@@ -5,7 +5,7 @@
 
 .featuredWork {
   padding: var(--space-9) var(--space-8);
-  background: var(--bg-black);
+  background: var(--bg-cream);
 }
 
 .container {
@@ -23,31 +23,33 @@
   font-weight: 400;
   letter-spacing: 0.03rem;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-charcoal-2);
   margin: 0;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gap-grid);
 }
 
 .cardOuter {
+  grid-column: span 4;
   background: transparent;
-  border: 1px solid var(--border-gray);
+  border: 1px solid var(--border-black);
   border-radius: 0;
   overflow: hidden;
   transition: var(--transition-all);
 }
 
 .cardOuter:hover {
-  border-color: var(--border-white);
-  transform: translateY(-4px);
+  border-color: var(--border-black);
+  border-width: 2px;
+  transform: translateY(-2px);
 }
 
 .card {
-  background: var(--bg-black);
+  background: var(--bg-cream);
   cursor: pointer;
   text-decoration: none;
   color: inherit;
@@ -108,17 +110,17 @@
   font-family: var(--font-heading);
   font-size: var(--text-h3);
   font-weight: 400;
-  letter-spacing: -0.05rem;
-  color: var(--text-white);
+  letter-spacing: var(--letter-spacing-h4);
+  color: var(--text-black);
   margin: 0 0 var(--space-2) 0;
 }
 
 .description {
   font-family: var(--font-body);
   font-size: var(--text-body-sm);
-  line-height: 1.2;
-  letter-spacing: -0.009rem;
-  color: var(--text-muted);
+  line-height: var(--lh-body-sm);
+  letter-spacing: var(--letter-spacing-body);
+  color: var(--text-charcoal-2);
   margin: 0 0 var(--space-3) 0;
   white-space: nowrap;
   overflow: hidden;
@@ -129,20 +131,21 @@
   font-family: var(--font-body);
   font-size: var(--text-micro);
   font-weight: 400;
-  letter-spacing: 0.03rem;
+  letter-spacing: var(--letter-spacing-uppercase);
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-charcoal-2);
+  opacity: 0.6;
   margin: 0;
 }
 
 /* Tablet */
 @media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+  .cardOuter {
+    grid-column: span 6;
   }
 
-  .grid > :last-child {
-    grid-column: span 2;
+  .cardOuter:last-child {
+    grid-column: span 12;
   }
 }
 
@@ -153,11 +156,15 @@
   }
 
   .grid {
-    grid-template-columns: 1fr;
+    gap: var(--gap-grid-mobile);
   }
 
-  .grid > :last-child {
-    grid-column: span 1;
+  .cardOuter {
+    grid-column: span 12;
+  }
+
+  .cardOuter:last-child {
+    grid-column: span 12;
   }
 
   .cardOuter:hover {

@@ -4,35 +4,31 @@
 
 /* About Hero */
 .aboutHero {
-  padding-top: 128px;
-  padding-bottom: 96px;
-  padding-left: 64px;
-  padding-right: 64px;
-  background: var(--surface-primary);
-  border-bottom: 1px solid var(--stroke-faint);
+  padding: var(--space-10) var(--space-8) var(--space-9);
+  background: var(--bg-cream);
 }
 
 .heroInner {
-  max-width: 1200px;
+  max-width: var(--container-lg);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 45% 55%;
-  gap: 64px;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gap-grid);
   align-items: start;
 }
 
 .portraitColumn {
+  grid-column: span 5;
   position: relative;
 }
 
 .portraitContainer {
   width: 100%;
-  max-width: 400px;
   aspect-ratio: 4 / 5;
-  border: 1px solid var(--stroke-faint);
+  border: 1px solid var(--border-black);
   overflow: hidden;
   position: sticky;
-  top: 120px;
+  top: 100px;
 }
 
 .portrait {
@@ -40,112 +36,113 @@
   height: 100%;
   object-fit: cover;
   filter: grayscale(100%);
-  transition: filter 400ms ease-out;
+  transition: var(--transition-fade);
 }
 
-.portrait:hover {
+.portraitContainer:hover .portrait {
   filter: grayscale(0%);
 }
 
 .contentColumn {
+  grid-column: span 7;
   padding-top: 0;
 }
 
 .pageLabel {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  letter-spacing: 0.08em;
+  font-family: var(--font-body);
+  font-size: var(--text-micro);
+  letter-spacing: var(--letter-spacing-uppercase);
   text-transform: uppercase;
-  color: var(--text-secondary);
-  margin-bottom: 12px;
+  color: var(--text-charcoal-2);
+  margin-bottom: var(--space-3);
 }
 
 .pageTitle {
   font-family: var(--font-heading);
-  font-size: 56px;
-  font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
-  margin-bottom: 32px;
+  font-size: var(--text-h2);
+  font-weight: 400;
+  line-height: var(--lh-h2);
+  letter-spacing: var(--letter-spacing-h2);
+  color: var(--text-black);
+  margin-bottom: var(--space-6);
 }
 
 .introduction {
   font-family: var(--font-body);
-  font-size: 17px;
-  line-height: 1.8;
-  color: var(--text-secondary);
-  margin-bottom: 32px;
-  max-width: 560px;
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  color: var(--text-charcoal);
+  margin-bottom: var(--space-6);
 }
 
 .rolesContainer {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
 }
 
 .roleItem {
   display: flex;
   align-items: baseline;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .roleTitle {
   font-family: var(--font-heading);
-  font-size: 17px;
-  font-weight: 500;
-  color: var(--text-primary);
+  font-size: var(--text-body);
+  font-weight: 400;
+  color: var(--text-black);
 }
 
 .roleCompany {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  color: var(--text-charcoal-2);
 }
 
 .location {
-  font-family: var(--font-mono);
-  font-size: 13px;
-  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  color: var(--text-charcoal-2);
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
 }
 
 /* Experience Timeline */
 .experienceSection {
-  padding: 96px 64px;
-  background: var(--surface-alt-1);
-  border-bottom: 1px solid var(--stroke-faint);
+  padding: var(--space-9) var(--space-8);
+  background: var(--bg-black);
 }
 
 .sectionInner {
-  max-width: 960px;
+  max-width: var(--container-md);
   margin: 0 auto;
 }
 
 .sectionHeader {
   font-family: var(--font-heading);
-  font-size: 28px;
-  font-weight: 500;
-  color: var(--text-primary);
-  margin-bottom: 48px;
+  font-size: var(--text-h3);
+  font-weight: 400;
+  line-height: var(--lh-h3);
+  letter-spacing: var(--letter-spacing-h3);
+  color: var(--text-white);
+  margin-bottom: var(--space-7);
 }
 
 .timelineContainer {
   position: relative;
-  padding-left: 48px;
+  padding-left: var(--space-7);
 }
 
 .timelineLine {
   position: absolute;
   left: 0;
-  top: 8px;
-  bottom: 8px;
+  top: var(--space-2);
+  bottom: var(--space-2);
   width: 1px;
-  background: var(--stroke-faint);
+  background: var(--border-gray);
 }
 
 .timelineItem {
@@ -206,56 +203,58 @@
 
 /* Awards Showcase */
 .awardsSection {
-  padding: 96px 64px;
-  background: var(--surface-primary);
-  border-bottom: 1px solid var(--stroke-faint);
+  padding: var(--space-9) var(--space-8);
+  background: var(--bg-cream);
 }
 
 .awardsInner {
-  max-width: 1200px;
+  max-width: var(--container-lg);
   margin: 0 auto;
 }
 
 .awardsHeader {
   font-family: var(--font-heading);
-  font-size: 28px;
-  font-weight: 500;
-  color: var(--text-primary);
+  font-size: var(--text-h3);
+  font-weight: 400;
+  line-height: var(--lh-h3);
+  letter-spacing: var(--letter-spacing-h3);
+  color: var(--text-black);
   text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: var(--space-7);
 }
 
 .awardsSubheader {
   font-family: var(--font-body);
-  font-size: 17px;
-  color: var(--text-secondary);
+  font-size: var(--text-body);
+  color: var(--text-charcoal);
   text-align: center;
-  margin-top: -24px;
-  margin-bottom: 48px;
+  margin-top: calc(var(--space-7) * -0.5);
+  margin-bottom: var(--space-7);
 }
 
 .awardsGrid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gap-grid);
 }
 
 .awardBadge {
+  grid-column: span 2;
   aspect-ratio: 1 / 1;
-  background: var(--surface-alt-1);
-  border: 1px solid var(--stroke-faint);
-  padding: 16px;
+  background: transparent;
+  border: 1px solid var(--border-black);
+  padding: var(--space-4);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   cursor: default;
-  transition: all 100ms ease-out;
+  transition: var(--transition-all);
 }
 
 .awardBadge:hover {
-  border-color: var(--stroke-secondary);
-  background: var(--surface-primary);
+  border-color: var(--border-black);
+  border-width: 2px;
 }
 
 .badgeImage {
@@ -264,10 +263,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 8px;
+  margin-bottom: var(--space-2);
   opacity: 0.6;
-  filter: grayscale(100%);
-  transition: opacity 100ms ease-out;
+  transition: var(--transition-opacity);
 }
 
 .awardBadge:hover .badgeImage {
@@ -277,14 +275,15 @@
 .badgeImage svg {
   width: 100%;
   height: auto;
-  color: var(--text-secondary);
+  color: var(--text-charcoal);
 }
 
 .badgeLabel {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.04em;
-  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: var(--text-micro);
+  letter-spacing: var(--letter-spacing-uppercase);
+  text-transform: uppercase;
+  color: var(--text-charcoal-2);
   text-align: center;
   max-width: 100%;
   overflow: hidden;
@@ -294,59 +293,62 @@
 
 /* Philosophy Section */
 .philosophySection {
-  padding: 96px 64px;
-  background: var(--surface-alt-1);
-  border-bottom: 1px solid var(--stroke-faint);
+  padding: var(--space-9) var(--space-8);
+  background: var(--bg-black);
 }
 
 .philosophyInner {
-  max-width: 960px;
+  max-width: var(--container-md);
   margin: 0 auto;
 }
 
 .leadParagraph {
   font-family: var(--font-heading);
-  font-size: 20px;
-  font-weight: 500;
-  line-height: 1.4;
-  color: var(--text-primary);
-  margin-bottom: 24px;
+  font-size: var(--font-h5);
+  font-weight: 400;
+  line-height: var(--lh-h3);
+  color: var(--text-white);
+  margin-bottom: var(--space-5);
 }
 
 .bodyParagraph {
   font-family: var(--font-body);
-  font-size: 17px;
-  line-height: 1.8;
-  color: var(--text-secondary);
-  margin-bottom: 24px;
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  color: var(--text-gray);
+  margin-bottom: var(--space-5);
 }
 
 .principlesContainer {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  margin-top: 48px;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gap-grid);
+  margin-top: var(--space-7);
 }
 
 .principleCard {
-  padding: 24px;
-  background: var(--surface-primary);
-  border: 1px solid var(--stroke-faint);
+  grid-column: span 4;
+  padding: var(--space-6);
+  background: transparent;
+  border: 1px solid var(--border-gray);
 }
 
 .principleNumber {
-  font-family: var(--font-mono);
-  font-size: 11px;
-  color: var(--text-muted);
-  margin-bottom: 12px;
+  font-family: var(--font-body);
+  font-size: var(--text-micro);
+  letter-spacing: var(--letter-spacing-uppercase);
+  text-transform: uppercase;
+  color: var(--text-gray);
+  opacity: 0.6;
+  margin-bottom: var(--space-3);
 }
 
 .principleTitle {
   font-family: var(--font-heading);
-  font-size: 17px;
-  font-weight: 500;
-  color: var(--text-primary);
-  margin-bottom: 8px;
+  font-size: var(--font-h6);
+  font-weight: 400;
+  color: var(--text-white);
+  margin-bottom: var(--space-2);
 }
 
 .principleDescription {

@@ -1,15 +1,16 @@
 .proof {
   padding: var(--space-9) var(--space-8);
-  background: var(--surface-alt-1);
-  border-top: var(--stroke-hairline) solid var(--stroke-faint);
-  border-bottom: var(--stroke-hairline) solid var(--stroke-faint);
+  background: var(--bg-black);
+  color: var(--text-white);
 }
 
 .headline {
   font-family: var(--font-heading);
   font-size: var(--text-h2);
-  font-weight: 500;
-  color: var(--text-primary);
+  font-weight: 400;
+  line-height: var(--lh-h2);
+  letter-spacing: var(--letter-spacing-h2);
+  color: var(--text-white);
   text-align: center;
   margin-bottom: var(--space-7);
 }
@@ -17,27 +18,27 @@
 /* Award Badge Grid */
 .awardGrid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: var(--space-5);
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gap-grid);
   max-width: var(--container-lg);
   margin: 0 auto var(--space-8);
 }
 
 .awardBadge {
+  grid-column: span 2;
   aspect-ratio: 1 / 1;
-  max-width: 120px;
-  justify-self: center;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--space-3);
-  border: var(--stroke-hairline) solid var(--stroke-faint);
-  background: var(--surface-primary);
-  transition: all var(--duration-fast) var(--ease-default);
+  border: 1px solid var(--border-gray);
+  background: transparent;
+  transition: var(--transition-all);
 }
 
 .awardBadge:hover {
-  border-color: var(--stroke-secondary);
+  border-color: var(--text-white);
+  opacity: 1;
 }
 
 .badgePlaceholder {
@@ -46,13 +47,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--text-micro);
-  color: var(--text-secondary);
+  color: var(--text-gray);
   text-align: center;
-  filter: grayscale(100%);
-  opacity: 0.7;
-  transition: opacity var(--duration-fast) var(--ease-default);
+  opacity: 0.6;
+  transition: var(--transition-opacity);
 }
 
 .awardBadge:hover .badgePlaceholder {
@@ -77,26 +77,26 @@
   transition: opacity var(--duration-fast) var(--ease-default);
 }
 
-.logoItem:hover {
-  opacity: 0.8;
+.logoItem:hover .logoPlaceholder {
+  opacity: 1;
 }
 
 .logoPlaceholder {
   height: 100%;
   display: flex;
   align-items: center;
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--text-caption);
-  font-weight: 500;
-  color: var(--text-secondary);
-  filter: grayscale(100%);
-  opacity: 0.5;
+  font-weight: 400;
+  color: var(--text-gray);
+  opacity: 0.6;
+  transition: var(--transition-opacity);
 }
 
 /* Tablet */
 @media (max-width: 1024px) {
-  .awardGrid {
-    grid-template-columns: repeat(4, 1fr);
+  .awardBadge {
+    grid-column: span 3;
   }
 }
 
@@ -107,8 +107,11 @@
   }
 
   .awardGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-4);
+    gap: var(--gap-grid-mobile);
+  }
+
+  .awardBadge {
+    grid-column: span 6;
   }
 
   .clientLogos {

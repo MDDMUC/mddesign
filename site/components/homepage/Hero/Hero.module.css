@@ -1,4 +1,5 @@
 .hero {
+  min-height: 70vh;
   padding-top: var(--space-10);
   padding-bottom: var(--space-9);
   padding-left: var(--space-8);
@@ -6,15 +7,20 @@
   max-width: var(--container-md);
   margin: 0 auto;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bg-black);
 }
 
 .headline {
   font-family: var(--font-heading);
   font-size: var(--text-display);
-  font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--text-primary);
+  font-weight: 400;
+  line-height: var(--lh-display);
+  letter-spacing: var(--letter-spacing-h1);
+  color: var(--text-white);
   margin-bottom: var(--space-5);
 }
 
@@ -22,8 +28,8 @@
   font-family: var(--font-body);
   font-size: var(--text-body);
   font-weight: 400;
-  line-height: 1.7;
-  color: var(--text-secondary);
+  line-height: var(--lh-body);
+  color: var(--text-gray);
   max-width: 640px;
   margin: 0 auto var(--space-7);
 }

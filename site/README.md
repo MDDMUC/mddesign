@@ -16,7 +16,7 @@ Award-winning portfolio website for Martin Drexler, featuring:
 - **Framework:** Next.js 16 (App Router)
 - **Language:** TypeScript
 - **Styling:** CSS Modules + CSS Variables
-- **Fonts:** DM Sans (400, 500) + JetBrains Mono (400, 500)
+- **Fonts:** Helvetica Neue (system font stack)
 - **Package Manager:** npm
 - **Deploy Target:** Static export (Vercel/Netlify)
 
@@ -78,7 +78,7 @@ All design specifications are in `/design-system/`:
 
 **Foundation Setup:**
 - [x] Next.js project initialized
-- [x] Fonts installed (DM Sans + JetBrains Mono)
+- [x] Fonts configured (Helvetica Neue system stack)
 - [x] Design tokens as CSS variables
 - [x] Typography system
 - [x] Button component (all variants + states)

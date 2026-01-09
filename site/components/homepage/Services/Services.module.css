@@ -29,11 +29,12 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--space-6);
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--gap-grid);
 }
 
 .cardOuter {
+  grid-column: span 4;
   background: transparent;
   border: 1px solid var(--border-black);
   border-radius: 0;
@@ -88,12 +89,12 @@
 
 /* Tablet */
 @media (max-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
+  .cardOuter {
+    grid-column: span 6;
   }
 
-  .grid > :last-child {
-    grid-column: span 2;
+  .cardOuter:last-child {
+    grid-column: span 12;
   }
 }
 
@@ -104,10 +105,14 @@
   }
 
   .grid {
-    grid-template-columns: 1fr;
+    gap: var(--gap-grid-mobile);
   }
 
-  .grid > :last-child {
-    grid-column: span 1;
+  .cardOuter {
+    grid-column: span 12;
+  }
+
+  .cardOuter:last-child {
+    grid-column: span 12;
   }
 }
