@@ -3,11 +3,12 @@
  * Based on modern reset practices
  */
 
-/* Box sizing */
+/* Box sizing and font inheritance */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 }
 
 /* Remove default margin and padding */
