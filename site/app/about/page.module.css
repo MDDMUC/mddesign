@@ -1,0 +1,533 @@
+.page {
+  width: 100%;
+}
+
+/* About Hero */
+.aboutHero {
+  padding-top: 128px;
+  padding-bottom: 96px;
+  padding-left: 64px;
+  padding-right: 64px;
+  background: var(--surface-primary);
+  border-bottom: 1px solid var(--stroke-faint);
+}
+
+.heroInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 45% 55%;
+  gap: 64px;
+  align-items: start;
+}
+
+.portraitColumn {
+  position: relative;
+}
+
+.portraitContainer {
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 4 / 5;
+  border: 1px solid var(--stroke-faint);
+  overflow: hidden;
+  position: sticky;
+  top: 120px;
+}
+
+.portrait {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(100%);
+  transition: filter 400ms ease-out;
+}
+
+.portrait:hover {
+  filter: grayscale(0%);
+}
+
+.contentColumn {
+  padding-top: 0;
+}
+
+.pageLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.pageTitle {
+  font-family: var(--font-heading);
+  font-size: 56px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  margin-bottom: 32px;
+}
+
+.introduction {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  max-width: 560px;
+}
+
+.rolesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.roleItem {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.roleTitle {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.roleCompany {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.location {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Experience Timeline */
+.experienceSection {
+  padding: 96px 64px;
+  background: var(--surface-alt-1);
+  border-bottom: 1px solid var(--stroke-faint);
+}
+
+.sectionInner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.sectionHeader {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 48px;
+}
+
+.timelineContainer {
+  position: relative;
+  padding-left: 48px;
+}
+
+.timelineLine {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: var(--stroke-faint);
+}
+
+.timelineItem {
+  position: relative;
+  padding-bottom: 48px;
+}
+
+.timelineItem:last-child {
+  padding-bottom: 0;
+}
+
+.timelineDot {
+  position: absolute;
+  left: -52px;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  background: var(--surface-primary);
+  border: 1.5px solid var(--stroke-secondary);
+  border-radius: 50%;
+}
+
+.currentDot {
+  background: var(--stroke-primary);
+  border-color: var(--stroke-primary);
+}
+
+.dateRange {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.roleTitle {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.companyLocation {
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.description {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  max-width: 480px;
+}
+
+/* Awards Showcase */
+.awardsSection {
+  padding: 96px 64px;
+  background: var(--surface-primary);
+  border-bottom: 1px solid var(--stroke-faint);
+}
+
+.awardsInner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.awardsHeader {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.awardsSubheader {
+  font-family: var(--font-body);
+  font-size: 17px;
+  color: var(--text-secondary);
+  text-align: center;
+  margin-top: -24px;
+  margin-bottom: 48px;
+}
+
+.awardsGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
+}
+
+.awardBadge {
+  aspect-ratio: 1 / 1;
+  background: var(--surface-alt-1);
+  border: 1px solid var(--stroke-faint);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  transition: all 100ms ease-out;
+}
+
+.awardBadge:hover {
+  border-color: var(--stroke-secondary);
+  background: var(--surface-primary);
+}
+
+.badgeImage {
+  max-width: 70%;
+  max-height: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  opacity: 0.6;
+  filter: grayscale(100%);
+  transition: opacity 100ms ease-out;
+}
+
+.awardBadge:hover .badgeImage {
+  opacity: 1;
+}
+
+.badgeImage svg {
+  width: 100%;
+  height: auto;
+  color: var(--text-secondary);
+}
+
+.badgeLabel {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Philosophy Section */
+.philosophySection {
+  padding: 96px 64px;
+  background: var(--surface-alt-1);
+  border-bottom: 1px solid var(--stroke-faint);
+}
+
+.philosophyInner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.leadParagraph {
+  font-family: var(--font-heading);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+}
+
+.bodyParagraph {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+}
+
+.principlesContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  margin-top: 48px;
+}
+
+.principleCard {
+  padding: 24px;
+  background: var(--surface-primary);
+  border: 1px solid var(--stroke-faint);
+}
+
+.principleNumber {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.principleTitle {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.principleDescription {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+/* Testimonials */
+.testimonialsSection {
+  padding: 96px 64px;
+  background: var(--surface-alt-1);
+  border-bottom: 1px solid var(--stroke-faint);
+}
+
+.testimonialsInner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.testimonialsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.testimonialCard {
+  padding: 32px;
+  background: var(--surface-primary);
+  border: 1px solid var(--stroke-faint);
+}
+
+.quote {
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  quotes: """ """ "'" "'";
+}
+
+.quote::before {
+  content: open-quote;
+}
+
+.quote::after {
+  content: close-quote;
+}
+
+.attribution {
+  border-top: 1px solid var(--stroke-faint);
+  padding-top: 16px;
+}
+
+.authorName {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.authorRole {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 2px;
+}
+
+.authorCompany {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* Personal Section */
+.personalSection {
+  padding: 64px 64px;
+  background: var(--surface-primary);
+  border-bottom: 1px solid var(--stroke-faint);
+}
+
+.personalInner {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.personalLabel {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.personalNote {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+}
+
+/* About CTA */
+.aboutCTA {
+  padding: 128px 64px;
+  background: var(--surface-alt-1);
+  text-align: center;
+}
+
+.ctaInner {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.ctaHeadline {
+  font-family: var(--font-heading);
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.ctaSubhead {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .aboutHero {
+    padding: 96px 24px 64px;
+  }
+
+  .heroInner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .portraitContainer {
+    position: relative;
+    top: 0;
+    max-width: 100%;
+  }
+
+  .pageTitle {
+    font-size: 40px;
+  }
+
+  .experienceSection,
+  .awardsSection,
+  .philosophySection,
+  .testimonialsSection,
+  .personalSection {
+    padding: 64px 24px;
+  }
+
+  .aboutCTA {
+    padding: 96px 24px;
+  }
+
+  .awardsGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .principlesContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .testimonialsGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .awardsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
