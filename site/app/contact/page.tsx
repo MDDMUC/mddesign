@@ -20,7 +20,9 @@ export default function ContactPage() {
     message: ''
   })
 
-  const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
 
   const validateEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -39,8 +41,12 @@ export default function ContactPage() {
     }
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
+    // Reset previous status
+    setSubmitStatus('idle')
+    setErrorMessage('')
 
     // Validate form
     const newErrors = {
@@ -76,22 +82,45 @@ export default function ContactPage() {
       return
     }
 
-    // Form is valid, submit
-    console.log('Form submitted:', formData)
-    setSubmitted(true)
+    // Form is valid, submit to Web3Forms
+    setIsSubmitting(true)
 
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      company: '',
-      message: ''
-    })
+    try {
+      const form = e.currentTarget
+      const formDataToSend = new FormData(form)
 
-    // Reset submitted state after 5 seconds
-    setTimeout(() => {
-      setSubmitted(false)
-    }, 5000)
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formDataToSend,
+      })
+
+      const data = await response.json()
+
+      if (response.ok && data.success) {
+        setSubmitStatus('success')
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          company: '',
+          message: ''
+        })
+
+        // Reset success state after 10 seconds
+        setTimeout(() => {
+          setSubmitStatus('idle')
+        }, 10000)
+      } else {
+        setSubmitStatus('error')
+        setErrorMessage(data.message || 'Something went wrong. Please try again.')
+      }
+    } catch (error) {
+      setSubmitStatus('error')
+      setErrorMessage('Network error. Please check your connection and try again.')
+      console.error('Form submission error:', error)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -116,7 +145,7 @@ export default function ContactPage() {
               Tell me about your project and I&apos;ll get back to you within 24 hours.
             </p>
 
-            {submitted && (
+            {submitStatus === 'success' && (
               <div className={styles.successMessage}>
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
                   <circle cx="10" cy="10" r="9" stroke="currentColor" strokeWidth="1.5"/>
@@ -126,7 +155,21 @@ export default function ContactPage() {
               </div>
             )}
 
+            {submitStatus === 'error' && (
+              <div className={styles.errorMessage}>
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <circle cx="10" cy="10" r="9" stroke="currentColor" strokeWidth="1.5"/>
+                  <path d="M10 6v5M10 14v.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                </svg>
+                <span>{errorMessage}</span>
+              </div>
+            )}
+
             <form onSubmit={handleSubmit} className={styles.form}>
+              <input type="hidden" name="access_key" value={process.env.NEXT_PUBLIC_WEB3FORMS_KEY || ''} />
+              <input type="hidden" name="subject" value="New Contact Form Submission - martindrexler.com" />
+              <input type="hidden" name="from_name" value="Martin Drexler Portfolio" />
+              <input type="hidden" name="redirect" value="false" />
               <FormInput
                 label="Your Name"
                 id="name"
@@ -179,8 +222,9 @@ export default function ContactPage() {
                 variant="primary"
                 size="large"
                 fullWidth
+                disabled={isSubmitting}
               >
-                Send Message
+                {isSubmitting ? 'Sending...' : 'Send Message'}
               </Button>
             </form>
           </div>
