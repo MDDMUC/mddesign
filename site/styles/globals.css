@@ -1,6 +1,6 @@
 /**
  * Global Styles - Martin Drexler Portfolio
- * Zion Virtual Control Aesthetic
+ * Anduril Lattice Command & Control Aesthetic
  */
 
 @import './reset.css';
@@ -16,6 +16,7 @@ body {
   color: var(--text-primary);
   background-color: var(--surface-primary);
   overflow-x: hidden;
+  letter-spacing: var(--letter-spacing-body);
 }
 
 /* ===== FOCUS STYLES ===== */
@@ -27,15 +28,15 @@ body {
 
 /* Add visible focus for keyboard navigation */
 :focus-visible {
-  outline: 2px solid var(--stroke-primary);
+  outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
 }
 
 /* ===== SELECTION ===== */
 
 ::selection {
-  background-color: var(--fill-hover);
-  color: var(--text-inverted);
+  background-color: var(--accent-primary);
+  color: var(--text-black);
 }
 
 /* ===== CONTAINER UTILITIES ===== */
@@ -73,7 +74,7 @@ body {
 }
 
 /* Mobile container adjustments */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .container-sm,
   .container-md,
   .container-lg,
@@ -84,7 +85,7 @@ body {
 }
 
 /* Tablet container adjustments */
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 769px) and (max-width: 1279px) {
   .container-sm,
   .container-md,
   .container-lg,
@@ -102,9 +103,9 @@ body {
   left: var(--space-4);
   z-index: var(--z-modal);
   padding: var(--space-3) var(--space-4);
-  background-color: var(--fill-hover);
-  color: var(--text-inverted);
-  font-family: var(--font-mono);
+  background-color: var(--bg-dark);
+  color: var(--text-white);
+  font-family: var(--font-body);
   font-size: var(--text-caption);
   text-decoration: none;
   border-radius: 0;
@@ -143,15 +144,94 @@ body {
   border-radius: 0;
 }
 
-/* Chamfered corners */
-.chamfer-sm {
-  clip-path: var(--chamfer-sm);
+/* ===== BACKGROUND UTILITIES ===== */
+
+.bg-black {
+  background-color: var(--bg-black);
 }
 
-.chamfer-md {
-  clip-path: var(--chamfer-md);
+.bg-cream {
+  background-color: var(--bg-cream);
 }
 
-.chamfer-lg {
-  clip-path: var(--chamfer-lg);
+.bg-charcoal {
+  background-color: var(--bg-charcoal-1);
+}
+
+.bg-olive {
+  background-color: var(--bg-olive);
+}
+
+/* ===== SECTION ALTERNATING BACKGROUNDS ===== */
+
+section:nth-child(odd) {
+  background-color: var(--bg-black);
+  color: var(--text-white);
+}
+
+section:nth-child(even) {
+  background-color: var(--bg-cream);
+  color: var(--text-black);
+}
+
+/* ===== OPACITY UTILITIES ===== */
+
+.opacity-60 {
+  opacity: 0.6;
+  transition: var(--transition-opacity);
+}
+
+.opacity-60:hover {
+  opacity: 1;
+}
+
+/* ===== LINK STYLES ===== */
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-opacity);
+}
+
+a:hover {
+  opacity: 0.7;
+}
+
+/* ===== IMAGE STYLES ===== */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ===== BUTTON RESET ===== */
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* ===== RESPONSIVE UTILITIES ===== */
+
+@media (max-width: 768px) {
+  .hide-mobile {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) {
+  .hide-desktop {
+    display: none;
+  }
+
+  .show-mobile {
+    display: none;
+  }
 }

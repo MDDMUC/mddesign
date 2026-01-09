@@ -1,6 +1,11 @@
+/**
+ * Services Component
+ * Anduril Lattice Command & Control Aesthetic
+ */
+
 .services {
   padding: var(--space-9) var(--space-8);
-  background: var(--surface-primary);
+  background: var(--bg-cream);
 }
 
 .container {
@@ -13,12 +18,12 @@
 }
 
 .label {
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--text-micro);
-  font-weight: 500;
-  letter-spacing: 0.08em;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
   text-transform: uppercase;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   margin: 0;
 }
 
@@ -29,67 +34,54 @@
 }
 
 .cardOuter {
-  background: var(--stroke-faint);
-  transition: all var(--duration-fast) var(--ease-default);
-  /* Chamfered corners: bottom-left and top-right (8px) */
-  clip-path: polygon(
-    0 0,
-    calc(100% - 8px) 0,
-    100% 8px,
-    100% 100%,
-    8px 100%,
-    0 calc(100% - 8px)
-  );
+  background: transparent;
+  border: 1px solid var(--border-black);
+  border-radius: 0;
+  transition: var(--transition-all);
 }
 
 .cardOuter:hover {
-  background: var(--stroke-secondary);
+  border-width: 2px;
   transform: translateY(-2px);
 }
 
 .card {
   padding: var(--space-6);
-  background: var(--surface-primary);
+  background: var(--bg-cream);
   min-height: 280px;
   display: flex;
   flex-direction: column;
-  /* Inner clip-path to reveal 0.75px border */
-  clip-path: polygon(
-    0 0.75px,
-    calc(100% - 8px + 0.75px) 0.75px,
-    calc(100% - 0.75px) 8px,
-    calc(100% - 0.75px) calc(100% - 0.75px),
-    8px calc(100% - 0.75px),
-    0.75px calc(100% - 8px + 0.75px),
-    0.75px 0.75px
-  );
 }
 
 .cardOuter:hover .icon {
-  color: var(--stroke-primary);
+  opacity: 1;
 }
 
 .icon {
   width: 48px;
   height: 48px;
-  color: var(--stroke-secondary);
+  color: var(--text-black);
+  opacity: 0.6;
   margin-bottom: var(--space-5);
-  transition: color var(--duration-fast) var(--ease-default);
+  transition: var(--transition-opacity);
 }
 
 .title {
   font-family: var(--font-heading);
   font-size: var(--text-h3);
-  font-weight: 500;
-  color: var(--text-primary);
+  font-weight: 400;
+  letter-spacing: -0.05rem;
+  color: var(--text-black);
   margin: 0 0 var(--space-3) 0;
 }
 
 .description {
   font-family: var(--font-body);
   font-size: var(--text-body-sm);
-  line-height: 1.6;
-  color: var(--text-secondary);
+  line-height: 1.2;
+  letter-spacing: -0.009rem;
+  color: var(--text-black);
+  opacity: 0.7;
   margin: 0;
   flex-grow: 1;
 }

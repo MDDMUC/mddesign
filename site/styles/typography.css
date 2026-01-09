@@ -1,91 +1,91 @@
 /**
  * Typography System - Martin Drexler Portfolio
- * Zion Virtual Control Aesthetic
+ * Anduril Lattice Command & Control Aesthetic
  *
- * Fonts: DM Sans (headings/body) + JetBrains Mono (technical/labels)
+ * Font: Helvetica Neue (closest to HelveticaNowDisplay)
  */
 
 /* ===== TYPE SCALE CLASSES ===== */
 
 .text-display {
   font-family: var(--font-heading);
-  font-size: var(--text-display);
-  line-height: var(--lh-display);
-  font-weight: 500;
-  letter-spacing: var(--tracking-tight);
+  font-size: 5rem;
+  line-height: 105%;
+  font-weight: 400;
+  letter-spacing: -0.1rem;
   color: var(--text-primary);
 }
 
 .text-h1 {
   font-family: var(--font-heading);
-  font-size: var(--text-h1);
-  line-height: var(--lh-h1);
-  font-weight: 500;
-  letter-spacing: var(--tracking-tight);
+  font-size: 4rem;
+  line-height: 105%;
+  font-weight: 400;
+  letter-spacing: -0.08rem;
   color: var(--text-primary);
 }
 
 .text-h2 {
   font-family: var(--font-heading);
-  font-size: var(--text-h2);
-  line-height: var(--lh-h2);
-  font-weight: 500;
-  letter-spacing: var(--tracking-normal);
+  font-size: 3.5rem;
+  line-height: 110%;
+  font-weight: 400;
+  letter-spacing: -0.07rem;
   color: var(--text-primary);
 }
 
 .text-h3 {
   font-family: var(--font-heading);
-  font-size: var(--text-h3);
-  line-height: var(--lh-h3);
-  font-weight: 500;
-  letter-spacing: var(--tracking-normal);
+  font-size: 2.5rem;
+  line-height: 115%;
+  font-weight: 400;
+  letter-spacing: -0.05rem;
   color: var(--text-primary);
 }
 
 .text-body {
   font-family: var(--font-body);
-  font-size: var(--text-body);
-  line-height: var(--lh-body);
+  font-size: 1.05rem;
+  line-height: 120%;
   font-weight: 400;
-  letter-spacing: var(--tracking-normal);
+  letter-spacing: -0.009rem;
   color: var(--text-primary);
 }
 
 .text-body-sm {
   font-family: var(--font-body);
-  font-size: var(--text-body-sm);
-  line-height: var(--lh-body-sm);
+  font-size: 0.938rem;
+  line-height: 120%;
   font-weight: 400;
-  letter-spacing: var(--tracking-normal);
-  color: var(--text-secondary);
+  letter-spacing: -0.009rem;
+  color: var(--text-muted);
 }
 
 .text-caption {
-  font-family: var(--font-mono);
-  font-size: var(--text-caption);
-  line-height: var(--lh-caption);
-  font-weight: 500;
-  letter-spacing: var(--tracking-wide);
-  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  line-height: 120%;
+  font-weight: 400;
+  letter-spacing: -0.009rem;
+  color: var(--text-muted);
 }
 
 .text-micro {
-  font-family: var(--font-mono);
-  font-size: var(--text-micro);
-  line-height: var(--lh-micro);
-  font-weight: 500;
-  letter-spacing: var(--tracking-wide);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  line-height: 120%;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
   text-transform: uppercase;
-  color: var(--text-secondary);
+  color: var(--text-muted);
 }
 
 .text-mono {
-  font-family: var(--font-mono);
-  font-size: var(--text-mono);
-  line-height: var(--lh-mono);
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  line-height: 120%;
   font-weight: 400;
-  letter-spacing: var(--tracking-normal);
+  letter-spacing: -0.009rem;
   color: var(--text-primary);
 }
 
@@ -93,40 +93,70 @@
 
 h1 {
   font-family: var(--font-heading);
-  font-size: var(--text-h1);
-  line-height: var(--lh-h1);
-  font-weight: 500;
-  letter-spacing: var(--tracking-tight);
+  font-size: 4rem;
+  line-height: 105%;
+  font-weight: 400;
+  letter-spacing: -0.08rem;
   color: var(--text-primary);
   margin: 0;
 }
 
 h2 {
   font-family: var(--font-heading);
-  font-size: var(--text-h2);
-  line-height: var(--lh-h2);
-  font-weight: 500;
-  letter-spacing: var(--tracking-normal);
+  font-size: 3.5rem;
+  line-height: 110%;
+  font-weight: 400;
+  letter-spacing: -0.07rem;
   color: var(--text-primary);
   margin: 0;
 }
 
 h3 {
   font-family: var(--font-heading);
-  font-size: var(--text-h3);
-  line-height: var(--lh-h3);
-  font-weight: 500;
-  letter-spacing: var(--tracking-normal);
+  font-size: 2.5rem;
+  line-height: 115%;
+  font-weight: 400;
+  letter-spacing: -0.05rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+h4 {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  line-height: 115%;
+  font-weight: 400;
+  letter-spacing: -0.02rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+h5 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  line-height: 115%;
+  font-weight: 400;
+  letter-spacing: -0.015rem;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+h6 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  line-height: 115%;
+  font-weight: 400;
+  letter-spacing: -0.013rem;
   color: var(--text-primary);
   margin: 0;
 }
 
 p {
   font-family: var(--font-body);
-  font-size: var(--text-body);
-  line-height: var(--lh-body);
+  font-size: 1.05rem;
+  line-height: 120%;
   font-weight: 400;
-  letter-spacing: var(--tracking-normal);
+  letter-spacing: -0.009rem;
   color: var(--text-primary);
   margin: 0;
 }
@@ -135,6 +165,10 @@ p {
 
 .uppercase {
   text-transform: uppercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
 }
 
 .color-primary {
@@ -153,36 +187,107 @@ p {
   color: var(--text-inverted);
 }
 
+.color-accent {
+  color: var(--accent-primary);
+}
+
+.color-white {
+  color: var(--text-white);
+}
+
+.color-black {
+  color: var(--text-black);
+}
+
+.color-cream {
+  color: var(--text-cream);
+}
+
+/* Font Weight Utilities */
+.font-light {
+  font-weight: 300;
+}
+
+.font-regular {
+  font-weight: 400;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-bold {
+  font-weight: 700;
+}
+
 /* Micro Label Pattern (technical labels) */
 .micro-label {
-  font-family: var(--font-mono);
-  font-size: var(--text-micro);
-  font-weight: 500;
-  letter-spacing: var(--tracking-wide);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
   text-transform: uppercase;
-  color: var(--text-secondary);
+  color: var(--text-muted);
 }
 
 /* ===== RESPONSIVE TYPOGRAPHY ===== */
 
 /* Mobile adjustments */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .text-display {
-    font-size: var(--text-h2); /* 28px on mobile */
+    font-size: 2.714rem;
   }
 
-  .text-h1 {
-    font-size: var(--text-h2); /* 28px on mobile */
+  .text-h1,
+  h1 {
+    font-size: 2.714rem;
   }
 
-  .text-h2 {
-    font-size: var(--text-h3); /* 20px on mobile */
+  .text-h2,
+  h2 {
+    font-size: 2.571rem;
+  }
+
+  .text-h3,
+  h3 {
+    font-size: 2.429rem;
+  }
+
+  h4 {
+    font-size: 2.286rem;
+  }
+
+  h5 {
+    font-size: 1.929rem;
+  }
+
+  h6 {
+    font-size: 1.714rem;
+  }
+
+  .text-body,
+  p {
+    font-size: 1.286rem;
+  }
+
+  .text-body-sm {
+    font-size: 1.143rem;
   }
 }
 
 /* Tablet adjustments */
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 769px) and (max-width: 1279px) {
   .text-display {
-    font-size: var(--text-h1); /* 40px on tablet */
+    font-size: 3.5rem;
+  }
+
+  .text-h1,
+  h1 {
+    font-size: 3rem;
+  }
+
+  .text-h2,
+  h2 {
+    font-size: 2.5rem;
   }
 }

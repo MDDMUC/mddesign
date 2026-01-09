@@ -1,3 +1,8 @@
+/**
+ * Form Input Component
+ * Anduril Lattice Command & Control Aesthetic
+ */
+
 .container {
   width: 100%;
   position: relative;
@@ -5,45 +10,40 @@
 
 .label {
   display: block;
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--text-micro);
-  font-weight: 500;
-  letter-spacing: 0.08em;
+  font-weight: 400;
+  letter-spacing: 0.03rem;
   text-transform: uppercase;
-  color: var(--text-secondary);
+  color: var(--text-muted);
   margin-bottom: var(--space-2);
 }
 
 .required {
-  color: var(--text-secondary);
+  color: var(--accent-error);
   margin-left: var(--space-1);
 }
 
-/* Outer wrapper for chamfered border */
+/* Input wrapper with border */
 .inputOuter {
-  background: var(--stroke-secondary);
-  /* Chamfered corners: bottom-left and top-right (4px) */
-  clip-path: polygon(
-    0 0,
-    calc(100% - 4px) 0,
-    100% 4px,
-    100% 100%,
-    4px 100%,
-    0 calc(100% - 4px)
-  );
-  transition: background-color var(--duration-fast) var(--ease-default);
+  background: transparent;
+  border: 1px solid var(--border-gray);
+  border-radius: 0;
+  transition: var(--transition-border);
 }
 
 .inputOuter:hover {
-  background: var(--stroke-primary);
+  border-color: var(--border-white);
 }
 
 .inputOuter:has(.input:focus) {
-  background: var(--stroke-primary);
+  border-color: var(--accent-primary);
+  border-width: 2px;
 }
 
 .inputOuter:has(.input:disabled) {
-  background: var(--stroke-faint);
+  border-color: var(--bg-gray-dark);
+  opacity: 0.5;
 }
 
 .input {
@@ -52,44 +52,27 @@
   padding: 0 var(--space-4);
   font-family: var(--font-body);
   font-size: var(--text-body);
-  color: var(--text-primary);
-  background: var(--surface-primary);
+  letter-spacing: -0.009rem;
+  color: var(--text-white);
+  background: transparent;
   border: none;
   border-radius: 0;
-  transition: padding var(--duration-fast) var(--ease-default);
-  /* Inner clip-path to reveal border */
-  clip-path: polygon(
-    0 0.75px,
-    calc(100% - 4px + 0.75px) 0.75px,
-    calc(100% - 0.75px) 4px,
-    calc(100% - 0.75px) calc(100% - 0.75px),
-    4px calc(100% - 0.75px),
-    0.75px calc(100% - 4px + 0.75px),
-    0.75px 0.75px
-  );
+  transition: var(--transition-all);
 }
 
 .input::placeholder {
   color: var(--text-muted);
   font-style: normal;
+  opacity: 0.6;
 }
 
 .input:focus {
   outline: none;
-  /* Adjust inner clip-path for 2px border on focus */
-  clip-path: polygon(
-    0 2px,
-    calc(100% - 4px + 2px) 2px,
-    calc(100% - 2px) 4px,
-    calc(100% - 2px) calc(100% - 2px),
-    4px calc(100% - 2px),
-    2px calc(100% - 4px + 2px),
-    2px 2px
-  );
+  padding: 0 calc(var(--space-4) - 1px);
 }
 
 .input:disabled {
-  background: var(--surface-alt-1);
+  background: var(--bg-charcoal-1);
   color: var(--text-muted);
   cursor: not-allowed;
 }
@@ -100,12 +83,11 @@ textarea.input {
   min-height: 160px;
   padding: var(--space-4);
   resize: vertical;
-  line-height: 1.6;
+  line-height: 1.2;
 }
 
 textarea.input:focus {
-  /* Keep padding consistent on focus - border handled by outer */
-  padding: var(--space-4);
+  padding: calc(var(--space-4) - 1px);
 }
 
 .textareaWrapper {
@@ -116,7 +98,7 @@ textarea.input:focus {
   position: absolute;
   bottom: var(--space-3);
   right: var(--space-4);
-  font-family: var(--font-mono);
+  font-family: var(--font-body);
   font-size: var(--text-micro);
   color: var(--text-muted);
   pointer-events: none;
@@ -124,20 +106,16 @@ textarea.input:focus {
 
 /* Error State */
 .inputOuter:has(.input.error) {
-  background: var(--accent-alert);
+  border-color: var(--accent-error);
+  border-width: 2px;
 }
 
 .input.error {
-  /* Adjust inner clip-path for 2px error border */
-  clip-path: polygon(
-    0 2px,
-    calc(100% - 4px + 2px) 2px,
-    calc(100% - 2px) 4px,
-    calc(100% - 2px) calc(100% - 2px),
-    4px calc(100% - 2px),
-    2px calc(100% - 4px + 2px),
-    2px 2px
-  );
+  padding: 0 calc(var(--space-4) - 1px);
+}
+
+textarea.input.error {
+  padding: calc(var(--space-4) - 1px);
 }
 
 .errorMessage {
@@ -147,34 +125,30 @@ textarea.input:focus {
   margin-top: var(--space-2);
   font-family: var(--font-body);
   font-size: var(--text-body-sm);
-  color: var(--accent-alert);
+  color: var(--accent-error);
 }
 
 .errorIcon {
   flex-shrink: 0;
-  color: var(--accent-alert);
+  color: var(--accent-error);
 }
 
 /* Success State */
 .inputOuter:has(.input.success) {
-  background: var(--stroke-primary);
+  border-color: var(--accent-primary);
+  border-width: 2px;
 }
 
 .input.success {
-  /* Adjust inner clip-path for 2px success border */
-  clip-path: polygon(
-    0 2px,
-    calc(100% - 4px + 2px) 2px,
-    calc(100% - 2px) 4px,
-    calc(100% - 2px) calc(100% - 2px),
-    4px calc(100% - 2px),
-    2px calc(100% - 4px + 2px),
-    2px 2px
-  );
+  padding: 0 calc(var(--space-4) - 1px);
+}
+
+textarea.input.success {
+  padding: calc(var(--space-4) - 1px);
 }
 
 /* Focus Visible */
 .input:focus-visible {
-  outline: 2px solid var(--stroke-primary);
+  outline: 2px solid var(--accent-primary);
   outline-offset: 2px;
 }

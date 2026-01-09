@@ -4,7 +4,7 @@ import styles from './Button.module.css'
 
 export interface ButtonProps {
   children: React.ReactNode
-  variant?: 'primary' | 'secondary' | 'text'
+  variant?: 'primary' | 'secondary' | 'text' | 'dark'
   size?: 'default' | 'small' | 'large'
   href?: string
   onClick?: () => void
@@ -46,7 +46,7 @@ export default function Button({
   const content = (
     <>
       {icon && iconPosition === 'left' && <span className={styles.icon}>{icon}</span>}
-      <span className={styles.text}>{children}</span>
+      <span>{children}</span>
       {icon && iconPosition === 'right' && <span className={styles.icon}>{icon}</span>}
       {loading && (
         <span className={styles.spinner} aria-hidden="true">
@@ -67,17 +67,10 @@ export default function Button({
     </>
   )
 
-  // Nested div structure for proper chamfered borders
-  const buttonContent = (
-    <span className={styles.inner}>
-      {content}
-    </span>
-  )
-
   if (href && !disabled) {
     return (
       <Link href={href} className={classNames}>
-        {buttonContent}
+        {content}
       </Link>
     )
   }
@@ -90,7 +83,7 @@ export default function Button({
       className={classNames}
       aria-busy={loading}
     >
-      {buttonContent}
+      {content}
     </button>
   )
 }
