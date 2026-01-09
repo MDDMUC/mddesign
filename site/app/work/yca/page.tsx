@@ -3,15 +3,60 @@ import CaseStudySection, { SectionParagraph, SectionInsightList, SectionPullQuot
 import MetricsCallout from '@/app/components/case-study/MetricsCallout';
 import ImageGallery from '@/app/components/case-study/ImageGallery';
 import CaseStudyNavigation from '@/app/components/case-study/CaseStudyNavigation';
+import { ArticleSchema, BreadcrumbSchema } from '@/components/StructuredData/StructuredData';
 
-export const metadata = {
-  title: 'Young Champion Ambassador Program | Martin Drexler',
-  description: 'Building a global youth leadership program from scratch. Now in 25+ cities worldwide, acquired by the International Olympic Academy.',
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'YCA Case Study - Global Youth Leadership Program Design',
+  description: 'Building a global youth leadership program from scratch. Now in 25+ cities worldwide, acquired by the International Olympic Academy. Strategic design and brand development.',
+  keywords: ['YCA', 'youth leadership', 'Olympic program', 'brand systems', 'program design', 'nonprofit design'],
+  openGraph: {
+    title: 'YCA Case Study - Global Youth Leadership Program Design',
+    description: 'Building a global youth leadership program from scratch. Now in 25+ cities, acquired by the International Olympic Academy.',
+    url: 'https://martindrexler.com/work/yca',
+    siteName: 'Martin Drexler Design',
+    images: [{
+      url: '/images/og-yca.jpg',
+      width: 1200,
+      height: 630,
+      alt: 'Young Champion Ambassador Program',
+    }],
+    locale: 'en_US',
+    type: 'article',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'YCA Case Study - Global Youth Leadership Program Design',
+    description: 'Building a global youth leadership program from scratch. Now in 25+ cities, acquired by IOA.',
+    images: ['/images/og-yca.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: 'https://martindrexler.com/work/yca',
+  },
 };
 
 export default function YCACaseStudy() {
   return (
-    <main>
+    <>
+      <ArticleSchema
+        title="YCA Case Study - Global Youth Leadership Program Design"
+        description="Building a global youth leadership program from scratch. Now in 25+ cities, acquired by the International Olympic Academy."
+        url="https://martindrexler.com/work/yca"
+        imageUrl="https://martindrexler.com/images/og-yca.jpg"
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: 'https://martindrexler.com' },
+          { name: 'Work', url: 'https://martindrexler.com/work' },
+          { name: 'YCA', url: 'https://martindrexler.com/work/yca' },
+        ]}
+      />
+      <main>
       <CaseStudyHero
         breadcrumb="Young Champion Ambassador"
         title="Young Champion Ambassador"
@@ -183,6 +228,7 @@ export default function YCACaseStudy() {
           href: '/work/keller-sports',
         }}
       />
-    </main>
+      </main>
+    </>
   );
 }

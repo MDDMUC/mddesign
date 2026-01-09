@@ -1,10 +1,41 @@
 import React from 'react'
 import styles from './page.module.css'
 import Button from '../../components/Button/Button'
+import { ServiceSchema, BreadcrumbSchema } from '@/components/StructuredData/StructuredData'
 
-export const metadata = {
-  title: 'Services | Martin Drexler',
-  description: 'Strategic Leadership, Product Design, and Brand Systems for ambitious companies. I partner with funded startups and enterprises at critical inflection points.',
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Design Services - Strategic Leadership, Product Design & Brand Systems',
+  description: 'Strategic Leadership, Product Design, and Brand Systems for ambitious companies. Partner with funded startups and enterprises at critical inflection points.',
+  keywords: ['design services', 'strategic leadership', 'product design', 'brand systems', 'design consulting', 'startup design', 'enterprise design'],
+  openGraph: {
+    title: 'Design Services - Strategic Leadership, Product Design & Brand Systems',
+    description: 'Strategic Leadership, Product Design, and Brand Systems for ambitious companies at critical inflection points.',
+    url: 'https://martindrexler.com/services',
+    siteName: 'Martin Drexler Design',
+    images: [{
+      url: '/images/og-services.jpg',
+      width: 1200,
+      height: 630,
+      alt: 'Martin Drexler Design Services',
+    }],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Design Services - Strategic Leadership, Product Design & Brand Systems',
+    description: 'Strategic Leadership, Product Design, and Brand Systems for ambitious companies at critical inflection points.',
+    images: ['/images/og-services.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: 'https://martindrexler.com/services',
+  },
 }
 
 const services = [
@@ -121,7 +152,15 @@ const processSteps = [
 
 export default function ServicesPage() {
   return (
-    <div className={styles.page}>
+    <>
+      <ServiceSchema />
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: 'https://martindrexler.com' },
+          { name: 'Services', url: 'https://martindrexler.com/services' },
+        ]}
+      />
+      <div className={styles.page}>
       {/* Services Hero */}
       <section className={styles.servicesHero}>
         <div className={styles.heroInner}>
@@ -251,6 +290,7 @@ export default function ServicesPage() {
           </p>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   )
 }

@@ -3,9 +3,39 @@ import styles from './page.module.css'
 import Image from 'next/image'
 import Button from '../../components/Button/Button'
 
-export const metadata = {
-  title: 'About | Martin Drexler',
-  description: 'Strategic design partner with 25+ international design awards. I help funded startups and enterprises transform their products, brands, and teams.',
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'About Martin Drexler - Award-Winning Strategic Design Partner',
+  description: 'Strategic design partner with 25+ international design awards including German Brand Award Gold. 15+ years leading design for startups and enterprises across Europe and the US.',
+  keywords: ['Martin Drexler', 'design leadership', 'strategic design', 'design awards', 'enterprise design', 'startup design consultant'],
+  openGraph: {
+    title: 'About Martin Drexler - Award-Winning Strategic Design Partner',
+    description: 'Strategic design partner with 25+ international design awards. 15+ years leading design for startups and enterprises.',
+    url: 'https://martindrexler.com/about',
+    siteName: 'Martin Drexler Design',
+    images: [{
+      url: '/images/og-about.jpg',
+      width: 1200,
+      height: 630,
+      alt: 'Martin Drexler - About',
+    }],
+    locale: 'en_US',
+    type: 'profile',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About Martin Drexler - Award-Winning Strategic Design Partner',
+    description: 'Strategic design partner with 25+ international design awards. 15+ years leading design for startups and enterprises.',
+    images: ['/images/og-about.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: 'https://martindrexler.com/about',
+  },
 }
 
 const testimonials = [

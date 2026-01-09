@@ -1,9 +1,41 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './page.module.css';
+import { getLightBlurDataURL } from '@/lib/image-utils';
 
-export const metadata = {
-  title: 'Selected Work | Martin Drexler',
-  description: 'Portfolio of strategic design work spanning enterprise platforms, brand systems, and digital products.',
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Portfolio - Selected Strategic Design Work & Case Studies',
+  description: 'Award-winning strategic design work spanning enterprise platforms, brand systems, and digital products. Case studies from CEPRES, YCA, Keller Sports, and more.',
+  keywords: ['design portfolio', 'case studies', 'enterprise design', 'brand systems', 'product design', 'design awards'],
+  openGraph: {
+    title: 'Portfolio - Selected Strategic Design Work & Case Studies',
+    description: 'Award-winning strategic design work spanning enterprise platforms, brand systems, and digital products.',
+    url: 'https://martindrexler.com/work',
+    siteName: 'Martin Drexler Design',
+    images: [{
+      url: '/images/og-work.jpg',
+      width: 1200,
+      height: 630,
+      alt: 'Martin Drexler Portfolio',
+    }],
+    locale: 'en_US',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Portfolio - Selected Strategic Design Work & Case Studies',
+    description: 'Award-winning strategic design work spanning enterprise platforms, brand systems, and digital products.',
+    images: ['/images/og-work.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: 'https://martindrexler.com/work',
+  },
 };
 
 interface Project {
@@ -53,7 +85,15 @@ function ProjectCard({ project }: { project: Project }) {
   return (
     <Link href={project.href} className={styles.projectCard}>
       <div className={styles.thumbnail}>
-        <img src={project.thumbnail} alt={project.title} />
+        <Image
+          src={project.thumbnail}
+          alt={project.title}
+          width={800}
+          height={600}
+          loading="lazy"
+          placeholder="blur"
+          blurDataURL={getLightBlurDataURL()}
+        />
       </div>
       <div className={styles.projectContent}>
         <h2 className={styles.projectTitle}>{project.title}</h2>

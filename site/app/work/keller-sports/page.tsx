@@ -4,15 +4,60 @@ import MetricsCallout from '@/app/components/case-study/MetricsCallout';
 import ImageGallery from '@/app/components/case-study/ImageGallery';
 import AwardBadgeGrid from '@/app/components/case-study/AwardBadgeGrid';
 import CaseStudyNavigation from '@/app/components/case-study/CaseStudyNavigation';
+import { ArticleSchema, BreadcrumbSchema } from '@/components/StructuredData/StructuredData';
 
-export const metadata = {
-  title: 'Keller Sports - Premium E-Commerce Transformation | Martin Drexler',
-  description: 'Transformed a premium sports e-commerce platform as Head of Design. 13 international awards, 3 full relaunches in 2 years.',
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Keller Sports Case Study - Premium E-Commerce Design Transformation',
+  description: 'Transformed a premium sports e-commerce platform as Head of Design. 13 international awards including German Brand Award Gold. 3 full relaunches in 2 years.',
+  keywords: ['Keller Sports', 'e-commerce design', 'Head of Design', 'German Brand Award', 'premium retail', 'sports e-commerce'],
+  openGraph: {
+    title: 'Keller Sports Case Study - Premium E-Commerce Design Transformation',
+    description: 'Transformed a premium sports e-commerce platform as Head of Design. 13 international awards, 3 full relaunches in 2 years.',
+    url: 'https://martindrexler.com/work/keller-sports',
+    siteName: 'Martin Drexler Design',
+    images: [{
+      url: '/images/og-keller-sports.jpg',
+      width: 1200,
+      height: 630,
+      alt: 'Keller Sports Design Transformation',
+    }],
+    locale: 'en_US',
+    type: 'article',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Keller Sports Case Study - Premium E-Commerce Design Transformation',
+    description: 'Transformed a premium sports e-commerce platform as Head of Design. 13 international awards.',
+    images: ['/images/og-keller-sports.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: 'https://martindrexler.com/work/keller-sports',
+  },
 };
 
 export default function KellerSportsCaseStudy() {
   return (
-    <main>
+    <>
+      <ArticleSchema
+        title="Keller Sports Case Study - Premium E-Commerce Design Transformation"
+        description="Transformed a premium sports e-commerce platform as Head of Design. 13 international awards."
+        url="https://martindrexler.com/work/keller-sports"
+        imageUrl="https://martindrexler.com/images/og-keller-sports.jpg"
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: 'https://martindrexler.com' },
+          { name: 'Work', url: 'https://martindrexler.com/work' },
+          { name: 'Keller Sports', url: 'https://martindrexler.com/work/keller-sports' },
+        ]}
+      />
+      <main>
       <CaseStudyHero
         breadcrumb="Keller Sports"
         title="Keller Sports"
@@ -207,6 +252,7 @@ export default function KellerSportsCaseStudy() {
           href: '/work/cepres',
         }}
       />
-    </main>
+      </main>
+    </>
   );
 }

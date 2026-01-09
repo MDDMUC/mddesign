@@ -4,15 +4,60 @@ import MetricsCallout from '@/app/components/case-study/MetricsCallout';
 import ImageGallery from '@/app/components/case-study/ImageGallery';
 import AwardBadgeGrid from '@/app/components/case-study/AwardBadgeGrid';
 import CaseStudyNavigation from '@/app/components/case-study/CaseStudyNavigation';
+import { ArticleSchema, BreadcrumbSchema } from '@/components/StructuredData/StructuredData';
 
-export const metadata = {
-  title: 'CEPRES - Private Market Investment Platform | Martin Drexler',
-  description: 'Designing the world\'s leading private market investment platform. 6 Private Equity Wire Awards, $45T in assets, 6,000+ users.',
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'CEPRES Case Study - Private Market Investment Platform Design',
+  description: 'Designing the world\'s leading private market investment platform. 6 Private Equity Wire Awards, $45T in assets, 6,000+ users. Learn how strategic design transformed complex financial data.',
+  keywords: ['CEPRES', 'private equity', 'investment platform', 'enterprise design', 'data visualization', 'financial software design'],
+  openGraph: {
+    title: 'CEPRES Case Study - Private Market Investment Platform Design',
+    description: 'Designing the world\'s leading private market investment platform. 6 Awards, $45T in assets, 6,000+ users.',
+    url: 'https://martindrexler.com/work/cepres',
+    siteName: 'Martin Drexler Design',
+    images: [{
+      url: '/images/og-cepres.jpg',
+      width: 1200,
+      height: 630,
+      alt: 'CEPRES Platform Design',
+    }],
+    locale: 'en_US',
+    type: 'article',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CEPRES Case Study - Private Market Investment Platform Design',
+    description: 'Designing the world\'s leading private market investment platform. 6 Awards, $45T in assets, 6,000+ users.',
+    images: ['/images/og-cepres.jpg'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: 'https://martindrexler.com/work/cepres',
+  },
 };
 
 export default function CEPRESCaseStudy() {
   return (
-    <main>
+    <>
+      <ArticleSchema
+        title="CEPRES Case Study - Private Market Investment Platform Design"
+        description="Designing the world's leading private market investment platform. 6 Awards, $45T in assets, 6,000+ users."
+        url="https://martindrexler.com/work/cepres"
+        imageUrl="https://martindrexler.com/images/og-cepres.jpg"
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: 'Home', url: 'https://martindrexler.com' },
+          { name: 'Work', url: 'https://martindrexler.com/work' },
+          { name: 'CEPRES', url: 'https://martindrexler.com/work/cepres' },
+        ]}
+      />
+      <main>
       <CaseStudyHero
         breadcrumb="CEPRES"
         title="CEPRES"
@@ -179,6 +224,7 @@ export default function CEPRESCaseStudy() {
           href: '/work/yca',
         }}
       />
-    </main>
+      </main>
+    </>
   );
 }

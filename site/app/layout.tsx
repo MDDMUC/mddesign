@@ -21,6 +21,7 @@ const jetBrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://martindrexler.com'),
   title: 'Martin Drexler - Strategic Design Partner',
   description: 'Award-winning strategic design partner for ambitious companies. I help funded startups and enterprises transform their products, brands, and teams.',
   keywords: ['strategic design', 'product design', 'brand systems', 'design leadership', 'UX design'],
