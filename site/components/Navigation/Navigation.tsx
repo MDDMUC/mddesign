@@ -7,22 +7,17 @@ export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { label: 'Subterranean', href: '/subterranean' },
-    { label: 'Sea', href: '/sea' },
-    { label: 'Land', href: '/land' },
-    { label: 'Air', href: '/air' },
-    { label: 'Space', href: '/space' },
-    { label: 'Lattice', href: '/lattice' },
-    { label: 'Arsenal-1', href: '/arsenal-1' },
+    { label: 'Portfolio', href: '/work' },
+    { label: 'Contact', href: '/contact' },
+    { label: 'Theme', href: '/theme' },
   ];
 
   return (
     <nav className={styles.nav}>
       <div className={styles.container}>
-        {/* Left: Logo */}
+        {/* Left: Logo (icon only) */}
         <Link href="/" className={styles.logo}>
           <span className={styles.logoIcon}>△</span>
-          <span className={styles.logoText}>ANDURIL</span>
         </Link>
 
         {/* Center: Navigation Items */}
@@ -36,14 +31,6 @@ export default function Navigation() {
               {item.label}
             </Link>
           ))}
-        </div>
-
-        {/* Right: Search & Company */}
-        <div className={styles.navActions}>
-          <button className={styles.searchBtn}>Search</button>
-          <button className={styles.companyBtn}>
-            Company <span className={styles.plus}>+</span>
-          </button>
         </div>
 
         {/* Mobile Menu Button */}

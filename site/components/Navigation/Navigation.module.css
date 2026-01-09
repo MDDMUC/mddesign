@@ -36,10 +36,6 @@
   font-size: 1.5rem;
 }
 
-.logoText {
-  font-weight: 700;
-}
-
 .navItems {
   display: flex;
   align-items: center;
@@ -63,34 +59,6 @@
   opacity: 0.6;
 }
 
-.navActions {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.searchBtn,
-.companyBtn {
-  background: transparent;
-  border: none;
-  font-size: 0.875rem;
-  font-weight: 400;
-  letter-spacing: var(--letter-spacing-button);
-  color: var(--text-black);
-  cursor: pointer;
-  transition: opacity 0.2s ease;
-  font-family: var(--font-body);
-}
-
-.searchBtn:hover,
-.companyBtn:hover {
-  opacity: 0.6;
-}
-
-.plus {
-  margin-left: 0.25rem;
-}
-
 /* Mobile Menu */
 .mobileMenuBtn {
   display: none;
@@ -104,10 +72,6 @@
 
 @media (max-width: 1024px) {
   .navItems {
-    display: none;
-  }
-
-  .navActions {
     display: none;
   }
 
