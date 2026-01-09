@@ -1,0 +1,157 @@
+/**
+ * Global Styles - Martin Drexler Portfolio
+ * Zion Virtual Control Aesthetic
+ */
+
+@import './reset.css';
+@import './tokens.css';
+@import './typography.css';
+
+/* ===== BASE STYLES ===== */
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  color: var(--text-primary);
+  background-color: var(--surface-primary);
+  overflow-x: hidden;
+}
+
+/* ===== FOCUS STYLES ===== */
+
+/* Remove default focus outline */
+:focus {
+  outline: none;
+}
+
+/* Add visible focus for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--stroke-primary);
+  outline-offset: 2px;
+}
+
+/* ===== SELECTION ===== */
+
+::selection {
+  background-color: var(--fill-hover);
+  color: var(--text-inverted);
+}
+
+/* ===== CONTAINER UTILITIES ===== */
+
+.container-sm {
+  max-width: var(--container-sm);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-5);
+  padding-right: var(--space-5);
+}
+
+.container-md {
+  max-width: var(--container-md);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-8);
+  padding-right: var(--space-8);
+}
+
+.container-lg {
+  max-width: var(--container-lg);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-8);
+  padding-right: var(--space-8);
+}
+
+.container-xl {
+  max-width: var(--container-xl);
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--space-8);
+  padding-right: var(--space-8);
+}
+
+/* Mobile container adjustments */
+@media (max-width: 767px) {
+  .container-sm,
+  .container-md,
+  .container-lg,
+  .container-xl {
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+  }
+}
+
+/* Tablet container adjustments */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .container-sm,
+  .container-md,
+  .container-lg,
+  .container-xl {
+    padding-left: var(--space-7);
+    padding-right: var(--space-7);
+  }
+}
+
+/* ===== SKIP LINK ===== */
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-4);
+  z-index: var(--z-modal);
+  padding: var(--space-3) var(--space-4);
+  background-color: var(--fill-hover);
+  color: var(--text-inverted);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  text-decoration: none;
+  border-radius: 0;
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+/* ===== UTILITY CLASSES ===== */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Grayscale filter utility */
+.grayscale {
+  filter: grayscale(100%);
+  transition: filter var(--duration-normal) var(--ease-out);
+}
+
+.grayscale:hover {
+  filter: grayscale(0%);
+}
+
+/* Sharp corners (default) */
+.sharp-corners {
+  border-radius: 0;
+}
+
+/* Chamfered corners */
+.chamfer-sm {
+  clip-path: var(--chamfer-sm);
+}
+
+.chamfer-md {
+  clip-path: var(--chamfer-md);
+}
+
+.chamfer-lg {
+  clip-path: var(--chamfer-lg);
+}

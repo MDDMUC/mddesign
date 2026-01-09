@@ -1,0 +1,188 @@
+/**
+ * Typography System - Martin Drexler Portfolio
+ * Zion Virtual Control Aesthetic
+ *
+ * Fonts: DM Sans (headings/body) + JetBrains Mono (technical/labels)
+ */
+
+/* ===== TYPE SCALE CLASSES ===== */
+
+.text-display {
+  font-family: var(--font-heading);
+  font-size: var(--text-display);
+  line-height: var(--lh-display);
+  font-weight: 500;
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+}
+
+.text-h1 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h1);
+  line-height: var(--lh-h1);
+  font-weight: 500;
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+}
+
+.text-h2 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  line-height: var(--lh-h2);
+  font-weight: 500;
+  letter-spacing: var(--tracking-normal);
+  color: var(--text-primary);
+}
+
+.text-h3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  line-height: var(--lh-h3);
+  font-weight: 500;
+  letter-spacing: var(--tracking-normal);
+  color: var(--text-primary);
+}
+
+.text-body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  font-weight: 400;
+  letter-spacing: var(--tracking-normal);
+  color: var(--text-primary);
+}
+
+.text-body-sm {
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  line-height: var(--lh-body-sm);
+  font-weight: 400;
+  letter-spacing: var(--tracking-normal);
+  color: var(--text-secondary);
+}
+
+.text-caption {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  line-height: var(--lh-caption);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  color: var(--text-secondary);
+}
+
+.text-micro {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  line-height: var(--lh-micro);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.text-mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  line-height: var(--lh-mono);
+  font-weight: 400;
+  letter-spacing: var(--tracking-normal);
+  color: var(--text-primary);
+}
+
+/* ===== SEMANTIC HTML DEFAULTS ===== */
+
+h1 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h1);
+  line-height: var(--lh-h1);
+  font-weight: 500;
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+h2 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  line-height: var(--lh-h2);
+  font-weight: 500;
+  letter-spacing: var(--tracking-normal);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+h3 {
+  font-family: var(--font-heading);
+  font-size: var(--text-h3);
+  line-height: var(--lh-h3);
+  font-weight: 500;
+  letter-spacing: var(--tracking-normal);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+p {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  font-weight: 400;
+  letter-spacing: var(--tracking-normal);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* ===== UTILITY CLASSES ===== */
+
+.uppercase {
+  text-transform: uppercase;
+}
+
+.color-primary {
+  color: var(--text-primary);
+}
+
+.color-secondary {
+  color: var(--text-secondary);
+}
+
+.color-muted {
+  color: var(--text-muted);
+}
+
+.color-inverted {
+  color: var(--text-inverted);
+}
+
+/* Micro Label Pattern (technical labels) */
+.micro-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* ===== RESPONSIVE TYPOGRAPHY ===== */
+
+/* Mobile adjustments */
+@media (max-width: 767px) {
+  .text-display {
+    font-size: var(--text-h2); /* 28px on mobile */
+  }
+
+  .text-h1 {
+    font-size: var(--text-h2); /* 28px on mobile */
+  }
+
+  .text-h2 {
+    font-size: var(--text-h3); /* 20px on mobile */
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .text-display {
+    font-size: var(--text-h1); /* 40px on tablet */
+  }
+}

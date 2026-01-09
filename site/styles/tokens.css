@@ -1,0 +1,198 @@
+/**
+ * Design Tokens - Martin Drexler Portfolio
+ * Zion Virtual Control Aesthetic
+ *
+ * Source: DESIGN_TOKENS.md
+ */
+
+:root {
+  /* ===== COLORS ===== */
+
+  /* Surfaces */
+  --surface-primary: #FFFFFF;
+  --surface-tinted: #F0F0FF;
+  --surface-alt-1: #F6FAFB;
+  --surface-alt-2: #EAEEF1;
+
+  /* Strokes & Lines */
+  --stroke-primary: #626262;
+  --stroke-secondary: #949494;
+  --stroke-faint: #D0D4D7;
+
+  /* Text */
+  --text-primary: #626262;
+  --text-secondary: #949494;
+  --text-muted: #B0B4B7;
+  --text-inverted: #FFFFFF;
+
+  /* Interactive States */
+  --fill-hover: #626262;
+  --fill-active: #4A4A4A;
+  --fill-focus: #626262;
+
+  /* Accent (Use Sparingly) */
+  --accent-alert: #C44536;
+
+  /* ===== TYPOGRAPHY ===== */
+
+  /* Font Families */
+  --font-heading: 'DM Sans', 'Inter', system-ui, sans-serif;
+  --font-body: 'DM Sans', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', 'Consolas', monospace;
+
+  /* Type Scale - Sizes */
+  --text-display: 3.5rem;      /* 56px */
+  --text-h1: 2.5rem;           /* 40px */
+  --text-h2: 1.75rem;          /* 28px */
+  --text-h3: 1.25rem;          /* 20px */
+  --text-body: 1.0625rem;      /* 17px */
+  --text-body-sm: 0.9375rem;   /* 15px */
+  --text-caption: 0.8125rem;   /* 13px */
+  --text-micro: 0.6875rem;     /* 11px */
+  --text-mono: 0.875rem;       /* 14px */
+
+  /* Type Scale - Line Heights */
+  --lh-display: 1.1;
+  --lh-h1: 1.2;
+  --lh-h2: 1.3;
+  --lh-h3: 1.4;
+  --lh-body: 1.7;
+  --lh-body-sm: 1.6;
+  --lh-caption: 1.5;
+  --lh-micro: 1.4;
+  --lh-mono: 1.5;
+
+  /* Type Scale - Tracking (Letter Spacing) */
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.08em;
+  --tracking-wider: 0.12em;
+
+  /* ===== SPACING ===== */
+
+  /* Base Unit: 8px */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.5rem;    /* 24px */
+  --space-6: 2rem;      /* 32px */
+  --space-7: 3rem;      /* 48px */
+  --space-8: 4rem;      /* 64px */
+  --space-9: 6rem;      /* 96px */
+  --space-10: 8rem;     /* 128px */
+
+  /* Container Widths */
+  --container-sm: 640px;
+  --container-md: 960px;
+  --container-lg: 1200px;
+  --container-xl: 1440px;
+
+  /* ===== STROKES ===== */
+
+  --stroke-hairline: 1px;
+  --stroke-thin: 1.5px;
+  --stroke-medium: 2px;
+  --stroke-emphasis: 3px;
+
+  /* Border Styles */
+  --border-default: 1.5px solid var(--stroke-secondary);
+  --border-subtle: 1px solid var(--stroke-faint);
+  --border-focus: 2px solid var(--stroke-primary);
+
+  /* ===== CORNERS ===== */
+
+  /* Sharp corners by default, chamfered for special elements */
+  --border-radius: 0;
+
+  /* Chamfered Corners (Clip-path) */
+  --chamfer-sm: polygon(
+    4px 0,
+    calc(100% - 4px) 0,
+    100% 4px,
+    100% calc(100% - 4px),
+    calc(100% - 4px) 100%,
+    4px 100%,
+    0 calc(100% - 4px),
+    0 4px
+  );
+
+  --chamfer-md: polygon(
+    8px 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% calc(100% - 8px),
+    calc(100% - 8px) 100%,
+    8px 100%,
+    0 calc(100% - 8px),
+    0 8px
+  );
+
+  --chamfer-lg: polygon(
+    12px 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% calc(100% - 12px),
+    calc(100% - 12px) 100%,
+    12px 100%,
+    0 calc(100% - 12px),
+    0 12px
+  );
+
+  /* ===== MOTION & TIMING ===== */
+
+  /* Duration */
+  --duration-instant: 0ms;
+  --duration-fast: 100ms;
+  --duration-normal: 200ms;
+  --duration-slow: 400ms;
+  --duration-draw: 600ms;
+
+  /* Easing Functions */
+  --ease-default: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-snap: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Common Transitions */
+  --transition-hover: color var(--duration-fast) var(--ease-default),
+                      background-color var(--duration-fast) var(--ease-default),
+                      border-color var(--duration-fast) var(--ease-default);
+
+  --transition-draw: stroke-dashoffset var(--duration-draw) var(--ease-out);
+  --transition-fade: opacity var(--duration-normal) var(--ease-out);
+  --transition-slide: transform var(--duration-slow) var(--ease-out);
+
+  /* ===== Z-INDEX SCALE ===== */
+
+  --z-base: 0;
+  --z-elevated: 10;
+  --z-sticky: 100;
+  --z-overlay: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+}
+
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+
+/* Mobile: < 768px (default) */
+/* Tablet: 768px - 1024px */
+/* Desktop: > 1024px */
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0.01ms;
+    --duration-normal: 0.01ms;
+    --duration-slow: 0.01ms;
+    --duration-draw: 0.01ms;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
