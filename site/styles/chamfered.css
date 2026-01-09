@@ -8,6 +8,16 @@
  * - Outer container has border color as background with clip-path
  * - Inner content has slightly smaller clip-path to reveal border
  * - This creates proper borders that follow the chamfered edges
+ *
+ * SIZE USAGE GUIDELINES:
+ * - 4px (small): Form inputs, micro elements ONLY
+ * - 8px (medium): ALL BUTTONS (primary, secondary), ALL CARDS, standard containers
+ * - 12px (large): Prominent panels (mobile menu, metrics callout, hero elements)
+ * - 16px (xlarge): Reserved for major hero sections (rarely used)
+ *
+ * CONSISTENCY PRINCIPLE:
+ * Components of the same TYPE must have the SAME chamfer angle.
+ * Button variants differ in border weight and hover behavior, NOT chamfer size.
  */
 
 :root {
@@ -29,7 +39,7 @@
 
 /**
  * Small Chamfer Container (4px)
- * Use for: Form inputs, subtle elements, small buttons
+ * Use for: Form inputs and micro elements ONLY - NOT for buttons
  */
 .chamfered-container-small {
   position: relative;
@@ -46,7 +56,7 @@
 
 /**
  * Medium Chamfer Container (8px)
- * Use for: Standard buttons, cards, containers
+ * Use for: ALL BUTTONS (primary, secondary, any variant), ALL CARDS, standard containers
  */
 .chamfered-container-medium {
   position: relative;
@@ -63,7 +73,7 @@
 
 /**
  * Large Chamfer Container (12px)
- * Use for: Callout panels, featured sections
+ * Use for: Prominent panels (mobile menu, metrics callout, hero elements)
  */
 .chamfered-container-large {
   position: relative;
@@ -80,7 +90,7 @@
 
 /**
  * XLarge Chamfer Container (16px)
- * Use for: Hero sections, major panels
+ * Use for: Major hero sections and large-scale panels (rarely used)
  */
 .chamfered-container-xlarge {
   position: relative;

@@ -119,20 +119,20 @@
 .secondary {
   /* Outer container - border color background */
   background: var(--stroke-secondary);
-  /* Small chamfered corners: bottom-left and top-right (4px) */
+  /* Chamfered corners: bottom-left and top-right (8px) - matches primary */
   clip-path: polygon(
     0 0,
-    calc(100% - 4px) 0,
-    100% 4px,
+    calc(100% - 8px) 0,
+    100% 8px,
     100% 100%,
-    4px 100%,
-    0 calc(100% - 4px)
+    8px 100%,
+    0 calc(100% - 8px)
   );
   transition: all var(--duration-fast) var(--ease-default);
 }
 
 .secondary .inner {
-  /* Inner content - reveals border */
+  /* Inner content - reveals 1px border (thinner than primary) */
   width: 100%;
   height: 100%;
   display: inline-flex;
@@ -143,11 +143,11 @@
   color: var(--text-secondary);
   clip-path: polygon(
     0 1px,
-    calc(100% - 4px + 1px) 1px,
-    calc(100% - 1px) 4px,
+    calc(100% - 8px + 1px) 1px,
+    calc(100% - 1px) 8px,
     calc(100% - 1px) calc(100% - 1px),
-    4px calc(100% - 1px),
-    1px calc(100% - 4px + 1px),
+    8px calc(100% - 1px),
+    1px calc(100% - 8px + 1px),
     1px 1px
   );
   transition: all var(--duration-fast) var(--ease-default);
