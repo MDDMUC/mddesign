@@ -1,0 +1,123 @@
+.container {
+  width: 100%;
+  position: relative;
+}
+
+.label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+.required {
+  color: var(--text-secondary);
+  margin-left: var(--space-1);
+}
+
+.input {
+  width: 100%;
+  height: 52px;
+  padding: 0 var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  color: var(--text-primary);
+  background: var(--surface-primary);
+  border: var(--stroke-hairline) solid var(--stroke-secondary);
+  border-radius: 0;
+  transition: border-color var(--duration-fast) var(--ease-default);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+  font-style: normal;
+}
+
+.input:hover:not(:disabled) {
+  border-color: var(--stroke-primary);
+}
+
+.input:focus {
+  outline: none;
+  border: 2px solid var(--stroke-primary);
+  padding: 0 calc(var(--space-4) - 1px);
+}
+
+.input:disabled {
+  border-color: var(--stroke-faint);
+  background: var(--surface-alt-1);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+/* Textarea */
+.input[type='textarea'],
+textarea.input {
+  min-height: 160px;
+  padding: var(--space-4);
+  resize: vertical;
+  line-height: 1.6;
+}
+
+textarea.input:focus {
+  padding: calc(var(--space-4) - 1px);
+}
+
+.textareaWrapper {
+  position: relative;
+}
+
+.charCount {
+  position: absolute;
+  bottom: var(--space-3);
+  right: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+/* Error State */
+.input.error {
+  border: 2px solid var(--accent-alert);
+  padding: 0 calc(var(--space-4) - 1px);
+}
+
+textarea.input.error {
+  padding: calc(var(--space-4) - 1px);
+}
+
+.errorMessage {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  color: var(--accent-alert);
+}
+
+.errorIcon {
+  flex-shrink: 0;
+  color: var(--accent-alert);
+}
+
+/* Success State */
+.input.success {
+  border: 2px solid var(--stroke-primary);
+  padding: 0 calc(var(--space-4) - 1px);
+}
+
+textarea.input.success {
+  padding: calc(var(--space-4) - 1px);
+}
+
+/* Focus Visible */
+.input:focus-visible {
+  outline: 2px solid var(--stroke-primary);
+  outline-offset: 2px;
+}

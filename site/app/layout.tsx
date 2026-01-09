@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import { DM_Sans, JetBrains_Mono } from 'next/font/google'
+import Navigation from '@/components/Navigation'
+import Footer from '@/components/Footer'
 import '../styles/globals.css'
 
 // Font: DM Sans (headings and body)
@@ -43,7 +45,11 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
-        {children}
+        <Navigation />
+        <main id="main-content">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   )
