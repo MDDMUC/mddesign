@@ -1,222 +1,138 @@
 /**
- * Navigation Component
- * Anduril Lattice Command & Control Aesthetic
+ * Navigation Component - Anduril Style
+ * Exact replication from reference screenshot
  */
 
-/* Desktop Navigation */
-.header {
+.nav {
+  background: var(--bg-cream);
+  height: 72px;
   position: sticky;
   top: 0;
-  width: 100%;
-  height: 80px;
-  background: var(--bg-black);
-  border-bottom: 1px solid var(--border-gray);
-  z-index: var(--z-sticky);
+  z-index: 1000;
+  border-bottom: 1px solid var(--border-black);
 }
 
 .container {
-  max-width: var(--container-xl);
-  height: 100%;
-  margin: 0 auto;
-  padding: 0 var(--space-8);
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  max-width: 100%;
+  padding: 0 2rem;
 }
 
 .logo {
-  font-family: var(--font-body);
-  font-size: var(--text-caption);
-  font-weight: 400;
-  letter-spacing: 0.03rem;
-  text-transform: uppercase;
-  color: var(--text-white);
-  text-decoration: none;
-  transition: var(--transition-opacity);
-}
-
-.logo:hover {
-  opacity: 0.7;
-}
-
-.desktopNav {
-  display: none;
-}
-
-.navList {
   display: flex;
-  gap: var(--space-6);
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--text-black);
+  font-weight: 700;
+  font-size: 1.125rem;
+  letter-spacing: 0.05em;
+}
+
+.logoIcon {
+  font-size: 1.5rem;
+}
+
+.logoText {
+  font-weight: 700;
+}
+
+.navItems {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .navLink {
-  font-family: var(--font-body);
-  font-size: var(--text-caption);
+  font-size: 0.875rem;
   font-weight: 400;
-  letter-spacing: -0.009rem;
-  text-transform: capitalize;
-  color: var(--text-white);
+  letter-spacing: var(--letter-spacing-button);
+  color: var(--text-black);
   text-decoration: none;
-  position: relative;
-  transition: var(--transition-opacity);
-  opacity: 0.6;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
 }
 
 .navLink:hover {
-  opacity: 1;
-}
-
-.navLink::after {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--accent-primary);
-  opacity: 0;
-  transition: var(--transition-opacity);
-}
-
-.navLink:hover::after {
-  opacity: 1;
-}
-
-.navLink:focus-visible {
-  opacity: 1;
-  outline: 2px solid var(--accent-primary);
-  outline-offset: 4px;
-}
-
-/* Mobile Hamburger */
-.hamburger {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 44px;
-  height: 44px;
-  gap: 5px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: var(--transition-opacity);
   opacity: 0.6;
 }
 
-.hamburger:hover {
-  opacity: 1;
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
-.hamburger:active {
-  opacity: 0.8;
+.searchBtn,
+.companyBtn {
+  background: transparent;
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: var(--letter-spacing-button);
+  color: var(--text-black);
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+  font-family: var(--font-body);
 }
 
-.hamburger:focus-visible {
-  outline: 2px solid var(--accent-primary);
-  outline-offset: 2px;
+.searchBtn:hover,
+.companyBtn:hover {
+  opacity: 0.6;
 }
 
-.hamburgerLine {
-  width: 18px;
-  height: 1.5px;
-  background: var(--text-white);
-  transition: var(--transition-all);
+.plus {
+  margin-left: 0.25rem;
 }
 
-/* Mobile Menu Panel */
-.mobileMenuOuter {
-  position: fixed;
-  top: 64px;
-  left: var(--space-5);
-  right: var(--space-5);
-  background: var(--bg-black);
-  border: 1px solid var(--border-white);
-  border-radius: 0;
-  z-index: var(--z-overlay);
-  animation: slideDown var(--duration-normal) var(--ease-out);
+/* Mobile Menu */
+.mobileMenuBtn {
+  display: none;
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--text-black);
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+@media (max-width: 1024px) {
+  .navItems {
+    display: none;
+  }
+
+  .navActions {
+    display: none;
+  }
+
+  .mobileMenuBtn {
+    display: block;
+  }
 }
 
 .mobileMenu {
-  background: var(--bg-black);
-  padding: var(--space-6);
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .mobileMenuOuter {
-    animation: none;
-  }
-}
-
-.mobileNavList {
+  background: var(--bg-cream);
+  border-top: 1px solid var(--border-black);
+  padding: 1rem 2rem;
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  gap: 1rem;
 }
 
 .mobileNavLink {
-  font-family: var(--font-heading);
-  font-size: var(--text-h3);
-  font-weight: 400;
-  letter-spacing: -0.05rem;
-  color: var(--text-white);
+  font-size: 1rem;
+  color: var(--text-black);
   text-decoration: none;
-  transition: var(--transition-opacity);
-  opacity: 0.8;
+  padding: 0.5rem 0;
+  transition: opacity 0.2s ease;
 }
 
 .mobileNavLink:hover {
-  opacity: 1;
-}
-
-.mobileNavLink:focus-visible {
-  outline: 2px solid var(--accent-primary);
-  outline-offset: 2px;
-}
-
-/* Desktop breakpoint */
-@media (min-width: 1024px) {
-  .desktopNav {
-    display: block;
-  }
-
-  .hamburger {
-    display: none;
-  }
-
-  .mobileMenuOuter {
-    display: none;
-  }
-
-  .mobileMenu {
-    display: none;
-  }
-}
-
-/* Mobile adjustments */
-@media (max-width: 1023px) {
-  .header {
-    height: 64px;
-  }
-
-  .container {
-    padding: 0 var(--space-5);
-  }
+  opacity: 0.6;
 }

@@ -1,98 +1,75 @@
-'use client'
-
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import styles from './Navigation.module.css'
+'use client';
+import Link from 'next/link';
+import { useState } from 'react';
+import styles from './Navigation.module.css';
 
 export default function Navigation() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-
-  // Close menu on escape key
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isMenuOpen) {
-        setIsMenuOpen(false)
-      }
-    }
-
-    if (isMenuOpen) {
-      document.addEventListener('keydown', handleEscape)
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleEscape)
-      document.body.style.overflow = ''
-    }
-  }, [isMenuOpen])
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { label: 'Work', href: '/work' },
-    { label: 'About', href: '/about' },
-    { label: 'Services', href: '/services' },
-    { label: 'Contact', href: '/contact' },
-    { label: 'Theme', href: '/theme' },
-  ]
+    { label: 'Subterranean', href: '/subterranean' },
+    { label: 'Sea', href: '/sea' },
+    { label: 'Land', href: '/land' },
+    { label: 'Air', href: '/air' },
+    { label: 'Space', href: '/space' },
+    { label: 'Lattice', href: '/lattice' },
+    { label: 'Arsenal-1', href: '/arsenal-1' },
+  ];
 
   return (
-    <header className={styles.header}>
+    <nav className={styles.nav}>
       <div className={styles.container}>
+        {/* Left: Logo */}
         <Link href="/" className={styles.logo}>
-          MARTIN DREXLER
+          <span className={styles.logoIcon}>△</span>
+          <span className={styles.logoText}>ANDURIL</span>
         </Link>
 
-        {/* Desktop Navigation */}
-        <nav className={styles.desktopNav} aria-label="Main navigation">
-          <ul className={styles.navList}>
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link href={item.href} className={styles.navLink}>
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        {/* Center: Navigation Items */}
+        <div className={styles.navItems}>
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={styles.navLink}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
 
-        {/* Mobile Hamburger Button */}
+        {/* Right: Search & Company */}
+        <div className={styles.navActions}>
+          <button className={styles.searchBtn}>Search</button>
+          <button className={styles.companyBtn}>
+            Company <span className={styles.plus}>+</span>
+          </button>
+        </div>
+
+        {/* Mobile Menu Button */}
         <button
-          className={styles.hamburger}
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-          aria-expanded={isMenuOpen}
+          className={styles.mobileMenuBtn}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          <span className={styles.hamburgerLine}></span>
-          <span className={styles.hamburgerLine}></span>
-          <span className={styles.hamburgerLine}></span>
+          {mobileMenuOpen ? '×' : '☰'}
         </button>
       </div>
 
-      {/* Mobile Menu Panel */}
-      {isMenuOpen && (
-        <div className={styles.mobileMenuOuter}>
-          <nav
-            className={styles.mobileMenu}
-            role="navigation"
-            aria-label="Main navigation"
-          >
-            <ul className={styles.mobileNavList}>
-              {navItems.map((item) => (
-                <li key={item.href}>
-                  <Link
-                    href={item.href}
-                    className={styles.mobileNavLink}
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className={styles.mobileMenu}>
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className={styles.mobileNavLink}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
         </div>
       )}
-    </header>
-  )
+    </nav>
+  );
 }
