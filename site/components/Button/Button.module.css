@@ -49,57 +49,137 @@
 /* ===== VARIANT: PRIMARY ===== */
 
 .primary {
+  /* Outer container - border color background */
+  background: var(--stroke-primary);
+  /* Chamfered corners: bottom-left and top-right (8px) */
+  clip-path: polygon(
+    0 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% 100%,
+    8px 100%,
+    0 calc(100% - 8px)
+  );
+  transition: all var(--duration-fast) var(--ease-default);
+}
+
+.primary .inner {
+  /* Inner content - reveals border */
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
   background: transparent;
-  border: var(--stroke-thin) solid var(--stroke-primary);
   color: var(--text-primary);
-  clip-path: var(--chamfer-sm);
+  clip-path: polygon(
+    0 1.5px,
+    calc(100% - 8px + 1.5px) 1.5px,
+    calc(100% - 1.5px) 8px,
+    calc(100% - 1.5px) calc(100% - 1.5px),
+    8px calc(100% - 1.5px),
+    1.5px calc(100% - 8px + 1.5px),
+    1.5px 1.5px
+  );
+  transition: all var(--duration-fast) var(--ease-default);
 }
 
 .primary:hover:not(.disabled):not(.loading) {
-  background: var(--fill-hover);
-  color: var(--text-inverted);
+  background: var(--text-primary);
+}
+
+.primary:hover:not(.disabled):not(.loading) .inner {
+  background: var(--text-primary);
+  color: var(--surface-primary);
 }
 
 .primary:active:not(.disabled):not(.loading) {
+  background: var(--fill-active);
+}
+
+.primary:active:not(.disabled):not(.loading) .inner {
   background: var(--fill-active);
   color: var(--text-inverted);
 }
 
 .primary:focus-visible {
-  background: transparent;
-  border: var(--stroke-medium) solid var(--stroke-primary);
-  color: var(--text-primary);
+  background: var(--stroke-primary);
   outline: 2px solid var(--stroke-primary);
   outline-offset: 2px;
+}
+
+.primary:focus-visible .inner {
+  background: transparent;
+  color: var(--text-primary);
 }
 
 /* ===== VARIANT: SECONDARY ===== */
 
 .secondary {
+  /* Outer container - border color background */
+  background: var(--stroke-secondary);
+  /* Small chamfered corners: bottom-left and top-right (4px) */
+  clip-path: polygon(
+    0 0,
+    calc(100% - 4px) 0,
+    100% 4px,
+    100% 100%,
+    4px 100%,
+    0 calc(100% - 4px)
+  );
+  transition: all var(--duration-fast) var(--ease-default);
+}
+
+.secondary .inner {
+  /* Inner content - reveals border */
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
   background: transparent;
-  border: var(--stroke-hairline) solid var(--stroke-secondary);
   color: var(--text-secondary);
-  clip-path: none; /* Sharp corners */
+  clip-path: polygon(
+    0 1px,
+    calc(100% - 4px + 1px) 1px,
+    calc(100% - 1px) 4px,
+    calc(100% - 1px) calc(100% - 1px),
+    4px calc(100% - 1px),
+    1px calc(100% - 4px + 1px),
+    1px 1px
+  );
+  transition: all var(--duration-fast) var(--ease-default);
 }
 
 .secondary:hover:not(.disabled):not(.loading) {
+  background: var(--stroke-primary);
+}
+
+.secondary:hover:not(.disabled):not(.loading) .inner {
   background: transparent;
-  border-color: var(--stroke-primary);
   color: var(--text-primary);
 }
 
 .secondary:active:not(.disabled):not(.loading) {
+  background: var(--stroke-primary);
+}
+
+.secondary:active:not(.disabled):not(.loading) .inner {
   background: var(--surface-alt-2);
-  border-color: var(--stroke-primary);
   color: var(--text-primary);
 }
 
 .secondary:focus-visible {
-  background: transparent;
-  border: var(--stroke-medium) solid var(--stroke-primary);
-  color: var(--text-primary);
+  background: var(--stroke-primary);
   outline: 2px solid var(--stroke-primary);
   outline-offset: 2px;
+}
+
+.secondary:focus-visible .inner {
+  background: transparent;
+  color: var(--text-primary);
 }
 
 /* ===== VARIANT: TEXT LINK ===== */
@@ -137,8 +217,12 @@
 
 .primary.disabled,
 .secondary.disabled {
+  background: var(--stroke-faint);
+}
+
+.primary.disabled .inner,
+.secondary.disabled .inner {
   background: transparent;
-  border-color: var(--stroke-faint);
   color: var(--text-muted);
 }
 
@@ -155,8 +239,12 @@
 }
 
 .primary.loading {
-  background: var(--fill-hover);
-  color: var(--text-inverted);
+  background: var(--text-primary);
+}
+
+.primary.loading .inner {
+  background: var(--text-primary);
+  color: var(--surface-primary);
 }
 
 .loading .text {

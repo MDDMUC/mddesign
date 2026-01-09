@@ -39,15 +39,17 @@ export default function FormInput(props: FormInputProps) {
 
       return (
         <div className={styles.textareaWrapper}>
-          <textarea
-            id={id}
-            className={inputClasses}
-            aria-invalid={error ? 'true' : 'false'}
-            aria-describedby={error ? `${id}-error` : undefined}
-            aria-required={required}
-            maxLength={maxLength}
-            {...textareaRest}
-          />
+          <div className={styles.inputOuter}>
+            <textarea
+              id={id}
+              className={inputClasses}
+              aria-invalid={error ? 'true' : 'false'}
+              aria-describedby={error ? `${id}-error` : undefined}
+              aria-required={required}
+              maxLength={maxLength}
+              {...textareaRest}
+            />
+          </div>
           {showCharCount && maxLength && (
             <div className={styles.charCount}>
               {currentLength}/{maxLength}
@@ -60,15 +62,17 @@ export default function FormInput(props: FormInputProps) {
     const { id: _id, ...inputRest } = rest as InputHTMLAttributes<HTMLInputElement>
 
     return (
-      <input
-        id={id}
-        type={type}
-        className={inputClasses}
-        aria-invalid={error ? 'true' : 'false'}
-        aria-describedby={error ? `${id}-error` : undefined}
-        aria-required={required}
-        {...inputRest}
-      />
+      <div className={styles.inputOuter}>
+        <input
+          id={id}
+          type={type}
+          className={inputClasses}
+          aria-invalid={error ? 'true' : 'false'}
+          aria-describedby={error ? `${id}-error` : undefined}
+          aria-required={required}
+          {...inputRest}
+        />
+      </div>
     )
   }
 

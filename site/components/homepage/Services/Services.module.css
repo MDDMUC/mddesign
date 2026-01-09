@@ -28,22 +28,44 @@
   gap: var(--space-6);
 }
 
+.cardOuter {
+  background: var(--stroke-faint);
+  transition: all var(--duration-fast) var(--ease-default);
+  /* Chamfered corners: bottom-left and top-right (8px) */
+  clip-path: polygon(
+    0 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% 100%,
+    8px 100%,
+    0 calc(100% - 8px)
+  );
+}
+
+.cardOuter:hover {
+  background: var(--stroke-secondary);
+  transform: translateY(-2px);
+}
+
 .card {
   padding: var(--space-6);
-  border: var(--stroke-hairline) solid var(--stroke-faint);
   background: var(--surface-primary);
   min-height: 280px;
   display: flex;
   flex-direction: column;
-  transition: all var(--duration-fast) var(--ease-default);
+  /* Inner clip-path to reveal 0.75px border */
+  clip-path: polygon(
+    0 0.75px,
+    calc(100% - 8px + 0.75px) 0.75px,
+    calc(100% - 0.75px) 8px,
+    calc(100% - 0.75px) calc(100% - 0.75px),
+    8px calc(100% - 0.75px),
+    0.75px calc(100% - 8px + 0.75px),
+    0.75px 0.75px
+  );
 }
 
-.card:hover {
-  border-color: var(--stroke-secondary);
-  transform: translateY(-2px);
-}
-
-.card:hover .icon {
+.cardOuter:hover .icon {
   color: var(--stroke-primary);
 }
 

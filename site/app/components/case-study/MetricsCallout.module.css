@@ -1,9 +1,30 @@
-.panel {
-  background: var(--surface-alt-2);
-  border: var(--stroke-thin) solid var(--stroke-secondary);
-  padding: var(--space-7); /* 48px */
+.panelOuter {
+  background: var(--stroke-primary);
   margin: var(--space-7) 0; /* 48px */
-  clip-path: var(--chamfer-md);
+  /* Large chamfered corners: bottom-left and top-right (12px) */
+  clip-path: polygon(
+    0 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% 100%,
+    12px 100%,
+    0 calc(100% - 12px)
+  );
+}
+
+.panel {
+  background: var(--surface-tinted);
+  padding: var(--space-7); /* 48px */
+  /* Inner clip-path to reveal 2px border */
+  clip-path: polygon(
+    0 2px,
+    calc(100% - 12px + 2px) 2px,
+    calc(100% - 2px) 12px,
+    calc(100% - 2px) calc(100% - 2px),
+    12px calc(100% - 2px),
+    2px calc(100% - 12px + 2px),
+    2px 2px
+  );
 }
 
 .grid {

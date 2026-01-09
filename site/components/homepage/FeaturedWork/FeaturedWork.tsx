@@ -35,25 +35,26 @@ export default function FeaturedWork() {
 
         <div className={styles.grid}>
           {projects.map((project) => (
-            <Link
-              key={project.id}
-              href={project.slug}
-              className={styles.card}
-            >
-              <div className={styles.thumbnail}>
-                <div className={styles.thumbnailPlaceholder}>
-                  {project.title}
+            <div key={project.id} className={styles.cardOuter}>
+              <Link
+                href={project.slug}
+                className={styles.card}
+              >
+                <div className={styles.thumbnail}>
+                  <div className={styles.thumbnailPlaceholder}>
+                    {project.title}
+                  </div>
+                  <div className={styles.clientLogo}>
+                    {project.title}
+                  </div>
                 </div>
-                <div className={styles.clientLogo}>
-                  {project.title}
+                <div className={styles.content}>
+                  <h3 className={styles.title}>{project.title}</h3>
+                  <p className={styles.description}>{project.description}</p>
+                  <p className={styles.metric}>{project.metric}</p>
                 </div>
-              </div>
-              <div className={styles.content}>
-                <h3 className={styles.title}>{project.title}</h3>
-                <p className={styles.description}>{project.description}</p>
-                <p className={styles.metric}>{project.metric}</p>
-              </div>
-            </Link>
+              </Link>
+            </div>
           ))}
         </div>
       </div>

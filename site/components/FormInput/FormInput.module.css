@@ -19,6 +19,33 @@
   margin-left: var(--space-1);
 }
 
+/* Outer wrapper for chamfered border */
+.inputOuter {
+  background: var(--stroke-secondary);
+  /* Chamfered corners: bottom-left and top-right (4px) */
+  clip-path: polygon(
+    0 0,
+    calc(100% - 4px) 0,
+    100% 4px,
+    100% 100%,
+    4px 100%,
+    0 calc(100% - 4px)
+  );
+  transition: background-color var(--duration-fast) var(--ease-default);
+}
+
+.inputOuter:hover {
+  background: var(--stroke-primary);
+}
+
+.inputOuter:has(.input:focus) {
+  background: var(--stroke-primary);
+}
+
+.inputOuter:has(.input:disabled) {
+  background: var(--stroke-faint);
+}
+
 .input {
   width: 100%;
   height: 52px;
@@ -27,9 +54,19 @@
   font-size: var(--text-body);
   color: var(--text-primary);
   background: var(--surface-primary);
-  border: var(--stroke-hairline) solid var(--stroke-secondary);
+  border: none;
   border-radius: 0;
-  transition: border-color var(--duration-fast) var(--ease-default);
+  transition: padding var(--duration-fast) var(--ease-default);
+  /* Inner clip-path to reveal border */
+  clip-path: polygon(
+    0 0.75px,
+    calc(100% - 4px + 0.75px) 0.75px,
+    calc(100% - 0.75px) 4px,
+    calc(100% - 0.75px) calc(100% - 0.75px),
+    4px calc(100% - 0.75px),
+    0.75px calc(100% - 4px + 0.75px),
+    0.75px 0.75px
+  );
 }
 
 .input::placeholder {
@@ -37,18 +74,21 @@
   font-style: normal;
 }
 
-.input:hover:not(:disabled) {
-  border-color: var(--stroke-primary);
-}
-
 .input:focus {
   outline: none;
-  border: 2px solid var(--stroke-primary);
-  padding: 0 calc(var(--space-4) - 1px);
+  /* Adjust inner clip-path for 2px border on focus */
+  clip-path: polygon(
+    0 2px,
+    calc(100% - 4px + 2px) 2px,
+    calc(100% - 2px) 4px,
+    calc(100% - 2px) calc(100% - 2px),
+    4px calc(100% - 2px),
+    2px calc(100% - 4px + 2px),
+    2px 2px
+  );
 }
 
 .input:disabled {
-  border-color: var(--stroke-faint);
   background: var(--surface-alt-1);
   color: var(--text-muted);
   cursor: not-allowed;
@@ -64,7 +104,8 @@ textarea.input {
 }
 
 textarea.input:focus {
-  padding: calc(var(--space-4) - 1px);
+  /* Keep padding consistent on focus - border handled by outer */
+  padding: var(--space-4);
 }
 
 .textareaWrapper {
@@ -82,13 +123,21 @@ textarea.input:focus {
 }
 
 /* Error State */
-.input.error {
-  border: 2px solid var(--accent-alert);
-  padding: 0 calc(var(--space-4) - 1px);
+.inputOuter:has(.input.error) {
+  background: var(--accent-alert);
 }
 
-textarea.input.error {
-  padding: calc(var(--space-4) - 1px);
+.input.error {
+  /* Adjust inner clip-path for 2px error border */
+  clip-path: polygon(
+    0 2px,
+    calc(100% - 4px + 2px) 2px,
+    calc(100% - 2px) 4px,
+    calc(100% - 2px) calc(100% - 2px),
+    4px calc(100% - 2px),
+    2px calc(100% - 4px + 2px),
+    2px 2px
+  );
 }
 
 .errorMessage {
@@ -107,13 +156,21 @@ textarea.input.error {
 }
 
 /* Success State */
-.input.success {
-  border: 2px solid var(--stroke-primary);
-  padding: 0 calc(var(--space-4) - 1px);
+.inputOuter:has(.input.success) {
+  background: var(--stroke-primary);
 }
 
-textarea.input.success {
-  padding: calc(var(--space-4) - 1px);
+.input.success {
+  /* Adjust inner clip-path for 2px success border */
+  clip-path: polygon(
+    0 2px,
+    calc(100% - 4px + 2px) 2px,
+    calc(100% - 2px) 4px,
+    calc(100% - 2px) calc(100% - 2px),
+    4px calc(100% - 2px),
+    2px calc(100% - 4px + 2px),
+    2px 2px
+  );
 }
 
 /* Focus Visible */

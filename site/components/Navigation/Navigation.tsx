@@ -70,25 +70,27 @@ export default function Navigation() {
 
       {/* Mobile Menu Panel */}
       {isMenuOpen && (
-        <nav
-          className={styles.mobileMenu}
-          role="navigation"
-          aria-label="Main navigation"
-        >
-          <ul className={styles.mobileNavList}>
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={styles.mobileNavLink}
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <div className={styles.mobileMenuOuter}>
+          <nav
+            className={styles.mobileMenu}
+            role="navigation"
+            aria-label="Main navigation"
+          >
+            <ul className={styles.mobileNavList}>
+              {navItems.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className={styles.mobileNavLink}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
       )}
     </header>
   )

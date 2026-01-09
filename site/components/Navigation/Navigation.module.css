@@ -117,16 +117,38 @@
 }
 
 /* Mobile Menu Panel */
-.mobileMenu {
+.mobileMenuOuter {
   position: fixed;
   top: 64px;
-  left: 0;
-  right: 0;
-  background: var(--surface-primary);
-  border-bottom: var(--stroke-thin) solid var(--stroke-secondary);
-  padding: var(--space-6) var(--space-5);
+  left: var(--space-5);
+  right: var(--space-5);
+  background: var(--stroke-primary);
   z-index: var(--z-overlay);
+  /* Chamfered corners: bottom-left and top-right (12px) */
+  clip-path: polygon(
+    0 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% 100%,
+    12px 100%,
+    0 calc(100% - 12px)
+  );
   animation: slideDown var(--duration-normal) var(--ease-out);
+}
+
+.mobileMenu {
+  background: var(--surface-alt-1);
+  padding: var(--space-6);
+  /* Inner clip-path to reveal 1.5px border */
+  clip-path: polygon(
+    0 1.5px,
+    calc(100% - 12px + 1.5px) 1.5px,
+    calc(100% - 1.5px) 12px,
+    calc(100% - 1.5px) calc(100% - 1.5px),
+    12px calc(100% - 1.5px),
+    1.5px calc(100% - 12px + 1.5px),
+    1.5px 1.5px
+  );
 }
 
 @keyframes slideDown {
@@ -141,7 +163,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .mobileMenu {
+  .mobileMenuOuter {
     animation: none;
   }
 }
@@ -180,6 +202,10 @@
   }
 
   .hamburger {
+    display: none;
+  }
+
+  .mobileMenuOuter {
     display: none;
   }
 

@@ -67,10 +67,17 @@ export default function Button({
     </>
   )
 
+  // Nested div structure for proper chamfered borders
+  const buttonContent = (
+    <span className={styles.inner}>
+      {content}
+    </span>
+  )
+
   if (href && !disabled) {
     return (
       <Link href={href} className={classNames}>
-        {content}
+        {buttonContent}
       </Link>
     )
   }
@@ -83,7 +90,7 @@ export default function Button({
       className={classNames}
       aria-busy={loading}
     >
-      {content}
+      {buttonContent}
     </button>
   )
 }

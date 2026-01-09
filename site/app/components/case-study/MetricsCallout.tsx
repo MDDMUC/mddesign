@@ -11,15 +11,17 @@ interface MetricsCalloutProps {
 
 export default function MetricsCallout({ metrics }: MetricsCalloutProps) {
   return (
-    <div className={styles.panel}>
-      <dl className={styles.grid}>
-        {metrics.map((metric, index) => (
-          <div key={index} className={styles.metricItem}>
-            <dt className={styles.value}>{metric.value}</dt>
-            <dd className={styles.label}>{metric.label}</dd>
-          </div>
-        ))}
-      </dl>
+    <div className={styles.panelOuter}>
+      <div className={styles.panel}>
+        <dl className={styles.grid}>
+          {metrics.map((metric, index) => (
+            <div key={index} className={styles.metricItem}>
+              <dt className={styles.value}>{metric.value}</dt>
+              <dd className={styles.label}>{metric.label}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
     </div>
   );
 }

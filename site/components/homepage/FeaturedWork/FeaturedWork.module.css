@@ -28,20 +28,42 @@
   gap: var(--space-6);
 }
 
-.card {
-  border: var(--stroke-hairline) solid var(--stroke-faint);
-  background: var(--surface-primary);
+.cardOuter {
+  background: var(--stroke-faint);
   overflow: hidden;
+  transition: all var(--duration-fast) var(--ease-default);
+  /* Chamfered corners: bottom-left and top-right (8px) */
+  clip-path: polygon(
+    0 0,
+    calc(100% - 8px) 0,
+    100% 8px,
+    100% 100%,
+    8px 100%,
+    0 calc(100% - 8px)
+  );
+}
+
+.cardOuter:hover {
+  background: var(--stroke-secondary);
+  transform: translateY(-4px);
+}
+
+.card {
+  background: var(--surface-primary);
   cursor: pointer;
   text-decoration: none;
   color: inherit;
   display: block;
-  transition: all var(--duration-fast) var(--ease-default);
-}
-
-.card:hover {
-  border-color: var(--stroke-secondary);
-  transform: translateY(-4px);
+  /* Inner clip-path to reveal 0.75px border */
+  clip-path: polygon(
+    0 0.75px,
+    calc(100% - 8px + 0.75px) 0.75px,
+    calc(100% - 0.75px) 8px,
+    calc(100% - 0.75px) calc(100% - 0.75px),
+    8px calc(100% - 0.75px),
+    0.75px calc(100% - 8px + 0.75px),
+    0.75px 0.75px
+  );
 }
 
 .card:hover .thumbnailPlaceholder {
@@ -148,7 +170,7 @@
     grid-column: span 1;
   }
 
-  .card:hover {
+  .cardOuter:hover {
     transform: none;
   }
 }

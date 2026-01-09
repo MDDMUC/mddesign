@@ -1,0 +1,281 @@
+/**
+ * Chamfered Corner System - Zion Virtual Control Aesthetic
+ *
+ * Chamfered corners: diagonal 45° cuts on BOTTOM-LEFT and TOP-RIGHT only
+ * Sharp corners: top-left and bottom-right remain sharp (90°)
+ *
+ * IMPLEMENTATION APPROACH: Nested div technique
+ * - Outer container has border color as background with clip-path
+ * - Inner content has slightly smaller clip-path to reveal border
+ * - This creates proper borders that follow the chamfered edges
+ */
+
+:root {
+  /* Chamfer sizes */
+  --chamfer-small: 4px;
+  --chamfer-medium: 8px;
+  --chamfer-large: 12px;
+  --chamfer-xlarge: 16px;
+
+  /* Border widths for chamfered elements */
+  --chamfer-border-hairline: 0.75px;
+  --chamfer-border-thin: 1px;
+  --chamfer-border-default: 1.5px;
+  --chamfer-border-medium: 2px;
+}
+
+/* ===== CHAMFERED CONTAINER (OUTER) ===== */
+/* These create the border by using background color and clip-path */
+
+/**
+ * Small Chamfer Container (4px)
+ * Use for: Form inputs, subtle elements, small buttons
+ */
+.chamfered-container-small {
+  position: relative;
+  background: var(--stroke-faint); /* Border color */
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--chamfer-small)) 0,
+    100% var(--chamfer-small),
+    100% 100%,
+    var(--chamfer-small) 100%,
+    0 calc(100% - var(--chamfer-small))
+  );
+}
+
+/**
+ * Medium Chamfer Container (8px)
+ * Use for: Standard buttons, cards, containers
+ */
+.chamfered-container-medium {
+  position: relative;
+  background: var(--stroke-faint); /* Border color */
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--chamfer-medium)) 0,
+    100% var(--chamfer-medium),
+    100% 100%,
+    var(--chamfer-medium) 100%,
+    0 calc(100% - var(--chamfer-medium))
+  );
+}
+
+/**
+ * Large Chamfer Container (12px)
+ * Use for: Callout panels, featured sections
+ */
+.chamfered-container-large {
+  position: relative;
+  background: var(--stroke-faint); /* Border color */
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--chamfer-large)) 0,
+    100% var(--chamfer-large),
+    100% 100%,
+    var(--chamfer-large) 100%,
+    0 calc(100% - var(--chamfer-large))
+  );
+}
+
+/**
+ * XLarge Chamfer Container (16px)
+ * Use for: Hero sections, major panels
+ */
+.chamfered-container-xlarge {
+  position: relative;
+  background: var(--stroke-faint); /* Border color */
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--chamfer-xlarge)) 0,
+    100% var(--chamfer-xlarge),
+    100% 100%,
+    var(--chamfer-xlarge) 100%,
+    0 calc(100% - var(--chamfer-xlarge))
+  );
+}
+
+/* ===== CHAMFERED INNER (CONTENT) ===== */
+/* These sit inside containers and reveal the border */
+
+/**
+ * Small Chamfer Inner - reveals hairline border (0.75px)
+ */
+.chamfered-inner-small-hairline {
+  width: 100%;
+  height: 100%;
+  background: var(--surface-primary);
+  clip-path: polygon(
+    0 var(--chamfer-border-hairline),
+    calc(100% - var(--chamfer-small) + var(--chamfer-border-hairline)) var(--chamfer-border-hairline),
+    calc(100% - var(--chamfer-border-hairline)) var(--chamfer-small),
+    calc(100% - var(--chamfer-border-hairline)) calc(100% - var(--chamfer-border-hairline)),
+    var(--chamfer-small) calc(100% - var(--chamfer-border-hairline)),
+    var(--chamfer-border-hairline) calc(100% - var(--chamfer-small) + var(--chamfer-border-hairline)),
+    var(--chamfer-border-hairline) var(--chamfer-border-hairline)
+  );
+}
+
+/**
+ * Small Chamfer Inner - reveals thin border (1px)
+ */
+.chamfered-inner-small-thin {
+  width: 100%;
+  height: 100%;
+  background: var(--surface-primary);
+  clip-path: polygon(
+    0 var(--chamfer-border-thin),
+    calc(100% - var(--chamfer-small) + var(--chamfer-border-thin)) var(--chamfer-border-thin),
+    calc(100% - var(--chamfer-border-thin)) var(--chamfer-small),
+    calc(100% - var(--chamfer-border-thin)) calc(100% - var(--chamfer-border-thin)),
+    var(--chamfer-small) calc(100% - var(--chamfer-border-thin)),
+    var(--chamfer-border-thin) calc(100% - var(--chamfer-small) + var(--chamfer-border-thin)),
+    var(--chamfer-border-thin) var(--chamfer-border-thin)
+  );
+}
+
+/**
+ * Medium Chamfer Inner - reveals thin border (1px)
+ */
+.chamfered-inner-medium-thin {
+  width: 100%;
+  height: 100%;
+  background: var(--surface-primary);
+  clip-path: polygon(
+    0 var(--chamfer-border-thin),
+    calc(100% - var(--chamfer-medium) + var(--chamfer-border-thin)) var(--chamfer-border-thin),
+    calc(100% - var(--chamfer-border-thin)) var(--chamfer-medium),
+    calc(100% - var(--chamfer-border-thin)) calc(100% - var(--chamfer-border-thin)),
+    var(--chamfer-medium) calc(100% - var(--chamfer-border-thin)),
+    var(--chamfer-border-thin) calc(100% - var(--chamfer-medium) + var(--chamfer-border-thin)),
+    var(--chamfer-border-thin) var(--chamfer-border-thin)
+  );
+}
+
+/**
+ * Medium Chamfer Inner - reveals default border (1.5px)
+ */
+.chamfered-inner-medium-default {
+  width: 100%;
+  height: 100%;
+  background: var(--surface-primary);
+  clip-path: polygon(
+    0 var(--chamfer-border-default),
+    calc(100% - var(--chamfer-medium) + var(--chamfer-border-default)) var(--chamfer-border-default),
+    calc(100% - var(--chamfer-border-default)) var(--chamfer-medium),
+    calc(100% - var(--chamfer-border-default)) calc(100% - var(--chamfer-border-default)),
+    var(--chamfer-medium) calc(100% - var(--chamfer-border-default)),
+    var(--chamfer-border-default) calc(100% - var(--chamfer-medium) + var(--chamfer-border-default)),
+    var(--chamfer-border-default) var(--chamfer-border-default)
+  );
+}
+
+/**
+ * Large Chamfer Inner - reveals default border (1.5px)
+ */
+.chamfered-inner-large-default {
+  width: 100%;
+  height: 100%;
+  background: var(--surface-primary);
+  clip-path: polygon(
+    0 var(--chamfer-border-default),
+    calc(100% - var(--chamfer-large) + var(--chamfer-border-default)) var(--chamfer-border-default),
+    calc(100% - var(--chamfer-border-default)) var(--chamfer-large),
+    calc(100% - var(--chamfer-border-default)) calc(100% - var(--chamfer-border-default)),
+    var(--chamfer-large) calc(100% - var(--chamfer-border-default)),
+    var(--chamfer-border-default) calc(100% - var(--chamfer-large) + var(--chamfer-border-default)),
+    var(--chamfer-border-default) var(--chamfer-border-default)
+  );
+}
+
+/**
+ * Large Chamfer Inner - reveals medium border (2px)
+ */
+.chamfered-inner-large-medium {
+  width: 100%;
+  height: 100%;
+  background: var(--surface-primary);
+  clip-path: polygon(
+    0 var(--chamfer-border-medium),
+    calc(100% - var(--chamfer-large) + var(--chamfer-border-medium)) var(--chamfer-border-medium),
+    calc(100% - var(--chamfer-border-medium)) var(--chamfer-large),
+    calc(100% - var(--chamfer-border-medium)) calc(100% - var(--chamfer-border-medium)),
+    var(--chamfer-large) calc(100% - var(--chamfer-border-medium)),
+    var(--chamfer-border-medium) calc(100% - var(--chamfer-large) + var(--chamfer-border-medium)),
+    var(--chamfer-border-medium) var(--chamfer-border-medium)
+  );
+}
+
+/* ===== LEGACY SUPPORT ===== */
+/* Keep old classes for backward compatibility but they won't have proper borders */
+
+.chamfered-small {
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--chamfer-small)) 0,
+    100% var(--chamfer-small),
+    100% 100%,
+    var(--chamfer-small) 100%,
+    0 calc(100% - var(--chamfer-small))
+  );
+}
+
+.chamfered-medium {
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--chamfer-medium)) 0,
+    100% var(--chamfer-medium),
+    100% 100%,
+    var(--chamfer-medium) 100%,
+    0 calc(100% - var(--chamfer-medium))
+  );
+}
+
+.chamfered-large {
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--chamfer-large)) 0,
+    100% var(--chamfer-large),
+    100% 100%,
+    var(--chamfer-large) 100%,
+    0 calc(100% - var(--chamfer-large))
+  );
+}
+
+.chamfered-xlarge {
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--chamfer-xlarge)) 0,
+    100% var(--chamfer-xlarge),
+    100% 100%,
+    var(--chamfer-xlarge) 100%,
+    0 calc(100% - var(--chamfer-xlarge))
+  );
+}
+
+/* ===== BORDER COLOR MODIFIERS ===== */
+
+.chamfered-border-color-faint {
+  background: var(--stroke-faint);
+}
+
+.chamfered-border-color-secondary {
+  background: var(--stroke-secondary);
+}
+
+.chamfered-border-color-primary {
+  background: var(--stroke-primary);
+}
+
+/* ===== RESPONSIVE CHAMFER ADJUSTMENTS ===== */
+
+/**
+ * Reduce chamfer sizes on mobile for smaller elements
+ */
+@media (max-width: 767px) {
+  :root {
+    --chamfer-medium: 6px;
+    --chamfer-large: 10px;
+    --chamfer-xlarge: 14px;
+  }
+}
