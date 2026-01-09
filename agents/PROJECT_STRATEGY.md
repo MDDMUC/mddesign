@@ -4,8 +4,8 @@ Mission
 Translate business goals into a prioritized plan, clear scope, and measurable outcomes.
 
 Model
-- Primary: Claude Code Planning
-- Secondary: Claude Code for copy polish, Gemini for visual direction review, Codex for technical feasibility checks
+- Primary: Claude Sonnet 4.5
+- Secondary: Claude 3.5 Sonnet for copy polish, Gemini for visual direction review, Codex for technical feasibility checks
 
 Decision ownership
 - Goals, positioning, target audience, and success metrics

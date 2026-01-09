@@ -1,0 +1,119 @@
+.section {
+  padding: var(--space-9) var(--space-8); /* 96px 64px */
+  background: var(--surface-primary);
+  border-bottom: var(--stroke-hairline) solid var(--stroke-faint);
+}
+
+.section.alt {
+  background: var(--surface-alt-1);
+}
+
+.innerContainer {
+  max-width: var(--container-md); /* 960px */
+  margin: 0 auto;
+}
+
+.header {
+  margin-bottom: var(--space-6); /* 32px */
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro); /* 11px */
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+  margin-bottom: var(--space-2); /* 8px */
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2); /* 28px */
+  font-weight: 500;
+  color: var(--text-primary);
+  position: relative;
+}
+
+.content {
+  max-width: 720px;
+}
+
+.paragraph {
+  font-family: var(--font-body);
+  font-size: var(--text-body); /* 17px */
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-5); /* 24px */
+}
+
+.paragraph:last-child {
+  margin-bottom: 0;
+}
+
+/* Insight List */
+.insightList {
+  background: var(--surface-alt-1);
+  border: var(--stroke-hairline) solid var(--stroke-faint);
+  padding: var(--space-5); /* 24px */
+  margin: var(--space-6) 0; /* 32px */
+}
+
+.section.alt .insightList {
+  background: var(--surface-primary);
+}
+
+.insightTitle {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro); /* 11px */
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-4); /* 16px */
+}
+
+.insightItems {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3); /* 12px */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.insightItem {
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm); /* 15px */
+  line-height: 1.5;
+  color: var(--text-primary);
+  padding-left: var(--space-4); /* 16px */
+  position: relative;
+}
+
+.insightItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 10px;
+  width: 8px;
+  height: 1px;
+  background: var(--stroke-secondary);
+}
+
+/* Pull Quote */
+.pullQuote {
+  font-family: var(--font-heading);
+  font-size: var(--text-h3); /* 20px */
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--text-primary);
+  padding-left: var(--space-5); /* 24px */
+  border-left: var(--stroke-thin) solid var(--stroke-secondary);
+  margin: var(--space-6) 0; /* 32px */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section {
+    padding: var(--space-8) var(--space-5); /* 64px 24px */
+  }
+}
