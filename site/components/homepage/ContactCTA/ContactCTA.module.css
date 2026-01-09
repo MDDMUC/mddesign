@@ -1,0 +1,69 @@
+.contactCTA {
+  padding: var(--space-10) var(--space-8);
+  background: var(--surface-primary);
+  border-top: var(--stroke-hairline) solid var(--stroke-faint);
+  text-align: center;
+}
+
+.container {
+  max-width: var(--container-sm);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.headline {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: 500;
+  color: var(--text-primary);
+  margin: 0 0 var(--space-4) 0;
+}
+
+.subhead {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: 1.7;
+  color: var(--text-secondary);
+  margin: 0 0 var(--space-6) 0;
+}
+
+.alternative {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--text-secondary);
+  margin: var(--space-4) 0 0 0;
+}
+
+.emailLink {
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: text-decoration var(--duration-fast) var(--ease-default);
+}
+
+.emailLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.emailLink:focus {
+  outline: 2px solid var(--stroke-primary);
+  outline-offset: 2px;
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .contactCTA {
+    padding: var(--space-9) var(--space-5);
+  }
+
+  .headline {
+    font-size: var(--text-h3);
+  }
+
+  /* Button will be full width via parent component */
+  .container > a {
+    width: 100%;
+  }
+}

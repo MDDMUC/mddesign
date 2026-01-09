@@ -1,0 +1,121 @@
+.proof {
+  padding: var(--space-9) var(--space-8);
+  background: var(--surface-alt-1);
+  border-top: var(--stroke-hairline) solid var(--stroke-faint);
+  border-bottom: var(--stroke-hairline) solid var(--stroke-faint);
+}
+
+.headline {
+  font-family: var(--font-heading);
+  font-size: var(--text-h2);
+  font-weight: 500;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: var(--space-7);
+}
+
+/* Award Badge Grid */
+.awardGrid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: var(--space-5);
+  max-width: var(--container-lg);
+  margin: 0 auto var(--space-8);
+}
+
+.awardBadge {
+  aspect-ratio: 1 / 1;
+  max-width: 120px;
+  justify-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3);
+  border: var(--stroke-hairline) solid var(--stroke-faint);
+  background: var(--surface-primary);
+  transition: all var(--duration-fast) var(--ease-default);
+}
+
+.awardBadge:hover {
+  border-color: var(--stroke-secondary);
+}
+
+.badgePlaceholder {
+  width: 80%;
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--text-secondary);
+  text-align: center;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: opacity var(--duration-fast) var(--ease-default);
+}
+
+.awardBadge:hover .badgePlaceholder {
+  opacity: 1;
+}
+
+/* Client Logo Row */
+.clientLogos {
+  display: flex;
+  gap: var(--space-7);
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: var(--container-lg);
+  margin: 0 auto;
+}
+
+.logoItem {
+  height: 32px;
+  display: flex;
+  align-items: center;
+  transition: opacity var(--duration-fast) var(--ease-default);
+}
+
+.logoItem:hover {
+  opacity: 0.8;
+}
+
+.logoPlaceholder {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  font-weight: 500;
+  color: var(--text-secondary);
+  filter: grayscale(100%);
+  opacity: 0.5;
+}
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .awardGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .proof {
+    padding: var(--space-9) var(--space-5);
+  }
+
+  .awardGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+
+  .clientLogos {
+    gap: var(--space-5);
+  }
+
+  .logoItem {
+    height: 24px;
+  }
+}
