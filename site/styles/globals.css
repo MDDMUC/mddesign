@@ -16,7 +16,10 @@ body {
   color: var(--text-primary);
   background-color: var(--surface-primary);
   overflow-x: hidden;
-  letter-spacing: var(--letter-spacing-body);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ===== FOCUS STYLES ===== */
@@ -216,6 +219,48 @@ button {
   border: none;
   padding: 0;
   cursor: pointer;
+}
+
+/* ===== CRT SCANLINE EFFECT ===== */
+
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.1),
+    rgba(0, 0, 0, 0.1) 1px,
+    transparent 1px,
+    transparent 2px
+  );
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.3;
+}
+
+/* ===== RETRO SCROLLBAR ===== */
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface-primary);
+  border-left: 1px solid var(--border-black);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-black);
+  border: 1px solid var(--surface-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
 }
 
 /* ===== RESPONSIVE UTILITIES ===== */

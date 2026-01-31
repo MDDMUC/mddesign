@@ -1,6 +1,13 @@
 import type { Metadata } from 'next'
+import { Share_Tech_Mono } from 'next/font/google'
 import Navigation from '@/components/Navigation'
 import '../styles/globals.css'
+
+const shareTechMono = Share_Tech_Mono({
+  weight: '400',
+  subsets: ['latin'],
+  variable: '--font-mono'
+})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://martindrexler.com'),
@@ -23,7 +30,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className={shareTechMono.variable}>
       <body>
         <a href="#main-content" className="skip-link">
           Skip to main content

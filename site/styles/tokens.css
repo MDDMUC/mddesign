@@ -7,54 +7,55 @@
 
 :root {
   /* ===== COLORS ===== */
+  /* Shadow Trader - Retro Amber Terminal Theme (80s Style) */
 
-  /* Background Colors */
-  --bg-black: #000000;
-  --bg-dark: #010101;
-  --bg-charcoal-1: #2f3234;
-  --bg-charcoal-2: #565654;
-  --bg-olive: #505544;
-  --bg-gray-dark: #6c6e6b;
-  --bg-gray-light: #b0b0a9;
-  --bg-tan: #bdad96;
-  --bg-cream: #f1f0ea;
-  --bg-white: #ffffff;
-  --bg-accent-green: #dff140;
+  /* Background Colors - Dark Gray Tones, Not Black */
+  --bg-black: #1a1b1d;
+  --bg-dark: #1a1b1d;
+  --bg-charcoal-1: #232426;
+  --bg-charcoal-2: #232426;
+  --bg-olive: #232426;
+  --bg-gray-dark: #3a3b3d;
+  --bg-gray-light: #5c5542;
+  --bg-tan: #9a8f6d;
+  --bg-cream: #ffb000;
+  --bg-white: #ffcc00;
+  --bg-accent-green: #88aa55;
 
   /* Surface Colors (Main backgrounds) */
-  --surface-primary: #000000;
-  --surface-secondary: #f1f0ea;
-  --surface-charcoal: #2f3234;
-  --surface-olive: #505544;
+  --surface-primary: #1a1b1d;
+  --surface-secondary: #232426;
+  --surface-charcoal: #232426;
+  --surface-olive: #232426;
 
-  /* Text Colors */
-  --text-black: #010101;
-  --text-charcoal: #2f3234;
-  --text-charcoal-2: #565654;
-  --text-olive: #505544;
-  --text-gray: #b0b0a9;
-  --text-gray-light: #d8d8d4;
-  --text-cream: #f1f0ea;
-  --text-off-white: #f5f5f5;
-  --text-white: #ffffff;
-  --text-accent-green: #dff140;
-  --text-accent-green-light: #eff8a0;
-  --text-error-red: #ff3535;
+  /* Text Colors - The "Faded Yellow" / Amber Spectrum */
+  --text-black: #5c5542;
+  --text-charcoal: #9a8f6d;
+  --text-charcoal-2: #9a8f6d;
+  --text-olive: #9a8f6d;
+  --text-gray: #9a8f6d;
+  --text-gray-light: #ffb000;
+  --text-cream: #ffb000;
+  --text-off-white: #ffcc00;
+  --text-white: #ffb000;
+  --text-accent-green: #88aa55;
+  --text-accent-green-light: #88aa55;
+  --text-error-red: #cc5555;
 
   /* Semantic Text Colors */
-  --text-primary: #ffffff;
-  --text-secondary: #010101;
-  --text-muted: #b0b0a9;
-  --text-inverted: #ffffff;
+  --text-primary: #ffb000;
+  --text-secondary: #9a8f6d;
+  --text-muted: #9a8f6d;
+  --text-inverted: #ffb000;
 
   /* Border Colors */
-  --border-black: #010101;
-  --border-white: #ffffff;
-  --border-gray: #b0b0a9;
+  --border-black: #3a3b3d;
+  --border-white: #ffb000;
+  --border-gray: #3a3b3d;
 
-  /* Accent Colors */
-  --accent-primary: #dff140;
-  --accent-error: #ff3535;
+  /* Accent Colors - Vintage/Washed Out */
+  --accent-primary: #ffb000;
+  --accent-error: #cc5555;
 
   /* RGBA Values (Opacity Variants) */
   --overlay-lightest: rgba(1, 1, 1, 0.004);
@@ -69,11 +70,11 @@
 
   /* ===== TYPOGRAPHY ===== */
 
-  /* Font Families */
-  --font-primary: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-  --font-heading: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-  --font-body: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-  --font-mono: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  /* Font Families - Share Tech Mono (Retro Terminal Aesthetic) */
+  --font-primary: 'Share Tech Mono', 'Courier New', monospace;
+  --font-heading: 'Share Tech Mono', 'Courier New', monospace;
+  --font-body: 'Share Tech Mono', 'Courier New', monospace;
+  --font-mono: 'Share Tech Mono', 'Courier New', monospace;
 
   /* Font Weights */
   --weight-hairline: 50;
@@ -152,38 +153,39 @@
   --tracking-wider: 0.08rem;
 
   /* ===== SPACING ===== */
+  /* Shadow Trader - Simple Uniform Spacing */
 
   /* Padding Values */
-  --padding-xs: 0.1rem;
-  --padding-sm: 0.5rem;
-  --padding-md: 0.8rem;
-  --padding-lg: 1rem;
-  --padding-xl: 1.428rem;
-  --padding-2xl: 2rem;
-  --padding-3xl: 3rem;
-  --padding-4xl: 4rem;
-  --padding-5xl: 5rem;
-  --padding-6xl: 7rem;
+  --padding-xs: 4px;
+  --padding-sm: 8px;
+  --padding-md: 12px;
+  --padding-lg: 16px;
+  --padding-xl: 24px;
+  --padding-2xl: 32px;
+  --padding-3xl: 48px;
+  --padding-4xl: 64px;
+  --padding-5xl: 80px;
+  --padding-6xl: 112px;
 
   /* Specific component padding */
-  --padding-button: 0.5rem 0.7rem;
-  --padding-button-large: 0.8rem 2rem;
-  --padding-section-desktop: 0 2rem;
-  --padding-section-mobile: 0 1.428rem;
+  --padding-button: 8px 16px;
+  --padding-button-large: 12px 24px;
+  --padding-section-desktop: 0 32px;
+  --padding-section-mobile: 0 16px;
 
   /* Gap Values (Grid/Flex spacing) */
-  --gap-xs: 0.1rem;
-  --gap-sm: 0.25rem;
-  --gap-md: 0.357rem;
-  --gap-base: 0.5rem;
-  --gap-lg: 0.75rem;
-  --gap-xl: 1rem;
-  --gap-2xl: 1.25rem;
-  --gap-3xl: 2rem;
-  --gap-4xl: 3rem;
-  --gap-5xl: 4rem;
-  --gap-6xl: 6rem;
-  --gap-7xl: 7rem;
+  --gap-xs: 4px;
+  --gap-sm: 8px;
+  --gap-md: 12px;
+  --gap-base: 16px;
+  --gap-lg: 16px;
+  --gap-xl: 24px;
+  --gap-2xl: 32px;
+  --gap-3xl: 48px;
+  --gap-4xl: 64px;
+  --gap-5xl: 80px;
+  --gap-6xl: 112px;
+  --gap-7xl: 112px;
 
   /* Grid gap pattern */
   --gap-grid: 1.25rem 1.125rem;
@@ -239,11 +241,11 @@
   --border-subtle: 1px solid var(--border-gray);
   --border-focus: 2px solid var(--border-black);
 
-  /* Border Radius Values - SHARP CORNERS */
-  --border-radius: 0;
+  /* Border Radius Values - BOXY/RETRO (Shadow Trader Style) */
+  --border-radius: 2px;
   --radius-none: 0;
   --radius-sm: 2px;
-  --radius-md: 5px;
+  --radius-md: 4px;
   --radius-round: 50%;
   --radius-pill: 100px;
   --radius-full: 1000px;
@@ -261,9 +263,9 @@
   --opacity-mostly-opaque: 0.8;
   --opacity-visible: 1;
 
-  /* Shadows */
-  --shadow-glow-accent: 0 0 10px #dff140, 0 0 5px #dff140;
-  --shadow-viewport: 0 0 0 1vh #000;
+  /* Shadows - Retro Amber Glow */
+  --shadow-glow-accent: 0 0 5px rgba(255, 176, 0, 0.4), 0 0 10px rgba(255, 176, 0, 0.2);
+  --shadow-viewport: 0 0 0 1vh rgba(26, 27, 29, 0.9);
 
   /* Backdrop Filters */
   --backdrop-blur: blur(0.5rem);
