@@ -1,0 +1,8 @@
+{
+  "buildCommand": "cd site && npm run build",
+  "installCommand": "cd site && npm install",
+  "outputDirectory": "site/out",
+  "projectSettings": {
+    "sourceFilesOutsideRootDirectory": true
+  }
+}
