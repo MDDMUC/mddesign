@@ -1,167 +1,29 @@
-import Link from 'next/link';
-import Image from 'next/image';
-import styles from './page.module.css';
-import { getLightBlurDataURL } from '@/lib/image-utils';
+'use client'
 
-import type { Metadata } from 'next'
+import { YStack, XStack, Separator, View, ScrollView } from 'tamagui'
+import { TerminalFrame, FrameDecoration } from '@/components/Terminal/Frame'
+import { TerminalText } from '@/components/Terminal/Text'
+import { TypewriterText } from '@/components/Terminal/Typewriter'
+import { motion } from 'framer-motion'
+import Link from 'next/link'
 
-export const metadata: Metadata = {
-  title: 'Portfolio - Selected Strategic Design Work & Case Studies',
-  description: 'Award-winning strategic design work spanning enterprise platforms, brand systems, and digital products. Case studies from CEPRES, YCA, Keller Sports, and more.',
-  keywords: ['design portfolio', 'case studies', 'enterprise design', 'brand systems', 'product design', 'design awards'],
-  openGraph: {
-    title: 'Portfolio - Selected Strategic Design Work & Case Studies',
-    description: 'Award-winning strategic design work spanning enterprise platforms, brand systems, and digital products.',
-    url: 'https://martindrexler.com/work',
-    siteName: 'Martin Drexler Design',
-    images: [{
-      url: '/images/og-work.jpg',
-      width: 1200,
-      height: 630,
-      alt: 'Martin Drexler Portfolio',
-    }],
-    locale: 'en_US',
-    type: 'website',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Portfolio - Selected Strategic Design Work & Case Studies',
-    description: 'Award-winning strategic design work spanning enterprise platforms, brand systems, and digital products.',
-    images: ['/images/og-work.jpg'],
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  alternates: {
-    canonical: 'https://martindrexler.com/work',
-  },
-};
-
-interface Project {
-  title: string;
-  href: string;
-  description: string;
-  metrics: string;
-  thumbnail: string;
-  featured?: boolean;
-}
-
-const projects: Project[] = [
-  {
-    title: 'CEPRES',
-    href: '/work/cepres',
-    description: 'The world\'s leading private market investment platform',
-    metrics: '6 Awards • $45T in Assets • 6,000+ Users',
-    thumbnail: 'https://placehold.co/800x600/EAEEF1/626262?text=CEPRES',
-    featured: true,
-  },
-  {
-    title: 'Young Champion Ambassador',
-    href: '/work/yca',
-    description: 'A global youth leadership program built from scratch',
-    metrics: '25+ Cities • Acquired by IOA • 3 Years',
-    thumbnail: 'https://placehold.co/800x600/EAEEF1/626262?text=YCA',
-    featured: true,
-  },
-  {
-    title: 'Keller Sports',
-    href: '/work/keller-sports',
-    description: 'Transformed a premium sports e-commerce platform',
-    metrics: '13 Awards • 3 Relaunches • 2 Years',
-    thumbnail: 'https://placehold.co/800x600/EAEEF1/626262?text=Keller+Sports',
-    featured: true,
-  },
-  {
-    title: 'Planetarie',
-    href: '#',
-    description: 'CBD startup positioned from founding through acquisition',
-    metrics: 'Brand Strategy • Product Design • Acquired',
-    thumbnail: 'https://placehold.co/800x600/EAEEF1/626262?text=Planetarie',
-  },
-];
-
-function ProjectCard({ project }: { project: Project }) {
-  return (
-    <Link href={project.href} className={styles.projectCard}>
-      <div className={styles.thumbnail}>
-        <Image
-          src={project.thumbnail}
-          alt={project.title}
-          width={800}
-          height={600}
-          loading="lazy"
-          placeholder="blur"
-          blurDataURL={getLightBlurDataURL()}
-        />
-      </div>
-      <div className={styles.projectContent}>
-        <h2 className={styles.projectTitle}>{project.title}</h2>
-        <p className={styles.projectDescription}>{project.description}</p>
-        <p className={styles.projectMetrics}>{project.metrics}</p>
-      </div>
-    </Link>
-  );
-}
+const portfolio = [
+  { id: 'ARC_01', title: 'CEPRES', category: 'FINTECH', year: '2024', status: 'COMPLETED', metrics: '12.4TB_DATA' },
+  { id: 'ARC_02', title: 'KELLER SPORTS', category: 'ECOMMERCE', year: '2023', status: 'ARCHIVED', metrics: '8.1M_USERS' },
+  { id: 'ARC_03', title: 'YCA', category: 'BRANDING', year: '2025', status: 'LIVE', metrics: 'GLOBAL_SYNC' },
+]
 
 export default function WorkPage() {
-  const featuredProjects = projects.filter(p => p.featured);
-  const otherProjects = projects.filter(p => !p.featured);
-
   return (
-    <main className={styles.main}>
-      <section className={styles.hero}>
-        <div className={styles.heroContent}>
-          <h1 className={styles.title}>Selected Work</h1>
-          <p className={styles.subtitle}>
-            Strategic design projects spanning enterprise platforms, brand systems, and digital products.
-            Each project represents a long-term partnership focused on measurable business outcomes.
-          </p>
-        </div>
-      </section>
-
-      <section className={styles.featuredSection}>
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>Featured Projects</h2>
-          <p className={styles.sectionDescription}>
-            In-depth case studies showcasing strategy, process, and results
-          </p>
-        </div>
-        <div className={styles.featuredGrid}>
-          {featuredProjects.map((project) => (
-            <ProjectCard key={project.href} project={project} />
-          ))}
-        </div>
-      </section>
-
-      {otherProjects.length > 0 && (
-        <section className={styles.otherSection}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Additional Work</h2>
-            <p className={styles.sectionDescription}>
-              Selected projects across various industries and engagement types
-            </p>
-          </div>
-          <div className={styles.otherGrid}>
-            {otherProjects.map((project) => (
-              <ProjectCard key={project.href} project={project} />
-            ))}
-          </div>
-        </section>
-      )}
-
-      <section className={styles.ctaSection}>
-        <div className={styles.ctaContent}>
-          <h2 className={styles.ctaTitle}>Let's talk about your project</h2>
-          <p className={styles.ctaDescription}>
-            Whether you're scaling after a funding round or transforming an established product,
-            I'd love to hear what you're working on.
-          </p>
-          <Link href="/#contact" className={styles.ctaButton}>
-            Start a Conversation
-          </Link>
-        </div>
-      </section>
-    </main>
-  );
+    <YStack flex={1} padding="$space.4" gap="$space.4"><XStack gap="$space.4" flex={1} $sm={{ flexDirection: 'column' }}><YStack width={300} gap="$space.4" $sm={{ width: '100%' }}><TerminalFrame flex={1} padding="$space.4"><FrameDecoration /><YStack gap="$space.4"><TypewriterText text="ARCHIVE_INDEX" intensity="high" fontSize="$2" delay={100} /><Separator borderColor="$stroke" /><ScrollView><YStack gap="$space.2">{portfolio.map(p => (
+                    <motion.div key={p.id} whileHover={{ x: 5 }}><XStack padding="$space.2" gap="$space.2" borderWidth={1} borderColor="transparent" hoverStyle={{ borderColor: '$accent', backgroundColor: 'rgba(255,176,0,0.05)' }}><TerminalText fontSize="$1" intensity="dim">{p.id}</TerminalText><TerminalText fontSize="$1">{p.title}</TerminalText></XStack></motion.div>
+                  ))}</YStack></ScrollView></YStack><YStack gap="$space.2" marginTop="$space.4"><Separator borderColor="$stroke" /><TerminalText fontSize="$1" intensity="dim">DB_STATUS: ONLINE</TerminalText><TerminalText fontSize="$1" intensity="dim">ENCRYPTION: AES-256</TerminalText></YStack></TerminalFrame></YStack><YStack flex={1} gap="$space.4"><TerminalFrame flex={1} padding="$space.6"><FrameDecoration /><YStack gap="$space.6"><XStack justifyContent="space-between" alignItems="center"><TypewriterText text="QUERYING_PORTFOLIO_DATABASE..." fontSize="$3" intensity="high" /><TerminalText fontSize="$1" intensity="muted">03_ENTRIES_FOUND</TerminalText></XStack><Separator borderColor="$stroke" /><YStack gap="$space.8">{portfolio.map((p, i) => (
+                    <motion.div
+                      key={p.id}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.2 }}
+                    ><Link href={`/work/${p.title.toLowerCase().replace(' ', '-')}`} style={{ textDecoration: 'none' }}><TerminalFrame interactive variant="chamfered" padding="$space.0" overflow="hidden"><XStack><View width={150} height={150} backgroundColor="rgba(255,176,0,0.1)" borderRightWidth={1} borderColor="$stroke" justifyContent="center" alignItems="center" $xs={{ display: 'none' }}><TerminalText intensity="dim" fontSize="$1">PREVIEW_NA</TerminalText></View><YStack flex={1} padding="$space.4" gap="$space.2"><XStack justifyContent="space-between"><TerminalText intensity="high" fontSize="$4">{p.title}</TerminalText><TerminalText color="$green" fontSize="$1">[{p.status}]</TerminalText></XStack><XStack gap="$space.4"><TerminalText intensity="muted" fontSize="$1">CAT: {p.category}</TerminalText><TerminalText intensity="muted" fontSize="$1">YEAR: {p.year}</TerminalText><TerminalText intensity="muted" fontSize="$1">METRIC: {p.metrics}</TerminalText></XStack><Separator borderColor="$stroke" marginTop="$space.2" /><XStack justifyContent="flex-end" marginTop="$space.2"><TerminalText fontSize="$1" glow>ACCESS_FULL_INTEL_&gt;</TerminalText></XStack></YStack></XStack></TerminalFrame></Link></motion.div>
+                  ))}</YStack></YStack></TerminalFrame></YStack></XStack></YStack>
+  )
 }

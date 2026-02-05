@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Share_Tech_Mono } from 'next/font/google'
+import { Providers } from './providers'
 import Navigation from '@/components/Navigation'
 import '../styles/globals.css'
 
@@ -12,16 +13,8 @@ const shareTechMono = Share_Tech_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://martindrexler.com'),
   title: 'Martin Drexler - Strategic Design Partner',
-  description: 'Award-winning strategic design partner for ambitious companies. I help funded startups and enterprises transform their products, brands, and teams.',
-  keywords: ['strategic design', 'product design', 'brand systems', 'design leadership', 'UX design'],
+  description: 'Award-winning strategic design partner for ambitious companies.',
   authors: [{ name: 'Martin Drexler' }],
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    title: 'Martin Drexler - Strategic Design Partner',
-    description: 'Award-winning strategic design partner for ambitious companies.',
-    siteName: 'Martin Drexler Design',
-  },
 }
 
 export default function RootLayout({
@@ -31,14 +24,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={shareTechMono.variable}>
-      <body>
-        <a href="#main-content" className="skip-link">
-          Skip to main content
-        </a>
-        <Navigation />
-        <main id="main-content">
-          {children}
-        </main>
+      <body style={{ background: '#1a1b1d', margin: 0, padding: 0, height: '100vh', overflow: 'hidden' }}>
+        <Providers><div className="scanlines" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 9999 }} /><div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}><Navigation /><main id="main-content" style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'auto' }}>{children}</main></div></Providers>
       </body>
     </html>
   )
