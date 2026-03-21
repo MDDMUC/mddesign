@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './page.module.css'
 import Image from 'next/image'
-import Button from '../../components/Button/Button'
+import Link from 'next/link'
 
 import type { Metadata } from 'next'
 
@@ -303,9 +303,9 @@ export default function AboutPage() {
           <p className={styles.ctaSubhead}>
             Let&apos;s discuss how strategic design can help your company grow.
           </p>
-          <Button variant="primary" href="/contact">
+          <Link href="/contact" className={styles.ctaButton}>
             Start a Conversation
-          </Button>
+          </Link>
         </div>
       </section>
     </div>

@@ -1,72 +1,67 @@
 /**
- * Theme Page Styles
- * Comprehensive design system documentation
+ * Theme Page - ZION VIRTUAL CONTROL
+ * Design system documentation with monochromatic aesthetic
  */
 
 /* ===== MAIN LAYOUT ===== */
 
 .main {
   min-height: 100vh;
-  background: var(--bg-cream);
-  color: var(--text-black);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  padding-top: 64px;
 }
 
 /* ===== HEADER ===== */
 
 .header {
-  background: var(--bg-black);
-  color: var(--text-white);
-  padding: var(--space-10) 0 var(--space-8);
-  border-bottom: 1px solid var(--border-gray);
+  background: var(--bg-primary);
+  padding: var(--space-9) 0;
+  border-bottom: var(--stroke-hairline) solid var(--line-primary);
 }
 
 .container {
-  max-width: var(--container-xl);
+  max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 var(--space-8);
+  padding: 0 var(--container-padding);
 }
 
 .title {
-  font-family: var(--font-heading);
-  font-size: var(--text-h1);
-  font-weight: 400;
-  letter-spacing: var(--letter-spacing-h1);
+  font-size: var(--text-display);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-tight);
   margin-bottom: var(--space-4);
 }
 
 .subtitle {
-  font-family: var(--font-body);
   font-size: var(--text-body);
-  font-weight: 400;
-  letter-spacing: var(--letter-spacing-body);
-  color: var(--text-gray);
+  font-weight: var(--weight-light);
+  color: var(--text-secondary);
   max-width: 800px;
-  line-height: var(--lh-body);
+  line-height: var(--lh-relaxed);
 }
 
 /* ===== SECTIONS ===== */
 
 .section {
-  padding: var(--space-9) 0;
-  border-bottom: 1px solid var(--border-gray);
+  padding: var(--section-padding) 0;
+  border-bottom: var(--stroke-hairline) solid var(--line-faint);
 }
 
 .sectionTitle {
-  font-family: var(--font-heading);
   font-size: var(--text-h2);
-  font-weight: 400;
-  letter-spacing: var(--letter-spacing-h2);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-tight);
   margin-bottom: var(--space-3);
-  color: var(--text-black);
 }
 
 .sectionDescription {
-  font-family: var(--font-body);
   font-size: var(--text-body);
-  color: var(--text-charcoal);
+  font-weight: var(--weight-light);
+  color: var(--text-secondary);
   margin-bottom: var(--space-8);
   max-width: 800px;
-  line-height: var(--lh-body);
+  line-height: var(--lh-relaxed);
 }
 
 /* ===== COLOR PALETTE ===== */
@@ -76,37 +71,35 @@
 }
 
 .categoryTitle {
-  font-family: var(--font-heading);
   font-size: var(--text-h3);
-  font-weight: 400;
-  letter-spacing: var(--letter-spacing-h3);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
   margin-bottom: var(--space-5);
-  color: var(--text-black);
 }
 
 .colorGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: var(--space-6);
+  gap: var(--space-5);
 }
 
 .colorCard {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--border-gray);
-  background: var(--bg-white);
-  transition: var(--transition-all);
+  border: var(--stroke-hairline) solid var(--line-primary);
+  background: var(--bg-primary);
+  transition: var(--transition-fast);
 }
 
 .colorCard:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background: var(--bg-secondary);
 }
 
 .colorSwatch {
   width: 100%;
-  height: 120px;
-  border-bottom: 1px solid var(--border-gray);
+  height: 100px;
+  border-bottom: var(--stroke-hairline) solid var(--line-faint);
 }
 
 .colorInfo {
@@ -117,42 +110,41 @@
 }
 
 .colorName {
-  font-family: var(--font-body);
-  font-size: var(--text-body);
-  font-weight: 400;
-  color: var(--text-black);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-regular);
+  color: var(--text-primary);
 }
 
 .colorHex {
   font-family: var(--font-mono);
   font-size: var(--text-caption);
-  color: var(--text-charcoal);
+  color: var(--text-muted);
   text-transform: uppercase;
 }
 
 .colorVar {
   font-family: var(--font-mono);
-  font-size: var(--text-caption);
-  color: var(--text-gray);
-  background: var(--bg-cream);
+  font-size: var(--text-micro);
+  color: var(--text-muted);
+  background: var(--bg-secondary);
   padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--border-gray);
+  border: var(--stroke-hairline) solid var(--line-faint);
   cursor: pointer;
-  transition: var(--transition-all);
+  transition: var(--transition-fast);
   text-align: left;
 }
 
 .colorVar:hover {
-  background: var(--bg-black);
-  color: var(--text-white);
-  border-color: var(--border-black);
+  background: var(--line-primary);
+  color: var(--bg-primary);
+  border-color: var(--line-primary);
 }
 
 .colorUsage {
-  font-family: var(--font-body);
   font-size: var(--text-caption);
-  color: var(--text-gray);
-  line-height: 1.4;
+  font-weight: var(--weight-light);
+  color: var(--text-muted);
+  line-height: var(--lh-relaxed);
 }
 
 /* ===== TYPOGRAPHY ===== */
@@ -160,13 +152,13 @@
 .typographyList {
   display: flex;
   flex-direction: column;
-  gap: var(--space-6);
+  gap: var(--space-5);
 }
 
 .typographyItem {
   padding: var(--space-5);
-  border: 1px solid var(--border-gray);
-  background: var(--bg-white);
+  border: var(--stroke-hairline) solid var(--line-primary);
+  background: var(--bg-primary);
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
@@ -177,28 +169,26 @@
   flex-direction: column;
   gap: var(--space-2);
   padding-bottom: var(--space-3);
-  border-bottom: 1px solid var(--border-gray);
+  border-bottom: var(--stroke-hairline) solid var(--line-faint);
 }
 
 .typographyName {
-  font-family: var(--font-body);
   font-size: var(--text-body-sm);
-  font-weight: 400;
-  color: var(--text-black);
+  font-weight: var(--weight-regular);
+  color: var(--text-primary);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--tracking-wider);
 }
 
 .typographySpecs {
   font-family: var(--font-mono);
   font-size: var(--text-caption);
-  color: var(--text-gray);
+  color: var(--text-muted);
 }
 
 .typographySample {
-  font-family: var(--font-body);
-  font-weight: 400;
-  color: var(--text-black);
+  font-weight: var(--weight-light);
+  color: var(--text-primary);
 }
 
 /* ===== SPACING ===== */
@@ -214,8 +204,8 @@
   align-items: center;
   gap: var(--space-6);
   padding: var(--space-4);
-  border: 1px solid var(--border-gray);
-  background: var(--bg-white);
+  border: var(--stroke-hairline) solid var(--line-primary);
+  background: var(--bg-primary);
 }
 
 .spacingInfo {
@@ -226,22 +216,20 @@
 }
 
 .spacingName {
-  font-family: var(--font-body);
   font-size: var(--text-body-sm);
-  font-weight: 400;
-  color: var(--text-black);
+  font-weight: var(--weight-regular);
+  color: var(--text-primary);
 }
 
 .spacingValue {
   font-family: var(--font-mono);
   font-size: var(--text-caption);
-  color: var(--text-gray);
+  color: var(--text-muted);
 }
 
 .spacingBar {
-  height: 32px;
-  background: var(--accent-primary);
-  border: 1px solid var(--border-black);
+  height: 24px;
+  background: var(--line-primary);
   min-width: 4px;
 }
 
@@ -252,29 +240,27 @@
 }
 
 .componentTitle {
-  font-family: var(--font-heading);
   font-size: var(--text-h3);
-  font-weight: 400;
-  letter-spacing: var(--letter-spacing-h3);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
   margin-bottom: var(--space-5);
-  color: var(--text-black);
 }
 
 .componentDemo {
   margin-bottom: var(--space-6);
   padding: var(--space-6);
-  border: 1px solid var(--border-gray);
-  background: var(--bg-white);
+  border: var(--stroke-hairline) solid var(--line-primary);
+  background: var(--bg-primary);
 }
 
 .demoLabel {
-  font-family: var(--font-body);
-  font-size: var(--text-body-sm);
-  font-weight: 400;
-  color: var(--text-gray);
+  font-size: var(--text-micro);
+  font-weight: var(--weight-regular);
+  color: var(--text-muted);
   margin-bottom: var(--space-4);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--tracking-widest);
 }
 
 /* Buttons */
@@ -288,21 +274,20 @@
 
 .buttonPrimary {
   padding: var(--space-3) var(--space-6);
-  background: var(--bg-black);
-  color: var(--text-white);
-  border: 1px solid var(--border-black);
-  font-family: var(--font-body);
-  font-size: var(--text-body-sm);
-  font-weight: 400;
-  letter-spacing: var(--letter-spacing-button);
+  background: var(--line-primary);
+  color: var(--bg-primary);
+  border: var(--stroke-hairline) solid var(--line-primary);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
   cursor: pointer;
-  transition: var(--transition-all);
+  transition: var(--transition-normal);
 }
 
 .buttonPrimary:hover:not(:disabled) {
-  background: var(--accent-primary);
-  color: var(--text-black);
-  border-color: var(--accent-primary);
+  background: transparent;
+  color: var(--text-primary);
 }
 
 .buttonPrimary:disabled {
@@ -313,19 +298,19 @@
 .buttonSecondary {
   padding: var(--space-3) var(--space-6);
   background: transparent;
-  color: var(--text-black);
-  border: 1px solid var(--border-black);
-  font-family: var(--font-body);
-  font-size: var(--text-body-sm);
-  font-weight: 400;
-  letter-spacing: var(--letter-spacing-button);
+  color: var(--text-primary);
+  border: var(--stroke-hairline) solid var(--line-primary);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
   cursor: pointer;
-  transition: var(--transition-all);
+  transition: var(--transition-normal);
 }
 
 .buttonSecondary:hover:not(:disabled) {
-  background: var(--bg-black);
-  color: var(--text-white);
+  background: var(--line-primary);
+  color: var(--bg-primary);
 }
 
 .buttonSecondary:disabled {
@@ -338,135 +323,129 @@
 .textInput {
   width: 100%;
   padding: var(--space-3) var(--space-4);
-  background: var(--bg-white);
-  color: var(--text-black);
-  border: 1px solid var(--border-gray);
-  font-family: var(--font-body);
-  font-size: var(--text-body);
-  font-weight: 400;
-  letter-spacing: var(--letter-spacing-body);
-  transition: var(--transition-all);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: var(--stroke-hairline) solid var(--line-tertiary);
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-light);
+  transition: var(--transition-fast);
   margin-bottom: var(--space-3);
 }
 
 .textInput:hover:not(:disabled) {
-  border-color: var(--border-black);
+  border-color: var(--line-primary);
 }
 
 .textInput:focus {
   outline: none;
-  border-color: var(--border-black);
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  border-color: var(--line-primary);
 }
 
 .textInput:disabled {
   opacity: 0.4;
   cursor: not-allowed;
-  background: var(--bg-cream);
+  background: var(--bg-secondary);
 }
 
 .textInput::placeholder {
-  color: var(--text-gray);
+  color: var(--text-muted);
 }
 
 .textarea {
   width: 100%;
   padding: var(--space-3) var(--space-4);
-  background: var(--bg-white);
-  color: var(--text-black);
-  border: 1px solid var(--border-gray);
-  font-family: var(--font-body);
-  font-size: var(--text-body);
-  font-weight: 400;
-  letter-spacing: var(--letter-spacing-body);
-  line-height: var(--lh-body);
-  transition: var(--transition-all);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border: var(--stroke-hairline) solid var(--line-tertiary);
+  font-family: var(--font-primary);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-light);
+  line-height: var(--lh-relaxed);
+  transition: var(--transition-fast);
   resize: vertical;
   margin-bottom: var(--space-3);
 }
 
 .textarea:hover:not(:disabled) {
-  border-color: var(--border-black);
+  border-color: var(--line-primary);
 }
 
 .textarea:focus {
   outline: none;
-  border-color: var(--border-black);
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  border-color: var(--line-primary);
 }
 
 .textarea::placeholder {
-  color: var(--text-gray);
+  color: var(--text-muted);
 }
 
 /* Cards */
 
 .cardExample {
   padding: var(--space-6);
-  background: var(--bg-cream);
-  border: 1px solid var(--border-gray);
+  background: var(--bg-secondary);
+  border: var(--stroke-hairline) solid var(--line-faint);
   margin-bottom: var(--space-4);
 }
 
 .cardLabel {
-  font-family: var(--font-body);
-  font-size: var(--text-caption);
-  font-weight: 400;
-  letter-spacing: 0.05em;
+  font-size: var(--text-micro);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
-  color: var(--text-gray);
+  color: var(--text-muted);
   margin-bottom: var(--space-3);
 }
 
 .cardTitle {
-  font-family: var(--font-heading);
   font-size: var(--text-h3);
-  font-weight: 400;
-  letter-spacing: var(--letter-spacing-h3);
-  color: var(--text-black);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-primary);
   margin-bottom: var(--space-3);
 }
 
 .cardDescription {
-  font-family: var(--font-body);
   font-size: var(--text-body);
-  color: var(--text-charcoal);
-  line-height: var(--lh-body);
+  font-weight: var(--weight-light);
+  color: var(--text-secondary);
+  line-height: var(--lh-relaxed);
 }
 
 /* Code Blocks */
 
 .codeBlock {
-  background: var(--bg-black);
-  color: var(--text-white);
+  background: var(--line-primary);
+  color: var(--bg-primary);
   padding: var(--space-4);
   font-family: var(--font-mono);
   font-size: var(--text-caption);
   overflow-x: auto;
-  border: 1px solid var(--border-black);
   margin-top: var(--space-4);
-  line-height: 1.6;
+  line-height: var(--lh-relaxed);
 }
 
 /* ===== TOKEN BUTTON ===== */
 
 .tokenButton {
   font-family: var(--font-mono);
-  font-size: var(--text-caption);
-  color: var(--text-gray);
-  background: var(--bg-cream);
+  font-size: var(--text-micro);
+  color: var(--text-muted);
+  background: var(--bg-secondary);
   padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--border-gray);
+  border: var(--stroke-hairline) solid var(--line-faint);
   cursor: pointer;
-  transition: var(--transition-all);
+  transition: var(--transition-fast);
   text-align: left;
   max-width: fit-content;
 }
 
 .tokenButton:hover {
-  background: var(--bg-black);
-  color: var(--text-white);
-  border-color: var(--border-black);
+  background: var(--line-primary);
+  color: var(--bg-primary);
+  border-color: var(--line-primary);
 }
 
 /* ===== DESIGN TOKENS TABLE ===== */
@@ -474,14 +453,14 @@
 .tokenTable {
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--border-gray);
-  background: var(--bg-white);
+  border: var(--stroke-hairline) solid var(--line-primary);
+  background: var(--bg-primary);
 }
 
 .tokenRow {
   display: grid;
   grid-template-columns: 150px 1fr 1fr 2fr;
-  border-bottom: 1px solid var(--border-gray);
+  border-bottom: var(--stroke-hairline) solid var(--line-faint);
 }
 
 .tokenRow:last-child {
@@ -490,14 +469,13 @@
 
 .tokenHeader {
   padding: var(--space-4);
-  font-family: var(--font-body);
-  font-size: var(--text-body-sm);
-  font-weight: 400;
+  font-size: var(--text-micro);
+  font-weight: var(--weight-regular);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background: var(--bg-black);
-  color: var(--text-white);
-  border-right: 1px solid var(--border-gray);
+  letter-spacing: var(--tracking-widest);
+  background: var(--line-primary);
+  color: var(--bg-primary);
+  border-right: var(--stroke-hairline) solid var(--bg-primary);
 }
 
 .tokenHeader:last-child {
@@ -506,10 +484,9 @@
 
 .tokenCell {
   padding: var(--space-4);
-  font-family: var(--font-body);
   font-size: var(--text-body-sm);
-  color: var(--text-black);
-  border-right: 1px solid var(--border-gray);
+  color: var(--text-primary);
+  border-right: var(--stroke-hairline) solid var(--line-faint);
   display: flex;
   align-items: center;
 }
@@ -522,12 +499,12 @@
   padding: var(--space-4);
   font-family: var(--font-mono);
   font-size: var(--text-caption);
-  color: var(--text-charcoal);
+  color: var(--text-muted);
   background: transparent;
   border: none;
-  border-right: 1px solid var(--border-gray);
+  border-right: var(--stroke-hairline) solid var(--line-faint);
   cursor: pointer;
-  transition: var(--transition-all);
+  transition: var(--transition-fast);
   text-align: left;
   width: 100%;
   display: flex;
@@ -535,8 +512,8 @@
 }
 
 .tokenCellButton:hover {
-  background: var(--bg-cream);
-  color: var(--text-black);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
 }
 
 /* ===== GRID SYSTEM ===== */
@@ -547,24 +524,23 @@
   gap: var(--space-4);
   margin-bottom: var(--space-8);
   padding: var(--space-6);
-  background: var(--bg-white);
-  border: 1px solid var(--border-gray);
+  background: var(--bg-primary);
+  border: var(--stroke-hairline) solid var(--line-primary);
 }
 
 .gridColumn {
   aspect-ratio: 1;
-  border: 1px solid var(--border-gray);
+  border: var(--stroke-hairline) solid var(--line-primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-cream);
+  background: var(--bg-secondary);
 }
 
 .gridColumnInner {
-  font-family: var(--font-body);
   font-size: var(--text-caption);
-  font-weight: 400;
-  color: var(--text-gray);
+  font-weight: var(--weight-light);
+  color: var(--text-muted);
 }
 
 .gridExamples {
@@ -580,12 +556,11 @@
 }
 
 .exampleLabel {
-  font-family: var(--font-body);
-  font-size: var(--text-body-sm);
-  font-weight: 400;
-  color: var(--text-gray);
+  font-size: var(--text-micro);
+  font-weight: var(--weight-regular);
+  color: var(--text-muted);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: var(--tracking-widest);
 }
 
 .gridDemoExample {
@@ -593,18 +568,17 @@
   grid-template-columns: repeat(12, 1fr);
   gap: var(--space-4);
   padding: var(--space-6);
-  background: var(--bg-white);
-  border: 1px solid var(--border-gray);
+  background: var(--bg-primary);
+  border: var(--stroke-hairline) solid var(--line-primary);
 }
 
 .gridCol4 {
   grid-column: span 4;
   padding: var(--space-4);
-  background: var(--accent-primary);
-  border: 1px solid var(--border-black);
-  font-family: var(--font-body);
+  background: var(--bg-secondary);
+  border: var(--stroke-hairline) solid var(--line-primary);
   font-size: var(--text-body-sm);
-  color: var(--text-black);
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -614,11 +588,10 @@
 .gridCol5 {
   grid-column: span 5;
   padding: var(--space-4);
-  background: var(--accent-primary);
-  border: 1px solid var(--border-black);
-  font-family: var(--font-body);
+  background: var(--bg-secondary);
+  border: var(--stroke-hairline) solid var(--line-primary);
   font-size: var(--text-body-sm);
-  color: var(--text-black);
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -628,11 +601,10 @@
 .gridCol6 {
   grid-column: span 6;
   padding: var(--space-4);
-  background: var(--accent-primary);
-  border: 1px solid var(--border-black);
-  font-family: var(--font-body);
+  background: var(--bg-secondary);
+  border: var(--stroke-hairline) solid var(--line-primary);
   font-size: var(--text-body-sm);
-  color: var(--text-black);
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -642,11 +614,10 @@
 .gridCol7 {
   grid-column: span 7;
   padding: var(--space-4);
-  background: var(--accent-primary);
-  border: 1px solid var(--border-black);
-  font-family: var(--font-body);
+  background: var(--bg-secondary);
+  border: var(--stroke-hairline) solid var(--line-primary);
   font-size: var(--text-body-sm);
-  color: var(--text-black);
+  color: var(--text-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -656,12 +627,20 @@
 /* ===== RESPONSIVE ===== */
 
 @media (max-width: 768px) {
+  .main {
+    padding-top: 56px;
+  }
+
   .container {
-    padding: 0 var(--space-5);
+    padding: 0 var(--container-padding-mobile);
   }
 
   .header {
-    padding: var(--space-8) 0 var(--space-6);
+    padding: var(--space-7) 0;
+  }
+
+  .title {
+    font-size: var(--text-h1);
   }
 
   .section {
@@ -680,7 +659,7 @@
   .tokenCell,
   .tokenCellButton {
     border-right: none;
-    border-bottom: 1px solid var(--border-gray);
+    border-bottom: var(--stroke-hairline) solid var(--line-faint);
   }
 
   .gridDemo {

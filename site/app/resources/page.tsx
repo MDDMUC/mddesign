@@ -1,28 +1,84 @@
-'use client'
+import Link from 'next/link'
+import type { Metadata } from 'next'
+import styles from './page.module.css'
 
-import { YStack, XStack, Separator, View } from 'tamagui'
-import { TerminalFrame, FrameDecoration } from '@/components/Terminal/Frame'
-import { TerminalText } from '@/components/Terminal/Text'
-import { TypewriterText } from '@/components/Terminal/Typewriter'
-import { motion } from 'framer-motion'
+export const metadata: Metadata = {
+  title: 'Resources',
+  description: 'Design resources, insights, and tools from Martin Drexler Design Studio.',
+}
 
 const resources = [
-  { group: 'DESIGN_SYSTEMS', items: ['ANDURIL_LATTICE_V2', 'SHADOW_TRADER_TOKENS', 'GRID_PROTOCOLS'] },
-  { group: 'RESEARCH_INTEL', items: ['USER_BEHAVIOR_REPORT_2025', 'FUTURE_OF_TERMINAL_UI', 'BLOCKCHAIN_INTERFACES'] },
-  { group: 'TOOLS_SCRIPTS', items: ['IMAGE_PROCESSOR_V1', 'GLITCH_GENERATOR', 'SYNC_UTILITY'] },
+  {
+    category: 'Design Systems',
+    items: [
+      { title: 'Design Token Framework', description: 'A comprehensive approach to design tokens' },
+      { title: 'Component Library Guide', description: 'Best practices for building scalable UI systems' },
+      { title: 'Documentation Standards', description: 'How to document design decisions effectively' },
+    ],
+  },
+  {
+    category: 'Strategy',
+    items: [
+      { title: 'Discovery Workshop Template', description: 'Framework for stakeholder alignment' },
+      { title: 'Design Sprint Guide', description: 'Rapid prototyping and validation methods' },
+      { title: 'Metrics That Matter', description: 'Measuring design impact on business outcomes' },
+    ],
+  },
+  {
+    category: 'Process',
+    items: [
+      { title: 'Design Review Checklist', description: 'Quality assurance for design deliverables' },
+      { title: 'Handoff Best Practices', description: 'Smooth transitions from design to development' },
+      { title: 'Feedback Frameworks', description: 'Structured approaches to design critique' },
+    ],
+  },
 ]
 
 export default function ResourcesPage() {
   return (
-    <YStack flex={1} padding="$space.4" gap="$space.4"><TerminalFrame flex={1} padding="$space.6"><FrameDecoration /><YStack gap="$space.6" flex={1}><XStack justifyContent="space-between" alignItems="center"><TypewriterText text="CENTRAL_INTELLIGENCE_HUB" fontSize="$4" intensity="high" /><TerminalText intensity="muted" fontSize="$1">PROTOCOL: READ_ONLY_ACCESS</TerminalText></XStack><Separator borderColor="$stroke" /><XStack gap="$space.6" flex={1} $sm={{ flexDirection: 'column' }}>{resources.map((g, i) => (
-              <YStack key={g.group} flex={1} gap="$space.4"><TypewriterText text={`[${g.group}]`} intensity="high" fontSize="$2" delay={120} /><Separator borderColor="$stroke" /><YStack gap="$space.2">{g.items.map((item, j) => (
-                    <motion.div 
-                      key={item}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.2 + j * 0.1 }}
-                    ><XStack padding="$space.3" borderWidth={1} borderColor="$stroke" backgroundColor="rgba(255,176,0,0.03)" hoverStyle={{ borderColor: '$accent', backgroundColor: 'rgba(255,176,0,0.1)' }} justifyContent="space-between" alignItems="center" cursor="pointer"><XStack gap="$space.2" alignItems="center"><View width={6} height={6} backgroundColor="$accent" /><TerminalText fontSize="$1">{item}</TerminalText></XStack><TerminalText fontSize="$1" intensity="dim">DL_0.1MB</TerminalText></XStack></motion.div>
-                  ))}</YStack></YStack>
-            ))}</XStack></YStack><YStack gap="$space.2" marginTop="$space.6"><Separator borderColor="$stroke" /><XStack justifyContent="space-between"><TerminalText fontSize="$1" intensity="dim">DREXLER_CORP_INFRASTRUCTURE</TerminalText><TerminalText fontSize="$1" intensity="dim" className="blink">READY_FOR_SYNC_&gt;</TerminalText></XStack></YStack></TerminalFrame></YStack>
+    <div className={styles.page}>
+      {/* Hero */}
+      <section className={styles.hero}>
+        <div className={styles.heroContainer}>
+          <h1 className={styles.heroTitle}>Resources</h1>
+          <p className={styles.heroSubtitle}>
+            Design resources, frameworks, and insights developed through years of strategic design work.
+          </p>
+        </div>
+      </section>
+
+      {/* Resources */}
+      <section className={styles.resources}>
+        <div className={styles.resourcesContainer}>
+          {resources.map((group) => (
+            <div key={group.category} className={styles.resourceGroup}>
+              <h2 className={styles.groupTitle}>{group.category}</h2>
+              <div className={styles.resourceList}>
+                {group.items.map((item) => (
+                  <div key={item.title} className={styles.resourceCard}>
+                    <h3 className={styles.resourceTitle}>{item.title}</h3>
+                    <p className={styles.resourceDescription}>{item.description}</p>
+                    <span className={styles.resourceStatus}>Coming Soon</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className={styles.cta}>
+        <div className={styles.ctaContainer}>
+          <h2 className={styles.ctaTitle}>Want early access?</h2>
+          <p className={styles.ctaSubtitle}>
+            Get notified when new resources are available.
+          </p>
+          <Link href="/contact" className={styles.ctaButton}>
+            Get in Touch
+          </Link>
+        </div>
+      </section>
+    </div>
   )
 }

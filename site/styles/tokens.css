@@ -1,424 +1,154 @@
 /**
  * Design Tokens - Martin Drexler Portfolio
- * Anduril Lattice Command & Control Aesthetic
+ * ZION VIRTUAL CONTROL - Matrix Reloaded Aesthetic
  *
- * Source: anduril-design-system.md
+ * Pure white environment, black hairline UI
+ * Architectural blueprint precision
+ * Monochromatic - NO color
  */
 
 :root {
-  /* ===== COLORS ===== */
-  /* Shadow Trader - Retro Amber Terminal Theme (80s Style) */
+  /* ===== COLORS - MONOCHROMATIC ONLY ===== */
 
-  /* Background Colors - Dark Gray Tones, Not Black */
-  --bg-black: #1a1b1d;
-  --bg-dark: #1a1b1d;
-  --bg-charcoal-1: #232426;
-  --bg-charcoal-2: #232426;
-  --bg-olive: #232426;
-  --bg-gray-dark: #3a3b3d;
-  --bg-gray-light: #5c5542;
-  --bg-tan: #9a8f6d;
-  --bg-cream: #ffb000;
-  --bg-white: #ffcc00;
-  --bg-accent-green: #88aa55;
+  /* Backgrounds - Pure White */
+  --bg-primary: #ffffff;
+  --bg-secondary: #fafafa;
+  --bg-tertiary: #f5f5f5;
 
-  /* Surface Colors (Main backgrounds) */
-  --surface-primary: #1a1b1d;
-  --surface-secondary: #232426;
-  --surface-charcoal: #232426;
-  --surface-olive: #232426;
+  /* Lines & Strokes - Pure Black */
+  --line-primary: #000000;
+  --line-secondary: #333333;
+  --line-tertiary: #666666;
+  --line-faint: #e0e0e0;
 
-  /* Text Colors - The "Faded Yellow" / Amber Spectrum */
-  --text-black: #5c5542;
-  --text-charcoal: #9a8f6d;
-  --text-charcoal-2: #9a8f6d;
-  --text-olive: #9a8f6d;
-  --text-gray: #9a8f6d;
-  --text-gray-light: #ffb000;
-  --text-cream: #ffb000;
-  --text-off-white: #ffcc00;
-  --text-white: #ffb000;
-  --text-accent-green: #88aa55;
-  --text-accent-green-light: #88aa55;
-  --text-error-red: #cc5555;
+  /* Text */
+  --text-primary: #000000;
+  --text-secondary: #333333;
+  --text-tertiary: #666666;
+  --text-muted: #999999;
 
-  /* Semantic Text Colors */
-  --text-primary: #ffb000;
-  --text-secondary: #9a8f6d;
-  --text-muted: #9a8f6d;
-  --text-inverted: #ffb000;
+  /* Semantic */
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--line-primary);
 
-  /* Border Colors */
-  --border-black: #3a3b3d;
-  --border-white: #ffb000;
-  --border-gray: #3a3b3d;
+  /* ===== STROKE WEIGHTS ===== */
 
-  /* Accent Colors - Vintage/Washed Out */
-  --accent-primary: #ffb000;
-  --accent-error: #cc5555;
-
-  /* RGBA Values (Opacity Variants) */
-  --overlay-lightest: rgba(1, 1, 1, 0.004);
-  --overlay-lighter: rgba(1, 1, 1, 0.01);
-  --overlay-light: rgba(1, 1, 1, 0.1);
-  --overlay-medium: rgba(1, 1, 1, 0.25);
-  --overlay-dark: rgba(1, 1, 1, 0.5);
-  --overlay-darker: rgba(1, 1, 1, 0.6);
-  --overlay-darkest: rgba(1, 1, 1, 0.945);
-  --overlay-black-medium: rgba(0, 0, 0, 0.4);
-  --overlay-black-dark: rgba(0, 0, 0, 0.7);
+  --stroke-hairline: 1px;
+  --stroke-thin: 1.5px;
+  --stroke-medium: 2px;
+  --stroke-thick: 3px;
 
   /* ===== TYPOGRAPHY ===== */
 
-  /* Font Families - Share Tech Mono (Retro Terminal Aesthetic) */
-  --font-primary: 'Share Tech Mono', 'Courier New', monospace;
-  --font-heading: 'Share Tech Mono', 'Courier New', monospace;
-  --font-body: 'Share Tech Mono', 'Courier New', monospace;
-  --font-mono: 'Share Tech Mono', 'Courier New', monospace;
+  /* Font Families - Clean, Technical */
+  --font-primary: 'Helvetica Neue', 'Helvetica', 'Arial', system-ui, sans-serif;
+  --font-mono: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
 
   /* Font Weights */
-  --weight-hairline: 50;
-  --weight-thin: 100;
-  --weight-extra-light: 200;
   --weight-light: 300;
   --weight-regular: 400;
   --weight-medium: 500;
-  --weight-bold: 700;
-  --weight-extra-bold: 800;
-  --weight-black: 900;
-  --weight-extra-black: 950;
 
-  /* Font Sizes (Base: 14px) */
-  --font-h1: 5rem;           /* 70px at 14px base */
-  --font-h2: 4rem;           /* 56px */
-  --font-h3: 3.5rem;         /* 49px */
-  --font-h4: 2.5rem;         /* 35px */
-  --font-h5: 2rem;           /* 28px */
-  --font-h6: 1.5rem;         /* 21px */
-  --font-h7: 1.25rem;        /* 17.5px */
-  --font-body: 1.05rem;      /* 14.7px */
-  --font-button: 0.875rem;   /* 12.25px */
-  --font-small: 0.938rem;    /* 13.13px */
-  --font-caption: 0.75rem;   /* 10.5px */
-
-  /* Type Scale - Semantic Names */
-  --text-display: 5rem;
-  --text-h1: 4rem;
-  --text-h2: 3.5rem;
-  --text-h3: 2.5rem;
-  --text-body: 1.05rem;
-  --text-body-sm: 0.938rem;
-  --text-caption: 0.75rem;
-  --text-micro: 0.75rem;
-  --text-mono: 0.875rem;
+  /* Font Sizes - Restrained Scale */
+  --text-display: 4rem;      /* 64px */
+  --text-h1: 3rem;           /* 48px */
+  --text-h2: 2.25rem;        /* 36px */
+  --text-h3: 1.5rem;         /* 24px */
+  --text-h4: 1.25rem;        /* 20px */
+  --text-body: 1rem;         /* 16px */
+  --text-body-sm: 0.875rem;  /* 14px */
+  --text-caption: 0.75rem;   /* 12px */
+  --text-micro: 0.625rem;    /* 10px */
 
   /* Line Heights */
-  --line-height-h1: 105%;
-  --line-height-h2: 105%;
-  --line-height-h3: 110%;
-  --line-height-h4: 115%;
-  --line-height-h5: 115%;
-  --line-height-h6: 115%;
-  --line-height-h7: 115%;
-  --line-height-body: 120%;
-  --line-height-button: 105%;
-
-  /* Semantic Line Heights */
-  --lh-display: 1.05;
-  --lh-h1: 1.05;
-  --lh-h2: 1.1;
-  --lh-h3: 1.15;
-  --lh-body: 1.2;
-  --lh-body-sm: 1.2;
-  --lh-caption: 1.2;
-  --lh-micro: 1.2;
-  --lh-mono: 1.2;
+  --lh-tight: 1.1;
+  --lh-heading: 1.2;
+  --lh-body: 1.6;
+  --lh-relaxed: 1.8;
 
   /* Letter Spacing */
-  --letter-spacing-h1: -0.1rem;
-  --letter-spacing-h2: -0.08rem;
-  --letter-spacing-h3: -0.07rem;
-  --letter-spacing-h4: -0.05rem;
-  --letter-spacing-h5: -0.02rem;
-  --letter-spacing-h6: -0.015rem;
-  --letter-spacing-h7: -0.013rem;
-  --letter-spacing-body: -0.009rem;
-  --letter-spacing-button: -0.009rem;
-  --letter-spacing-uppercase: 0.03rem;
-
-  /* Semantic Tracking */
-  --tracking-tight: -0.1rem;
-  --tracking-normal: -0.009rem;
-  --tracking-wide: 0.03rem;
-  --tracking-wider: 0.08rem;
+  --tracking-tight: -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.05em;
+  --tracking-wider: 0.1em;
+  --tracking-widest: 0.2em;
 
   /* ===== SPACING ===== */
-  /* Shadow Trader - Simple Uniform Spacing */
 
-  /* Padding Values */
-  --padding-xs: 4px;
-  --padding-sm: 8px;
-  --padding-md: 12px;
-  --padding-lg: 16px;
-  --padding-xl: 24px;
-  --padding-2xl: 32px;
-  --padding-3xl: 48px;
-  --padding-4xl: 64px;
-  --padding-5xl: 80px;
-  --padding-6xl: 112px;
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.5rem;    /* 24px */
+  --space-6: 2rem;      /* 32px */
+  --space-7: 3rem;      /* 48px */
+  --space-8: 4rem;      /* 64px */
+  --space-9: 6rem;      /* 96px */
+  --space-10: 8rem;     /* 128px */
+  --space-11: 12rem;    /* 192px */
+  --space-12: 16rem;    /* 256px */
 
-  /* Specific component padding */
-  --padding-button: 8px 16px;
-  --padding-button-large: 12px 24px;
-  --padding-section-desktop: 0 32px;
-  --padding-section-mobile: 0 16px;
+  /* Section Spacing */
+  --section-padding: var(--space-10);
 
-  /* Gap Values (Grid/Flex spacing) */
-  --gap-xs: 4px;
-  --gap-sm: 8px;
-  --gap-md: 12px;
-  --gap-base: 16px;
-  --gap-lg: 16px;
-  --gap-xl: 24px;
-  --gap-2xl: 32px;
-  --gap-3xl: 48px;
-  --gap-4xl: 64px;
-  --gap-5xl: 80px;
-  --gap-6xl: 112px;
-  --gap-7xl: 112px;
+  /* Container */
+  --container-padding: 3rem;
+  --container-padding-mobile: 1.5rem;
+  --container-max: 1200px;
 
-  /* Grid gap pattern */
-  --gap-grid: 1.25rem 1.125rem;
-  --gap-grid-mobile: 0.357rem;
+  /* ===== GRID ===== */
 
-  /* Base Unit Spacing (for consistency) */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.5rem;
-  --space-6: 2rem;
-  --space-7: 3rem;
-  --space-8: 4rem;
-  --space-9: 6rem;
-  --space-10: 8rem;
-
-  /* Margin Values */
-  --margin-section: 3rem 0;
-  --margin-top-sm: 1rem;
-  --margin-top-md: 2rem;
-  --margin-top-lg: 4rem;
-  --margin-top-xl: 7rem;
-  --margin-bottom-sm: 1rem;
-  --margin-bottom-md: 2rem;
-  --margin-bottom-lg: 4rem;
-
-  /* ===== LAYOUT ===== */
-
-  /* Container Widths */
-  --container-full: calc(100% - 4rem);
-  --container-full-mobile: calc(100% - 2.856rem);
-  --container-narrow: 1400px;
-  --container-sm: 640px;
-  --container-md: 960px;
-  --container-lg: 1200px;
-  --container-xl: 1440px;
-
-  /* Grid System */
-  --grid-columns: repeat(12, 1fr);
-  --grid-gap: 1.25rem 1.125rem;
-  --grid-gap-mobile: 0.357rem;
-
-  /* ===== BORDERS & CORNERS ===== */
-
-  /* Border Widths */
-  --border-thin: 1px;
-  --border-medium: 2px;
-  --border-thick: 4px;
-
-  /* Border Styles */
-  --border-default: 1px solid var(--border-black);
-  --border-subtle: 1px solid var(--border-gray);
-  --border-focus: 2px solid var(--border-black);
-
-  /* Border Radius Values - BOXY/RETRO (Shadow Trader Style) */
-  --border-radius: 2px;
-  --radius-none: 0;
-  --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-round: 50%;
-  --radius-pill: 100px;
-  --radius-full: 1000px;
-
-  /* ===== EFFECTS ===== */
-
-  /* Opacity Values */
-  --opacity-hidden: 0;
-  --opacity-faint: 0.2;
-  --opacity-light: 0.3;
-  --opacity-lighter: 0.4;
-  --opacity-medium: 0.5;
-  --opacity-semitransparent: 0.6;
-  --opacity-translucent: 0.7;
-  --opacity-mostly-opaque: 0.8;
-  --opacity-visible: 1;
-
-  /* Shadows - Retro Amber Glow */
-  --shadow-glow-accent: 0 0 5px rgba(255, 176, 0, 0.4), 0 0 10px rgba(255, 176, 0, 0.2);
-  --shadow-viewport: 0 0 0 1vh rgba(26, 27, 29, 0.9);
-
-  /* Backdrop Filters */
-  --backdrop-blur: blur(0.5rem);
+  --grid-columns: 12;
+  --grid-gap: 1.5rem;
 
   /* ===== TRANSITIONS ===== */
 
-  /* Duration */
-  --duration-instant: 0ms;
+  --duration-instant: 100ms;
   --duration-fast: 200ms;
   --duration-normal: 300ms;
   --duration-slow: 500ms;
-  --duration-draw: 600ms;
 
-  /* Easing Functions */
-  --ease-default: ease-out;
-  --ease-in: ease-in;
-  --ease-out: ease-out;
-  --ease-snap: cubic-bezier(0.2, 0, 0, 1);
-  --ease-smooth: cubic-bezier(0.215, 0.62, 0.34, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
-  /* Standard transitions */
-  --transition-fast: 0.2s ease-in-out;
-  --transition-normal: 0.3s ease-out;
-  --transition-slow: 0.5s;
+  --transition-fast: all var(--duration-fast) var(--ease-out);
+  --transition-normal: all var(--duration-normal) var(--ease-out);
 
-  /* Specific transition patterns */
-  --transition-opacity: opacity 0.3s ease-out;
-  --transition-color: color 0.3s ease-out;
-  --transition-background: background 0.3s ease-in-out;
-  --transition-transform: transform 0.3s ease-out;
-  --transition-all: all 0.3s ease-out;
-
-  /* Complex transitions */
-  --transition-button: background-color 0.5s, border-color 0.5s;
-  --transition-border: border 0.3s ease-out, background-color 0.3s ease-out, color 0.3s ease-out;
-
-  /* Common Transitions */
-  --transition-hover: all 0.3s ease-out;
-  --transition-draw: stroke-dashoffset 0.6s ease-out;
-  --transition-fade: opacity 0.3s ease-out;
-  --transition-slide: transform 0.5s ease-out;
-
-  /* ===== Z-INDEX SCALE ===== */
+  /* ===== Z-INDEX ===== */
 
   --z-base: 0;
-  --z-content: 1;
-  --z-overlay: 2;
   --z-elevated: 10;
   --z-sticky: 100;
-  --z-dropdown: 100;
-  --z-modal: 101;
-  --z-header: 1000;
-  --z-toast: 400;
+  --z-overlay: 200;
+  --z-modal: 300;
 
   /* ===== INTERACTIVE STATES ===== */
 
-  --fill-hover: #626262;
-  --fill-active: #4A4A4A;
-  --fill-focus: #626262;
-
-  /* ===== TRANSFORMS ===== */
-
-  --transform-center: translate(-50%, -50%);
-  --transform-rotate-45: rotate(45deg);
-  --transform-rotate-neg-45: rotate(-45deg);
+  --opacity-muted: 0.5;
+  --opacity-hover: 1;
 }
 
-/* ===== RESPONSIVE FONT SIZING SYSTEM ===== */
-
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 400px) {
-  html {
-    font-size: 14px;
-  }
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 14px;
-  }
-
-  :root {
-    /* Mobile font sizes */
-    --font-h1-mobile: 2.714rem;
-    --font-h2-mobile: 2.571rem;
-    --font-h3-mobile: 2.429rem;
-    --font-h4-mobile: 2.286rem;
-    --font-h5-mobile: 1.929rem;
-    --font-h6-mobile: 1.714rem;
-    --font-h7-mobile: 1.429rem;
-    --font-body-mobile: 1.286rem;
-    --font-button-mobile: 1.071rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  html {
-    font-size: calc(1.25vw - 2px);
-  }
-}
-
-@media (min-width: 1440px) {
-  html {
-    font-size: calc(0.416667vw + 10px);
-  }
-}
-
-@media (min-width: 1920px) {
-  html {
-    font-size: calc(1.25vw - 6px);
-  }
-}
-
-@media (min-width: 2400px) {
-  html {
-    font-size: 24px;
-  }
-}
-
-/* ===== BREAKPOINTS ===== */
-
-/* Mobile: < 768px (default) */
-/* Tablet: 768px - 1280px */
-/* Desktop: > 1280px */
-/* Large: > 1920px */
-/* XLarge: > 2400px */
+/* ===== RESPONSIVE TYPOGRAPHY ===== */
 
 @media (max-width: 768px) {
   :root {
-    --container-padding: 1.428rem;
-    --grid-gap: 0.357rem;
-    --padding-section-desktop: 0 1.428rem;
+    --text-display: 2.5rem;
+    --text-h1: 2rem;
+    --text-h2: 1.5rem;
+    --text-h3: 1.25rem;
+    --text-h4: 1.125rem;
+    --section-padding: var(--space-8);
+    --container-padding: var(--container-padding-mobile);
   }
 }
 
-/* ===== REDUCED MOTION SUPPORT ===== */
+/* ===== REDUCED MOTION ===== */
 
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --duration-fast: 0.01ms;
-    --duration-normal: 0.01ms;
-    --duration-slow: 0.01ms;
-    --duration-draw: 0.01ms;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+    --duration-instant: 0ms;
+    --duration-fast: 0ms;
+    --duration-normal: 0ms;
+    --duration-slow: 0ms;
   }
 }

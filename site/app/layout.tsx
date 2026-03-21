@@ -1,20 +1,33 @@
 import type { Metadata } from 'next'
-import { Share_Tech_Mono } from 'next/font/google'
-import { Providers } from './providers'
-import Navigation from '@/components/Navigation'
+import Navigation from '@/components/Navigation/Navigation'
+import Footer from '@/components/Footer/Footer'
 import '../styles/globals.css'
-
-const shareTechMono = Share_Tech_Mono({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-mono'
-})
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://martindrexler.com'),
-  title: 'Martin Drexler - Strategic Design Partner',
-  description: 'Award-winning strategic design partner for ambitious companies.',
+  title: {
+    default: 'Martin Drexler - Strategic Design Partner',
+    template: '%s | Martin Drexler'
+  },
+  description: 'Award-winning strategic design partner for ambitious companies. 15+ years leading design for startups and enterprises across Europe and the US.',
   authors: [{ name: 'Martin Drexler' }],
+  openGraph: {
+    type: 'website',
+    locale: 'en_US',
+    url: 'https://martindrexler.com',
+    siteName: 'Martin Drexler Design',
+    title: 'Martin Drexler - Strategic Design Partner',
+    description: 'Award-winning strategic design partner for ambitious companies.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Martin Drexler - Strategic Design Partner',
+    description: 'Award-winning strategic design partner for ambitious companies.',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 }
 
 export default function RootLayout({
@@ -23,9 +36,16 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={shareTechMono.variable}>
-      <body style={{ background: '#1a1b1d', margin: 0, padding: 0, height: '100vh', overflow: 'hidden' }}>
-        <Providers><div className="scanlines" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 9999 }} /><div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}><Navigation /><main id="main-content" style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'auto' }}>{children}</main></div></Providers>
+    <html lang="en">
+      <body>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
+        <Navigation />
+        <main id="main-content">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   )

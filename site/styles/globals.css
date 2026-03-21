@@ -1,120 +1,298 @@
+/**
+ * Global Styles - Martin Drexler Portfolio
+ * ZION VIRTUAL CONTROL - Matrix Reloaded Aesthetic
+ *
+ * Pure white, black hairlines, architectural precision
+ */
+
 @import './tokens.css';
 
-/* ===== RESET & BASE ===== */
-* {
+/* ===== RESET ===== */
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-  background-color: #1a1b1d;
-  color: #ffb000;
-  font-family: var(--font-mono), monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
+  font-family: var(--font-primary);
+  font-size: var(--text-body);
+  font-weight: var(--weight-light);
+  line-height: var(--lh-body);
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
   min-height: 100vh;
+}
+
+/* ===== TYPOGRAPHY ===== */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  font-weight: var(--weight-light);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tracking-tight);
+  color: var(--text-primary);
+}
+
+h1 { font-size: var(--text-h1); }
+h2 { font-size: var(--text-h2); }
+h3 { font-size: var(--text-h3); }
+h4 { font-size: var(--text-h4); }
+
+p {
+  margin-bottom: var(--space-4);
+  color: var(--text-secondary);
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+a {
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: var(--transition-fast);
+}
+
+/* ===== LAYOUT ===== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-padding);
+}
+
+.section {
+  padding: var(--section-padding) 0;
+  border-bottom: var(--stroke-hairline) solid var(--line-faint);
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+/* ===== HAIRLINE UI ELEMENTS ===== */
+
+/* Outlined Button - Primary Interaction */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-primary);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--text-primary);
+  background: transparent;
+  border: var(--stroke-hairline) solid var(--line-primary);
+  cursor: pointer;
+  transition: var(--transition-normal);
+}
+
+.btn:hover {
+  background: var(--line-primary);
+  color: var(--bg-primary);
+}
+
+/* Text Link */
+.link {
   position: relative;
-  /* Digital Grid Background */
-  background-image: 
-    linear-gradient(rgba(255, 176, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 176, 0, 0.03) 1px, transparent 1px);
+  color: var(--text-primary);
+  opacity: var(--opacity-muted);
+  transition: var(--transition-fast);
+}
+
+.link:hover {
+  opacity: var(--opacity-hover);
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: var(--stroke-hairline);
+  background: var(--line-primary);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--duration-normal) var(--ease-out);
+}
+
+.link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ===== GEOMETRIC DECORATIONS ===== */
+
+/* Corner Brackets */
+.corner-brackets {
+  position: relative;
+}
+
+.corner-brackets::before,
+.corner-brackets::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: var(--stroke-hairline) solid var(--line-primary);
+}
+
+.corner-brackets::before {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+}
+
+.corner-brackets::after {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+}
+
+/* Crosshair */
+.crosshair {
+  position: relative;
+}
+
+.crosshair::before,
+.crosshair::after {
+  content: '';
+  position: absolute;
+  background: var(--line-primary);
+}
+
+.crosshair::before {
+  width: var(--stroke-hairline);
+  height: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.crosshair::after {
+  width: 20px;
+  height: var(--stroke-hairline);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Grid Lines Background */
+.grid-bg {
+  background-image:
+    linear-gradient(var(--line-faint) var(--stroke-hairline), transparent var(--stroke-hairline)),
+    linear-gradient(90deg, var(--line-faint) var(--stroke-hairline), transparent var(--stroke-hairline));
   background-size: 40px 40px;
 }
 
-/* ===== CRT SCANLINE EFFECT ===== */
-.scanlines {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: repeating-linear-gradient(
-    0deg,
-    rgba(0, 0, 0, 0.08),
-    rgba(0, 0, 0, 0.08) 1px,
-    transparent 1px,
-    transparent 2px
-  );
-  pointer-events: none;
-  z-index: 9999;
-  opacity: 0.5;
-  animation: flicker 0.15s infinite;
+/* ===== FOCUS STATES ===== */
+
+:focus-visible {
+  outline: var(--stroke-medium) solid var(--line-primary);
+  outline-offset: 2px;
 }
 
-@keyframes flicker {
-  0% { opacity: 0.45; }
-  50% { opacity: 0.55; }
-  100% { opacity: 0.45; }
+/* ===== SELECTION ===== */
+
+::selection {
+  background: var(--line-primary);
+  color: var(--bg-primary);
 }
 
-/* ===== GLOW EFFECTS ===== */
-.glow-text {
-  text-shadow: 0 0 5px rgba(255, 176, 0, 0.7), 0 0 10px rgba(255, 176, 0, 0.4);
-}
+/* ===== SCROLLBAR ===== */
 
-.glow-border {
-  box-shadow: 0 0 5px rgba(255, 176, 0, 0.3);
-  border: 1px solid #ffb000;
-}
-
-/* ===== GLASS EFFECT ===== */
-.glass-effect {
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
-
-/* ===== CHAMFERED BORDER ===== */
-.chamfer {
-  clip-path: polygon(
-    15px 0%, 100% 0%, 
-    100% calc(100% - 15px), 
-    calc(100% - 15px) 100%, 
-    0% 100%, 0% 15%
-  );
-}
-
-/* ===== ANIMATIONS ===== */
-.glitch-text {
-  animation: glitch 3s infinite;
-}
-
-@keyframes glitch {
-  0% { transform: translate(0); }
-  2% { transform: translate(-2px, 2px); color: #ffcc00; }
-  4% { transform: translate(2px, -2px); color: #88aa55; }
-  6% { transform: translate(0); }
-  100% { transform: translate(0); }
-}
-
-.blink {
-  animation: blink 1s step-end infinite;
-}
-
-@keyframes blink {
-  50% { opacity: 0; }
-}
-
-/* ===== RETRO SCROLLBAR ===== */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #1a1b1d;
+  background: var(--bg-primary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #3a3b3d;
-  border-radius: 0;
+  background: var(--line-tertiary);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #ffb000;
+  background: var(--line-primary);
+}
+
+/* ===== UTILITY ===== */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: var(--space-4);
+  z-index: var(--z-modal);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-primary);
+  border: var(--stroke-hairline) solid var(--line-primary);
+  color: var(--text-primary);
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+/* ===== ANIMATIONS ===== */
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drawLine {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+
+.animate-fade-in {
+  animation: fadeIn var(--duration-normal) var(--ease-out) forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp var(--duration-slow) var(--ease-out) forwards;
 }

@@ -1,29 +1,144 @@
-'use client'
-
-import { YStack, XStack, Separator, View, ScrollView } from 'tamagui'
-import { TerminalFrame, FrameDecoration } from '@/components/Terminal/Frame'
-import { TerminalText } from '@/components/Terminal/Text'
-import { TypewriterText } from '@/components/Terminal/Typewriter'
-import { motion } from 'framer-motion'
 import Link from 'next/link'
+import type { Metadata } from 'next'
+import styles from './page.module.css'
 
-const portfolio = [
-  { id: 'ARC_01', title: 'CEPRES', category: 'FINTECH', year: '2024', status: 'COMPLETED', metrics: '12.4TB_DATA' },
-  { id: 'ARC_02', title: 'KELLER SPORTS', category: 'ECOMMERCE', year: '2023', status: 'ARCHIVED', metrics: '8.1M_USERS' },
-  { id: 'ARC_03', title: 'YCA', category: 'BRANDING', year: '2025', status: 'LIVE', metrics: 'GLOBAL_SYNC' },
+export const metadata: Metadata = {
+  title: 'Work',
+  description: 'Selected projects showcasing strategic design work for startups and enterprises. Award-winning work for CEPRES, Keller Sports, YCA, and more.',
+}
+
+const featuredProjects = [
+  {
+    id: 'cepres',
+    title: 'CEPRES',
+    category: 'FinTech Platform',
+    description: 'Complete redesign of the leading private equity analytics platform serving 1,200+ institutional investors globally.',
+    metrics: '6 International Design Awards',
+    href: '/work/cepres',
+    featured: true,
+  },
+  {
+    id: 'keller-sports',
+    title: 'Keller Sports',
+    category: 'E-Commerce',
+    description: 'Led design transformation across 3 full relaunches for Europe\'s leading premium sports retailer.',
+    metrics: 'German Brand Award Gold',
+    href: '/work/keller-sports',
+    featured: true,
+  },
+  {
+    id: 'yca',
+    title: 'Young Champion Ambassador',
+    category: 'Brand & Digital',
+    description: 'Built global youth leadership program from scratch. Brand identity, digital platform, and event design.',
+    metrics: 'Acquired by IOA · 25+ Cities',
+    href: '/work/yca',
+    featured: true,
+  },
+]
+
+const otherProjects = [
+  {
+    id: 'planetarie',
+    title: 'Planetarie',
+    category: 'SaaS Platform',
+    description: 'Product design for AI-powered sustainability platform.',
+    metrics: 'Acquired 2023',
+  },
+  {
+    id: 'ghostsignal',
+    title: 'GHOSTSignal',
+    category: 'Defense Tech',
+    description: 'Co-founder · Design leadership for next-gen defense systems.',
+    metrics: 'In Development',
+  },
+  {
+    id: 'haimish',
+    title: 'Haimish Studio',
+    category: 'Agency',
+    description: 'Partner · Strategic design for ambitious companies.',
+    metrics: 'Ongoing',
+  },
+  {
+    id: 'nasa',
+    title: 'NASA JPL',
+    category: 'Research Interface',
+    description: 'Data visualization and interface design for mission systems.',
+    metrics: 'Confidential',
+  },
 ]
 
 export default function WorkPage() {
   return (
-    <YStack flex={1} padding="$space.4" gap="$space.4"><XStack gap="$space.4" flex={1} $sm={{ flexDirection: 'column' }}><YStack width={300} gap="$space.4" $sm={{ width: '100%' }}><TerminalFrame flex={1} padding="$space.4"><FrameDecoration /><YStack gap="$space.4"><TypewriterText text="ARCHIVE_INDEX" intensity="high" fontSize="$2" delay={100} /><Separator borderColor="$stroke" /><ScrollView><YStack gap="$space.2">{portfolio.map(p => (
-                    <motion.div key={p.id} whileHover={{ x: 5 }}><XStack padding="$space.2" gap="$space.2" borderWidth={1} borderColor="transparent" hoverStyle={{ borderColor: '$accent', backgroundColor: 'rgba(255,176,0,0.05)' }}><TerminalText fontSize="$1" intensity="dim">{p.id}</TerminalText><TerminalText fontSize="$1">{p.title}</TerminalText></XStack></motion.div>
-                  ))}</YStack></ScrollView></YStack><YStack gap="$space.2" marginTop="$space.4"><Separator borderColor="$stroke" /><TerminalText fontSize="$1" intensity="dim">DB_STATUS: ONLINE</TerminalText><TerminalText fontSize="$1" intensity="dim">ENCRYPTION: AES-256</TerminalText></YStack></TerminalFrame></YStack><YStack flex={1} gap="$space.4"><TerminalFrame flex={1} padding="$space.6"><FrameDecoration /><YStack gap="$space.6"><XStack justifyContent="space-between" alignItems="center"><TypewriterText text="QUERYING_PORTFOLIO_DATABASE..." fontSize="$3" intensity="high" /><TerminalText fontSize="$1" intensity="muted">03_ENTRIES_FOUND</TerminalText></XStack><Separator borderColor="$stroke" /><YStack gap="$space.8">{portfolio.map((p, i) => (
-                    <motion.div
-                      key={p.id}
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.2 }}
-                    ><Link href={`/work/${p.title.toLowerCase().replace(' ', '-')}`} style={{ textDecoration: 'none' }}><TerminalFrame interactive variant="chamfered" padding="$space.0" overflow="hidden"><XStack><View width={150} height={150} backgroundColor="rgba(255,176,0,0.1)" borderRightWidth={1} borderColor="$stroke" justifyContent="center" alignItems="center" $xs={{ display: 'none' }}><TerminalText intensity="dim" fontSize="$1">PREVIEW_NA</TerminalText></View><YStack flex={1} padding="$space.4" gap="$space.2"><XStack justifyContent="space-between"><TerminalText intensity="high" fontSize="$4">{p.title}</TerminalText><TerminalText color="$green" fontSize="$1">[{p.status}]</TerminalText></XStack><XStack gap="$space.4"><TerminalText intensity="muted" fontSize="$1">CAT: {p.category}</TerminalText><TerminalText intensity="muted" fontSize="$1">YEAR: {p.year}</TerminalText><TerminalText intensity="muted" fontSize="$1">METRIC: {p.metrics}</TerminalText></XStack><Separator borderColor="$stroke" marginTop="$space.2" /><XStack justifyContent="flex-end" marginTop="$space.2"><TerminalText fontSize="$1" glow>ACCESS_FULL_INTEL_&gt;</TerminalText></XStack></YStack></XStack></TerminalFrame></Link></motion.div>
-                  ))}</YStack></YStack></TerminalFrame></YStack></XStack></YStack>
+    <div className={styles.page}>
+      {/* Hero */}
+      <section className={styles.hero}>
+        <div className={styles.heroContainer}>
+          <h1 className={styles.heroTitle}>Selected Work</h1>
+          <p className={styles.heroSubtitle}>
+            A collection of strategic design projects for startups and enterprises.
+            Each project represents a partnership focused on driving measurable business outcomes.
+          </p>
+        </div>
+      </section>
+
+      {/* Featured Projects */}
+      <section className={styles.featured}>
+        <div className={styles.sectionContainer}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionLabel}>Featured Projects</span>
+          </div>
+          <div className={styles.projectList}>
+            {featuredProjects.map((project, index) => (
+              <Link key={project.id} href={project.href} className={styles.projectCard}>
+                <div className={styles.projectImage}>
+                  <div className={styles.projectImagePlaceholder}>
+                    <span>{project.title}</span>
+                  </div>
+                </div>
+                <div className={styles.projectContent}>
+                  <span className={styles.projectCategory}>{project.category}</span>
+                  <h2 className={styles.projectTitle}>{project.title}</h2>
+                  <p className={styles.projectDescription}>{project.description}</p>
+                  <span className={styles.projectMetrics}>{project.metrics}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Other Projects */}
+      <section className={styles.other}>
+        <div className={styles.sectionContainer}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionLabel}>Other Projects</span>
+          </div>
+          <div className={styles.otherGrid}>
+            {otherProjects.map((project) => (
+              <div key={project.id} className={styles.otherCard}>
+                <span className={styles.projectCategory}>{project.category}</span>
+                <h3 className={styles.otherTitle}>{project.title}</h3>
+                <p className={styles.otherDescription}>{project.description}</p>
+                <span className={styles.projectMetrics}>{project.metrics}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className={styles.cta}>
+        <div className={styles.ctaContainer}>
+          <h2 className={styles.ctaTitle}>Have a project in mind?</h2>
+          <p className={styles.ctaSubtitle}>
+            Let&apos;s discuss how strategic design can help your company achieve its goals.
+          </p>
+          <Link href="/contact" className={styles.ctaButton}>
+            Start a Conversation
+          </Link>
+        </div>
+      </section>
+    </div>
   )
 }

@@ -1,51 +1,157 @@
-'use client'
-
-import { YStack, XStack, Separator, View } from 'tamagui'
-import { TerminalFrame, FrameDecoration } from '@/components/Terminal/Frame'
-import { TerminalText } from '@/components/Terminal/Text'
-import { TypewriterText } from '@/components/Terminal/Typewriter'
-import { motion, AnimatePresence } from 'framer-motion'
-import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import styles from './page.module.css'
 
 const projects = [
-  { id: 'PROJECT_01', title: 'CEPRES', status: 'DECRYPTED', type: 'FinTech Interface' },
-  { id: 'PROJECT_02', title: 'KELLER', status: 'STABLE', type: 'E-Commerce Engine' },
-  { id: 'PROJECT_03', title: 'YCA_SITE', status: 'ACTIVE', type: 'Brand Experience' },
+  {
+    id: '01',
+    title: 'CEPRES',
+    category: 'FinTech Platform',
+    year: '2023',
+    href: '/work/cepres',
+  },
+  {
+    id: '02',
+    title: 'Keller Sports',
+    category: 'E-Commerce',
+    year: '2022',
+    href: '/work/keller-sports',
+  },
+  {
+    id: '03',
+    title: 'YCA',
+    category: 'Brand & Digital',
+    year: '2021',
+    href: '/work/yca',
+  },
+]
+
+const capabilities = [
+  { id: '01', label: 'Strategy' },
+  { id: '02', label: 'Product' },
+  { id: '03', label: 'Brand' },
+  { id: '04', label: 'Systems' },
 ]
 
 export default function Home() {
-  const [booting, setBooting] = useState(true)
-  const [coords, setCoords] = useState({ x: 40.7128, y: 74.0060 })
-
-  useEffect(() => {
-    const timer = setTimeout(() => setBooting(false), 2000)
-    const interval = setInterval(() => {
-      setCoords({
-        x: 40.7128 + (Math.random() - 0.5) * 0.01,
-        y: 74.0060 + (Math.random() - 0.5) * 0.01
-      })
-    }, 100)
-    return () => { clearTimeout(timer); clearInterval(interval); }
-  }, [])
-
   return (
-    <YStack flex={1} backgroundColor="$bg" position="relative" overflow="hidden"><AnimatePresence>{booting && (
-          <motion.div
-            key="boot"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            style={{
-              position: 'fixed', inset: 0, backgroundColor: '#1a1b1d', zIndex: 10000,
-              display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 10
-            }}
-          ><TypewriterText intensity="high" className="blink" text="INITIALIZING_BOOT_SEQUENCE..." /><TerminalText intensity="muted" fontSize="$1">KERNEL_LOADING_0xFF721</TerminalText><View width={200} height={2} backgroundColor="$stroke"><motion.div 
-                initial={{ width: 0 }} 
-                animate={{ width: '100%' }} 
-                transition={{ duration: 1.5 }}
-                style={{ height: '100%', backgroundColor: '#ffb000' }} 
-              /></View></motion.div>
-        )}</AnimatePresence><XStack flex={1} padding="$space.4" gap="$space.4"><YStack width={200} gap="$space.4" $md={{ display: 'none' }}><TerminalFrame flex={1} padding="$space.3"><FrameDecoration /><YStack gap="$space.2"><TerminalText fontSize="$1" intensity="dim">COORD_TRACKER</TerminalText><Separator borderColor="$stroke" /><TerminalText fontSize="$1" intensity="high">LAT: {coords.x.toFixed(4)}</TerminalText><TerminalText fontSize="$1" intensity="high">LON: {coords.y.toFixed(4)}</TerminalText></YStack><YStack flex={1} justifyContent="flex-end"><TerminalText fontSize="$1" intensity="dim">SIGNAL: ESTABLISHED</TerminalText></YStack></TerminalFrame><TerminalFrame height={150} padding="$space.3"><FrameDecoration /><TerminalText fontSize="$1" intensity="dim">MEM_USAGE</TerminalText><View flex={1} justifyContent="center" alignItems="center"><TerminalText fontSize="$6" glow>94%</TerminalText></View></TerminalFrame></YStack><YStack flex={1} gap="$space.4"><TerminalFrame padding="$space.8" glow><FrameDecoration /><YStack gap="$space.2" alignItems="center"><TypewriterText intensity="muted" fontSize="$1" letterSpacing={10} text="STRATEGIC DESIGN PARTNER" delay={100} /><TypewriterText fontSize="$9" fontWeight="700" glow style={{ fontSize: 'min(8vw, 80px)' }} text="MARTIN DREXLER" delay={80} /><XStack gap="$space.4" alignItems="center"><Separator width={50} borderColor="$accent" /><TerminalText intensity="high" className="glitch-text">IDENTITY_001_AUTHORIZED</TerminalText><Separator width={50} borderColor="$accent" /></XStack></YStack></TerminalFrame><XStack gap="$space.4" flexWrap="wrap">{projects.map((p, i) => (
-              <TerminalFrame key={p.id} flex={1} minWidth={280} interactive padding="$space.0" overflow="hidden" variant="chamfered"><motion.div whileHover={{ scale: 1.02 }} style={{ padding: 24, height: '100%' }}><YStack gap="$space.4"><XStack justifyContent="space-between" alignItems="center"><TerminalText intensity="dim" fontSize="$1">{p.id}</TerminalText><TerminalText color="$green" fontSize="$1">[{p.status}]</TerminalText></XStack><Separator borderColor="$stroke" /><YStack><TerminalText fontSize="$5" glow>{p.title}</TerminalText><TerminalText intensity="muted" fontSize="$2">{p.type}</TerminalText></YStack><View height={100} backgroundColor="rgba(255,176,0,0.05)" borderWidth={1} borderStyle="dashed" borderColor="$stroke" justifyContent="center" alignItems="center"><TerminalText intensity="dim" fontSize="$1">ENCRYPTED_PREVIEW_DATA</TerminalText></View><XStack justifyContent="space-between" alignItems="center"><TerminalText fontSize="$1" intensity="muted">REV_2026.01</TerminalText><View paddingHorizontal="$space.2" paddingVertical="$space.1" backgroundColor="$accent"><TerminalText color="#000" fontSize="$1" fontWeight="700">OPEN_FILE</TerminalText></View></XStack></YStack></motion.div></TerminalFrame>
-            ))}</XStack></YStack><YStack width={60} gap="$space.4" alignItems="center" $sm={{ display: 'none' }}><View flex={1} width={1} backgroundColor="$stroke" /><TerminalText style={{ writingMode: 'vertical-rl' }} intensity="dim" fontSize="$1">ACCESS_LOG_2026</TerminalText><View flex={1} width={1} backgroundColor="$stroke" /></YStack></XStack><XStack position="absolute" bottom={10} left={20} gap="$space.4"><TerminalText fontSize="$1" intensity="dim">©2026_DREXLER_CORE</TerminalText><TerminalText fontSize="$1" intensity="dim">SECURE_CONNECTION</TerminalText></XStack></YStack>
+    <div className={styles.page}>
+      {/* Hero Section */}
+      <section className={styles.hero}>
+        <div className={styles.heroContainer}>
+          {/* Geometric Frame */}
+          <div className={styles.heroFrame}>
+            <div className={styles.cornerTL} />
+            <div className={styles.cornerTR} />
+            <div className={styles.cornerBL} />
+            <div className={styles.cornerBR} />
+
+            <div className={styles.heroContent}>
+              <span className={styles.heroLabel}>Strategic Design</span>
+              <h1 className={styles.heroTitle}>
+                Design that drives<br />
+                business growth
+              </h1>
+              <p className={styles.heroSubtitle}>
+                I partner with ambitious companies to transform
+                their products, brands, and teams through strategic design.
+              </p>
+
+              <div className={styles.heroCta}>
+                <Link href="/work" className={styles.ctaButton}>
+                  View Work
+                </Link>
+                <Link href="/contact" className={styles.ctaLink}>
+                  Start a Project
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* Status Bar */}
+          <div className={styles.statusBar}>
+            <span className={styles.statusItem}>Munich, Germany</span>
+            <span className={styles.statusDivider} />
+            <span className={styles.statusItem}>Available for Projects</span>
+            <span className={styles.statusDivider} />
+            <span className={styles.statusItem}>15+ Years Experience</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section className={styles.projects}>
+        <div className={styles.sectionContainer}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionIndex}>01</span>
+            <h2 className={styles.sectionTitle}>Selected Work</h2>
+          </div>
+
+          <div className={styles.projectList}>
+            {projects.map((project) => (
+              <Link key={project.id} href={project.href} className={styles.projectRow}>
+                <span className={styles.projectIndex}>{project.id}</span>
+                <span className={styles.projectTitle}>{project.title}</span>
+                <span className={styles.projectCategory}>{project.category}</span>
+                <span className={styles.projectYear}>{project.year}</span>
+                <span className={styles.projectArrow}>→</span>
+              </Link>
+            ))}
+          </div>
+
+          <div className={styles.sectionFooter}>
+            <Link href="/work" className={styles.viewAllLink}>
+              View All Projects
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Capabilities Section */}
+      <section className={styles.capabilities}>
+        <div className={styles.sectionContainer}>
+          <div className={styles.sectionHeader}>
+            <span className={styles.sectionIndex}>02</span>
+            <h2 className={styles.sectionTitle}>Capabilities</h2>
+          </div>
+
+          <div className={styles.capabilitiesGrid}>
+            {capabilities.map((cap) => (
+              <div key={cap.id} className={styles.capabilityCard}>
+                <span className={styles.capabilityIndex}>{cap.id}</span>
+                <span className={styles.capabilityLabel}>{cap.label}</span>
+              </div>
+            ))}
+          </div>
+
+          <p className={styles.capabilitiesText}>
+            I help companies transform their products, brands, and teams
+            through strategic design. My approach combines business strategy
+            with exceptional craft to deliver measurable outcomes.
+          </p>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className={styles.contact}>
+        <div className={styles.contactContainer}>
+          <div className={styles.contactFrame}>
+            <div className={styles.cornerTL} />
+            <div className={styles.cornerTR} />
+            <div className={styles.cornerBL} />
+            <div className={styles.cornerBR} />
+
+            <div className={styles.contactContent}>
+              <span className={styles.contactLabel}>03</span>
+              <h2 className={styles.contactTitle}>
+                Ready to work together?
+              </h2>
+              <Link href="/contact" className={styles.ctaButton}>
+                Start a Conversation
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   )
 }
