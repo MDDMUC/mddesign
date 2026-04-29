@@ -18,11 +18,13 @@ All commands run from the `site/` directory:
 
 ```bash
 cd site
-npm run dev      # Start development server (port 3000)
-npm run build    # Production build (static export)
-npm run lint     # ESLint (note: `next lint` is broken in Next 16; run eslint directly if needed)
-npm run start    # Serve production build
+npm run dev        # Start development server (port 3000)
+npm run build      # Production build (static export → site/out/)
+npm run typecheck  # tsc --noEmit (TypeScript only; no ESLint — see note below)
+npm run start      # Serve production build
 ```
+
+ESLint was removed because the Next 16 / ESLint 9 / `eslint-config-next` interplay is broken (FlatCompat circular-config error) and not worth fighting on a 60-line codebase. `tsc` and `next build` between them catch what matters.
 
 ## Tech Stack
 

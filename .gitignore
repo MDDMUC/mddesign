@@ -12,7 +12,7 @@ Thumbs.db
 node_modules/
 dist/
 build/
-.out/
+out/
 .next/
 .cache/
 coverage/
