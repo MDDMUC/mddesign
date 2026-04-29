@@ -1,310 +1,135 @@
 /**
- * Typography System - Martin Drexler Portfolio
- * Anduril Lattice Command & Control Aesthetic
- *
- * Font: Helvetica Neue (closest to HelveticaNowDisplay)
+ * Typography — Martin Drexler Portfolio
+ * Display & body: Fraunces (warm contemporary serif)
+ * UI:             Inter (neutral sans)
+ * Hand marks:     Caveat (handwritten, accents only)
  */
-
-/* ===== TYPE SCALE CLASSES ===== */
-/* Shadow Trader - Share Tech Mono Retro Terminal Aesthetic */
-
-.text-display {
-  font-family: var(--font-heading);
-  font-size: 3.5rem;
-  line-height: 105%;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--text-primary);
-  text-shadow: 0 0 5px rgba(255, 176, 0, 0.3);
-}
-
-.text-h1 {
-  font-family: var(--font-heading);
-  font-size: 3rem;
-  line-height: 105%;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--text-primary);
-  text-shadow: 0 0 5px rgba(255, 176, 0, 0.2);
-}
-
-.text-h2 {
-  font-family: var(--font-heading);
-  font-size: 2.5rem;
-  line-height: 110%;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--text-primary);
-  text-shadow: 0 0 5px rgba(255, 176, 0, 0.2);
-}
-
-.text-h3 {
-  font-family: var(--font-heading);
-  font-size: 1.75rem;
-  line-height: 115%;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--text-primary);
-}
-
-.text-body {
-  font-family: var(--font-body);
-  font-size: 0.875rem;
-  line-height: 120%;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  color: var(--text-primary);
-}
-
-.text-body-sm {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  line-height: 120%;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-}
-
-.text-caption {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  line-height: 120%;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.text-micro {
-  font-family: var(--font-body);
-  font-size: 0.65rem;
-  line-height: 120%;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.text-mono {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  line-height: 120%;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  color: var(--text-primary);
-}
 
 /* ===== SEMANTIC HTML DEFAULTS ===== */
 
-h1 {
-  font-family: var(--font-heading);
-  font-size: 3rem;
-  line-height: 105%;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--text-primary);
-  text-shadow: 0 0 5px rgba(255, 176, 0, 0.2);
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-regular);
+  line-height: var(--lh-heading);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink);
   margin: 0;
 }
 
-h2 {
-  font-family: var(--font-heading);
-  font-size: 2.5rem;
-  line-height: 110%;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--text-primary);
-  text-shadow: 0 0 5px rgba(255, 176, 0, 0.2);
-  margin: 0;
-}
-
-h3 {
-  font-family: var(--font-heading);
-  font-size: 1.75rem;
-  line-height: 115%;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--text-primary);
-  margin: 0;
-}
-
-h4 {
-  font-family: var(--font-heading);
-  font-size: 1.5rem;
-  line-height: 115%;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--text-primary);
-  margin: 0;
-}
-
-h5 {
-  font-family: var(--font-heading);
-  font-size: 1rem;
-  line-height: 115%;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  color: var(--text-primary);
-  margin: 0;
-}
-
+h1 { font-size: var(--text-h1); line-height: var(--lh-tight); }
+h2 { font-size: var(--text-h2); }
+h3 { font-size: var(--text-h3); }
+h4 { font-size: var(--text-h4); }
+h5 { font-size: var(--text-body); font-weight: var(--weight-medium); }
 h6 {
-  font-family: var(--font-heading);
-  font-size: 0.875rem;
-  line-height: 115%;
-  font-weight: 400;
-  letter-spacing: 0.05em;
+  font-family: var(--font-ui);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
   text-transform: uppercase;
-  color: var(--text-primary);
-  margin: 0;
+  color: var(--ink-mute);
 }
 
 p {
   font-family: var(--font-body);
-  font-size: 0.875rem;
-  line-height: 120%;
-  font-weight: 400;
-  letter-spacing: 0.05em;
-  color: var(--text-primary);
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  color: var(--ink-soft);
   margin: 0;
+}
+
+p + p {
+  margin-top: var(--space-4);
+}
+
+/* ===== TYPE SCALE CLASSES ===== */
+
+.text-display {
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  line-height: var(--lh-tight);
+  font-weight: var(--weight-regular);
+  letter-spacing: var(--tracking-tight);
+  color: var(--ink);
+}
+
+.text-h1 { font: var(--weight-regular) var(--text-h1)/var(--lh-tight) var(--font-display); letter-spacing: var(--tracking-tight); color: var(--ink); }
+.text-h2 { font: var(--weight-regular) var(--text-h2)/var(--lh-heading) var(--font-display); letter-spacing: var(--tracking-tight); color: var(--ink); }
+.text-h3 { font: var(--weight-regular) var(--text-h3)/var(--lh-heading) var(--font-display); color: var(--ink); }
+
+.text-body {
+  font-family: var(--font-body);
+  font-size: var(--text-body);
+  line-height: var(--lh-body);
+  color: var(--ink-soft);
+}
+
+.text-body-sm {
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  line-height: var(--lh-body);
+  color: var(--ink-soft);
+}
+
+.text-caption {
+  font-family: var(--font-ui);
+  font-size: var(--text-caption);
+  line-height: 1.4;
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.text-micro {
+  font-family: var(--font-ui);
+  font-size: var(--text-micro);
+  line-height: 1.4;
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--ink-mute);
+}
+
+.text-mono {
+  font-family: var(--font-mono);
+  font-size: var(--text-body-sm);
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.text-hand {
+  font-family: var(--font-hand);
+  font-size: 1.5em;
+  line-height: 1;
+  font-weight: var(--weight-regular);
+  color: var(--accent);
 }
 
 /* ===== UTILITY CLASSES ===== */
 
-.uppercase {
-  text-transform: uppercase;
-}
+.uppercase { text-transform: uppercase; letter-spacing: var(--tracking-wider); }
+.capitalize { text-transform: capitalize; }
 
-.capitalize {
-  text-transform: capitalize;
-}
+.color-primary { color: var(--ink); }
+.color-secondary { color: var(--ink-soft); }
+.color-muted { color: var(--ink-mute); }
+.color-inverted { color: var(--paper); }
+.color-accent { color: var(--accent); }
+.color-white { color: var(--paper); }
+.color-black { color: var(--ink); }
+.color-cream { color: var(--paper-deep); }
 
-.color-primary {
-  color: var(--text-primary);
-}
+.font-light { font-weight: var(--weight-light); }
+.font-regular { font-weight: var(--weight-regular); }
+.font-medium { font-weight: var(--weight-medium); }
+.font-bold { font-weight: var(--weight-semibold); }
 
-.color-secondary {
-  color: var(--text-secondary);
-}
-
-.color-muted {
-  color: var(--text-muted);
-}
-
-.color-inverted {
-  color: var(--text-inverted);
-}
-
-.color-accent {
-  color: var(--accent-primary);
-}
-
-.color-white {
-  color: var(--text-white);
-}
-
-.color-black {
-  color: var(--text-black);
-}
-
-.color-cream {
-  color: var(--text-cream);
-}
-
-/* Font Weight Utilities */
-.font-light {
-  font-weight: 300;
-}
-
-.font-regular {
-  font-weight: 400;
-}
-
-.font-medium {
-  font-weight: 500;
-}
-
-.font-bold {
-  font-weight: 700;
-}
-
-/* Micro Label Pattern (technical labels) */
 .micro-label {
-  font-family: var(--font-body);
-  font-size: 0.75rem;
-  font-weight: 400;
-  letter-spacing: 0.03rem;
+  font-family: var(--font-ui);
+  font-size: var(--text-micro);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-widest);
   text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-/* ===== RESPONSIVE TYPOGRAPHY ===== */
-
-/* Mobile adjustments */
-@media (max-width: 768px) {
-  .text-display {
-    font-size: 2.714rem;
-  }
-
-  .text-h1,
-  h1 {
-    font-size: 2.714rem;
-  }
-
-  .text-h2,
-  h2 {
-    font-size: 2.571rem;
-  }
-
-  .text-h3,
-  h3 {
-    font-size: 2.429rem;
-  }
-
-  h4 {
-    font-size: 2.286rem;
-  }
-
-  h5 {
-    font-size: 1.929rem;
-  }
-
-  h6 {
-    font-size: 1.714rem;
-  }
-
-  .text-body,
-  p {
-    font-size: 1.286rem;
-  }
-
-  .text-body-sm {
-    font-size: 1.143rem;
-  }
-}
-
-/* Tablet adjustments */
-@media (min-width: 769px) and (max-width: 1279px) {
-  .text-display {
-    font-size: 3.5rem;
-  }
-
-  .text-h1,
-  h1 {
-    font-size: 3rem;
-  }
-
-  .text-h2,
-  h2 {
-    font-size: 2.5rem;
-  }
+  color: var(--ink-mute);
 }

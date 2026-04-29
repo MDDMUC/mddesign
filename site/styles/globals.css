@@ -1,11 +1,10 @@
 /**
- * Global Styles - Martin Drexler Portfolio
- * ZION VIRTUAL CONTROL - Matrix Reloaded Aesthetic
- *
- * Pure white, black hairlines, architectural precision
+ * Global Styles — Martin Drexler Portfolio
+ * Direction: minimalist + hand-drawn (paper background, ink text, terracotta accent)
  */
 
 @import './tokens.css';
+@import './typography.css';
 
 /* ===== RESET ===== */
 
@@ -22,44 +21,26 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  background-color: var(--paper);
 }
 
 body {
-  font-family: var(--font-primary);
+  font-family: var(--font-body);
   font-size: var(--text-body);
-  font-weight: var(--weight-light);
+  font-weight: var(--weight-regular);
   line-height: var(--lh-body);
-  color: var(--text-primary);
-  background-color: var(--bg-primary);
+  color: var(--ink);
+  background-color: var(--paper);
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(200, 85, 61, 0.025), transparent 40%),
+    radial-gradient(circle at 80% 90%, rgba(26, 26, 26, 0.02), transparent 40%);
   min-height: 100vh;
 }
 
-/* ===== TYPOGRAPHY ===== */
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-primary);
-  font-weight: var(--weight-light);
-  line-height: var(--lh-heading);
-  letter-spacing: var(--tracking-tight);
-  color: var(--text-primary);
-}
-
-h1 { font-size: var(--text-h1); }
-h2 { font-size: var(--text-h2); }
-h3 { font-size: var(--text-h3); }
-h4 { font-size: var(--text-h4); }
-
-p {
-  margin-bottom: var(--space-4);
-  color: var(--text-secondary);
-}
-
-p:last-child {
-  margin-bottom: 0;
-}
+/* ===== LINKS ===== */
 
 a {
-  color: var(--text-primary);
+  color: inherit;
   text-decoration: none;
   transition: var(--transition-fast);
 }
@@ -75,166 +56,109 @@ a {
 
 .section {
   padding: var(--section-padding) 0;
-  border-bottom: var(--stroke-hairline) solid var(--line-faint);
 }
 
-.section:last-child {
-  border-bottom: none;
+.section + .section {
+  border-top: var(--stroke-hair) solid var(--ink-faint);
 }
 
-/* ===== HAIRLINE UI ELEMENTS ===== */
+/* ===== BUTTON FALLBACK (component <Button> overrides) ===== */
 
-/* Outlined Button - Primary Interaction */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
   padding: var(--space-3) var(--space-5);
-  font-family: var(--font-primary);
-  font-size: var(--text-caption);
-  font-weight: var(--weight-regular);
+  font-family: var(--font-ui);
+  font-size: var(--text-body-sm);
+  font-weight: var(--weight-medium);
   letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  color: var(--text-primary);
+  color: var(--ink);
   background: transparent;
-  border: var(--stroke-hairline) solid var(--line-primary);
+  border: var(--stroke-pencil) solid var(--ink);
   cursor: pointer;
   transition: var(--transition-normal);
 }
 
 .btn:hover {
-  background: var(--line-primary);
-  color: var(--bg-primary);
+  background: var(--ink);
+  color: var(--paper);
 }
 
-/* Text Link */
+/* ===== TEXT LINK — hand-drawn underline on hover ===== */
+
 .link {
   position: relative;
-  color: var(--text-primary);
-  opacity: var(--opacity-muted);
-  transition: var(--transition-fast);
+  color: var(--ink);
+  border-bottom: var(--stroke-hair) solid var(--ink-faint);
+  padding-bottom: 1px;
+  transition: border-color var(--duration-fast) var(--ease-out);
 }
 
 .link:hover {
-  opacity: var(--opacity-hover);
+  border-bottom-color: var(--accent);
 }
 
-.link::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: var(--stroke-hairline);
-  background: var(--line-primary);
-  transform: scaleX(0);
-  transform-origin: right;
-  transition: transform var(--duration-normal) var(--ease-out);
+/* ===== HAND-MARK UTILITIES ===== */
+
+.hand {
+  font-family: var(--font-hand);
+  color: var(--accent);
+  font-weight: var(--weight-regular);
 }
 
-.link:hover::after {
-  transform: scaleX(1);
-  transform-origin: left;
-}
-
-/* ===== GEOMETRIC DECORATIONS ===== */
-
-/* Corner Brackets */
-.corner-brackets {
+.hand-underline {
   position: relative;
+  display: inline-block;
 }
 
-.corner-brackets::before,
-.corner-brackets::after {
+.hand-underline::after {
   content: '';
   position: absolute;
-  width: 20px;
-  height: 20px;
-  border: var(--stroke-hairline) solid var(--line-primary);
-}
-
-.corner-brackets::before {
-  top: 0;
-  left: 0;
-  border-right: none;
-  border-bottom: none;
-}
-
-.corner-brackets::after {
-  bottom: 0;
-  right: 0;
-  border-left: none;
-  border-top: none;
-}
-
-/* Crosshair */
-.crosshair {
-  position: relative;
-}
-
-.crosshair::before,
-.crosshair::after {
-  content: '';
-  position: absolute;
-  background: var(--line-primary);
-}
-
-.crosshair::before {
-  width: var(--stroke-hairline);
-  height: 20px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.crosshair::after {
-  width: 20px;
-  height: var(--stroke-hairline);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-/* Grid Lines Background */
-.grid-bg {
-  background-image:
-    linear-gradient(var(--line-faint) var(--stroke-hairline), transparent var(--stroke-hairline)),
-    linear-gradient(90deg, var(--line-faint) var(--stroke-hairline), transparent var(--stroke-hairline));
-  background-size: 40px 40px;
+  left: -2%;
+  right: -2%;
+  bottom: -0.15em;
+  height: 0.32em;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 12' preserveAspectRatio='none'><path d='M2 8 Q 50 2, 100 6 T 198 5' fill='none' stroke='%23c8553d' stroke-width='2.2' stroke-linecap='round'/></svg>");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  pointer-events: none;
 }
 
 /* ===== FOCUS STATES ===== */
 
 :focus-visible {
-  outline: var(--stroke-medium) solid var(--line-primary);
-  outline-offset: 2px;
+  outline: var(--stroke-ink) solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 /* ===== SELECTION ===== */
 
 ::selection {
-  background: var(--line-primary);
-  color: var(--bg-primary);
+  background: var(--accent-soft);
+  color: var(--ink);
 }
 
 /* ===== SCROLLBAR ===== */
 
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-primary);
+  background: var(--paper);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--line-tertiary);
+  background: var(--ink-faint);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--line-primary);
+  background: var(--ink-mute);
 }
 
 /* ===== UTILITY ===== */
@@ -257,9 +181,10 @@ a {
   left: var(--space-4);
   z-index: var(--z-modal);
   padding: var(--space-3) var(--space-4);
-  background: var(--bg-primary);
-  border: var(--stroke-hairline) solid var(--line-primary);
-  color: var(--text-primary);
+  background: var(--paper);
+  border: var(--stroke-pencil) solid var(--ink);
+  color: var(--ink);
+  font-family: var(--font-ui);
 }
 
 .skip-link:focus {
@@ -276,7 +201,7 @@ a {
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -285,7 +210,7 @@ a {
 }
 
 @keyframes drawLine {
-  from { stroke-dashoffset: 1000; }
+  from { stroke-dashoffset: var(--draw-length, 1000); }
   to { stroke-dashoffset: 0; }
 }
 

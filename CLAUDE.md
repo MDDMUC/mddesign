@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Portfolio website for Martin Drexler, a freelance graphic design business. The aesthetic is "Zion Virtual Control" from Matrix Reloaded: clinical, precise, blueprint-like with a retro amber terminal design system.
+Portfolio website for Martin Drexler, a freelance graphic design business.
+
+**Visual direction:** Minimalist + hand-drawn. A disciplined grid on warm paper, with restrained handwritten marks (underlines, arrows, marginalia) used sparingly for personality. Designer's-sketchbook feel without doodle kitsch. Full brief in `design-system/BRIEF.md`.
 
 ## Commands
 
@@ -20,10 +22,10 @@ npm run start    # Serve production build
 
 ## Tech Stack
 
-- **Framework**: Next.js 16 with App Router, TypeScript
-- **Styling**: CSS Modules + Tamagui, CSS custom properties for design tokens
-- **Fonts**: Share Tech Mono (monospace terminal aesthetic)
-- **Build**: Static export (`output: 'export'` in next.config.ts)
+- **Framework**: Next.js 16 with App Router, TypeScript, React 19
+- **Styling**: CSS Modules, CSS custom properties for tokens. (Tamagui is installed but not currently used; safe to remove if no component imports it.)
+- **Fonts**: Fraunces (serif display + body), Inter (UI/sans), Caveat (handwritten accents). Loaded via `next/font/google`.
+- **Build**: Static export (`output: 'export'` in `next.config.ts`)
 - **Deployment**: Vercel (builds from `/site` directory)
 
 ## Architecture
@@ -31,59 +33,62 @@ npm run start    # Serve production build
 ```
 site/
 ├── app/                    # Next.js App Router pages
-│   ├── layout.tsx          # Root layout with Navigation, scanlines overlay
+│   ├── layout.tsx          # Root layout, font wiring, Navigation, paper background
 │   ├── page.tsx            # Homepage
-│   ├── work/               # Portfolio case studies
-│   │   ├── cepres/
-│   │   ├── keller-sports/
-│   │   └── yca/
-│   ├── about/
-│   ├── contact/
-│   ├── services/
-│   └── components/         # Page-specific components (case-study/)
+│   ├── work/{cepres,keller-sports,yca}/  # Case studies (currently template stubs)
+│   ├── about/ contact/ services/
+│   └── components/         # Page-scoped components (case-study/)
 ├── components/             # Shared components
-│   ├── Navigation/
-│   ├── Button/
-│   ├── FormInput/
-│   ├── Terminal/           # Terminal-style UI primitives (Card, Frame, Text, Typewriter)
-│   └── homepage/           # Homepage sections (Hero, Services, FeaturedWork, etc.)
-└── styles/
-    ├── tokens.css          # Design tokens (colors, spacing, typography, motion)
-    ├── typography.css      # Type scale
-    ├── reset.css           # CSS reset
-    └── globals.css         # Global styles, imports other CSS
+│   ├── Navigation/ Button/ FormInput/ Footer/
+│   ├── HandMark/           # Inline SVG hand-drawn marks (underline, arrow, circle, bracket)
+│   ├── PaperBackground/    # Subtle paper-grain background
+│   └── homepage/           # Homepage sections (Hero, Services, FeaturedWork, …)
+├── styles/
+│   ├── tokens.css          # Design tokens — single source of truth for CSS values
+│   ├── typography.css      # Type scale
+│   ├── reset.css           # CSS reset
+│   └── globals.css         # Global styles, imports other CSS
+└── public/
 ```
+
+(Older components from prior directions — `Terminal/`, `ZionBackground/` — are removed during the current redesign. Don't reintroduce them.)
 
 ## Design System
 
-Design tokens are defined in `design-system/DESIGN_TOKENS.md` and implemented in `site/styles/tokens.css`.
+Single source of truth for design values:
+
+- **Tokens (CSS):** `site/styles/tokens.css` — authoritative.
+- **Token intent (docs):** `design-system/DESIGN_TOKENS.md` — narrative, must mirror the CSS.
+- **Direction:** `design-system/BRIEF.md` — tone, primitives, what this isn't.
 
 Key principles:
-- **Monochrome palette**: Cool greys on dark background (#1a1b1d), amber accent (#d4a574)
-- **Sharp corners**: No border-radius; use chamfered corners via clip-path for CTAs
-- **Thin strokes**: 1-2px lines
-- **Large negative space**: Section margins 64-128px
-- **Performance**: 60fps target, GPU-accelerated transforms only
-- **Reduced motion**: Always respect `prefers-reduced-motion`
+- **Warm paper palette** (`--paper` background, `--ink` text, single `--accent` terracotta for hand marks).
+- **No border-radius** unless it's drawn imperfectly as part of a hand mark. Hairline rules over heavy borders.
+- **Hand marks are seasoning.** One per visual unit, max. SVG only, never raster.
+- **Whitespace is structural.** Section padding stays generous (96–128px desktop). Don't tighten.
+- **Performance:** 60fps target, GPU-accelerated transforms only.
+- **Reduced motion:** Always respect `prefers-reduced-motion`.
+
+## Governance — keep this codebase from drifting again
+
+This site has been redesigned more than once. To prevent doc thrash:
+
+1. **Single source of truth per concern.** Tokens → `site/styles/tokens.css`. Design intent → `design-system/`. Decisions → `logs/DECISIONS.md`. Project state → this file.
+2. **CLAUDE.md must match the running site.** If you change the aesthetic, update CLAUDE.md *in the same commit*.
+3. **No new root-level `.md` files** unless they replace something. Pivots go straight to `docs/archive/`, not "pending cleanup."
+4. **Don't pattern-match from `docs/archive/`.** Those files describe abandoned directions (Anduril, Shadow Trader, Zion). They're history, not spec.
 
 ## Workflow
 
-This project uses a multi-agent workflow documented in `workflow/`:
-
-1. **Project Strategy Agent** - Brief, sitemap, backlog
-2. **Design Agent** - Visual system and page comps
-3. **Implementation Engineer** - Build to spec
-4. **QA Agent** - Cross-device, accessibility validation
-
-Tickets are tracked in `tickets/INDEX.md` using templates from `tickets/templates/`.
+The repo contains scaffolding for a multi-agent workflow (`workflow/`, `agents/`, `tickets/`) that **is not currently in active use**. Don't try to populate tickets or follow agent role docs unless the user explicitly asks. Work directly in `site/` and log notable decisions in `logs/DECISIONS.md`.
 
 ## Key Files
 
-- `PROJECT_START.md` - Shared context for all agents
-- `design-system/BRIEF.md` - Design system direction and constraints
-- `design-system/DESIGN_TOKENS.md` - Full token specification
-- `workflow/WORKFLOW_CONTRACT.md` - Gates, budgets, quality checks
-- `logs/DECISIONS.md` - Decision log for deviations from brief
+- `design-system/BRIEF.md` — design direction
+- `design-system/DESIGN_TOKENS.md` — token spec
+- `site/styles/tokens.css` — token implementation (authoritative)
+- `logs/DECISIONS.md` — decision log
+- `docs/archive/` — superseded docs, do not pattern-match
 
 ## Quality Standards
 
