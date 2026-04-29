@@ -1,112 +1,20 @@
 /**
- * Design Tokens — Martin Drexler Portfolio
- * Direction: Minimalist + hand-drawn (warm paper, near-black ink, single terracotta accent)
- *
- * Source of truth for CSS values. If design-system/DESIGN_TOKENS.md drifts, this file wins.
- * Fonts are wired in app/layout.tsx via next/font/google, which sets:
- *   --font-display, --font-body (both → Fraunces)
- *   --font-ui                    (→ Inter)
- *   --font-hand                  (→ Caveat)
+ * Design Tokens — Martin Drexler holding page + contact form
+ * Direction: white background, black ink, system/Inter type. That's it.
  */
 
 :root {
-  /* ===== COLOR — paper + ink ===== */
+  /* Color */
+  --bg: #ffffff;
+  --ink: #111111;
+  --ink-soft: #444444;
+  --ink-mute: #777777;
+  --ink-faint: #d8d8d8;
 
-  /* Canonical names */
-  --paper: #f7f3ec;
-  --paper-deep: #efe8dc;
-  --ink: #1a1a1a;
-  --ink-soft: #3a3a3a;
-  --ink-mute: #7a7568;
-  --ink-faint: #cfc7b8;
-
-  /* Single warm accent — used sparingly for hand marks and emphasis */
-  --accent: #c8553d;
-  --accent-soft: rgba(200, 85, 61, 0.12);
-
-  /* Legacy aliases — existing CSS modules reference these.
-     Re-pointing them to the paper palette flips the whole site at once. */
-  --bg-primary: var(--paper);
-  --bg-secondary: var(--paper-deep);
-  --bg-tertiary: var(--paper-deep);
-
-  --line-primary: var(--ink);
-  --line-secondary: var(--ink-soft);
-  --line-tertiary: var(--ink-mute);
-  --line-faint: var(--ink-faint);
-
-  --text-primary: var(--ink);
-  --text-secondary: var(--ink-soft);
-  --text-tertiary: var(--ink-mute);
-  --text-muted: var(--ink-mute);
-  --text-inverted: var(--paper);
-  --text-white: var(--paper);
-  --text-black: var(--ink);
-  --text-cream: var(--paper-deep);
-  --accent-primary: var(--accent);
-
-  --color-background: var(--paper);
-  --color-foreground: var(--ink);
-
-  /* ===== STROKE WEIGHTS ===== */
-
-  --stroke-hair: 1px;
-  --stroke-pencil: 1.25px;
-  --stroke-ink: 2px;
-
-  /* Legacy aliases */
-  --stroke-hairline: var(--stroke-hair);
-  --stroke-thin: var(--stroke-pencil);
-  --stroke-medium: var(--stroke-ink);
-  --stroke-thick: 3px;
-
-  /* ===== TYPOGRAPHY =====
-     Font CSS variables (--font-display, --font-body, --font-ui, --font-hand)
-     are injected by next/font in app/layout.tsx. Fallbacks here let CSS render
-     gracefully if a font fails to load. */
-
-  --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
-  --font-body: var(--font-display);
+  /* Type */
   --font-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-hand: 'Caveat', 'Comic Sans MS', cursive;
 
-  /* Legacy aliases */
-  --font-primary: var(--font-body);
-  --font-heading: var(--font-display);
-  --font-mono: 'SF Mono', 'Monaco', 'Consolas', monospace;
-
-  /* Font Weights */
-  --weight-light: 300;
-  --weight-regular: 400;
-  --weight-medium: 500;
-  --weight-semibold: 600;
-
-  /* Font Sizes — restrained scale */
-  --text-display: 4.5rem;     /* 72px — slightly larger because Fraunces is more compact than display */
-  --text-h1: 3rem;            /* 48px */
-  --text-h2: 2.25rem;         /* 36px */
-  --text-h3: 1.5rem;          /* 24px */
-  --text-h4: 1.25rem;         /* 20px */
-  --text-body: 1.0625rem;     /* 17px — serif body benefits from a hair larger */
-  --text-body-sm: 0.9375rem;  /* 15px */
-  --text-caption: 0.8125rem;  /* 13px */
-  --text-micro: 0.6875rem;    /* 11px */
-
-  /* Line Heights */
-  --lh-tight: 1.05;
-  --lh-heading: 1.15;
-  --lh-body: 1.6;
-  --lh-relaxed: 1.75;
-
-  /* Letter Spacing — looser baseline; the warm serif doesn't need uppercase tracking tricks */
-  --tracking-tight: -0.015em;
-  --tracking-normal: 0;
-  --tracking-wide: 0.02em;
-  --tracking-wider: 0.06em;
-  --tracking-widest: 0.12em;
-
-  /* ===== SPACING ===== */
-
+  /* Spacing scale (kept simple) */
   --space-1: 0.25rem;
   --space-2: 0.5rem;
   --space-3: 0.75rem;
@@ -116,69 +24,19 @@
   --space-7: 3rem;
   --space-8: 4rem;
   --space-9: 6rem;
-  --space-10: 8rem;
-  --space-11: 12rem;
-  --space-12: 16rem;
 
-  --section-padding: var(--space-10);
+  /* Layout */
+  --container-max: 960px;
 
-  --container-padding: 3rem;
-  --container-padding-mobile: 1.5rem;
-  --container-max: 1200px;
-
-  /* ===== GRID ===== */
-
-  --grid-columns: 12;
-  --grid-gap: 1.5rem;
-
-  /* ===== TRANSITIONS ===== */
-
-  --duration-instant: 100ms;
-  --duration-fast: 200ms;
-  --duration-normal: 300ms;
-  --duration-slow: 500ms;
-
+  /* Motion */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
-
-  --transition-fast: all var(--duration-fast) var(--ease-out);
-  --transition-normal: all var(--duration-normal) var(--ease-out);
-
-  /* ===== Z-INDEX ===== */
-
-  --z-base: 0;
-  --z-elevated: 10;
-  --z-sticky: 100;
-  --z-overlay: 200;
-  --z-modal: 300;
-
-  /* ===== INTERACTIVE STATES ===== */
-
-  --opacity-muted: 0.55;
-  --opacity-hover: 1;
 }
-
-/* ===== RESPONSIVE TYPOGRAPHY ===== */
-
-@media (max-width: 768px) {
-  :root {
-    --text-display: 2.75rem;
-    --text-h1: 2.125rem;
-    --text-h2: 1.625rem;
-    --text-h3: 1.25rem;
-    --text-h4: 1.125rem;
-    --section-padding: var(--space-8);
-    --container-padding: var(--container-padding-mobile);
-  }
-}
-
-/* ===== REDUCED MOTION ===== */
 
 @media (prefers-reduced-motion: reduce) {
   :root {
-    --duration-instant: 0ms;
     --duration-fast: 0ms;
     --duration-normal: 0ms;
-    --duration-slow: 0ms;
   }
 }

@@ -1,25 +1,11 @@
-import { withTamagui } from '@tamagui/next-plugin'
-import type { NextConfig } from 'next';
-
-const tamaguiPlugin = withTamagui({
-  config: './tamagui.config.ts',
-  components: ['tamagui'],
-  disableExtraction: true,
-  excludeReactNativeWebExports: ['Switch', 'ProgressBar', 'Picker', 'CheckBox', 'Touchable'],
-})
+import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   turbopack: {},
-  output: 'export', 
+  output: 'export',
   images: {
     unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'placehold.co',
-      },
-    ],
   },
-};
+}
 
-export default tamaguiPlugin(nextConfig);
+export default nextConfig

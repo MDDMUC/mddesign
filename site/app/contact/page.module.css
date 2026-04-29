@@ -1,110 +1,88 @@
-/**
- * Contact Page - ZION VIRTUAL CONTROL
- * Pure white, black hairlines, architectural forms
- */
+/* Contact page — plain white background, simple form */
 
 .page {
-  width: 100%;
-  padding-top: 64px;
+  min-height: 100vh;
+  background: #ffffff;
+  padding: var(--space-8) var(--space-5) var(--space-9);
 }
 
 /* ===== HERO ===== */
 
 .hero {
-  background-color: var(--bg-primary);
-  padding: var(--space-9) 0;
-  text-align: center;
-  border-bottom: var(--stroke-hairline) solid var(--line-primary);
+  max-width: var(--container-max);
+  margin: 0 auto var(--space-8);
 }
 
 .heroContainer {
-  max-width: 700px;
-  margin: 0 auto;
-  padding: 0 var(--container-padding);
+  max-width: 640px;
 }
 
 .heroTitle {
-  font-size: var(--text-display);
-  font-weight: var(--weight-light);
-  line-height: var(--lh-tight);
-  letter-spacing: var(--tracking-tight);
-  margin: 0 0 var(--space-5);
+  font-family: var(--font-ui);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin: 0 0 var(--space-4);
+  color: var(--ink);
 }
 
 .heroSubtitle {
-  font-size: var(--text-body);
-  font-weight: var(--weight-light);
-  color: var(--text-secondary);
-  line-height: var(--lh-relaxed);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
   margin: 0;
 }
 
-/* ===== CONTACT SECTION ===== */
+/* ===== CONTACT GRID ===== */
 
 .contactSection {
-  background-color: var(--bg-primary);
-  padding: var(--section-padding) 0;
+  max-width: var(--container-max);
+  margin: 0 auto;
 }
 
 .contactContainer {
-  max-width: var(--container-max);
-  margin: 0 auto;
-  padding: 0 var(--container-padding);
+  width: 100%;
 }
 
 .contactGrid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr;
-  gap: var(--space-8);
-  align-items: start;
+  grid-template-columns: 1.4fr 1fr;
+  gap: var(--space-9);
 }
 
-/* ===== FORM COLUMN ===== */
+/* ===== FORM ===== */
 
 .formColumn {
-  background-color: var(--bg-primary);
-  border: var(--stroke-hairline) solid var(--line-primary);
-  padding: var(--space-7);
-  position: relative;
-}
-
-/* Corner decorations */
-.formColumn::before,
-.formColumn::after {
-  content: '';
-  position: absolute;
-  width: 16px;
-  height: 16px;
-}
-
-.formColumn::before {
-  top: -1px;
-  left: -1px;
-  border-top: var(--stroke-hairline) solid var(--line-primary);
-  border-left: var(--stroke-hairline) solid var(--line-primary);
-}
-
-.formColumn::after {
-  bottom: -1px;
-  right: -1px;
-  border-bottom: var(--stroke-hairline) solid var(--line-primary);
-  border-right: var(--stroke-hairline) solid var(--line-primary);
+  min-width: 0;
 }
 
 .formTitle {
-  font-family: var(--font-display);
-  font-size: var(--text-h3);
-  font-weight: var(--weight-regular);
-  letter-spacing: var(--tracking-tight);
-  margin: 0 0 var(--space-3);
+  font-family: var(--font-ui);
+  font-size: 1.375rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 var(--space-2);
 }
 
 .formDescription {
-  font-size: var(--text-body-sm);
-  font-weight: var(--weight-light);
-  color: var(--text-secondary);
-  line-height: var(--lh-relaxed);
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--ink-soft);
   margin: 0 0 var(--space-6);
+}
+
+.successMessage {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: #f5f5f5;
+  border: 1px solid var(--ink-faint);
+  color: var(--ink);
+  font-size: 0.9375rem;
+  margin-bottom: var(--space-5);
 }
 
 .form {
@@ -123,62 +101,74 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  min-width: 0;
 }
 
 .label {
-  font-size: var(--text-micro);
-  font-weight: var(--weight-regular);
-  letter-spacing: var(--tracking-wider);
-  text-transform: uppercase;
-  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
 }
 
 .input,
 .textarea {
+  width: 100%;
   padding: var(--space-3) var(--space-4);
-  font-family: var(--font-primary);
-  font-size: var(--text-body-sm);
-  font-weight: var(--weight-light);
-  color: var(--text-primary);
-  background-color: var(--bg-primary);
-  border: var(--stroke-hairline) solid var(--line-tertiary);
-  transition: var(--transition-fast);
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--ink);
+  background: #ffffff;
+  border: 1px solid var(--ink-faint);
+  border-radius: 0;
+  transition: border-color var(--duration-fast) var(--ease-out);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--ink-mute);
+  opacity: 0.7;
+}
+
+.input:hover,
+.textarea:hover {
+  border-color: var(--ink-mute);
 }
 
 .input:focus,
 .textarea:focus {
   outline: none;
-  border-color: var(--line-primary);
-}
-
-.input::placeholder,
-.textarea::placeholder {
-  color: var(--text-muted);
+  border-color: var(--ink);
 }
 
 .textarea {
   resize: vertical;
-  min-height: 150px;
+  min-height: 160px;
 }
 
 .submitButton {
   align-self: flex-start;
-  padding: var(--space-3) var(--space-6);
-  font-family: var(--font-primary);
-  font-size: var(--text-caption);
-  font-weight: var(--weight-regular);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
-  color: var(--text-primary);
-  background-color: transparent;
-  border: var(--stroke-hairline) solid var(--line-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-7);
+  margin-top: var(--space-2);
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  background: var(--ink);
+  border: 1px solid var(--ink);
   cursor: pointer;
-  transition: var(--transition-normal);
+  transition: background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
 }
 
-.submitButton:hover:not(:disabled) {
-  background-color: var(--line-primary);
-  color: var(--bg-primary);
+.submitButton:hover:not(:disabled),
+.submitButton:focus-visible:not(:disabled) {
+  background: #ffffff;
+  color: var(--ink);
 }
 
 .submitButton:disabled {
@@ -186,151 +176,107 @@
   cursor: not-allowed;
 }
 
-.successMessage {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-3);
-  padding: var(--space-4);
-  background-color: var(--bg-secondary);
-  border: var(--stroke-hairline) solid var(--line-tertiary);
-  margin-bottom: var(--space-5);
-}
-
-.successMessage svg {
-  flex-shrink: 0;
-  color: var(--text-primary);
-}
-
-.successMessage span {
-  font-size: var(--text-body-sm);
-  font-weight: var(--weight-light);
-  line-height: var(--lh-relaxed);
-}
-
 /* ===== INFO COLUMN ===== */
 
 .infoColumn {
-  padding-top: var(--space-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
 }
 
 .infoTitle {
-  font-family: var(--font-display);
-  font-size: var(--text-h4);
-  font-weight: var(--weight-medium);
-  letter-spacing: var(--tracking-tight);
-  margin: 0 0 var(--space-5);
+  font-family: var(--font-ui);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 var(--space-4);
 }
 
 .contactMethods {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
-  margin-bottom: var(--space-6);
+  gap: var(--space-3);
 }
 
 .contactMethod {
-  display: flex;
-  flex-direction: column;
-  padding: var(--space-5);
-  background-color: var(--bg-primary);
-  border: var(--stroke-hairline) solid var(--line-primary);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.125rem;
+  padding: var(--space-4) 0;
+  border-top: 1px solid var(--ink-faint);
   text-decoration: none;
   color: inherit;
-  transition: var(--transition-normal);
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.contactMethod:last-child {
+  border-bottom: 1px solid var(--ink-faint);
 }
 
 .contactMethod:hover {
-  background: var(--bg-secondary);
+  background: #fafafa;
 }
 
 .methodLabel {
-  font-size: var(--text-micro);
-  font-weight: var(--weight-regular);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  letter-spacing: var(--tracking-widest);
-  color: var(--text-muted);
-  margin-bottom: var(--space-2);
+  color: var(--ink-mute);
 }
 
 .methodValue {
-  font-size: var(--text-body);
-  font-weight: var(--weight-light);
-  color: var(--text-primary);
-  margin-bottom: var(--space-1);
+  font-size: 1rem;
+  color: var(--ink);
 }
 
 .methodNote {
-  font-size: var(--text-caption);
-  font-weight: var(--weight-light);
-  color: var(--text-muted);
+  font-size: 0.8125rem;
+  color: var(--ink-mute);
 }
 
 .locationInfo,
 .availabilityInfo {
-  padding: var(--space-5) 0;
-  border-top: var(--stroke-hairline) solid var(--line-faint);
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
 }
 
 .locationLabel,
 .availabilityLabel {
-  display: block;
-  font-size: var(--text-micro);
-  font-weight: var(--weight-regular);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  letter-spacing: var(--tracking-widest);
-  color: var(--text-muted);
-  margin-bottom: var(--space-2);
+  color: var(--ink-mute);
+  margin-bottom: 0.25rem;
 }
 
 .locationValue,
 .availabilityValue {
-  display: block;
-  font-size: var(--text-body);
-  font-weight: var(--weight-light);
-  color: var(--text-primary);
-  margin-bottom: var(--space-1);
+  font-size: 1rem;
+  color: var(--ink);
 }
 
 .locationNote {
-  display: block;
-  font-size: var(--text-caption);
-  font-weight: var(--weight-light);
-  color: var(--text-muted);
+  font-size: 0.8125rem;
+  color: var(--ink-mute);
 }
 
 /* ===== RESPONSIVE ===== */
 
-@media (max-width: 1024px) {
-  .contactGrid {
-    grid-template-columns: 1fr;
-    gap: var(--space-7);
-  }
-
-  .infoColumn {
-    padding-top: 0;
-  }
-}
-
 @media (max-width: 768px) {
   .page {
-    padding-top: 56px;
-  }
-
-  .hero {
-    padding: var(--space-7) 0;
-  }
-
-  .heroContainer,
-  .contactContainer {
-    padding: 0 var(--container-padding-mobile);
+    padding: var(--space-6) var(--space-4) var(--space-8);
   }
 
   .heroTitle {
-    font-size: var(--text-h2);
+    font-size: 1.875rem;
   }
 
-  .formColumn {
-    padding: var(--space-5);
+  .contactGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
   }
 
   .formRow {
