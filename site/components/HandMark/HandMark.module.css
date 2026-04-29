@@ -1,0 +1,35 @@
+.root {
+  display: inline-block;
+  pointer-events: none;
+  color: var(--accent);
+  overflow: visible;
+}
+
+.underline {
+  width: 100%;
+  height: 0.32em;
+}
+
+.circle {
+  width: 1.2em;
+  height: 0.85em;
+}
+
+.arrow {
+  width: 1.6em;
+  height: 0.5em;
+  vertical-align: middle;
+}
+
+.bracket-left,
+.bracket-right {
+  width: 0.5em;
+  height: 100%;
+  align-self: stretch;
+}
+
+.asterisk {
+  width: 0.7em;
+  height: 0.7em;
+  vertical-align: 0.05em;
+}

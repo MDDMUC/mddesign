@@ -1,0 +1,22 @@
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: var(--paper);
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: multiply;
+  opacity: 0.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain {
+    opacity: 0.4;
+  }
+}
