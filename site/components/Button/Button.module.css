@@ -1,206 +1,126 @@
 /**
- * Button Component Styles
- * Anduril Lattice Command & Control Aesthetic
+ * Button — minimalist + hand-drawn
+ * Three sizes, four variants (primary, secondary, dark alias, text link).
  */
 
 .button {
-  /* Base styling */
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--space-2);
-  font-family: var(--font-body);
-  font-weight: 400;
-  letter-spacing: var(--letter-spacing-button);
-  text-transform: capitalize;
+  font-family: var(--font-ui);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-wide);
   text-decoration: none;
   cursor: pointer;
-  transition: var(--transition-all);
-  position: relative;
+  transition: var(--transition-normal);
   white-space: nowrap;
   border-radius: 0;
-
-  /* Ensure minimum touch target */
   min-height: 44px;
 }
 
 /* ===== SIZE VARIANTS ===== */
 
 .default {
-  height: 52px;
+  height: 48px;
   min-width: 160px;
-  padding: var(--padding-button);
-  font-size: var(--font-button);
+  padding: 0 var(--space-6);
+  font-size: var(--text-body-sm);
 }
 
 .small {
-  height: 40px;
-  min-width: 120px;
-  padding: 0.4rem 0.6rem;
+  height: 36px;
+  min-width: 100px;
+  padding: 0 var(--space-4);
   font-size: var(--text-caption);
 }
 
 .large {
-  height: 60px;
+  height: 56px;
   min-width: 200px;
-  padding: var(--padding-button-large);
-  font-size: var(--font-button);
+  padding: 0 var(--space-7);
+  font-size: var(--text-body);
 }
 
-/* ===== VARIANT: PRIMARY ===== */
+/* ===== PRIMARY ===== */
 
 .primary {
-  background: var(--bg-dark);
-  color: var(--text-white);
-  border: none;
-  border-radius: 0;
-  transition: var(--transition-all);
+  background: var(--ink);
+  color: var(--paper);
+  border: var(--stroke-pencil) solid var(--ink);
 }
 
 .primary:hover:not(.disabled):not(.loading) {
-  background: transparent;
-  outline: 1px solid var(--bg-dark);
-  color: var(--bg-dark);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--paper);
 }
 
 .primary:active:not(.disabled):not(.loading) {
-  background: var(--fill-active);
-  outline: none;
-  color: var(--text-white);
+  transform: translateY(1px);
 }
 
-.primary:focus-visible {
-  outline: 2px solid var(--accent-primary);
-  outline-offset: 2px;
-}
-
-/* ===== VARIANT: SECONDARY ===== */
+/* ===== SECONDARY ===== */
 
 .secondary {
   background: transparent;
-  color: var(--text-white);
-  outline: 1px solid var(--text-white);
-  border: none;
-  border-radius: 0;
-  transition: var(--transition-all);
+  color: var(--ink);
+  border: var(--stroke-pencil) solid var(--ink);
 }
 
 .secondary:hover:not(.disabled):not(.loading) {
-  background: var(--text-white);
-  color: var(--bg-dark);
+  background: var(--ink);
+  color: var(--paper);
 }
 
-.secondary:active:not(.disabled):not(.loading) {
-  background: var(--bg-gray-light);
-  outline-color: var(--bg-gray-light);
-  color: var(--bg-dark);
-}
-
-.secondary:focus-visible {
-  outline: 2px solid var(--accent-primary);
-  outline-offset: 2px;
-}
-
-/* ===== VARIANT: DARK (for cream backgrounds) ===== */
+/* ===== DARK (alias for primary, kept for backwards compat) ===== */
 
 .dark {
-  background: var(--bg-dark);
-  color: var(--text-white);
-  border: none;
-  border-radius: 0;
-  transition: var(--transition-all);
+  background: var(--ink);
+  color: var(--paper);
+  border: var(--stroke-pencil) solid var(--ink);
 }
 
 .dark:hover:not(.disabled):not(.loading) {
-  background: transparent;
-  outline: 1px solid var(--bg-dark);
-  color: var(--bg-dark);
+  background: var(--accent);
+  border-color: var(--accent);
 }
 
-.dark:active:not(.disabled):not(.loading) {
-  background: var(--fill-active);
-  outline: none;
-  color: var(--text-white);
-}
-
-.dark:focus-visible {
-  outline: 2px solid var(--accent-primary);
-  outline-offset: 2px;
-}
-
-/* ===== VARIANT: TEXT LINK ===== */
+/* ===== TEXT LINK ===== */
 
 .text {
   height: auto;
   min-width: auto;
-  padding: var(--space-2) 0;
+  padding: var(--space-1) 0;
   background: transparent;
   border: none;
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-color: currentColor;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 4px;
+  color: var(--ink);
+  border-bottom: var(--stroke-hair) solid var(--ink-faint);
   border-radius: 0;
-  opacity: 0.6;
-  transition: var(--transition-opacity);
+  transition: border-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
 }
 
 .text:hover:not(.disabled):not(.loading) {
-  opacity: 1;
-  text-decoration-thickness: 2px;
+  color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 
-.text:focus-visible {
-  outline: 2px solid var(--accent-primary);
-  outline-offset: 2px;
-}
+/* ===== STATES ===== */
 
-/* ===== DISABLED STATE ===== */
+:where(.button):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
 
 .disabled {
   cursor: not-allowed;
-  opacity: 0.5;
+  opacity: 0.45;
   pointer-events: none;
 }
-
-.primary.disabled,
-.secondary.disabled,
-.dark.disabled {
-  background: var(--bg-gray-dark);
-  outline: none;
-}
-
-.primary.disabled,
-.dark.disabled {
-  color: var(--text-gray);
-}
-
-.secondary.disabled {
-  outline: 1px solid var(--bg-gray-dark);
-  color: var(--text-gray);
-}
-
-.text.disabled {
-  color: var(--text-muted);
-  text-decoration-color: var(--text-muted);
-}
-
-/* ===== LOADING STATE ===== */
 
 .loading {
   cursor: wait;
   pointer-events: none;
-}
-
-.primary.loading,
-.dark.loading {
-  background: var(--bg-dark);
-  color: var(--text-white);
-}
-
-.loading .text {
-  opacity: 0.7;
 }
 
 .spinner {
@@ -209,12 +129,10 @@
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
-/* ===== ICON SUPPORT ===== */
+/* ===== ICONS ===== */
 
 .icon {
   display: inline-flex;
@@ -232,9 +150,8 @@
   fill: none;
 }
 
-/* Icon animation on hover */
 .button:hover:not(.disabled):not(.loading) .icon {
-  transition: transform var(--duration-fast) var(--ease-default);
+  transition: transform var(--duration-fast) var(--ease-out);
 }
 
 .button:hover:not(.disabled):not(.loading) .icon:last-child {
@@ -245,40 +162,23 @@
   transform: translateX(-4px);
 }
 
-/* ===== FULL WIDTH ===== */
+/* ===== UTILITIES ===== */
 
-.fullWidth {
-  width: 100%;
-}
-
-/* ===== RESPONSIVE ===== */
+.fullWidth { width: 100%; }
 
 @media (max-width: 768px) {
   .button {
     width: 100%;
     justify-content: center;
   }
-
   .default,
   .small,
   .large {
     min-width: auto;
   }
-
-  .default,
-  .large {
-    font-size: var(--font-button-mobile);
-  }
 }
 
-/* ===== REDUCED MOTION ===== */
-
 @media (prefers-reduced-motion: reduce) {
-  .spinner {
-    animation: none;
-  }
-
-  .button:hover .icon {
-    transform: none;
-  }
+  .spinner { animation: none; }
+  .button:hover .icon { transform: none; }
 }

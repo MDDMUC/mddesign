@@ -1,13 +1,13 @@
 /**
- * Footer - ZION VIRTUAL CONTROL
- * Minimal hairline layout
+ * Footer — minimalist + hand-drawn
+ * Hairline grid, hand-drawn signature
  */
 
 .footer {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  padding: var(--space-8) 0;
-  border-top: var(--stroke-hairline) solid var(--line-primary);
+  background-color: var(--paper);
+  color: var(--ink);
+  padding: var(--space-9) 0 var(--space-6);
+  border-top: var(--stroke-hair) solid var(--ink-faint);
 }
 
 .container {
@@ -20,53 +20,52 @@
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: var(--space-8);
-  padding-bottom: var(--space-6);
-  border-bottom: var(--stroke-hairline) solid var(--line-faint);
+  padding-bottom: var(--space-7);
+  border-bottom: var(--stroke-hair) solid var(--ink-faint);
 }
 
-/* Brand Column */
 .brandColumn {
-  max-width: 280px;
+  max-width: 320px;
 }
 
 .logo {
   display: inline-block;
-  font-family: var(--font-primary);
-  font-size: var(--text-body-sm);
-  font-weight: var(--weight-light);
-  color: var(--text-primary);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: var(--weight-medium);
+  color: var(--ink);
   text-decoration: none;
-  letter-spacing: var(--tracking-wider);
-  text-transform: uppercase;
-  margin-bottom: var(--space-4);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: var(--space-3);
+  transition: var(--transition-fast);
 }
 
 .logo:hover {
-  opacity: var(--opacity-muted);
+  color: var(--accent);
 }
 
 .tagline {
-  font-size: var(--text-caption);
-  font-weight: var(--weight-light);
-  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  color: var(--ink-soft);
   line-height: var(--lh-relaxed);
   margin: 0;
 }
 
-/* Link Columns */
 .linkColumn {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-3);
 }
 
 .columnTitle {
-  font-size: var(--text-micro);
-  font-weight: var(--weight-regular);
-  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-size: var(--text-caption);
+  font-weight: var(--weight-medium);
+  color: var(--ink-mute);
   text-transform: uppercase;
-  letter-spacing: var(--tracking-widest);
-  margin: 0;
+  letter-spacing: var(--tracking-wider);
+  margin: 0 0 var(--space-2);
 }
 
 .linkList {
@@ -79,18 +78,17 @@
 }
 
 .link {
-  font-size: var(--text-caption);
-  font-weight: var(--weight-light);
-  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: var(--text-body-sm);
+  color: var(--ink-soft);
   text-decoration: none;
   transition: var(--transition-fast);
 }
 
 .link:hover {
-  color: var(--text-primary);
+  color: var(--accent);
 }
 
-/* Bottom Bar */
 .bottomBar {
   display: flex;
   align-items: center;
@@ -99,9 +97,9 @@
 }
 
 .copyright {
-  font-size: var(--text-micro);
-  font-weight: var(--weight-light);
-  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-size: var(--text-caption);
+  color: var(--ink-mute);
   margin: 0;
 }
 
@@ -111,18 +109,17 @@
 }
 
 .legalLink {
-  font-size: var(--text-micro);
-  font-weight: var(--weight-light);
-  color: var(--text-muted);
+  font-family: var(--font-ui);
+  font-size: var(--text-caption);
+  color: var(--ink-mute);
   text-decoration: none;
   transition: var(--transition-fast);
 }
 
 .legalLink:hover {
-  color: var(--text-primary);
+  color: var(--ink);
 }
 
-/* Responsive */
 @media (max-width: 1024px) {
   .grid {
     grid-template-columns: 1fr 1fr 1fr;
@@ -137,33 +134,17 @@
 }
 
 @media (max-width: 768px) {
-  .footer {
-    padding: var(--space-6) 0;
-  }
-
-  .container {
-    padding: 0 var(--container-padding-mobile);
-  }
-
-  .grid {
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-5);
-  }
-
+  .footer { padding: var(--space-7) 0 var(--space-5); }
+  .container { padding: 0 var(--container-padding-mobile); }
+  .grid { grid-template-columns: 1fr 1fr; gap: var(--space-5); }
   .bottomBar {
     flex-direction: column;
     gap: var(--space-3);
     text-align: center;
   }
-
-  .legalLinks {
-    gap: var(--space-4);
-  }
+  .legalLinks { gap: var(--space-4); }
 }
 
 @media (max-width: 480px) {
-  .grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-5);
-  }
+  .grid { grid-template-columns: 1fr; gap: var(--space-5); }
 }
