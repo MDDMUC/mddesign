@@ -20,7 +20,7 @@ const contactMethods = [
 ]
 
 export default function ContactPage() {
-  const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle')
+  const [formState, setFormState] = useState<'idle' | 'opened'>('idle')
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -28,15 +28,24 @@ export default function ContactPage() {
     message: '',
   })
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    setFormState('submitting')
 
-    // Simulate form submission
-    setTimeout(() => {
-      setFormState('success')
-      setFormData({ name: '', email: '', company: '', message: '' })
-    }, 1000)
+    const subject = formData.name
+      ? `Enquiry from ${formData.name}`
+      : 'Enquiry via martindrexler.com'
+    const bodyLines = [
+      `Name: ${formData.name}`,
+      `Email: ${formData.email}`,
+      formData.company ? `Company: ${formData.company}` : null,
+      '',
+      formData.message,
+    ].filter((line): line is string => line !== null)
+
+    const url = `mailto:hello@martindrexler.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`
+
+    window.location.href = url
+    setFormState('opened')
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -70,13 +79,18 @@ export default function ContactPage() {
                 Tell me about your project, timeline, and budget. The more details, the better.
               </p>
 
-              {formState === 'success' && (
+              {formState === 'opened' && (
                 <div className={styles.successMessage}>
-                  <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                    <path d="M16.667 5L7.5 14.167 3.333 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                  <span>Thank you for your message. I&apos;ll be in touch soon.</span>
+                  <span>[ OK — MAIL APP SHOULD HAVE OPENED ]</span>
                 </div>
+              )}
+              {formState === 'opened' && (
+                <p className={styles.formDescription}>
+                  If nothing opened, write me directly at{' '}
+                  <a className={styles.inlineLink} href="mailto:hello@martindrexler.com">
+                    hello@martindrexler.com
+                  </a>.
+                </p>
               )}
 
               <form className={styles.form} onSubmit={handleSubmit}>
@@ -139,9 +153,8 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   className={styles.submitButton}
-                  disabled={formState === 'submitting'}
                 >
-                  {formState === 'submitting' ? 'Sending...' : 'Send Message'}
+                  Send Message
                 </button>
               </form>
             </div>

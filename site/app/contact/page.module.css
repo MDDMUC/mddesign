@@ -75,6 +75,18 @@
   max-width: 52ch;
 }
 
+.inlineLink {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--ink-30);
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--dur-fast) var(--ease-out);
+}
+
+.inlineLink:hover {
+  text-decoration-color: var(--ink);
+}
+
 .successMessage {
   display: inline-flex;
   align-items: center;
