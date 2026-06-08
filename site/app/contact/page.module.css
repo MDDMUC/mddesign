@@ -102,6 +102,32 @@
   margin-bottom: var(--space-5);
 }
 
+.errorMessage {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg);
+  border: var(--rule);
+  color: var(--ink);
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  margin-bottom: var(--space-5);
+  max-width: 60ch;
+  line-height: var(--leading-snug);
+}
+
+.honeypot {
+  position: absolute;
+  left: -10000px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
 .form {
   display: flex;
   flex-direction: column;

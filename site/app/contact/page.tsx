@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import type { Metadata } from 'next'
 import styles from './page.module.css'
 
 const contactMethods = [
@@ -19,39 +18,51 @@ const contactMethods = [
   },
 ]
 
+type FormState = 'idle' | 'submitting' | 'success' | 'error'
+
 export default function ContactPage() {
-  const [formState, setFormState] = useState<'idle' | 'opened'>('idle')
+  const [formState, setFormState] = useState<FormState>('idle')
+  const [errorMessage, setErrorMessage] = useState('')
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     company: '',
     message: '',
+    company_url: '', // honeypot
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setFormState('submitting')
+    setErrorMessage('')
 
-    const subject = formData.name
-      ? `Enquiry from ${formData.name}`
-      : 'Enquiry via martindrexler.com'
-    const bodyLines = [
-      `Name: ${formData.name}`,
-      `Email: ${formData.email}`,
-      formData.company ? `Company: ${formData.company}` : null,
-      '',
-      formData.message,
-    ].filter((line): line is string => line !== null)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
 
-    const url = `mailto:hello@martindrexler.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`
+      const data: { ok?: boolean; error?: string } = await res.json().catch(() => ({}))
 
-    window.location.href = url
-    setFormState('opened')
+      if (!res.ok) {
+        setFormState('error')
+        setErrorMessage(data.error || 'Something went wrong. Try again or email me directly.')
+        return
+      }
+
+      setFormState('success')
+      setFormData({ name: '', email: '', company: '', message: '', company_url: '' })
+    } catch {
+      setFormState('error')
+      setErrorMessage('Network error. Try again or email me directly.')
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     }))
   }
 
@@ -79,21 +90,37 @@ export default function ContactPage() {
                 Tell me about your project, timeline, and budget. The more details, the better.
               </p>
 
-              {formState === 'opened' && (
+              {formState === 'success' && (
                 <div className={styles.successMessage}>
-                  <span>[ OK — MAIL APP SHOULD HAVE OPENED ]</span>
+                  <span>[ OK — MESSAGE SENT ]</span>
                 </div>
               )}
-              {formState === 'opened' && (
+              {formState === 'success' && (
                 <p className={styles.formDescription}>
-                  If nothing opened, write me directly at{' '}
-                  <a className={styles.inlineLink} href="mailto:hello@martindrexler.com">
-                    hello@martindrexler.com
-                  </a>.
+                  Thanks. I&apos;ll get back to you within 24 hours.
                 </p>
               )}
+              {formState === 'error' && (
+                <div className={styles.errorMessage}>
+                  <span>[ ERROR ] {errorMessage}</span>
+                </div>
+              )}
 
-              <form className={styles.form} onSubmit={handleSubmit}>
+              <form className={styles.form} onSubmit={handleSubmit} noValidate>
+                {/* Honeypot — visually hidden, bots fill it */}
+                <div className={styles.honeypot} aria-hidden="true">
+                  <label htmlFor="company_url">Leave this field empty</label>
+                  <input
+                    type="text"
+                    id="company_url"
+                    name="company_url"
+                    value={formData.company_url}
+                    onChange={handleChange}
+                    tabIndex={-1}
+                    autoComplete="off"
+                  />
+                </div>
+
                 <div className={styles.formRow}>
                   <div className={styles.formGroup}>
                     <label htmlFor="name" className={styles.label}>Name</label>
@@ -106,6 +133,7 @@ export default function ContactPage() {
                       required
                       className={styles.input}
                       placeholder="Your name"
+                      autoComplete="name"
                     />
                   </div>
                   <div className={styles.formGroup}>
@@ -119,6 +147,7 @@ export default function ContactPage() {
                       required
                       className={styles.input}
                       placeholder="your@email.com"
+                      autoComplete="email"
                     />
                   </div>
                 </div>
@@ -133,6 +162,7 @@ export default function ContactPage() {
                     onChange={handleChange}
                     className={styles.input}
                     placeholder="Your company"
+                    autoComplete="organization"
                   />
                 </div>
 
@@ -153,8 +183,9 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   className={styles.submitButton}
+                  disabled={formState === 'submitting'}
                 >
-                  Send Message
+                  {formState === 'submitting' ? 'Sending…' : 'Send Message'}
                 </button>
               </form>
             </div>

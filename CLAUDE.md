@@ -21,7 +21,7 @@ All commands run from `site/`:
 ```bash
 cd site
 npm run dev        # Dev server, port 3000
-npm run build      # Production build (static export → site/out/)
+npm run build      # Production build (Next.js → site/.next/)
 npm run typecheck  # tsc --noEmit
 npm run start      # Serve production build
 ```
@@ -33,8 +33,8 @@ No ESLint (Next 16 / ESLint 9 / `eslint-config-next` interplay is broken). `tsc`
 - **Framework:** Next.js 16 (App Router), React 19, TypeScript
 - **Styling:** CSS Modules + tokens in `site/styles/tokens.css`
 - **Fonts:** Inter via `next/font/google` (more may be added — coordinate via the BRIEF)
-- **Build:** Static export (`output: 'export'` in `next.config.ts`)
-- **Deployment:** Vercel — builds from `/site` (see root `vercel.json`)
+- **Build:** Next.js on Vercel (static pages + one serverless function at `/api/contact`). Was static export until 2026-06-08; switched to add the contact form mailer.
+- **Deployment:** Vercel — Project Root Directory must be set to `site/` in the Vercel dashboard. Static pages still serve from the edge; only `/api/contact` invokes a serverless function.
 
 ## Architecture
 
@@ -112,7 +112,7 @@ Don't invoke it for trivial changes (copy edits, dependency bumps, typo fixes).
 ## Quality Standards
 
 - WCAG AA accessibility minimum. Visible focus states everywhere. Color contrast meets AA on all text.
-- Static export must produce all routes cleanly.
+- `npm run build` must complete cleanly with all routes rendering.
 - No console warnings on any page.
 - Image strategy: AVIF/WebP with PNG fallback; explicit `width`/`height`; `loading="lazy"` except for LCP image which gets `fetchPriority="high"`.
 - Reduced motion is respected. The `prefers-reduced-motion` block in `tokens.css` already zeroes durations — extend it if you add new motion.
