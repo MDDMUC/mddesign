@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import styles from './page.module.css'
+import { MotionDemo } from './MotionDemo'
 
 export const metadata: Metadata = {
   title: 'System — Martin Drexler',
@@ -59,11 +60,11 @@ export default function SystemPage() {
 
       <main className={styles.main}>
         <section className={styles.titleSection}>
-          <span className={styles.coord}>00 — DESIGN SYSTEM</span>
-          <h1 className={styles.title}>
+          <span className={`${styles.coord} reveal-fade`}>00 — DESIGN SYSTEM</span>
+          <h1 className={`${styles.title} reveal-mask reveal-stagger-1`}>
             Zion v2<span className={styles.cursor} aria-hidden="true" />
           </h1>
-          <p className={styles.lede}>
+          <p className={`${styles.lede} reveal-rise reveal-stagger-3`}>
             Pure white field, ink hairlines, no chroma. Inter for content, IBM Plex Mono for the
             system&apos;s voice. This page is the reference — every primitive in one place.
           </p>
@@ -267,7 +268,16 @@ export default function SystemPage() {
           <p className={styles.fineprint}>Blinks at 1.2s. Reduced-motion turns it solid.</p>
         </Block>
 
-        <Divider id="03" label="PATTERNS" />
+        <Divider id="03" label="MOTION" />
+
+        <Block label="Reveal vocabulary">
+          <p className={styles.fineprint}>
+            Entrance animations. CSS-only, run once on mount. Reduced-motion zeros every duration.
+          </p>
+          <MotionDemo />
+        </Block>
+
+        <Divider id="04" label="PATTERNS" />
 
         <Block label="Section identifier in context">
           <div className={styles.sectionDemo}>
@@ -311,7 +321,7 @@ export default function SystemPage() {
           </div>
         </Block>
 
-        <Divider id="04" label="ANTI-PATTERNS" />
+        <Divider id="05" label="ANTI-PATTERNS" />
 
         <Block label="What the design-critic will reject">
           <ul className={styles.antiList}>

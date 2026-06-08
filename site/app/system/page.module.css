@@ -785,6 +785,72 @@
   font-weight: 500;
 }
 
+/* ───────── Motion demo ───────── */
+
+.motionDemo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.motionToolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding-bottom: var(--space-3);
+  border-bottom: var(--rule-faint);
+}
+
+.motionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--space-5);
+}
+
+.motionCell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.motionFrame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 96px;
+  padding: var(--space-4);
+  border: var(--rule);
+  overflow: hidden;
+}
+
+.motionMark {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 500;
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-tight);
+  color: var(--ink);
+  display: inline-block;
+}
+
+.motionLineTrack {
+  width: 100%;
+  height: 1px;
+  background: var(--ink);
+}
+
+.staggerRow {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.staggerDot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  background: var(--ink);
+}
+
 /* ───────── Responsive ───────── */
 
 @media (max-width: 900px) {

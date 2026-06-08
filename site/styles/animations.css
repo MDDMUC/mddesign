@@ -1,0 +1,116 @@
+/**
+ * Motion library — Zion v2
+ *
+ * Entrance animations only. Pure CSS, run once on initial paint.
+ *
+ * Vocabulary (see design/SYSTEM.md §7):
+ *   .reveal-rise   — translate + fade. Default body reveal.
+ *   .reveal-fade   — opacity only. Captions, fineprint.
+ *   .reveal-mask   — clip-path bottom-to-top reveal. Display headlines.
+ *   .reveal-line   — scaleX from left. Hairlines and dividers.
+ *   .reveal-clip   — clip-path top+bottom inset wipe. Images, frames.
+ *
+ * Stagger:
+ *   .reveal-stagger-1 ... -5  — add animation-delay (60→480ms).
+ *
+ * Rules:
+ *   - These animations run on mount. No scroll triggers, no IntersectionObserver.
+ *   - Reduced-motion zeros every duration via tokens.css.
+ *   - Never combine a reveal class on the same element as a hover/state
+ *     transition that touches the same property (transform/opacity).
+ */
+
+/* ── Keyframes ─────────────────────────── */
+
+@keyframes reveal-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes reveal-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes reveal-mask {
+  from { clip-path: inset(0 0 100% 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+@keyframes reveal-line {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes reveal-clip {
+  from { clip-path: inset(50% 0 50% 0); }
+  to   { clip-path: inset(0 0 0 0); }
+}
+
+/* ── Utility classes ───────────────────── */
+
+.reveal-rise,
+.reveal-fade,
+.reveal-mask,
+.reveal-line,
+.reveal-clip {
+  animation-fill-mode: both;
+  animation-timing-function: var(--ease-reveal);
+}
+
+.reveal-rise {
+  animation-name: reveal-rise;
+  animation-duration: var(--dur-reveal);
+}
+
+.reveal-fade {
+  animation-name: reveal-fade;
+  animation-duration: var(--dur-reveal);
+}
+
+.reveal-mask {
+  animation-name: reveal-mask;
+  animation-duration: var(--dur-reveal);
+  /* The mask-reveal pairs well with translateY on its inner content for
+     letterpress-style risers — see SYSTEM.md §7 for the wrapped variant. */
+}
+
+.reveal-line {
+  animation-name: reveal-line;
+  animation-duration: var(--dur-line);
+  transform-origin: left center;
+}
+
+.reveal-clip {
+  animation-name: reveal-clip;
+  animation-duration: var(--dur-reveal);
+}
+
+/* ── Stagger delays ────────────────────── */
+
+.reveal-stagger-1 { animation-delay: var(--stagger-1); }
+.reveal-stagger-2 { animation-delay: var(--stagger-2); }
+.reveal-stagger-3 { animation-delay: var(--stagger-3); }
+.reveal-stagger-4 { animation-delay: var(--stagger-4); }
+.reveal-stagger-5 { animation-delay: var(--stagger-5); }
+
+/* ── Reduced motion ────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-rise,
+  .reveal-fade,
+  .reveal-mask,
+  .reveal-line,
+  .reveal-clip {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+}

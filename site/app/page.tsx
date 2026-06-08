@@ -4,7 +4,7 @@ import styles from './page.module.css'
 export default function Home() {
   return (
     <main className={styles.main}>
-      <picture>
+      <picture className="reveal-fade">
         <source
           srcSet="/images/hero/familycrest.webp"
           type="image/webp"
@@ -19,7 +19,7 @@ export default function Home() {
           className={styles.crest}
         />
       </picture>
-      <Link href="/contact" className={styles.button}>
+      <Link href="/contact" className={`${styles.button} reveal-rise reveal-stagger-3`}>
         Contact
       </Link>
     </main>

@@ -169,24 +169,63 @@ Inter is loaded; IBM Plex Mono will be added via `next/font/google`. No third fa
 
 ## 7. Motion
 
+Two domains: **state** (hover, focus, form submission — fast, mechanical, `--ease-out`) and **entrance** (page-load reveals — slower, settled, `--ease-reveal`). They use different tokens because they communicate different things.
+
 ```
 --dur-instant   80ms
---dur-fast      160ms
---dur-base      240ms
---dur-slow      400ms
+--dur-fast      160ms                            state — micro
+--dur-base      240ms                            state — default
+--dur-slow      400ms                            state — heavy
+--dur-reveal    700ms                            entrance — type, blocks
+--dur-line      900ms                            entrance — hairline draw
 
---ease-out     cubic-bezier(0.2, 0, 0, 1)    sharp out
---ease-in      cubic-bezier(0.5, 0, 1, 0.5)  sharp in
---ease-inout   cubic-bezier(0.7, 0, 0.2, 1)  mechanical curve
+--ease-out      cubic-bezier(0.2, 0, 0, 1)       state default — sharp out
+--ease-in       cubic-bezier(0.5, 0, 1, 0.5)
+--ease-inout    cubic-bezier(0.7, 0, 0.2, 1)
+--ease-reveal   cubic-bezier(0.16, 1, 0.3, 1)    entrance default — gentle settle
+
+--stagger-1     60ms                             child delay step (1×)
+--stagger-2     120ms
+--stagger-3     200ms
+--stagger-4     320ms
+--stagger-5     480ms
 ```
 
-**Rules:**
+### 7.1 State motion (always-on)
 
-- Default duration: `--dur-base`. Default easing: `--ease-out`.
-- What moves: state changes (hover, focus, page transition, form submission).
-- What doesn't move: hero headlines, body copy, the crest, the grid.
-- No scroll-triggered fade-ins. No parallax. No looping animations except the cursor blink (§10).
-- `prefers-reduced-motion` zeroes all durations — handled in `tokens.css`.
+- Default duration `--dur-base`. Default easing `--ease-out`.
+- Applies to: hover, focus, form state changes, button presses.
+- Always uses `transition`, never `animation`.
+
+### 7.2 Entrance motion (page-load reveals)
+
+Five primitives, in `site/styles/animations.css`. They run **once on mount** as CSS animations — no scroll triggers, no IntersectionObserver. Reduced-motion zeros every duration. Apply them by adding the class to any element.
+
+| Class | Effect | Use |
+|---|---|---|
+| `.reveal-rise` | translateY(12px) + opacity 0 → 1 | Default body reveal. Subtitles, paragraphs, blocks. |
+| `.reveal-fade` | opacity 0 → 1 | Captions, mono labels, fineprint. The lightest touch. |
+| `.reveal-mask` | clip-path `inset(0 0 100% 0)` → `inset(0)` | Display headlines. Reads as the text revealing from below. |
+| `.reveal-line` | scaleX(0) → scaleX(1), origin left | Hairlines and dividers drawing in. |
+| `.reveal-clip` | clip-path `inset(50% 0)` → `inset(0)` | Images and frames. Rectangular wipe from horizontal centre. |
+
+**Stagger:** add `.reveal-stagger-1` through `.reveal-stagger-5` to delay sequential children. Use whole-step delays — don't invent intermediates.
+
+**Recipe — a hero:**
+```jsx
+<span className="coord reveal-fade">00 — INDEX</span>
+<h1 className="reveal-mask reveal-stagger-1">Display headline</h1>
+<p className="reveal-rise reveal-stagger-3">Lede paragraph...</p>
+```
+
+The coord drops in first (instant fade), the headline rises through its mask 60ms later, the lede follows at 200ms. The sequence reads as deliberate, not decorative — the page assembles itself.
+
+### 7.3 What moves vs. what doesn't
+
+- **Moves on entrance:** display headlines (mask), coords + small chrome (fade), body blocks + buttons (rise), divider hairlines (line), hero images (clip).
+- **Moves on state:** hover, focus, form submission feedback.
+- **Loops:** only the cursor (§9.7). Nothing else loops.
+- **Never moves on scroll.** No scroll-triggered fade-ins. No parallax. No "scroll-reveal" — when you can see the rest of the page when scrolling, the choreography is over.
 
 ---
 

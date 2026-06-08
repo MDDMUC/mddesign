@@ -101,10 +101,20 @@
   --dur-fast: 160ms;
   --dur-base: 240ms;
   --dur-slow: 400ms;
+  --dur-reveal: 700ms;       /* type / element entrance */
+  --dur-line: 900ms;          /* hairline draw-in */
 
   --ease-out: cubic-bezier(0.2, 0, 0, 1);
   --ease-in: cubic-bezier(0.5, 0, 1, 0.5);
   --ease-inout: cubic-bezier(0.7, 0, 0.2, 1);
+  --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);  /* gentle settle for entrances */
+
+  /* Stagger steps — used as animation-delay multipliers. */
+  --stagger-1: 60ms;
+  --stagger-2: 120ms;
+  --stagger-3: 200ms;
+  --stagger-4: 320ms;
+  --stagger-5: 480ms;
 
   /* Legacy motion aliases */
   --duration-fast: var(--dur-fast);
@@ -123,6 +133,13 @@
     --dur-fast: 0ms;
     --dur-base: 0ms;
     --dur-slow: 0ms;
+    --dur-reveal: 0ms;
+    --dur-line: 0ms;
+    --stagger-1: 0ms;
+    --stagger-2: 0ms;
+    --stagger-3: 0ms;
+    --stagger-4: 0ms;
+    --stagger-5: 0ms;
     --duration-fast: 0ms;
     --duration-normal: 0ms;
   }

@@ -51,8 +51,8 @@ export default function ContactPage() {
       {/* Hero */}
       <section className={styles.hero}>
         <div className={styles.heroContainer}>
-          <h1 className={styles.heroTitle}>Let&apos;s work together</h1>
-          <p className={styles.heroSubtitle}>
+          <h1 className={`${styles.heroTitle} reveal-mask`}>Let&apos;s work together</h1>
+          <p className={`${styles.heroSubtitle} reveal-rise reveal-stagger-2`}>
             Have a project in mind? I&apos;d love to hear about it.
             Send me a message and I&apos;ll get back to you within 24 hours.
           </p>
@@ -60,7 +60,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form Section */}
-      <section className={styles.contactSection}>
+      <section className={`${styles.contactSection} reveal-rise reveal-stagger-3`}>
         <div className={styles.contactContainer}>
           <div className={styles.contactGrid}>
             {/* Form */}
