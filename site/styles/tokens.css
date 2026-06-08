@@ -1,41 +1,128 @@
 /**
- * Design Tokens — Martin Drexler holding page + contact form
- * Direction: white background, black ink, system/Inter type. That's it.
+ * Design Tokens — Martin Drexler portfolio
+ * Direction: Zion — pure white field, 1px ink hairlines, no chroma, no radius.
+ * Mono (IBM Plex) is the voice of the system; sans (Inter) is the voice of the content.
+ *
+ * Token authority: this file is canonical. Anything inlined in a CSS module
+ * that could be a token is wrong — promote it here.
  */
 
 :root {
-  /* Color */
+  /* ───────── Color ─────────
+   * Pure black / pure white only. The greyscale ramp exists for hierarchy,
+   * not for decoration. No accent. No tint. If a UI moment needs emphasis,
+   * use weight, size, or inversion — not color. */
   --bg: #ffffff;
-  --ink: #111111;
-  --ink-soft: #444444;
-  --ink-mute: #777777;
-  --ink-faint: #d8d8d8;
+  --bg-inverse: #000000;
 
-  /* Type */
-  --font-ui: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --ink: #000000;
+  --ink-80: #1a1a1a;   /* body text on bright surface (softer than pure) */
+  --ink-70: #404040;   /* secondary text, dimmed labels */
+  --ink-50: #737373;   /* placeholder, muted note */
+  --ink-30: #b3b3b3;   /* disabled, subtle hairline */
+  --ink-15: #d9d9d9;   /* faint divider */
+  --ink-05: #f2f2f2;   /* hairline-tinted hover surface */
+  --ink-inverse: #ffffff;
 
-  /* Spacing scale (kept simple) */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.5rem;
-  --space-6: 2rem;
-  --space-7: 3rem;
-  --space-8: 4rem;
-  --space-9: 6rem;
+  /* Legacy aliases — existing modules consume these. Do not add new uses. */
+  --ink-soft: var(--ink-70);
+  --ink-mute: var(--ink-50);
+  --ink-faint: var(--ink-15);
 
-  /* Layout */
-  --container-max: 960px;
+  /* ───────── Type ───────── */
+  --font-sans: var(--font-sans-loaded), 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: var(--font-mono-loaded), 'IBM Plex Mono', ui-monospace, 'Menlo', 'Consolas', monospace;
 
-  /* Motion */
-  --duration-fast: 150ms;
-  --duration-normal: 250ms;
-  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Semantic aliases — use these in component CSS, not the raw family names. */
+  --font-display: var(--font-sans);
+  --font-body: var(--font-sans);
+  --font-data: var(--font-mono);
+  --font-ui: var(--font-sans); /* legacy alias */
+
+  /* Type scale — derived from a 1.25 ratio, rounded to friendly stops. */
+  --text-2xs: 0.6875rem;  /* 11 — micro mono chrome */
+  --text-xs:  0.75rem;    /* 12 — mono label, coord */
+  --text-sm:  0.875rem;   /* 14 — secondary body */
+  --text-base: 1rem;      /* 16 — body */
+  --text-lg:  1.125rem;   /* 18 — editorial body */
+  --text-xl:  1.375rem;   /* 22 — subheading */
+  --text-2xl: 1.75rem;    /* 28 — h2 */
+  --text-3xl: 2.25rem;    /* 36 — h1 small */
+  --text-4xl: 3rem;       /* 48 — display */
+  --text-5xl: 4.5rem;     /* 72 — large display */
+  --text-6xl: 6rem;       /* 96 — monumental */
+
+  --leading-tight: 1.05;
+  --leading-snug: 1.2;
+  --leading-body: 1.55;
+  --leading-loose: 1.7;
+
+  --tracking-display: -0.02em;
+  --tracking-body: 0;
+  --tracking-mono: 0.02em;
+  --tracking-caps: 0.14em;
+
+  /* ───────── Space ─────────
+   * 4-based scale. Don't invent values between these. */
+  --space-0: 0;
+  --space-1: 0.25rem;   /* 4 */
+  --space-2: 0.5rem;    /* 8 */
+  --space-3: 0.75rem;   /* 12 */
+  --space-4: 1rem;      /* 16 */
+  --space-5: 1.5rem;    /* 24 */
+  --space-6: 2rem;      /* 32 */
+  --space-7: 3rem;      /* 48 */
+  --space-8: 4rem;      /* 64 */
+  --space-9: 6rem;      /* 96 */
+  --space-10: 8rem;     /* 128 */
+  --space-11: 12rem;    /* 192 */
+
+  /* ───────── Layout ───────── */
+  --container-narrow: 720px;   /* editorial column */
+  --container-max: 1280px;     /* default content max */
+  --container-wide: 1480px;    /* hero, work index, monumental sections */
+  --gutter: var(--space-5);
+  --pad-page: var(--space-5);
+  --pad-page-lg: var(--space-7);
+  --rail-h: 56px;              /* top/bottom rail */
+
+  /* ───────── Rules ─────────
+   * Hairlines are the signature. `--rule` is the default — pure black 1px.
+   * Mute and faint are for hierarchy within a single composition. */
+  --rule-w: 1px;
+  --rule: 1px solid var(--ink);
+  --rule-mute: 1px solid var(--ink-30);
+  --rule-faint: 1px solid var(--ink-15);
+  --radius: 0;                 /* hard rule: no rounded corners */
+
+  /* ───────── Motion ─────────
+   * Mechanical-but-not-jarring. Sharp out, gentle in. */
+  --dur-instant: 80ms;
+  --dur-fast: 160ms;
+  --dur-base: 240ms;
+  --dur-slow: 400ms;
+
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --ease-in: cubic-bezier(0.5, 0, 1, 0.5);
+  --ease-inout: cubic-bezier(0.7, 0, 0.2, 1);
+
+  /* Legacy motion aliases */
+  --duration-fast: var(--dur-fast);
+  --duration-normal: var(--dur-base);
+
+  /* ───────── Layers ───────── */
+  --z-base: 0;
+  --z-rail: 10;
+  --z-overlay: 50;
+  --z-modal: 100;
 }
 
 @media (prefers-reduced-motion: reduce) {
   :root {
+    --dur-instant: 0ms;
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-slow: 0ms;
     --duration-fast: 0ms;
     --duration-normal: 0ms;
   }

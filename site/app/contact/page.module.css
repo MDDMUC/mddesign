@@ -18,20 +18,21 @@
 }
 
 .heroTitle {
-  font-family: var(--font-ui);
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-family: var(--font-display);
+  font-size: clamp(var(--text-3xl), 4vw, var(--text-4xl));
   font-weight: 600;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-display);
   margin: 0 0 var(--space-4);
   color: var(--ink);
 }
 
 .heroSubtitle {
-  font-size: 1.0625rem;
-  line-height: 1.6;
-  color: var(--ink-soft);
+  font-size: var(--text-lg);
+  line-height: var(--leading-body);
+  color: var(--ink-70);
   margin: 0;
+  max-width: 56ch;
 }
 
 /* ===== CONTACT GRID ===== */
@@ -58,30 +59,34 @@
 }
 
 .formTitle {
-  font-family: var(--font-ui);
-  font-size: 1.375rem;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
   font-weight: 600;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.005em;
   color: var(--ink);
   margin: 0 0 var(--space-2);
 }
 
 .formDescription {
-  font-size: 0.9375rem;
-  line-height: 1.55;
-  color: var(--ink-soft);
+  font-size: var(--text-sm);
+  line-height: var(--leading-body);
+  color: var(--ink-70);
   margin: 0 0 var(--space-6);
+  max-width: 52ch;
 }
 
 .successMessage {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-4);
-  background: #f5f5f5;
-  border: 1px solid var(--ink-faint);
-  color: var(--ink);
-  font-size: 0.9375rem;
+  padding: var(--space-3) var(--space-4);
+  background: var(--ink);
+  border: var(--rule);
+  color: var(--ink-inverse);
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
   margin-bottom: var(--space-5);
 }
 
@@ -105,41 +110,38 @@
 }
 
 .label {
-  font-size: 0.8125rem;
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
   font-weight: 500;
-  letter-spacing: 0.02em;
-  color: var(--ink-soft);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-70);
 }
 
 .input,
 .textarea {
   width: 100%;
   padding: var(--space-3) var(--space-4);
-  font-family: var(--font-ui);
-  font-size: 1rem;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
   line-height: 1.4;
   color: var(--ink);
-  background: #ffffff;
-  border: 1px solid var(--ink-faint);
-  border-radius: 0;
-  transition: border-color var(--duration-fast) var(--ease-out);
+  background: var(--bg);
+  border: var(--rule);
+  border-radius: var(--radius);
+  transition: outline-color var(--dur-fast) var(--ease-out);
 }
 
 .input::placeholder,
 .textarea::placeholder {
-  color: var(--ink-mute);
-  opacity: 0.7;
-}
-
-.input:hover,
-.textarea:hover {
-  border-color: var(--ink-mute);
+  color: var(--ink-50);
+  opacity: 1;
 }
 
 .input:focus,
 .textarea:focus {
-  outline: none;
-  border-color: var(--ink);
+  outline: 1px solid var(--ink);
+  outline-offset: 3px;
 }
 
 .textarea {
@@ -154,25 +156,33 @@
   justify-content: center;
   padding: var(--space-3) var(--space-7);
   margin-top: var(--space-2);
-  font-family: var(--font-ui);
-  font-size: 0.9375rem;
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
   font-weight: 500;
-  letter-spacing: 0.02em;
-  color: #ffffff;
-  background: var(--ink);
-  border: 1px solid var(--ink);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink);
+  background: var(--bg);
+  border: var(--rule);
   cursor: pointer;
-  transition: background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
 }
 
-.submitButton:hover:not(:disabled),
-.submitButton:focus-visible:not(:disabled) {
-  background: #ffffff;
-  color: var(--ink);
+.submitButton:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--ink-inverse);
+}
+
+.submitButton:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 3px;
 }
 
 .submitButton:disabled {
-  opacity: 0.5;
+  color: var(--ink-30);
+  border-color: var(--ink-30);
   cursor: not-allowed;
 }
 
@@ -185,10 +195,12 @@
 }
 
 .infoTitle {
-  font-family: var(--font-ui);
-  font-size: 1.125rem;
-  font-weight: 600;
-  color: var(--ink);
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-70);
   margin: 0 0 var(--space-4);
 }
 
@@ -201,38 +213,40 @@
 .contactMethod {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.125rem;
-  padding: var(--space-4) 0;
-  border-top: 1px solid var(--ink-faint);
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-3);
+  margin: 0 calc(var(--space-3) * -1);
+  border-top: var(--rule);
   text-decoration: none;
   color: inherit;
-  transition: background-color var(--duration-fast) var(--ease-out);
+  transition: background-color var(--dur-fast) var(--ease-out);
 }
 
 .contactMethod:last-child {
-  border-bottom: 1px solid var(--ink-faint);
+  border-bottom: var(--rule);
 }
 
 .contactMethod:hover {
-  background: #fafafa;
+  background: var(--ink-05);
 }
 
 .methodLabel {
-  font-size: 0.75rem;
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
   font-weight: 500;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
-  color: var(--ink-mute);
+  color: var(--ink-70);
 }
 
 .methodValue {
-  font-size: 1rem;
+  font-size: var(--text-base);
   color: var(--ink);
 }
 
 .methodNote {
-  font-size: 0.8125rem;
-  color: var(--ink-mute);
+  font-size: var(--text-sm);
+  color: var(--ink-50);
 }
 
 .locationInfo,
@@ -244,23 +258,24 @@
 
 .locationLabel,
 .availabilityLabel {
-  font-size: 0.75rem;
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
   font-weight: 500;
-  letter-spacing: 0.06em;
+  letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
-  color: var(--ink-mute);
-  margin-bottom: 0.25rem;
+  color: var(--ink-70);
+  margin-bottom: var(--space-1);
 }
 
 .locationValue,
 .availabilityValue {
-  font-size: 1rem;
+  font-size: var(--text-base);
   color: var(--ink);
 }
 
 .locationNote {
-  font-size: 0.8125rem;
-  color: var(--ink-mute);
+  font-size: var(--text-sm);
+  color: var(--ink-50);
 }
 
 /* ===== RESPONSIVE ===== */

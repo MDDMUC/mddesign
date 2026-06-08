@@ -1,0 +1,840 @@
+/* /system — design system reference page. Internal demo route. */
+
+.page {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink-80);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ───────── Rails ───────── */
+
+.rail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--rail-h);
+  padding: 0 var(--pad-page);
+  border-bottom: var(--rule);
+}
+
+.brand {
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  color: var(--ink);
+}
+
+.railNav {
+  display: flex;
+  gap: var(--space-6);
+}
+
+.footRail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--rail-h);
+  padding: 0 var(--pad-page);
+  border-top: var(--rule);
+  margin-top: var(--space-9);
+}
+
+/* ───────── Main ───────── */
+
+.main {
+  max-width: var(--container-max);
+  width: 100%;
+  margin: 0 auto;
+  padding: var(--space-9) var(--pad-page);
+  flex: 1;
+}
+
+.titleSection {
+  margin-bottom: var(--space-10);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--text-6xl);
+  font-weight: 500;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-display);
+  color: var(--ink);
+  margin: var(--space-3) 0 var(--space-5);
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.lede {
+  font-size: var(--text-lg);
+  line-height: var(--leading-body);
+  color: var(--ink-70);
+  max-width: 60ch;
+  margin: 0;
+}
+
+/* ───────── Coord chrome ───────── */
+
+.coord {
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-70);
+  display: inline-block;
+}
+
+.coordMute {
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  color: var(--ink-50);
+  letter-spacing: var(--tracking-mono);
+}
+
+.coordNote {
+  font-size: var(--text-sm);
+  color: var(--ink-50);
+}
+
+/* ───────── Block (section wrapper) ───────── */
+
+.block {
+  margin: var(--space-8) 0;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--space-7);
+  padding-top: var(--space-5);
+  border-top: var(--rule-faint);
+}
+
+.blockLabel {
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-70);
+  margin: 0;
+  position: sticky;
+  top: var(--space-4);
+  align-self: start;
+}
+
+.blockBody > * + * {
+  margin-top: var(--space-5);
+}
+
+/* ───────── Big section divider ───────── */
+
+.bigDivider {
+  margin: var(--space-10) 0 var(--space-7);
+  padding: var(--space-3) 0;
+  border-top: var(--rule);
+  border-bottom: var(--rule);
+}
+
+.bigDividerLabel {
+  font-family: var(--font-data);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+/* ───────── Cursor ───────── */
+
+.cursor {
+  display: inline-block;
+  width: 0.4em;
+  height: 0.9em;
+  background: var(--ink);
+  animation: blink 1.2s steps(2, end) infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor { animation: none; }
+}
+
+/* ───────── Swatches ───────── */
+
+.swatchGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-4);
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.swatchChip {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: var(--rule);
+}
+
+.swatchMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.swatchToken {
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono);
+  color: var(--ink);
+}
+
+.swatchValue {
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  color: var(--ink-50);
+}
+
+.swatchUse {
+  font-size: var(--text-sm);
+  color: var(--ink-70);
+}
+
+/* ───────── Type ───────── */
+
+.typeStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.typeRow {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: var(--space-5);
+  align-items: baseline;
+  padding-bottom: var(--space-3);
+  border-bottom: var(--rule-faint);
+}
+
+.typeMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.typeSample {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-tight);
+  color: var(--ink);
+}
+
+.typeSampleMono {
+  font-family: var(--font-data);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.pairing {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-7);
+}
+
+.pairingTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 500;
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-tight);
+  color: var(--ink);
+  margin: var(--space-2) 0 var(--space-4);
+}
+
+.pairingBody {
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--ink-80);
+  margin: 0;
+  max-width: 50ch;
+}
+
+.pairingMonoTitle {
+  font-family: var(--font-data);
+  font-size: var(--text-xl);
+  font-weight: 500;
+  letter-spacing: var(--tracking-mono);
+  color: var(--ink);
+  margin: var(--space-2) 0 var(--space-4);
+}
+
+.pairingMonoBody {
+  font-family: var(--font-data);
+  font-size: var(--text-sm);
+  line-height: var(--leading-body);
+  letter-spacing: var(--tracking-mono);
+  color: var(--ink-80);
+  margin: 0;
+  max-width: 44ch;
+}
+
+/* ───────── Space ───────── */
+
+.spaceStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.spaceRow {
+  display: grid;
+  grid-template-columns: 100px 60px 1fr;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.spaceBar {
+  height: 12px;
+  background: var(--ink);
+}
+
+/* ───────── Rules ───────── */
+
+.ruleStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.ruleRow {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.ruleDefault { height: 1px; background: var(--ink); }
+.ruleMute    { height: 1px; background: var(--ink-30); }
+.ruleFaint   { height: 1px; background: var(--ink-15); }
+
+/* ───────── Button matrix ───────── */
+
+.matrix {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.matrixHead,
+.matrixRow {
+  display: grid;
+  grid-template-columns: 100px repeat(4, 1fr);
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.matrixHead {
+  padding-bottom: var(--space-2);
+  border-bottom: var(--rule-faint);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-5);
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+  width: fit-content;
+}
+
+.btn_outline {
+  color: var(--ink);
+  background: var(--bg);
+  border: var(--rule);
+}
+.btn_outline:hover,
+.btn_outline[data-state="hover"] {
+  background: var(--ink);
+  color: var(--ink-inverse);
+}
+
+.btn_solid {
+  color: var(--ink-inverse);
+  background: var(--ink);
+  border: var(--rule);
+}
+.btn_solid:hover,
+.btn_solid[data-state="hover"] {
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.btn_ghost {
+  color: var(--ink);
+  background: transparent;
+  border: 1px solid transparent;
+}
+.btn_ghost:hover,
+.btn_ghost[data-state="hover"] {
+  background: var(--ink-05);
+}
+
+.btn:focus-visible,
+.btn[data-state="focus"] {
+  outline: 1px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.btn:disabled,
+.btn[disabled] {
+  color: var(--ink-30);
+  border-color: var(--ink-30);
+  background: var(--bg);
+  cursor: not-allowed;
+}
+.btn_ghost:disabled,
+.btn_ghost[disabled] {
+  border-color: transparent;
+}
+
+/* ───────── Fields ───────── */
+
+.fieldGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-5);
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.fieldLabel {
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink-70);
+}
+
+.field {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.4;
+  color: var(--ink);
+  background: var(--bg);
+  border: var(--rule);
+  border-radius: var(--radius);
+  resize: vertical;
+}
+
+.field::placeholder {
+  color: var(--ink-50);
+  opacity: 1;
+}
+
+.field:focus,
+.field[data-state="focus"] {
+  outline: 1px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.field:disabled,
+.field[data-state="disabled"] {
+  color: var(--ink-50);
+  border-color: var(--ink-30);
+  background: var(--bg);
+  cursor: not-allowed;
+}
+
+.field[data-state="error"] {
+  border-color: var(--ink);
+}
+
+.fieldError {
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-top: var(--space-1);
+}
+
+/* ───────── Links ───────── */
+
+.linkStack > p {
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--ink-80);
+  margin: 0 0 var(--space-3);
+  max-width: 60ch;
+}
+
+.linkInline {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--ink-30);
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--dur-fast) var(--ease-out);
+}
+.linkInline:hover {
+  text-decoration-color: var(--ink);
+}
+
+.linkStandalone {
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur-fast) var(--ease-out);
+  padding-bottom: 2px;
+}
+.linkStandalone:hover,
+.linkStandalone[data-state="hover"] {
+  border-bottom-color: var(--ink);
+}
+
+/* ───────── Dividers ───────── */
+
+.dividerStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.divPlain {
+  height: 1px;
+  background: var(--ink);
+  margin-top: var(--space-2);
+}
+
+.divLabelled {
+  position: relative;
+  margin-top: var(--space-2);
+  border-top: var(--rule);
+}
+
+.divLabel {
+  position: absolute;
+  top: 0;
+  left: var(--space-4);
+  transform: translateY(-50%);
+  background: var(--bg);
+  padding: 0 var(--space-3);
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+/* ───────── Coord list ───────── */
+
+.coordList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+}
+
+.coordList li {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  align-items: baseline;
+  gap: var(--space-4);
+  padding: var(--space-2) 0;
+  border-bottom: var(--rule-faint);
+}
+
+/* ───────── Frame ───────── */
+
+.frame {
+  position: relative;
+  border: var(--rule);
+  padding: var(--space-7) var(--space-5) var(--space-5);
+}
+
+.frameLabel {
+  position: absolute;
+  top: 0;
+  left: var(--space-4);
+  transform: translateY(-50%);
+  background: var(--bg);
+  padding: 0 var(--space-3);
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.frameBody {
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--ink-80);
+  margin: 0;
+  max-width: 60ch;
+}
+
+/* ───────── Status ───────── */
+
+.statusStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.statusIdle,
+.statusActive {
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  padding: var(--space-1) var(--space-3);
+}
+
+.statusIdle {
+  color: var(--ink);
+  border: var(--rule);
+}
+
+.statusActive {
+  color: var(--ink-inverse);
+  background: var(--ink);
+  border: var(--rule);
+}
+
+/* ───────── Cursor demo / fineprint ───────── */
+
+.cursorDemo {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 500;
+  letter-spacing: var(--tracking-display);
+  color: var(--ink);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.fineprint {
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  color: var(--ink-50);
+  margin: 0;
+  letter-spacing: var(--tracking-mono);
+}
+
+/* ───────── Section identifier demo ───────── */
+
+.sectionDemo {
+  position: relative;
+  padding-top: var(--space-5);
+}
+
+.sectionDemoId {
+  font-family: var(--font-data);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--ink);
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+.sectionDemoRule {
+  height: 1px;
+  background: var(--ink);
+  margin-bottom: var(--space-4);
+}
+
+.sectionDemoTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 500;
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-snug);
+  color: var(--ink);
+  margin: 0 0 var(--space-3);
+  max-width: 30ch;
+}
+
+.sectionDemoBody {
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--ink-80);
+  max-width: 60ch;
+  margin: 0;
+}
+
+/* ───────── Two-up ───────── */
+
+.twoUp {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: var(--space-7);
+}
+
+.twoUpTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 500;
+  letter-spacing: var(--tracking-display);
+  line-height: var(--leading-snug);
+  color: var(--ink);
+  margin: var(--space-2) 0 var(--space-4);
+  max-width: 28ch;
+}
+
+.twoUpBody {
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--ink-80);
+  margin: 0;
+  max-width: 60ch;
+}
+
+.twoUpMeta {
+  padding-top: var(--space-7);
+  border-top: var(--rule-faint);
+}
+
+.metaList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+}
+
+.metaRow {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: var(--space-3);
+  align-items: baseline;
+}
+
+.metaValue {
+  font-size: var(--text-sm);
+  color: var(--ink-80);
+  margin: 0;
+}
+
+/* ───────── Anti-list ───────── */
+
+.antiList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.antiList li {
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--ink-80);
+  padding: var(--space-2) 0 var(--space-2) var(--space-5);
+  border-bottom: var(--rule-faint);
+  position: relative;
+}
+
+.antiList li::before {
+  content: "×";
+  position: absolute;
+  left: 0;
+  top: var(--space-2);
+  font-family: var(--font-data);
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* ───────── Responsive ───────── */
+
+@media (max-width: 900px) {
+  .block {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+  .blockLabel {
+    position: static;
+  }
+  .pairing,
+  .twoUp {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  .twoUpMeta {
+    padding-top: var(--space-5);
+  }
+  .matrixHead,
+  .matrixRow {
+    grid-template-columns: 80px repeat(4, 1fr);
+    gap: var(--space-2);
+  }
+  .title {
+    font-size: var(--text-4xl);
+  }
+  .coordList li {
+    grid-template-columns: 1fr;
+    gap: var(--space-1);
+  }
+}
+
+@media (max-width: 600px) {
+  .matrix {
+    overflow-x: auto;
+  }
+  .matrixHead,
+  .matrixRow {
+    grid-template-columns: 70px repeat(4, minmax(80px, 1fr));
+    min-width: 480px;
+  }
+  .typeRow {
+    grid-template-columns: 1fr;
+    gap: var(--space-2);
+  }
+  .ruleRow,
+  .spaceRow {
+    grid-template-columns: 90px 1fr;
+  }
+  .spaceRow > .coordMute {
+    display: none;
+  }
+}

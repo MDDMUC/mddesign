@@ -1,0 +1,35 @@
+{
+  "enabledPlugins": {
+    "frontend-design@claude-plugins-official": true,
+    "vercel@claude-plugins-official": true
+  },
+  "permissions": {
+    "allow": [
+      "Bash(npm run dev:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run start:*)",
+      "Bash(npm run typecheck:*)",
+      "Bash(npm install:*)",
+      "Bash(npm ci:*)",
+      "Bash(npx tsc:*)",
+      "Bash(npx next:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git add:*)",
+      "Bash(git restore --staged:*)",
+      "Bash(git branch:*)",
+      "Bash(git switch:*)",
+      "Bash(git stash list:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(cd site:*)",
+      "Bash(file:*)",
+      "Bash(identify:*)",
+      "WebFetch(domain:fonts.google.com)",
+      "WebFetch(domain:vercel.com)",
+      "WebFetch(domain:nextjs.org)"
+    ]
+  }
+}

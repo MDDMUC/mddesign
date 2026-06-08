@@ -1,79 +1,126 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code working in this repository.
 
-## Project Overview
+## Project
 
-Holding page for Martin Drexler. The site is intentionally minimal: a centered crest on a white background with a button to a contact form. That's it. Everything else has been scrapped.
+Martin Drexler is a freelance graphic designer (hello@martindrexler.com). This repo is his portfolio site — the ambition is **a world-class design-focused website for a freelance graphic design business**.
 
-**Current site map:**
-- `/` — white background, centered crest image (`public/images/hero/familycrest.png`), single Contact button.
-- `/contact` — functional contact form on a white background.
+**Current state (2026-06-08):** Holding page only. Has been deliberately scrapped back to crest + Contact button after several aesthetic pivots that drifted into generic territory. Expansion to a full portfolio is now authorized.
 
-If you're tempted to add a portfolio, services page, about page, case study, or any "rich" portfolio content — stop and confirm with the user first. The previous expansive structure was deliberately removed.
+**Current routes:**
+- `/` — white background, centered crest (`public/images/hero/familycrest.png`), single Contact button.
+- `/contact` — functional contact form.
+
+**Expansion is intentional and incremental.** Don't rebuild the whole site in one pass. Each new page or section should be designed and shipped to the quality bar set in `design/BRIEF.md`. If a page would look like it could come from a generic agency template, it isn't ready.
 
 ## Commands
 
-All commands run from the `site/` directory:
+All commands run from `site/`:
 
 ```bash
 cd site
-npm run dev        # Start development server (port 3000)
+npm run dev        # Dev server, port 3000
 npm run build      # Production build (static export → site/out/)
-npm run typecheck  # tsc --noEmit (TypeScript only; no ESLint — see note below)
+npm run typecheck  # tsc --noEmit
 npm run start      # Serve production build
 ```
 
-ESLint was removed because the Next 16 / ESLint 9 / `eslint-config-next` interplay is broken (FlatCompat circular-config error) and not worth fighting on a 60-line codebase. `tsc` and `next build` between them catch what matters.
+No ESLint (Next 16 / ESLint 9 / `eslint-config-next` interplay is broken). `tsc` + `next build` are the checks that matter.
 
 ## Tech Stack
 
 - **Framework:** Next.js 16 (App Router), React 19, TypeScript
-- **Styling:** CSS Modules + a small set of CSS custom properties in `site/styles/tokens.css`
-- **Fonts:** Inter only, loaded via `next/font/google`
+- **Styling:** CSS Modules + tokens in `site/styles/tokens.css`
+- **Fonts:** Inter via `next/font/google` (more may be added — coordinate via the BRIEF)
 - **Build:** Static export (`output: 'export'` in `next.config.ts`)
-- **Deployment:** Vercel (builds from `/site` directory — see root `vercel.json`)
+- **Deployment:** Vercel — builds from `/site` (see root `vercel.json`)
 
 ## Architecture
 
 ```
 site/
 ├── app/
-│   ├── layout.tsx         # Minimal: html/body wrapper, loads Inter
+│   ├── layout.tsx         # html/body wrapper, font loading
 │   ├── page.tsx           # Holding page: crest + Contact button
 │   ├── page.module.css
-│   └── contact/
-│       ├── layout.tsx     # SEO metadata
-│       ├── page.tsx       # Contact form (client component)
-│       └── page.module.css
+│   ├── contact/
+│   ├── icon.png           # Favicons
+│   ├── apple-icon.png
+│   ├── robots.ts
+│   └── sitemap.ts
 ├── styles/
-│   ├── tokens.css         # Small token set (color, spacing, type, motion)
-│   ├── reset.css          # Modern reset
-│   └── globals.css        # Global styles, imports tokens + reset
+│   ├── tokens.css         # Single token source — extend, don't fork
+│   ├── reset.css
+│   └── globals.css
 └── public/
     ├── icons/sprite.svg
-    └── images/hero/familycrest.png
+    └── images/hero/familycrest.{png,webp}
+
+design/
+├── BRIEF.md               # North-star: principles, sitemap, open questions
+├── moodboards/            # Visual references collected by the user
+├── references/            # Inspiration sites + analysis notes
+├── research/              # Discovery / strategy notes
+├── comps/                 # Static comps (image exports from design tools)
+├── wireframes/            # Layout sketches
+├── prototypes/            # Working prototypes (HTML/code experiments)
+└── exports/               # Final design assets to ship
+
+docs/
+└── archive/               # Historical design directions — DO NOT pattern-match
+
+logs/
+└── DECISIONS.md           # Append a line when a design or scope decision is made
 ```
 
-Notably absent (deliberately): no shared component library, no design-system component specs in code, no portfolio/about/services pages, no Tamagui (was unused), no scroll animations, no hand-drawn SVG primitives.
+**Deliberately absent:** no shared component library, no Tamagui, no design-system meta-folder. The brief lives in `design/`, the tokens live in `site/styles/`. One source of truth per concern.
 
-## Design
+## Design Direction
 
-Pure white background. Black text. Inter throughout. No accent color. No decorative SVG marks. No serif. The crest image is the only visual flourish.
+The aesthetic direction is owned by `design/BRIEF.md`. Read it before any visual work. If you find yourself making a visual decision that isn't covered by the brief or the tokens, **flag it** rather than guessing — and update the brief once it's resolved.
 
-Anything more elaborate than that needs explicit user buy-in. Earlier directions (Anduril, Shadow Trader, Zion, hand-drawn) are in `docs/archive/` for history; do not pattern-match from them.
+**Non-negotiable principles** (these live above the brief because they don't change between aesthetic directions):
+
+- Whitespace is an active design element. Use it aggressively.
+- Type is the primary visual language. Choose pairings deliberately; never use system stacks as a fallback that ships.
+- Show the work; don't talk about it. Case studies are evidence, not marketing copy.
+- If it looks like a Bootstrap template, a Tailwind UI kit, or a generic agency landing page, delete it and start over.
+- Performance is a design constraint. Animations hold 60fps; LCP image is optimized; total weight per page stays lean.
 
 ## Governance
 
-1. **Single source of truth per concern.** Tokens → `site/styles/tokens.css`. Project state → this file. Decisions → `logs/DECISIONS.md`.
-2. **CLAUDE.md must match the running site.** If the site grows beyond holding-page + contact-form, update this file in the same commit.
+1. **Single source of truth per concern.**
+   - Tokens → `site/styles/tokens.css`
+   - Design direction → `design/BRIEF.md`
+   - Project state / how-we-work → this file
+   - Decisions → `logs/DECISIONS.md`
+2. **CLAUDE.md must match the running site.** If the site grows beyond what's documented here, update this file in the same commit.
 3. **No new root-level `.md` files.** Pivots go straight to `docs/archive/`.
-4. **Don't pattern-match from `docs/archive/`.** It's history, not spec.
-5. **Workflow / agents / tickets scaffolding** at the repo root is unused; don't try to populate it without explicit instruction.
+4. **Don't pattern-match from `docs/archive/`.** It's history. Anduril, Shadow Trader, Zion, and hand-drawn directions all live there and were all rejected.
+5. **Workflow / agents / tickets scaffolding** at the repo root (`agents/`, `tickets/`, `workflow/`, `content/`) is currently unused. Don't populate it without explicit user direction — the prior multi-agent flow was aspirational and got in the way.
+
+## Working with the Design Critic
+
+A project-scoped subagent lives at `.claude/agents/design-critic.md`. Invoke it (via the `Agent` tool) when:
+- You've finished a meaningful visual change and want a second pass before claiming done.
+- You're unsure whether a design choice clears the bar set by the brief.
+- The user asks for a design review.
+
+Don't invoke it for trivial changes (copy edits, dependency bumps, typo fixes).
 
 ## Quality Standards
 
-- WCAG AA accessibility minimum (the page is simple enough this should be trivial).
+- WCAG AA accessibility minimum. Visible focus states everywhere. Color contrast meets AA on all text.
 - Static export must produce all routes cleanly.
-- No console warnings on `/` or `/contact`.
-- Image optimization: the crest PNG is 2.2 MB — consider compressing or converting to AVIF/WebP if LCP becomes an issue.
+- No console warnings on any page.
+- Image strategy: AVIF/WebP with PNG fallback; explicit `width`/`height`; `loading="lazy"` except for LCP image which gets `fetchPriority="high"`.
+- Reduced motion is respected. The `prefers-reduced-motion` block in `tokens.css` already zeroes durations — extend it if you add new motion.
+
+## When in Doubt
+
+Confirm with the user before:
+- Adding a new page or major section.
+- Changing the type system (adding/removing fonts, restructuring the scale).
+- Introducing a library or dependency.
+- Touching anything in `docs/archive/` — those files are frozen history.

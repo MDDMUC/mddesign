@@ -21,7 +21,6 @@ html {
   -moz-text-size-adjust: none;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
-  scroll-behavior: smooth;
 }
 
 /* Remove list styles */
@@ -92,10 +91,6 @@ p {
 
 /* Remove animations for people who prefer not to see them */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
   *,
   *::before,
   *::after {

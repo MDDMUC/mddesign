@@ -1,23 +1,26 @@
-# MDDesign Website Project
+# mddesign
 
-Goal: build a world-class website for a freelance graphic design business.
+Portfolio site for Martin Drexler — freelance graphic designer (hello@martindrexler.com).
 
-Repo structure
-- agents/PROJECT_STRATEGY.md
-- agents/DESIGN_AGENT.md
-- agents/IMPLEMENTATION_ENGINEER.md
-- agents/QA_TESTING.md
-- workflow/WORKFLOW.md
-- workflow/TICKET_TEMPLATE.md
-- MODEL_SELECTION.md
+Deployed to https://martindrexler.com via Vercel.
 
-How we work
-- The project strategy agent owns the brief, sitemap, and backlog.
-- The design agent delivers the visual system and page comps.
-- The implementation engineer builds to spec and performance targets.
-- The QA agent validates across devices, browsers, and accessibility needs.
+## Start here
 
-Ticketing workflow
-- Use `workflow/TICKET_TEMPLATE.md` for every story, task, or bug.
-- Follow the status flow in `workflow/WORKFLOW.md`.
-- Record decisions and scope changes in the tracker.
+- **`CLAUDE.md`** — how this repo works, current site state, governance.
+- **`design/BRIEF.md`** — design north-star: principles, sitemap, open questions.
+- **`site/`** — the Next.js 16 app. All code lives here.
+- **`logs/DECISIONS.md`** — running log of design and scope decisions.
+
+## Develop
+
+```bash
+cd site
+npm install
+npm run dev        # http://localhost:3000
+npm run build      # static export to site/out/
+npm run typecheck
+```
+
+## History
+
+Earlier design directions (Anduril, Shadow Trader, Zion, hand-drawn) live in `docs/archive/`. They were rejected. Do not pattern-match from them.
