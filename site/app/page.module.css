@@ -45,15 +45,19 @@
   right: var(--space-5);
 }
 
-/* Contact sits centered, below crest + awards strip. The shader publishes
-   --md-contact-top on resize so this stays in sync with the in-shader layout
-   for any viewport size. Fallback covers SSR / sim-disabled cases. */
-.contact {
+/* The slot owns positioning so the link is free to animate transform via
+   reveal-rise without overwriting translateX(-50%). The shader publishes
+   --md-contact-top on resize so this stays in sync with the in-shader
+   layout for any viewport size. Fallback covers SSR / sim-disabled cases. */
+.contactSlot {
   position: absolute;
   top: calc(50% + var(--md-contact-top, 225px));
   left: 50%;
   transform: translateX(-50%);
   pointer-events: auto;
+}
+
+.contact {
   display: inline-flex;
   align-items: center;
   justify-content: center;
