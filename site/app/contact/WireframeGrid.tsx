@@ -72,7 +72,9 @@ export function WireframeGrid({ className }: Props) {
       const sy = Math.sin(rotY)
       const cx = Math.cos(rotX)
       const sx = Math.sin(rotX)
-      const scale = Math.min(w, h) * 0.32
+      // factor 1.2 → ~93% of min(viewport) — near top/bottom on desktop, still
+      // fits horizontally on mobile portrait at the rotation extremes.
+      const scale = Math.min(w, h) * 1.2
       const d = 3.6
       for (let i = 0; i < VERTS.length; i++) {
         const v = VERTS[i]
@@ -115,10 +117,11 @@ export function WireframeGrid({ className }: Props) {
         const ao = a * 3
         const bo = b * 3
         const depth = (proj[ao + 2] + proj[bo + 2]) * 0.5
-        // Subtle ink: very faint for far lines, modest for near.
-        let alpha = 0.16 - depth * 0.05
-        if (alpha < 0.04) alpha = 0.04
-        if (alpha > 0.22) alpha = 0.22
+        // Barely-there ink so the cube can fill the viewport without
+        // competing with the form copy.
+        let alpha = 0.05 - depth * 0.02
+        if (alpha < 0.02) alpha = 0.02
+        if (alpha > 0.08) alpha = 0.08
         ctx!.globalAlpha = alpha
         ctx!.beginPath()
         ctx!.moveTo(proj[ao], proj[ao + 1])
