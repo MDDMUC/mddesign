@@ -204,8 +204,6 @@ export default function ContactPage() {
 
             {/* Contact Info */}
             <div className={styles.infoColumn}>
-              <h3 className={styles.infoTitle}>Other ways to connect</h3>
-
               <div className={styles.contactMethods}>
                 {contactMethods.map((method) => (
                   <a
@@ -226,11 +224,6 @@ export default function ContactPage() {
                 <span className={styles.locationLabel}>Location</span>
                 <span className={styles.locationValue}>Munich, Germany</span>
                 <span className={styles.locationNote}>Available for remote work worldwide</span>
-              </div>
-
-              <div className={styles.availabilityInfo}>
-                <span className={styles.availabilityLabel}>Availability</span>
-                <span className={styles.availabilityValue}>Currently accepting new projects</span>
               </div>
             </div>
           </div>
