@@ -45,14 +45,12 @@
   right: var(--space-5);
 }
 
-/* Contact sits centered, below crest + awards strip. The two image layers in
-   the shader are sized in CSS pixels: crest ~360 (cap 70vw), awards ~54
-   (480/8.89). Total stack from viewport centre to button top:
-   crest/2 (180) + gap (40) + awards (54) + gap (32) = 306px on desktop.
-   Mobile (<768): crest caps at 70vw, awards too — collapse to ~226px. */
+/* Contact sits centered, below crest + awards strip. The shader publishes
+   --md-contact-top on resize so this stays in sync with the in-shader layout
+   for any viewport size. Fallback covers SSR / sim-disabled cases. */
 .contact {
   position: absolute;
-  top: calc(50% + 306px);
+  top: calc(50% + var(--md-contact-top, 225px));
   left: 50%;
   transform: translateX(-50%);
   pointer-events: auto;
@@ -74,11 +72,6 @@
     color var(--dur-fast) var(--ease-out);
 }
 
-@media (max-width: 768px) {
-  .contact {
-    top: calc(50% + 226px);
-  }
-}
 
 .contact:hover {
   background: var(--ink);

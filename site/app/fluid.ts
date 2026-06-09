@@ -60,6 +60,8 @@ type Config = {
   awardsMaxVw: number
   awardsGapPx: number      // gap below crest in CSS px
   awardsDisplaceStrength: number
+  contactGapPx: number     // gap below awards in CSS px
+  contactHeightPx: number  // contact button rendered height in CSS px (for stack centering)
 }
 
 const DEFAULTS: Config = {
@@ -81,6 +83,8 @@ const DEFAULTS: Config = {
   awardsMaxVw: 0.7,
   awardsGapPx: 40,
   awardsDisplaceStrength: 0.0025,
+  contactGapPx: 32,
+  contactHeightPx: 32,
 }
 
 export type FluidController = {
@@ -279,6 +283,16 @@ export function createFluid(
     void internalRGBA
   }
 
+  function publishStackVars() {
+    // CSS needs to know where to put the contact button so it lines up with
+    // the in-shader awards. One CSS variable, written on every resize.
+    const g = stackGeometry()
+    document.documentElement.style.setProperty(
+      '--md-contact-top',
+      `${g.contactTopCss}px`,
+    )
+  }
+
   function resize() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
     const w = Math.max(2, Math.floor(canvas.clientWidth * dpr))
@@ -287,10 +301,12 @@ export function createFluid(
       canvas.width = w
       canvas.height = h
       buildBuffers()
+      publishStackVars()
     }
   }
 
   resize()
+  publishStackVars()
 
   // Texture loader shared by crest + awards.
   function makeImageTexture(src: string): {
@@ -328,14 +344,40 @@ export function createFluid(
   logoTex = logoLoader.tex
   awardsTex = awardsLoader.tex
 
-  function logoUvBox() {
+  // Stack = crest → gap → awards → gap → contact. Center the *group* on the
+  // viewport rather than the crest alone. Returns a CSS-pixel shift to apply
+  // upward to the crest centre, plus a value for the contact button's top
+  // offset (so CSS can mirror the same maths).
+  function stackGeometry() {
     const dpr = canvas.width / Math.max(1, canvas.clientWidth)
     const cssW = canvas.clientWidth || canvas.width / dpr
+    const crestCss = Math.min(cfg.logoSizePx, cfg.logoMaxVw * cssW)
+    const awardsWCss = Math.min(cfg.awardsSizePx, cfg.awardsMaxVw * cssW)
+    const awardsHCss = awardsWCss / cfg.awardsAspect
+    const stackH =
+      crestCss +
+      cfg.awardsGapPx +
+      awardsHCss +
+      cfg.contactGapPx +
+      cfg.contactHeightPx
+    const half = stackH / 2
+    return {
+      dpr,
+      crestShiftCss: half - crestCss / 2,      // shift crest UP so stack is centered
+      contactTopCss: half - cfg.contactHeightPx, // contact top relative to viewport centre
+    }
+  }
+
+  function logoUvBox() {
+    const g = stackGeometry()
+    const cssW = canvas.clientWidth || canvas.width / g.dpr
     const targetCss = Math.min(cfg.logoSizePx, cfg.logoMaxVw * cssW)
-    const targetPx = targetCss * dpr
+    const targetPx = targetCss * g.dpr
     const halfX = targetPx / canvas.width / 2
     const halfY = targetPx / canvas.height / 2
-    return { cx: 0.5, cy: 0.5, hx: halfX, hy: halfY }
+    // Shift up on screen = larger vUv.y (bottom-origin).
+    const cy = 0.5 + (g.crestShiftCss * g.dpr) / canvas.height
+    return { cx: 0.5, cy, hx: halfX, hy: halfY }
   }
 
   function awardsUvBox() {
