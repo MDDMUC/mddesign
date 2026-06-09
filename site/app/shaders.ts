@@ -190,11 +190,19 @@ uniform vec2 uAwardsHalf;
 uniform float uAwardsEnabled;
 uniform float uAwardsDispStrength;
 
+// Awards strip stays as ink (luminance × alpha → black) so it reads as
+// part of the paper. The crest keeps its source colours and just alpha-
+// composites over what's already on the page.
 vec3 sampleAsInk (vec3 paper, sampler2D tex, vec2 uv) {
   vec4 s = texture(tex, vec2(uv.x, 1.0 - uv.y));
   float lum = dot(s.rgb, vec3(0.299, 0.587, 0.114));
   float ink = (1.0 - lum) * s.a;
   return mix(paper, vec3(0.0), ink);
+}
+
+vec3 sampleAsColor (vec3 paper, sampler2D tex, vec2 uv) {
+  vec4 s = texture(tex, vec2(uv.x, 1.0 - uv.y));
+  return mix(paper, s.rgb, s.a);
 }
 
 void main () {
@@ -205,7 +213,7 @@ void main () {
     vec2 warped = vUv - vel * uLogoDispStrength;
     vec2 logoUv = (warped - uLogoCenter) / (uLogoHalf * 2.0) + 0.5;
     if (logoUv.x >= 0.0 && logoUv.x <= 1.0 && logoUv.y >= 0.0 && logoUv.y <= 1.0) {
-      col = sampleAsInk(col, uLogo, logoUv);
+      col = sampleAsColor(col, uLogo, logoUv);
     }
   }
 
