@@ -168,43 +168,55 @@ void main () {
   fragColor = uValue * texture(uTarget, vUv);
 }`
 
-// Display pass: composes paper → crest (velocity-warped) → ink density.
-// The crest is sampled inside the shader so it warps with the velocity field
-// just like the ink — no separate HTML layer, no white bounding box.
+// Display pass: composes paper → crest → awards → ink. Each image layer is
+// sampled inside the shader, warped by the velocity field, and modulated by
+// its own activity envelope.
 export const DISPLAY = /* glsl */ `#version 300 es
 precision highp float;
 in vec2 vUv;
 out vec4 fragColor;
 uniform sampler2D uDensity;
 uniform sampler2D uVelocity;
+
 uniform sampler2D uLogo;
-uniform vec2 uLogoCenter;   // UV centre of the crest on screen
-uniform vec2 uLogoHalf;     // half-extent of the crest in UV
-uniform float uLogoEnabled; // 0 until the image has loaded
-uniform float uDispStrength;
+uniform vec2 uLogoCenter;
+uniform vec2 uLogoHalf;
+uniform float uLogoEnabled;
+uniform float uLogoDispStrength;
+
+uniform sampler2D uAwards;
+uniform vec2 uAwardsCenter;
+uniform vec2 uAwardsHalf;
+uniform float uAwardsEnabled;
+uniform float uAwardsDispStrength;
+
+vec3 sampleAsInk (vec3 paper, sampler2D tex, vec2 uv) {
+  vec4 s = texture(tex, vec2(uv.x, 1.0 - uv.y));
+  float lum = dot(s.rgb, vec3(0.299, 0.587, 0.114));
+  float ink = (1.0 - lum) * s.a;
+  return mix(paper, vec3(0.0), ink);
+}
+
 void main () {
   vec2 vel = texture(uVelocity, vUv).xy;
-  // Warp the whole field by the velocity. Same vocabulary as the advection
-  // step, just applied at display time so the crest reads as ink-on-paper too.
-  vec2 warped = vUv - vel * uDispStrength;
+  vec3 col = vec3(1.0);
 
-  vec3 paper = vec3(1.0);
-  vec3 col = paper;
-
-  // Crest sampling — only inside the crest's UV box.
   if (uLogoEnabled > 0.5) {
+    vec2 warped = vUv - vel * uLogoDispStrength;
     vec2 logoUv = (warped - uLogoCenter) / (uLogoHalf * 2.0) + 0.5;
     if (logoUv.x >= 0.0 && logoUv.x <= 1.0 && logoUv.y >= 0.0 && logoUv.y <= 1.0) {
-      vec4 logo = texture(uLogo, vec2(logoUv.x, 1.0 - logoUv.y));
-      // Treat the crest as dark ink: luminance darkens the paper proportional
-      // to alpha. Transparent areas of the PNG leave paper untouched — no box.
-      float lum = dot(logo.rgb, vec3(0.299, 0.587, 0.114));
-      float crestInk = (1.0 - lum) * logo.a;
-      col = mix(col, vec3(0.0), crestInk);
+      col = sampleAsInk(col, uLogo, logoUv);
     }
   }
 
-  // Fluid ink overlays everything.
+  if (uAwardsEnabled > 0.5) {
+    vec2 warped = vUv - vel * uAwardsDispStrength;
+    vec2 awardsUv = (warped - uAwardsCenter) / (uAwardsHalf * 2.0) + 0.5;
+    if (awardsUv.x >= 0.0 && awardsUv.x <= 1.0 && awardsUv.y >= 0.0 && awardsUv.y <= 1.0) {
+      col = sampleAsInk(col, uAwards, awardsUv);
+    }
+  }
+
   float d = texture(uDensity, vUv).r;
   float ink = clamp(d * 0.9, 0.0, 1.0);
   ink = pow(ink, 0.85);

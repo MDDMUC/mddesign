@@ -7,10 +7,9 @@ export default function Home() {
     <main className={styles.main}>
       <FluidCanvas className={styles.canvas} />
       <div className={styles.chrome}>
-        <span className={`${styles.wordmark} reveal-fade`}>MD_DESIGN</span>
         <Link
           href="/contact"
-          className={`${styles.contact} reveal-rise reveal-stagger-2`}
+          className={`${styles.contact} reveal-rise reveal-stagger-3`}
         >
           Contact
         </Link>

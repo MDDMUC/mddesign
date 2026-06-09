@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import styles from './page.module.css'
+import Link from 'next/link'
+import { WireframeGrid } from './WireframeGrid'
 
 const contactMethods = [
   {
@@ -68,6 +70,16 @@ export default function ContactPage() {
 
   return (
     <div className={styles.page}>
+      <WireframeGrid className={styles.wireframeCanvas} />
+      <Link href="/" className={`${styles.brandMark} reveal-fade`} aria-label="Martin Drexler — Home">
+        <img
+          src="/images/logo.jpg"
+          alt=""
+          width={512}
+          height={512}
+          className={styles.brandMarkImage}
+        />
+      </Link>
       {/* Hero */}
       <section className={styles.hero}>
         <div className={styles.heroContainer}>

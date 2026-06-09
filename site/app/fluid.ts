@@ -54,6 +54,12 @@ type Config = {
   logoSizePx: number
   logoMaxVw: number
   logoDisplaceStrength: number
+  awardsSrc: string
+  awardsAspect: number     // intrinsic aspect of awardsSrc (width/height)
+  awardsSizePx: number     // target rendered width in CSS px
+  awardsMaxVw: number
+  awardsGapPx: number      // gap below crest in CSS px
+  awardsDisplaceStrength: number
 }
 
 const DEFAULTS: Config = {
@@ -69,6 +75,12 @@ const DEFAULTS: Config = {
   logoSizePx: 360,
   logoMaxVw: 0.7,
   logoDisplaceStrength: 0.0025,
+  awardsSrc: '/images/hero/awards-horizontal-black.png',
+  awardsAspect: 800 / 90,
+  awardsSizePx: 480,
+  awardsMaxVw: 0.7,
+  awardsGapPx: 40,
+  awardsDisplaceStrength: 0.0025,
 }
 
 export type FluidController = {
@@ -280,38 +292,43 @@ export function createFluid(
 
   resize()
 
-  // Crest texture — loaded async. Shader guards on uLogoEnabled.
-  let logoTex: WebGLTexture | null = gl.createTexture()
-  let logoReady = false
-  {
-    gl.bindTexture(gl.TEXTURE_2D, logoTex)
-    // 1×1 transparent placeholder so the sampler is valid before load.
-    gl.texImage2D(
-      gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
+  // Texture loader shared by crest + awards.
+  function makeImageTexture(src: string): {
+    tex: WebGLTexture
+    ready: () => boolean
+  } {
+    const tex = gl!.createTexture()!
+    let ready = false
+    gl!.bindTexture(gl!.TEXTURE_2D, tex)
+    gl!.texImage2D(
+      gl!.TEXTURE_2D, 0, gl!.RGBA, 1, 1, 0, gl!.RGBA, gl!.UNSIGNED_BYTE,
       new Uint8Array([0, 0, 0, 0]),
     )
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-
+    gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MIN_FILTER, gl!.LINEAR)
+    gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_MAG_FILTER, gl!.LINEAR)
+    gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_WRAP_S, gl!.CLAMP_TO_EDGE)
+    gl!.texParameteri(gl!.TEXTURE_2D, gl!.TEXTURE_WRAP_T, gl!.CLAMP_TO_EDGE)
     const img = new Image()
     img.crossOrigin = 'anonymous'
     img.decoding = 'async'
-    img.src = cfg.logoSrc
+    img.src = src
     img.onload = () => {
-      gl!.bindTexture(gl!.TEXTURE_2D, logoTex)
+      gl!.bindTexture(gl!.TEXTURE_2D, tex)
       gl!.pixelStorei(gl!.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false)
-      gl!.texImage2D(
-        gl!.TEXTURE_2D, 0, gl!.RGBA, gl!.RGBA, gl!.UNSIGNED_BYTE, img,
-      )
-      logoReady = true
+      gl!.texImage2D(gl!.TEXTURE_2D, 0, gl!.RGBA, gl!.RGBA, gl!.UNSIGNED_BYTE, img)
+      ready = true
     }
+    return { tex, ready: () => ready }
   }
 
+  let logoTex: WebGLTexture | null
+  let awardsTex: WebGLTexture | null
+  const logoLoader = makeImageTexture(cfg.logoSrc)
+  const awardsLoader = makeImageTexture(cfg.awardsSrc)
+  logoTex = logoLoader.tex
+  awardsTex = awardsLoader.tex
+
   function logoUvBox() {
-    // Target the same on-screen footprint as the CSS crest:
-    // min(logoSizePx, logoMaxVw * cssWidth). Convert to UV.
     const dpr = canvas.width / Math.max(1, canvas.clientWidth)
     const cssW = canvas.clientWidth || canvas.width / dpr
     const targetCss = Math.min(cfg.logoSizePx, cfg.logoMaxVw * cssW)
@@ -319,6 +336,23 @@ export function createFluid(
     const halfX = targetPx / canvas.width / 2
     const halfY = targetPx / canvas.height / 2
     return { cx: 0.5, cy: 0.5, hx: halfX, hy: halfY }
+  }
+
+  function awardsUvBox() {
+    // Sit centered, just below the crest. Width capped by awardsMaxVw,
+    // height derived from awardsAspect.
+    const dpr = canvas.width / Math.max(1, canvas.clientWidth)
+    const cssW = canvas.clientWidth || canvas.width / dpr
+    const targetWidthCss = Math.min(cfg.awardsSizePx, cfg.awardsMaxVw * cssW)
+    const targetWidthPx = targetWidthCss * dpr
+    const targetHeightPx = targetWidthPx / cfg.awardsAspect
+    const halfX = targetWidthPx / canvas.width / 2
+    const halfY = targetHeightPx / canvas.height / 2
+    const gapPxCss = cfg.awardsGapPx * dpr
+    const gapY = gapPxCss / canvas.height
+    const crest = logoUvBox()
+    const cy = crest.cy - crest.hy - gapY - halfY
+    return { cx: 0.5, cy, hx: halfX, hy: halfY }
   }
 
   function blit(target: FBO | null) {
@@ -339,10 +373,11 @@ export function createFluid(
 
   const pointers = new Map<number, Pointer>()
 
-  // Crest warp envelope. 1.0 at boot (so ambient splats can wobble it once),
-  // exponentially decays to 0 unless a pointer move lands inside the crest box.
-  // Half-life chosen so the field reads as settled at ~3–4s.
+  // Warp envelopes per image layer. 1.0 at boot (so ambient splats wobble it
+  // once), then exponential decay. A pointer move that lands inside that layer's
+  // bounding box pins the envelope back to 1.
   let logoActivity = 1.0
+  let awardsActivity = 1.0
   const LOGO_HALF_LIFE = 1.0 // seconds
 
   function splat(x: number, y: number, dx: number, dy: number) {
@@ -379,14 +414,15 @@ export function createFluid(
         const dx = p.dx * cfg.splatForce
         const dy = p.dy * cfg.splatForce
         splat(p.x, p.y, dx, dy)
-        // Only real pointer activity inside the crest reactivates the warp.
-        // Ambient splats do not — that's why this lives here, not in splat().
-        const box = logoUvBox()
-        if (
-          Math.abs(p.x - box.cx) <= box.hx &&
-          Math.abs(p.y - box.cy) <= box.hy
-        ) {
+        // Real pointer activity inside an image's box reactivates its warp.
+        // Ambient splats do not touch either envelope.
+        const cb = logoUvBox()
+        if (Math.abs(p.x - cb.cx) <= cb.hx && Math.abs(p.y - cb.cy) <= cb.hy) {
           logoActivity = 1
+        }
+        const ab = awardsUvBox()
+        if (Math.abs(p.x - ab.cx) <= ab.hx && Math.abs(p.y - ab.cy) <= ab.hy) {
+          awardsActivity = 1
         }
       }
     }
@@ -468,18 +504,35 @@ export function createFluid(
     gl!.uniform1i(displayP.uniforms.get('uDensity')!, density.read.attach(0))
     gl!.uniform1i(displayP.uniforms.get('uVelocity')!, velocity.read.attach(1))
 
+    // Crest
     gl!.activeTexture(gl!.TEXTURE2)
     gl!.bindTexture(gl!.TEXTURE_2D, logoTex)
     gl!.uniform1i(displayP.uniforms.get('uLogo')!, 2)
-
-    const box = logoUvBox()
-    gl!.uniform2f(displayP.uniforms.get('uLogoCenter')!, box.cx, box.cy)
-    gl!.uniform2f(displayP.uniforms.get('uLogoHalf')!, box.hx, box.hy)
-    gl!.uniform1f(displayP.uniforms.get('uLogoEnabled')!, logoReady ? 1 : 0)
+    const lb = logoUvBox()
+    gl!.uniform2f(displayP.uniforms.get('uLogoCenter')!, lb.cx, lb.cy)
+    gl!.uniform2f(displayP.uniforms.get('uLogoHalf')!, lb.hx, lb.hy)
+    gl!.uniform1f(displayP.uniforms.get('uLogoEnabled')!, logoLoader.ready() ? 1 : 0)
     gl!.uniform1f(
-      displayP.uniforms.get('uDispStrength')!,
+      displayP.uniforms.get('uLogoDispStrength')!,
       cfg.logoDisplaceStrength * logoActivity,
     )
+
+    // Awards
+    gl!.activeTexture(gl!.TEXTURE3)
+    gl!.bindTexture(gl!.TEXTURE_2D, awardsTex)
+    gl!.uniform1i(displayP.uniforms.get('uAwards')!, 3)
+    const ab = awardsUvBox()
+    gl!.uniform2f(displayP.uniforms.get('uAwardsCenter')!, ab.cx, ab.cy)
+    gl!.uniform2f(displayP.uniforms.get('uAwardsHalf')!, ab.hx, ab.hy)
+    gl!.uniform1f(
+      displayP.uniforms.get('uAwardsEnabled')!,
+      awardsLoader.ready() ? 1 : 0,
+    )
+    gl!.uniform1f(
+      displayP.uniforms.get('uAwardsDispStrength')!,
+      cfg.awardsDisplaceStrength * awardsActivity,
+    )
+
     blit(null)
   }
 
@@ -491,8 +544,11 @@ export function createFluid(
     resize()
     applyPointers()
     step(dt)
-    logoActivity *= Math.exp(-dt / LOGO_HALF_LIFE)
+    const decay = Math.exp(-dt / LOGO_HALF_LIFE)
+    logoActivity *= decay
+    awardsActivity *= decay
     if (logoActivity < 0.001) logoActivity = 0
+    if (awardsActivity < 0.001) awardsActivity = 0
     render()
     raf = requestAnimationFrame(tick)
   }
@@ -565,7 +621,9 @@ export function createFluid(
       window.removeEventListener('pointerup', onUp)
       window.removeEventListener('pointercancel', onUp)
       if (logoTex) gl!.deleteTexture(logoTex)
+      if (awardsTex) gl!.deleteTexture(awardsTex)
       logoTex = null
+      awardsTex = null
       const loseCtx = gl!.getExtension('WEBGL_lose_context')
       loseCtx?.loseContext()
     },
