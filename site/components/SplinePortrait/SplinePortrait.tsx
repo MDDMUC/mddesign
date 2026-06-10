@@ -16,13 +16,25 @@ type Props = {
 export function SplinePortrait({ scene, ariaLabel }: Props) {
   const [shouldMount, setShouldMount] = useState(false)
   const [loaded, setLoaded] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Mobile gate — Spline + WebGL is too performance-intensive on phones
+  // and can crash low-end devices. Skip the scene entirely on small viewports.
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 720px)')
+    const handler = () => setIsMobile(mq.matches)
+    handler()
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
 
   // Defer Spline mount one tick so the container is fully measured before
   // Spline initialises its WebGL context.
   useEffect(() => {
+    if (isMobile) return
     const t = window.setTimeout(() => setShouldMount(true), 0)
     return () => window.clearTimeout(t)
-  }, [])
+  }, [isMobile])
 
   const handleLoad = () => {
     // Brief settle window before fading in — covers Spline's ResizeObserver
@@ -31,6 +43,8 @@ export function SplinePortrait({ scene, ariaLabel }: Props) {
       setLoaded(true)
     }, 300)
   }
+
+  if (isMobile) return null
 
   return (
     <div

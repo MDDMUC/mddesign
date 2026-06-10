@@ -313,6 +313,14 @@
   }
 }
 
+@media (max-width: 720px) {
+  /* Portrait Spline is hidden on mobile (WebGL too expensive for phones);
+     remove the now-empty frame so the meta block sits at the top. */
+  .portrait {
+    display: none;
+  }
+}
+
 @media (max-width: 640px) {
   .main {
     padding: var(--space-7) var(--pad-page) var(--space-9);

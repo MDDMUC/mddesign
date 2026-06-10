@@ -25,20 +25,33 @@ export function SplineBackground({ scene }: Props) {
   const [splineReady, setSplineReady] = useState(false)
   const [minDelayElapsed, setMinDelayElapsed] = useState(false)
   const [loaded, setLoaded] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Mobile gate — Spline + WebGL is too performance-intensive on phones and
+  // can crash low-end devices. Skip the scene entirely on small viewports.
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 720px)')
+    const handler = () => setIsMobile(mq.matches)
+    handler()
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
 
   // Defer Spline mount one tick so the container is fully measured before
   // Spline initialises its WebGL context.
   useEffect(() => {
+    if (isMobile) return
     const t = window.setTimeout(() => setShouldMount(true), 0)
     return () => window.clearTimeout(t)
-  }, [])
+  }, [isMobile])
 
   // Independent minimum-delay timer. Tied to page mount, not to onLoad.
   // Even if Spline finishes loading instantly, we don't reveal until this fires.
   useEffect(() => {
+    if (isMobile) return
     const t = window.setTimeout(() => setMinDelayElapsed(true), MIN_REVEAL_DELAY)
     return () => window.clearTimeout(t)
-  }, [])
+  }, [isMobile])
 
   // Reveal only when both conditions are satisfied: scene loaded + settled,
   // AND minimum delay since mount has passed.
@@ -56,6 +69,8 @@ export function SplineBackground({ scene }: Props) {
       setSplineReady(true)
     }, 300)
   }
+
+  if (isMobile) return null
 
   return (
     <div
