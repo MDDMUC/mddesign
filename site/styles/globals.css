@@ -2,6 +2,14 @@
 @import './reset.css';
 @import './animations.css';
 
+/* Personal-site-as-software typography defaults — SYSTEM §14.5.
+   Round quotes (ss03), single-story a (cv11), contextual alternates (calt),
+   tabular-nums slashed-zero where numerics matter, hanging punctuation. */
+html {
+  hanging-punctuation: first allow-end last;
+  font-feature-settings: var(--ot-default);
+}
+
 html,
 body {
   background: var(--bg);
@@ -9,6 +17,7 @@ body {
   font-family: var(--font-body);
   font-size: var(--text-base);
   line-height: var(--leading-body);
+  letter-spacing: var(--tracking-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -19,6 +28,10 @@ a {
   text-decoration: none;
 }
 
+em {
+  font-style: italic;
+}
+
 :focus-visible {
   outline: 2px solid var(--ink);
   outline-offset: 3px;
@@ -27,4 +40,39 @@ a {
 ::selection {
   background: var(--ink);
   color: var(--bg);
+}
+
+/* Drop cap — SYSTEM §14.5. Apply via class `.lede` to the first paragraph
+   of a case-study introduction. Reserved for one paragraph per case study. */
+.lede::first-letter {
+  font-size: 5.6em;
+  line-height: 0.85;
+  float: left;
+  margin: 0.08em 0.08em 0 0;
+  font-weight: 400;
+  font-variation-settings: 'wght' 200, 'opsz' 32;
+  color: var(--ink);
+}
+
+/* View Transitions — SYSTEM §14.2.
+   Cross-document MPA transitions on every route change. Named morphs handled
+   per-route via `view-transition-name` on hero/title pairs (work index ↔ case
+   study). Root crossfade is the default. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(root),
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--dur-fast);
+  animation-timing-function: var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }

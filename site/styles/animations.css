@@ -53,13 +53,47 @@
   to   { clip-path: inset(0 0 0 0); }
 }
 
+/* Per-line mask-rise — the 2026 hero pattern. Use with a wrapper element
+   that has overflow:hidden; the inner element animates translateY 140% → 0
+   so it reads as type rising up from the baseline. The 140% value clears
+   the wrap's padding-bottom (which extends the wrap beyond inner height
+   to accommodate descenders). Without it, ~20% of the glyphs are visible
+   at the start of the animation. */
+@keyframes reveal-line-rise {
+  from { transform: translateY(140%); }
+  to   { transform: translateY(0); }
+}
+
+/* Variable-font weight morph — the signature flourish.
+   Only the `wght` axis animates. `opsz` stays locked at 144 (display) because
+   Inter's optical-size masters swap mid-axis (14 → 32 → display) and the
+   discrete swap creates visible jitter near the end of the animation. */
+@keyframes reveal-weight {
+  from { font-variation-settings: 'wght' 200, 'opsz' 144; }
+  to   { font-variation-settings: 'wght' 510, 'opsz' 144; }
+}
+
+/* Bold variant — H1 bold line settles at wght 700 instead of 510. */
+@keyframes reveal-weight-bold {
+  from { font-variation-settings: 'wght' 200, 'opsz' 144; }
+  to   { font-variation-settings: 'wght' 700, 'opsz' 144; }
+}
+
+/* Light variant — H1 light line stays at wght 400 (the "title-case" line). */
+@keyframes reveal-weight-light {
+  from { font-variation-settings: 'wght' 200, 'opsz' 144; }
+  to   { font-variation-settings: 'wght' 400, 'opsz' 144; }
+}
+
 /* ── Utility classes ───────────────────── */
 
 .reveal-rise,
 .reveal-fade,
 .reveal-mask,
 .reveal-line,
-.reveal-clip {
+.reveal-clip,
+.reveal-line-rise,
+.reveal-weight {
   animation-fill-mode: both;
   animation-timing-function: var(--ease-reveal);
 }
@@ -92,6 +126,59 @@
   animation-duration: var(--dur-reveal);
 }
 
+/* New: per-line mask-rise. Use with .reveal-line-wrap on the parent. */
+.reveal-line-rise {
+  animation-name: reveal-line-rise;
+  animation-duration: var(--dur-reveal);
+  display: block;
+}
+
+/* Wrapper that clips the translateY at the baseline. Use as outer for the
+   per-line mask-rise pattern. Padding-bottom accommodates descenders at the
+   tight line-height used in display type — the `g` in "Design" needs room. */
+.reveal-line-wrap {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.25em;
+  /* Right padding accommodates the small right side bearing on display caps
+     (e.g. the "R" in DREXLER) that would otherwise get clipped by overflow:hidden. */
+  padding-right: 0.12em;
+}
+
+/* Compound — H1 BOLD line: mask-rise + weight axis morph to wght 700.
+   The shorthand sets both animations; a stagger class can override delay. */
+.reveal-h1-bold {
+  display: block;
+  animation:
+    reveal-line-rise var(--dur-reveal) var(--ease-reveal) both,
+    reveal-weight-bold var(--dur-line) var(--ease-reveal) both;
+}
+
+/* Compound — H1 LIGHT line: mask-rise + weight axis morph to wght 400. */
+.reveal-h1-light {
+  display: block;
+  animation:
+    reveal-line-rise var(--dur-reveal) var(--ease-reveal) both,
+    reveal-weight-light var(--dur-line) var(--ease-reveal) both;
+}
+
+/* Compound — H1 MEDIUM: mask-rise + weight morph to wght 510. Use for
+   secondary-page H1s (Work, Studio, Contact, etc.) that aren't the
+   monumental landing display. */
+.reveal-h1-medium {
+  display: block;
+  animation:
+    reveal-line-rise var(--dur-reveal) var(--ease-reveal) both,
+    reveal-weight var(--dur-line) var(--ease-reveal) both;
+}
+
+/* Standalone weight morph — for non-H1 cases where you want only the
+   weight axis to animate without the line-rise. */
+.reveal-weight {
+  animation-name: reveal-weight;
+  animation-duration: var(--dur-line);
+}
+
 /* ── Stagger delays ────────────────────── */
 
 .reveal-stagger-1 { animation-delay: var(--stagger-1); }
@@ -99,6 +186,10 @@
 .reveal-stagger-3 { animation-delay: var(--stagger-3); }
 .reveal-stagger-4 { animation-delay: var(--stagger-4); }
 .reveal-stagger-5 { animation-delay: var(--stagger-5); }
+.reveal-stagger-6 { animation-delay: var(--stagger-6); }
+.reveal-stagger-7 { animation-delay: var(--stagger-7); }
+.reveal-stagger-8 { animation-delay: var(--stagger-8); }
+.reveal-stagger-9 { animation-delay: var(--stagger-9); }
 
 /* ── Reduced motion ────────────────────── */
 
@@ -107,10 +198,16 @@
   .reveal-fade,
   .reveal-mask,
   .reveal-line,
-  .reveal-clip {
+  .reveal-clip,
+  .reveal-line-rise,
+  .reveal-weight,
+  .reveal-h1-bold,
+  .reveal-h1-light,
+  .reveal-h1-medium {
     animation: none;
     opacity: 1;
     transform: none;
     clip-path: none;
+    font-variation-settings: 'wght' 510, 'opsz' 144;
   }
 }

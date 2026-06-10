@@ -1,0 +1,74 @@
+/* /colophon — SYSTEM §14.4. Plain Plex Mono table. No chrome of its own;
+   the persistent ChromeStrip is the only chrome on this page. */
+
+.main {
+  max-width: var(--container-narrow);
+  margin: 0 auto;
+  padding: var(--space-9) var(--pad-page) var(--space-9);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--ink-80);
+  font-feature-settings: var(--ot-mono);
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
+.title {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+  margin: 0 0 var(--space-7) 0;
+}
+
+.table {
+  display: grid;
+  grid-template-columns: minmax(8rem, 12rem) 1fr;
+  row-gap: var(--space-3);
+  column-gap: var(--space-5);
+  border-top: var(--rule);
+  padding-top: var(--space-5);
+}
+
+.term {
+  color: var(--ink-60);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: var(--text-xs);
+}
+
+.def {
+  color: var(--ink-80);
+}
+
+.def a {
+  color: inherit;
+  border-bottom: 1px solid var(--ink-30);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.def a:hover {
+  border-color: var(--ink);
+}
+
+.foot {
+  margin-top: var(--space-9);
+  padding-top: var(--space-5);
+  border-top: var(--rule-faint);
+  color: var(--ink-50);
+  font-size: var(--text-xs);
+}
+
+@media (max-width: 640px) {
+  .main {
+    padding: var(--space-7) var(--pad-page) var(--space-9);
+  }
+  .table {
+    grid-template-columns: 1fr;
+    row-gap: var(--space-4);
+  }
+  .term {
+    margin-bottom: calc(var(--space-1) * -1);
+  }
+}

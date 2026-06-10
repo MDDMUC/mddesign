@@ -1,0 +1,336 @@
+/* Shared case-study CSS module — SYSTEM §14.9.
+   Used by every /work/[slug] page. Asymmetric 5/7 (mono title left, body
+   right) per §10.3 fix; §5 vignettes run full-width and alternate via
+   grid-template-areas. 1px ink hairline image frames (option C). */
+
+.main {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: var(--space-9) var(--pad-page) var(--space-10);
+  color: var(--ink-80);
+}
+
+/* ─── §1 Header ──────────────────────────────────────────────── */
+
+.header {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: var(--gutter);
+  align-items: end;
+  margin-bottom: var(--space-9);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+  color: var(--ink-60);
+  margin: 0 0 var(--space-5) 0;
+  font-feature-settings: var(--ot-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--fs-display-xl);
+  font-variation-settings: 'wght' 200, 'opsz' 144;
+  font-feature-settings: var(--ot-display);
+  letter-spacing: var(--tracking-display-tight);
+  line-height: var(--leading-display-tight);
+  color: var(--ink);
+  margin: 0 0 var(--space-5) 0;
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: var(--text-xl);
+  font-variation-settings: 'wght' 400;
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-body);
+  color: var(--ink-70);
+  margin: 0;
+  max-width: 38ch;
+}
+
+.meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-feature-settings: var(--ot-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.metaList {
+  display: grid;
+  grid-template-columns: minmax(5rem, 7rem) 1fr;
+  row-gap: var(--space-3);
+  column-gap: var(--space-4);
+  margin: 0;
+  padding: var(--space-4) 0;
+  border-top: var(--rule);
+  border-bottom: var(--rule);
+}
+
+.metaTerm {
+  color: var(--ink-60);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+.metaDef {
+  color: var(--ink-80);
+  margin: 0;
+}
+
+/* ─── §2 Hero artifact ──────────────────────────────────────── */
+
+.hero {
+  margin: 0 0 var(--space-10) 0;
+}
+
+.heroFrame {
+  position: relative;
+  border: var(--rule);
+  aspect-ratio: 16 / 9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink-05);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+}
+
+.heroFrame::before {
+  content: 'FIG. ' attr(data-fig);
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-4);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.08em;
+  color: var(--ink-60);
+}
+
+.heroFrame::after {
+  content: attr(data-status);
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-4);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.08em;
+  color: var(--ink-30);
+}
+
+/* ─── §§3–7 Sections — 5/7 split, body in the wider column ──── */
+
+.section {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: var(--gutter);
+  margin-bottom: var(--space-9);
+}
+
+/* §5 "Design decisions" runs full-width — vignettes inside take the
+   asymmetric split themselves. SYSTEM §14.9. */
+.sectionFull {
+  display: block;
+  margin-bottom: var(--space-9);
+}
+
+.sectionFull .sectionTitle {
+  max-width: var(--container-wide);
+  margin: 0 0 var(--space-7) 0;
+}
+
+.sectionTitle {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+  color: var(--ink-60);
+  margin: 0;
+  padding-top: var(--space-2);
+  border-top: var(--rule);
+}
+
+.sectionBody {
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  line-height: var(--leading-body);
+  color: var(--ink-80);
+  max-width: 60ch;
+}
+
+.sectionBody p {
+  margin: 0;
+}
+
+.sectionBody p + p {
+  margin-top: var(--space-4);
+}
+
+/* ─── §5 Vignettes — alternating asymmetric pairs ───────────── */
+
+.vignettes {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-9);
+}
+
+/* Every vignette leads with text — mechanical alternation across four
+   vignettes read as pattern, not editing (design-critic 2026-06-10). The
+   strongest claim should always lead with the prose; the image follows. */
+.vignette {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  grid-template-areas: 'text image';
+  gap: var(--gutter);
+  align-items: start;
+}
+
+.vignetteText {
+  grid-area: text;
+}
+
+.vignetteFrame {
+  position: relative;
+  grid-area: image;
+  border: var(--rule);
+  aspect-ratio: 3 / 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--ink-05);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+}
+
+.vignetteFrame::before {
+  content: 'FIG. ' attr(data-fig);
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-3);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.08em;
+  color: var(--ink-60);
+}
+
+.vignetteHeading {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-variation-settings: 'wght' 510;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  color: var(--ink);
+  margin: 0 0 var(--space-4) 0;
+  max-width: 18ch;
+}
+
+.vignetteBody {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--ink-80);
+  margin: 0;
+  max-width: 50ch;
+}
+
+/* ─── §7 Credits ────────────────────────────────────────────── */
+
+.credits {
+  display: grid;
+  grid-template-columns: minmax(6rem, 8rem) 1fr;
+  row-gap: var(--space-3);
+  column-gap: var(--space-5);
+  margin: 0;
+  padding-top: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  border-top: var(--rule);
+  max-width: 38rem;
+  font-feature-settings: var(--ot-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.creditTerm {
+  color: var(--ink-60);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+
+.creditDef {
+  color: var(--ink-80);
+  margin: 0;
+}
+
+/* ─── §8 Pager ──────────────────────────────────────────────── */
+
+.pager {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-10);
+  padding-top: var(--space-5);
+  border-top: var(--rule);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.pager a {
+  color: var(--ink);
+  text-decoration: none;
+  transition: opacity var(--dur-instant) var(--ease-out);
+}
+
+.pager a:hover {
+  opacity: 0.6;
+}
+
+.pager a:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.pagerDisabled {
+  color: var(--ink-30);
+}
+
+/* ─── Responsive ────────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .header,
+  .section,
+  .vignette {
+    grid-template-columns: 1fr;
+    grid-template-areas: 'text' 'image';
+  }
+
+  .meta {
+    margin-top: var(--space-5);
+  }
+
+  .vignettes {
+    gap: var(--space-7);
+  }
+
+  .vignetteFrame {
+    margin-top: var(--space-4);
+  }
+}
+
+@media (max-width: 640px) {
+  .main {
+    padding: var(--space-7) var(--pad-page) var(--space-9);
+  }
+}

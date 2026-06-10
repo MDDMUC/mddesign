@@ -1,0 +1,45 @@
+/* Contained Spline embed — fills its parent container.
+   Unlike SplineBackground (full-viewport fixed), this is positioned absolute
+   within whatever wrapper sizes it. Use for portraits, avatars, etc. */
+
+.canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    opacity 800ms var(--ease-reveal),
+    visibility 0s linear 800ms;
+}
+
+.canvas[data-loaded='true'] {
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity 800ms var(--ease-reveal),
+    visibility 0s linear 0s;
+}
+
+/* Force every descendant of the canvas wrapper to fill the container.
+   Spline's runtime DOM structure isn't guaranteed; cast a wide net. */
+.canvas > div,
+.canvas > div > div,
+.canvas > div > canvas,
+.canvas canvas {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canvas {
+    display: none;
+  }
+}

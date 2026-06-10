@@ -18,6 +18,7 @@
   --ink: #000000;
   --ink-80: #1a1a1a;   /* body text on bright surface (softer than pure) */
   --ink-70: #404040;   /* secondary text, dimmed labels */
+  --ink-60: #5e5e5e;   /* mono chrome strip on white (passes AA at 12px) */
   --ink-50: #737373;   /* placeholder, muted note */
   --ink-30: #b3b3b3;   /* disabled, subtle hairline */
   --ink-15: #d9d9d9;   /* faint divider */
@@ -40,8 +41,9 @@
   --font-ui: var(--font-sans); /* legacy alias */
 
   /* Type scale — derived from a 1.25 ratio, rounded to friendly stops. */
+  --text-3xs: 0.65625rem; /* 10.5 — chrome strip mono */
   --text-2xs: 0.6875rem;  /* 11 — micro mono chrome */
-  --text-xs:  0.75rem;    /* 12 — mono label, coord */
+  --text-xs:  0.75rem;    /* 12 — mono label, coord, eyebrow */
   --text-sm:  0.875rem;   /* 14 — secondary body */
   --text-base: 1rem;      /* 16 — body */
   --text-lg:  1.125rem;   /* 18 — editorial body */
@@ -52,14 +54,38 @@
   --text-5xl: 4.5rem;     /* 72 — large display */
   --text-6xl: 6rem;       /* 96 — monumental */
 
+  /* Fluid display scale — SYSTEM §14.5. Pentagram-scale presence inside Inter. */
+  --fs-display-m: clamp(2.5rem, 5vw, 4.5rem);    /* 40 → 72 — section openers */
+  --fs-display-l: clamp(3.5rem, 8vw, 7.5rem);    /* 56 → 120 — case-study opener */
+  --fs-display-xl: clamp(4.5rem, 12vw, 11.5rem); /* 72 → 184 — case-study hero project name */
+
+  /* Inter variable weight tokens — SYSTEM §14.5. 510 is the Linear-school signature. */
+  --fw-thin: 100;
+  --fw-light: 300;
+  --fw-book: 400;     /* body default */
+  --fw-medium: 510;   /* non-integer — H1/H2/buttons; subtly custom */
+  --fw-semi: 590;
+  --fw-bold: 700;
+  --fw-display: 200;  /* case-study hero — Inter Display via opsz */
+
+  /* OpenType feature sets — SYSTEM §14.5. Apply per-context, not globally. */
+  --ot-default: "calt" 1, "ss03" 1, "cv11" 1;          /* round quotes, single-story a */
+  --ot-mono: "calt" 1, "ss02" 1, "zero" 1;             /* slashed zero on mono */
+  --ot-tabular: "tnum" 1, "zero" 1;                    /* anywhere numerals must align */
+  --ot-display: "calt" 1, "ss03" 1, "cv11" 1, "cv10" 1; /* + G-spur for display character */
+
   --leading-tight: 1.05;
   --leading-snug: 1.2;
   --leading-body: 1.55;
   --leading-loose: 1.7;
+  --leading-display-tight: 0.92;  /* hero project name — SYSTEM §14.5 */
+  --leading-display: 1.0;
 
   --tracking-display: -0.02em;
-  --tracking-body: 0;
+  --tracking-display-tight: -0.04em;  /* hero project name — SYSTEM §14.5 */
+  --tracking-body: -0.005em;          /* Inter is wide; -0.005 cleans it up */
   --tracking-mono: 0.02em;
+  --tracking-mono-label: 0.08em;      /* mono eyebrow labels — SYSTEM §14.5 */
   --tracking-caps: 0.14em;
 
   /* ───────── Space ─────────
@@ -101,20 +127,27 @@
   --dur-fast: 160ms;
   --dur-base: 240ms;
   --dur-slow: 400ms;
-  --dur-reveal: 700ms;       /* type / element entrance */
-  --dur-line: 900ms;          /* hairline draw-in */
+  --dur-reveal: 1800ms;      /* type / element entrance (elegant, unhurried) */
+  --dur-line: 2400ms;         /* hairline draw + variable-font weight morph */
 
   --ease-out: cubic-bezier(0.2, 0, 0, 1);
-  --ease-in: cubic-bezier(0.5, 0, 1, 0.5);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);          /* sharp-in — for exits (command menu close) */
+  --ease-in-legacy: cubic-bezier(0.5, 0, 1, 0.5); /* legacy alias — do not use in new code */
   --ease-inout: cubic-bezier(0.7, 0, 0.2, 1);
-  --ease-reveal: cubic-bezier(0.16, 1, 0.3, 1);  /* gentle settle for entrances */
+  --ease-reveal: cubic-bezier(0.22, 1, 0.36, 1);  /* even gentler tail for elegant settle */
 
-  /* Stagger steps — used as animation-delay multipliers. */
+  /* Stagger steps — used as animation-delay multipliers.
+     Steps 1-5 cover quick choreographed sequences; 6-9 cover the longer
+     hero entrance choreography (see design/SYSTEM.md §7). */
   --stagger-1: 60ms;
   --stagger-2: 120ms;
   --stagger-3: 200ms;
   --stagger-4: 320ms;
   --stagger-5: 480ms;
+  --stagger-6: 700ms;
+  --stagger-7: 900ms;
+  --stagger-8: 1080ms;
+  --stagger-9: 1200ms;
 
   /* Legacy motion aliases */
   --duration-fast: var(--dur-fast);
@@ -140,6 +173,10 @@
     --stagger-3: 0ms;
     --stagger-4: 0ms;
     --stagger-5: 0ms;
+    --stagger-6: 0ms;
+    --stagger-7: 0ms;
+    --stagger-8: 0ms;
+    --stagger-9: 0ms;
     --duration-fast: 0ms;
     --duration-normal: 0ms;
   }

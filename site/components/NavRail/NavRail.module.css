@@ -1,0 +1,227 @@
+/* Editorial top nav rail — Agent 2 recommendation.
+   Sticky, 56px desktop / 48px mobile, single ink hairline below.
+   Coexists with CommandMenu (visible ⌘K hint) and ChromeStrip (bottom).
+   Mobile (≤720px): collapses to word-button "Menu" → full-viewport overlay. */
+
+.rail {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-rail);
+  display: grid;
+  grid-template-columns: auto 1fr auto auto auto auto;
+  align-items: center;
+  height: 56px;
+  padding: 0 var(--pad-page);
+  background: var(--bg);
+  border-bottom: var(--rule);
+  gap: var(--space-4);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-variation-settings: 'wght' 510;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.wordmark:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+}
+
+.wordmark:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.spacer {
+  /* grid-template-columns reserves the 1fr; this element fills it */
+}
+
+.links {
+  display: flex;
+  gap: 28px;
+}
+
+.link {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-variation-settings: 'wght' 400;
+  color: var(--ink);
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+  transition: text-decoration-color var(--dur-instant) var(--ease-out);
+  white-space: nowrap;
+}
+
+.link:hover {
+  text-decoration-color: var(--ink);
+}
+
+.link[aria-current='page'] {
+  text-decoration-color: var(--ink);
+}
+
+.link:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 4px;
+}
+
+.divider {
+  width: 1px;
+  height: 12px;
+  background: var(--ink);
+}
+
+.kbd {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid var(--ink-30);
+  background: transparent;
+  padding: 2px 6px;
+  color: var(--ink-60);
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+  white-space: nowrap;
+}
+
+.kbd:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.kbd:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.menuButton {
+  display: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  background: transparent;
+  border: none;
+  color: var(--ink);
+  cursor: pointer;
+  padding: 4px 0;
+  font-weight: 400;
+}
+
+.menuButton:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 4px;
+}
+
+/* ─── Mobile overlay ────────────────────────────────────────── */
+
+.overlay {
+  position: fixed;
+  inset: 48px 0 0 0;
+  z-index: var(--z-modal);
+  background: var(--bg);
+  padding: var(--space-9) var(--pad-page) var(--space-7);
+  animation: overlayIn var(--dur-fast) var(--ease-out);
+  overflow-y: auto;
+}
+
+@keyframes overlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.overlayNav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.overlayLink {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-variation-settings: 'wght' 510;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--ink);
+  text-decoration: none;
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.overlayLink[aria-current='page'] {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1.5px;
+}
+
+.overlayLink:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 6px;
+}
+
+.overlaySearch {
+  margin-top: var(--space-7);
+  padding-top: var(--space-5);
+  border-top: var(--rule);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+  color: var(--ink-60);
+  background: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+}
+
+.overlaySearch:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 4px;
+}
+
+/* ─── Responsive ────────────────────────────────────────────── */
+
+@media (max-width: 720px) {
+  .rail {
+    height: 48px;
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .links,
+  .divider,
+  .kbd {
+    display: none;
+  }
+
+  .menuButton {
+    display: inline-block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay {
+    animation: none;
+  }
+}

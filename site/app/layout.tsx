@@ -1,10 +1,12 @@
 import type { Metadata } from 'next'
 import { Inter, IBM_Plex_Mono } from 'next/font/google'
+import { CommandMenu } from '@/components/CommandMenu/CommandMenu'
+import { NavRail } from '@/components/NavRail/NavRail'
 import '../styles/globals.css'
 
 const inter = Inter({
   subsets: ['latin'],
-  weight: ['400', '500', '600'],
+  axes: ['opsz'],
   variable: '--font-sans-loaded',
   display: 'swap',
 })
@@ -30,7 +32,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${plexMono.variable}`}>
-      <body>{children}</body>
+      <body>
+        <NavRail />
+        {children}
+        <CommandMenu />
+      </body>
     </html>
   )
 }

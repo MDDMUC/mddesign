@@ -1,0 +1,69 @@
+/* Spline 3D scan background — fills its parent container.
+   The landing controls placement via its own positioning wrapper.
+   Hidden under prefers-reduced-motion (falls back to plain white). */
+
+/* Full-viewport fixed layer. Sits below the NavRail (which has its own
+   solid white background) and below page content (z-index: 1).
+   Interactive — pointer-events enabled so the scene receives mouse input. */
+.canvas {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: auto;
+  /* Visibility-hidden hides the whole element from rendering during
+     Spline's internal ResizeObserver pass, eliminating the visible
+     "scale + reposition" jump. Once Spline is fully settled AND the type
+     choreography has finished, fade in over 1200ms — the scene emerges as
+     the final element of the page-load sequence. */
+  visibility: hidden;
+  opacity: 0;
+  overflow: hidden;
+  transition:
+    opacity 2200ms var(--ease-reveal),
+    visibility 0s linear 2200ms;
+}
+
+.canvas[data-loaded='true'] {
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity 2200ms var(--ease-reveal),
+    visibility 0s linear 0s;
+}
+
+/* Force every descendant of the canvas wrapper to fill the container.
+   Spline's runtime DOM structure isn't guaranteed; cast a wide net. */
+.canvas,
+.canvas * {
+  box-sizing: border-box;
+}
+
+.canvas > div,
+.canvas > div > div,
+.canvas > div > canvas,
+.canvas canvas {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+
+.canvas[data-loaded='true'] {
+  opacity: 1;
+}
+
+.canvas > * {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .canvas {
+    display: none;
+  }
+}

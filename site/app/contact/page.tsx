@@ -1,24 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import styles from './page.module.css'
 import Link from 'next/link'
-import { WireframeGrid } from './WireframeGrid'
-
-const contactMethods = [
-  {
-    label: 'Email',
-    value: 'hello@martindrexler.com',
-    href: 'mailto:hello@martindrexler.com',
-    note: 'For project inquiries',
-  },
-  {
-    label: 'LinkedIn',
-    value: 'Martin Drexler',
-    href: 'https://linkedin.com/in/martindrexler',
-    note: 'Connect professionally',
-  },
-]
+import styles from './page.module.css'
 
 type FormState = 'idle' | 'submitting' | 'success' | 'error'
 
@@ -45,190 +29,204 @@ export default function ContactPage() {
         body: JSON.stringify(formData),
       })
 
-      const data: { ok?: boolean; error?: string } = await res.json().catch(() => ({}))
+      const data: { ok?: boolean; error?: string } = await res
+        .json()
+        .catch(() => ({}))
 
       if (!res.ok) {
         setFormState('error')
-        setErrorMessage(data.error || 'Something went wrong. Try again or email me directly.')
+        setErrorMessage(
+          data.error || 'Something went wrong. Try again or email directly.'
+        )
         return
       }
 
       setFormState('success')
-      setFormData({ name: '', email: '', company: '', message: '', company_url: '' })
+      setFormData({
+        name: '',
+        email: '',
+        company: '',
+        message: '',
+        company_url: '',
+      })
     } catch {
       setFormState('error')
-      setErrorMessage('Network error. Try again or email me directly.')
+      setErrorMessage('Network error. Try again or email directly.')
     }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }))
   }
 
+  const submitting = formState === 'submitting'
+  const success = formState === 'success'
+
   return (
-    <div className={styles.page}>
-      <WireframeGrid className={styles.wireframeCanvas} />
-      <Link href="/" className={`${styles.brandMark} reveal-fade`} aria-label="Martin Drexler — Home">
-        <img
-          src="/images/logo.jpg"
-          alt=""
-          width={512}
-          height={512}
-          className={styles.brandMarkImage}
-        />
-      </Link>
-      {/* Hero */}
-      <section className={styles.hero}>
-        <div className={styles.heroContainer}>
-          <h1 className={`${styles.heroTitle} reveal-mask`}>Let&apos;s work together</h1>
-          <p className={`${styles.heroSubtitle} reveal-rise reveal-stagger-2`}>
-            Have a project in mind? I&apos;d love to hear about it.
-            Send me a message and I&apos;ll get back to you within 24 hours.
+    <main className={styles.main}>
+      {/* Header — 7/5 split matching /studio and case studies. */}
+      <header className={styles.header}>
+        <div>
+          <p className={styles.eyebrow}>Contact</p>
+          <h1 className={styles.title}>Start a conversation</h1>
+          <p className={styles.lede}>
+            Brief work, full engagements, teaching, or notes — write any time.
+            I reply within twenty-four hours.
           </p>
         </div>
-      </section>
+        <aside className={styles.meta}>
+          <dl className={styles.metaList}>
+            <dt className={styles.metaTerm}>Email</dt>
+            <dd className={styles.metaDef}>
+              <a href="mailto:hello@martindrexler.com">
+                hello@martindrexler.com
+              </a>
+            </dd>
 
-      {/* Contact Form Section */}
-      <section className={`${styles.contactSection} reveal-rise reveal-stagger-3`}>
-        <div className={styles.contactContainer}>
-          <div className={styles.contactGrid}>
-            {/* Form */}
-            <div className={styles.formColumn}>
-              <h2 className={styles.formTitle}>Send a message</h2>
-              <p className={styles.formDescription}>
-                Tell me about your project, timeline, and budget. The more details, the better.
+            <dt className={styles.metaTerm}>LinkedIn</dt>
+            <dd className={styles.metaDef}>
+              <a
+                href="https://linkedin.com/in/martindrexler"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Martin Drexler
+              </a>
+            </dd>
+
+            <dt className={styles.metaTerm}>Based</dt>
+            <dd className={styles.metaDef}>Munich · Colorado Springs</dd>
+
+            <dt className={styles.metaTerm}>Response</dt>
+            <dd className={styles.metaDef}>Within 24h</dd>
+
+            <dt className={styles.metaTerm}>Status</dt>
+            <dd className={styles.metaDef}>Accepting projects</dd>
+          </dl>
+        </aside>
+      </header>
+
+      {/* Form section — 5/7 split, body in the wider column. */}
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Send a message</h2>
+        <div className={styles.formBody}>
+          {success ? (
+            <div className={styles.successPanel}>
+              <p className={styles.successLabel}>[ MESSAGE RECEIVED ]</p>
+              <p className={styles.successCopy}>
+                Thanks for writing. Reply within 24 hours, often sooner.
               </p>
+            </div>
+          ) : (
+            <form className={styles.form} onSubmit={handleSubmit} noValidate>
+              {/* Honeypot — visually hidden, bots fill it. */}
+              <div className={styles.honeypot} aria-hidden="true">
+                <label htmlFor="company_url">Leave this field empty</label>
+                <input
+                  type="text"
+                  id="company_url"
+                  name="company_url"
+                  value={formData.company_url}
+                  onChange={handleChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                />
+              </div>
 
-              {formState === 'success' && (
-                <div className={styles.successMessage}>
-                  <span>[ OK — MESSAGE SENT ]</span>
-                </div>
-              )}
-              {formState === 'success' && (
-                <p className={styles.formDescription}>
-                  Thanks. I&apos;ll get back to you within 24 hours.
-                </p>
-              )}
-              {formState === 'error' && (
-                <div className={styles.errorMessage}>
-                  <span>[ ERROR ] {errorMessage}</span>
-                </div>
-              )}
-
-              <form className={styles.form} onSubmit={handleSubmit} noValidate>
-                {/* Honeypot — visually hidden, bots fill it */}
-                <div className={styles.honeypot} aria-hidden="true">
-                  <label htmlFor="company_url">Leave this field empty</label>
+              <div className={styles.fieldGrid}>
+                <div className={styles.field}>
+                  <label htmlFor="name" className={styles.label}>
+                    Name
+                  </label>
                   <input
                     type="text"
-                    id="company_url"
-                    name="company_url"
-                    value={formData.company_url}
-                    onChange={handleChange}
-                    tabIndex={-1}
-                    autoComplete="off"
-                  />
-                </div>
-
-                <div className={styles.formRow}>
-                  <div className={styles.formGroup}>
-                    <label htmlFor="name" className={styles.label}>Name</label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      required
-                      className={styles.input}
-                      placeholder="Your name"
-                      autoComplete="name"
-                    />
-                  </div>
-                  <div className={styles.formGroup}>
-                    <label htmlFor="email" className={styles.label}>Email</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                      className={styles.input}
-                      placeholder="your@email.com"
-                      autoComplete="email"
-                    />
-                  </div>
-                </div>
-
-                <div className={styles.formGroup}>
-                  <label htmlFor="company" className={styles.label}>Company (optional)</label>
-                  <input
-                    type="text"
-                    id="company"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleChange}
-                    className={styles.input}
-                    placeholder="Your company"
-                    autoComplete="organization"
-                  />
-                </div>
-
-                <div className={styles.formGroup}>
-                  <label htmlFor="message" className={styles.label}>Message</label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
+                    id="name"
+                    name="name"
+                    value={formData.name}
                     onChange={handleChange}
                     required
-                    rows={6}
-                    className={styles.textarea}
-                    placeholder="Tell me about your project..."
+                    className={styles.input}
+                    autoComplete="name"
+                    disabled={submitting}
                   />
                 </div>
-
-                <button
-                  type="submit"
-                  className={styles.submitButton}
-                  disabled={formState === 'submitting'}
-                >
-                  {formState === 'submitting' ? 'Sending…' : 'Send Message'}
-                </button>
-              </form>
-            </div>
-
-            {/* Contact Info */}
-            <div className={styles.infoColumn}>
-              <div className={styles.contactMethods}>
-                {contactMethods.map((method) => (
-                  <a
-                    key={method.label}
-                    href={method.href}
-                    className={styles.contactMethod}
-                    target={method.href.startsWith('http') ? '_blank' : undefined}
-                    rel={method.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-                  >
-                    <span className={styles.methodLabel}>{method.label}</span>
-                    <span className={styles.methodValue}>{method.value}</span>
-                    <span className={styles.methodNote}>{method.note}</span>
-                  </a>
-                ))}
+                <div className={styles.field}>
+                  <label htmlFor="email" className={styles.label}>
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className={styles.input}
+                    autoComplete="email"
+                    disabled={submitting}
+                  />
+                </div>
               </div>
 
-              <div className={styles.locationInfo}>
-                <span className={styles.locationLabel}>Location</span>
-                <span className={styles.locationValue}>Munich, Germany</span>
-                <span className={styles.locationNote}>Available for remote work worldwide</span>
+              <div className={styles.field}>
+                <label htmlFor="company" className={styles.label}>
+                  Company <span className={styles.optional}>(optional)</span>
+                </label>
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleChange}
+                  className={styles.input}
+                  autoComplete="organization"
+                  disabled={submitting}
+                />
               </div>
-            </div>
-          </div>
+
+              <div className={styles.field}>
+                <label htmlFor="message" className={styles.label}>
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  rows={8}
+                  className={styles.textarea}
+                  disabled={submitting}
+                />
+              </div>
+
+              {formState === 'error' && (
+                <p className={styles.errorLine}>
+                  [ ERROR ] {errorMessage}
+                </p>
+              )}
+
+              <button
+                type="submit"
+                className={styles.submit}
+                disabled={submitting}
+              >
+                {submitting ? '[ SENDING ]' : 'Send message →'}
+              </button>
+            </form>
+          )}
         </div>
       </section>
-    </div>
+
+      <nav className={styles.pager} aria-label="Page navigation">
+        <Link href="/studio">&larr; Studio</Link>
+        <Link href="/work">Work &rarr;</Link>
+      </nav>
+    </main>
   )
 }

@@ -1,0 +1,190 @@
+/* /work — Six-row typographic ledger. SYSTEM §14.9.
+   Slash-separated mono discipline tags above title, right-aligned mono date,
+   1px ink hairlines between rows, no thumbnails. View Transitions wire to
+   the case-study page via `view-transition-name` on each row's title. */
+
+.main {
+  max-width: var(--container-wide);
+  margin: 0 auto;
+  padding: var(--space-9) var(--pad-page) var(--space-10);
+  color: var(--ink-80);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+  color: var(--ink-60);
+  margin: 0 0 var(--space-5) 0;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--fs-display-m);
+  font-variation-settings: 'wght' 510;
+  font-feature-settings: var(--ot-display);
+  letter-spacing: -0.025em;
+  line-height: 1.0;
+  color: var(--ink);
+  margin: 0 0 var(--space-9) 0;
+  /* Without the eyebrow above, the title needs slightly more breathing
+     space from the page top to feel deliberate. */
+  margin-top: var(--space-5);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: var(--rule);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(7rem, 9rem) 1fr 88px;
+  gap: var(--space-5);
+  align-items: center;
+  padding: var(--space-6) 0;
+  border-bottom: var(--rule);
+}
+
+.index {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+  color: var(--ink-60);
+  font-variant-numeric: tabular-nums;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.tags {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+  color: var(--ink-60);
+  font-feature-settings: var(--ot-mono);
+}
+
+.projectTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-variation-settings: 'wght' 510;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: var(--ink);
+  margin: 0;
+}
+
+.projectLink {
+  color: var(--ink);
+  text-decoration: none;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.projectLink:hover {
+  opacity: 0.6;
+}
+
+.projectLink:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 6px;
+}
+
+/* Upcoming rows keep full-ink titles — they are real project names, not
+   disabled UI. The [Case study upcoming] line in .status carries the muted
+   tone instead. design-critic 2026-06-10 contrast fix. */
+.projectMuted {
+  color: var(--ink);
+}
+
+.descriptor {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-snug);
+  color: var(--ink-70);
+  margin: 0;
+  max-width: 50ch;
+}
+
+.studio {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+  color: var(--ink-50);
+  margin-top: var(--space-2);
+}
+
+/* Square logo cell — placeholder until real logo assets land.
+   1px ink hairline frame, light --ink-05 fill, mono "LOGO" centred. */
+.logoCell {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.logoPlaceholder {
+  width: 88px;
+  height: 88px;
+  border: var(--rule);
+  background: var(--ink-05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-30);
+  font-feature-settings: var(--ot-mono);
+}
+
+.foot {
+  margin-top: var(--space-10);
+  padding-top: var(--space-5);
+  border-top: var(--rule-faint);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+  color: var(--ink-50);
+}
+
+@media (max-width: 760px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    padding: var(--space-5) 0;
+  }
+
+  .index {
+    text-align: left;
+  }
+
+  .logoCell {
+    justify-content: flex-start;
+    order: 0;
+  }
+
+  .projectTitle {
+    font-size: var(--text-2xl);
+  }
+}
+
+@media (max-width: 640px) {
+  .main {
+    padding: var(--space-7) var(--pad-page) var(--space-9);
+  }
+}

@@ -6,11 +6,20 @@ Guidance for Claude Code working in this repository.
 
 Martin Drexler is a freelance graphic designer (hello@martindrexler.com). This repo is his portfolio site — the ambition is **a world-class design-focused website for a freelance graphic design business**.
 
-**Current state (2026-06-08):** Holding page only. Has been deliberately scrapped back to crest + Contact button after several aesthetic pivots that drifted into generic territory. Expansion to a full portfolio is now authorized.
+**Current state (2026-06-10):** Site has expanded from holding page to a full portfolio. Landing is the WebGL2 Dobryakov fluid sim with the crest sampled in-shader and warped by the velocity field. Four-corner chrome on `/` only. Every other route carries the persistent mono chrome strip (wordmark / version / commit / build date / scroll progress / ⌘K hint) at the bottom of the viewport. ⌘K (Mac) or Ctrl K (Win/Linux) opens a command menu with cross-page navigation + copy email. Cross-document View Transitions wire `/work` ↔ case-study pages.
 
 **Current routes:**
-- `/` — white background, centered crest (`public/images/hero/familycrest.png`), single Contact button.
-- `/contact` — functional contact form.
+- `/` — WebGL2 fluid landing (`page.tsx` + `FluidCanvas.tsx` + `fluid.ts` + `shaders.ts`, ~510 lines total).
+- `/contact` — functional contact form, posts to `/api/contact`.
+- `/work` — six-row typographic ledger of selected work.
+- `/work/cepres` — case study #1 (UX flagship, fintech, $45T platform).
+- `/work/keller-sports` — case study #2 (commerce + brand + product, 13 awards, in-house tenure).
+- `/studio` — about page. H1 = Martin Drexler, positioning paragraph as lede, Practice / Teaching / Clients / Recognition sections.
+- `/colophon` — Plex Mono table of how the site is built. Noindex.
+- `/system` — internal design-system reference. Noindex.
+- `/api/contact` — serverless POST handler, sends via Google Workspace SMTP (nodemailer). Six SMTP env vars must be set in Vercel (`SMTP_HOST/PORT/USER/PASS`, `MAIL_FROM`, `MAIL_TO`).
+
+**Locked direction:** `design/BRIEF.md` + `design/SYSTEM.md §14` define "personal-site-as-software" with four signature moves (fluid sim, View Transitions, ⌘K menu, mono chrome strip). The case-study template (`SYSTEM.md §14.9`) is the canonical 8-section structure; its shared CSS lives at `site/components/CaseStudy/CaseStudy.module.css`. The locked six case studies + studio attribution + NDA blocklist are in memory (`project_case_studies_v1.md`).
 
 **Expansion is intentional and incremental.** Don't rebuild the whole site in one pass. Each new page or section should be designed and shipped to the quality bar set in `design/BRIEF.md`. If a page would look like it could come from a generic agency template, it isn't ready.
 
@@ -41,18 +50,33 @@ No ESLint (Next 16 / ESLint 9 / `eslint-config-next` interplay is broken). `tsc`
 ```
 site/
 ├── app/
-│   ├── layout.tsx         # html/body wrapper, font loading
-│   ├── page.tsx           # Holding page: crest + Contact button
+│   ├── layout.tsx         # html/body wrapper, font loading (Inter variable opsz + IBM Plex Mono), mounts ChromeStrip + CommandMenu
+│   ├── page.tsx           # Landing — mounts FluidCanvas + four-corner chrome
 │   ├── page.module.css
-│   ├── contact/
-│   ├── icon.png           # Favicons
-│   ├── apple-icon.png
+│   ├── FluidCanvas.tsx    # React shell for the WebGL2 sim
+│   ├── fluid.ts           # Sim engine (advection, jacobi, projection, crest sampling)
+│   ├── shaders.ts         # GLSL programs
+│   ├── contact/           # /contact form
+│   ├── api/contact/       # Serverless POST handler (nodemailer)
+│   ├── system/            # /system — design system reference (noindex)
+│   ├── studio/            # /studio — about page (positioning, teaching, clients, recognition)
+│   ├── colophon/          # /colophon — how the site is built (noindex)
+│   ├── work/              # /work — typographic ledger of selected work
+│   │   ├── cepres/        # case study #1
+│   │   └── keller-sports/ # case study #2
+│   ├── icon.jpg           # Favicons
+│   ├── apple-icon.jpg
 │   ├── robots.ts
 │   └── sitemap.ts
+├── components/
+│   ├── CaseStudy/         # Shared CSS module for /work/[slug] pages (SYSTEM §14.9)
+│   ├── ChromeStrip/       # Persistent mono chrome strip (SYSTEM §14.4)
+│   └── CommandMenu/       # ⌘K command palette (SYSTEM §14.3)
 ├── styles/
-│   ├── tokens.css         # Single token source — extend, don't fork
+│   ├── tokens.css         # Single token source — extend, don't fork (Zion v2)
+│   ├── animations.css     # 5 reveal/stagger utilities
 │   ├── reset.css
-│   └── globals.css
+│   └── globals.css        # @view-transition wiring, hanging-punctuation, OT defaults, drop cap class
 └── public/
     ├── icons/sprite.svg
     └── images/hero/familycrest.{png,webp}

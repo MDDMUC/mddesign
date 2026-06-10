@@ -1,0 +1,156 @@
+/* ⌘K command menu — SYSTEM §14.3.
+   White sheet, 1px ink border, no shadow, solid backdrop (not blurred).
+   Open at 160ms scale+opacity, close at 80ms opacity-only. */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  background: var(--bg);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 12vh var(--pad-page) 0;
+  animation: backdropIn var(--dur-fast) var(--ease-out);
+}
+
+.backdropClosing {
+  animation: backdropOut var(--dur-instant) var(--ease-in) forwards;
+}
+
+.sheet {
+  width: 100%;
+  max-width: 480px;
+  background: var(--bg);
+  border: var(--rule);
+  font-family: var(--font-body);
+  animation: sheetIn var(--dur-fast) var(--ease-out);
+  transform-origin: top center;
+}
+
+.sheetClosing {
+  animation: sheetOut var(--dur-instant) var(--ease-in) forwards;
+}
+
+@keyframes backdropIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes backdropOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes sheetIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes sheetOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  border-bottom: var(--rule);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+  color: var(--ink-60);
+}
+
+.hint {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+  border: 1px solid var(--ink-30);
+  padding: 1px 5px 0;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-3) var(--space-4);
+  cursor: pointer;
+  position: relative;
+  border-bottom: var(--rule-faint);
+  background: var(--bg);
+  transition: background-color var(--dur-instant) var(--ease-out);
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.itemActive {
+  background: var(--ink-05);
+}
+
+.itemActive::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--ink);
+}
+
+.itemLabel {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--ink);
+}
+
+.itemShortcut {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+  color: var(--ink-60);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .backdropClosing,
+  .sheet,
+  .sheetClosing {
+    animation: none;
+  }
+}

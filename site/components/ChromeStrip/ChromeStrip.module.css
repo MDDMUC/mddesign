@@ -1,0 +1,113 @@
+/* Mono chrome strip — SYSTEM §14.4. Bottom of viewport, every page except `/`.
+   Wordmark / version / commit / build date / scroll progress / ⌘K hint. */
+
+.chrome {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-rail);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-2) var(--pad-page);
+  font-family: var(--font-mono);
+  font-size: var(--text-3xs);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-60);
+  font-variant-numeric: tabular-nums slashed-zero;
+  font-feature-settings: var(--ot-mono);
+  pointer-events: none;
+  background: var(--bg);
+  border-top: var(--rule-faint);
+}
+
+.chrome > * {
+  pointer-events: auto;
+}
+
+.left,
+.right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.wordmark {
+  color: var(--ink-60);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.wordmark:hover {
+  color: var(--ink);
+}
+
+.wordmark:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.sep {
+  color: var(--ink-30);
+}
+
+.commitLink {
+  color: var(--ink-60);
+  text-decoration: none;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.commitLink:hover {
+  color: var(--ink);
+}
+
+.progress {
+  min-width: 4.5ch;
+  text-align: right;
+}
+
+.kbd {
+  border: 1px solid var(--ink-30);
+  padding: 1px 5px 0;
+  letter-spacing: 0.04em;
+  color: var(--ink-60);
+  background: transparent;
+  font-family: inherit;
+  font-size: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+}
+
+.kbd:hover {
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+.kbd:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .chrome {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding-bottom: max(var(--space-2), env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wordmark,
+  .commitLink {
+    transition: none;
+  }
+}

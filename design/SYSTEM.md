@@ -8,12 +8,13 @@ The system is small on purpose. It does three things well — type, hairlines, r
 
 ## 1. Premise
 
-The site is an **operator's blueprint**: pure white field, ink hairlines as the structural language, monospace as the voice of the system, sans as the voice of the content. Form is mechanical, content is human.
+The site is an **operator's blueprint that reads as working software**: pure white field, ink hairlines as the structural language, monospace as the voice of the system, sans as the voice of the content. Form is mechanical, content is human. Version stamps, build commits, ISO dates, and a ⌘K command menu announce that this site is a piece of software the designer maintains — not a brochure. Detail in §14.
 
-Two non-negotiables that shape every other decision:
+Three non-negotiables that shape every other decision:
 
 1. **Pure white, pure ink, nothing in between.** No tint, no chroma, no accent.
 2. **The 1px hairline is the signature.** Everything that needs an edge, gets a hairline. Filled black is reserved for emphasis (hover, selection, inversion).
+3. **The chrome is software.** Mono chrome strip on every page (wordmark / version / commit / build / scroll progress / ⌘K hint) + View Transitions on case-study navigation. The four signature moves in §14 compound; they do not compete.
 
 ---
 
@@ -366,3 +367,155 @@ Decisions land in `logs/DECISIONS.md` and folded back into this doc.
 2. **A new component primitive? Add a §9 entry here** before writing the code.
 3. **A new pattern? Add a §10 entry here** before applying it twice.
 4. **Tempted to break a rule?** Write the case in the PR description. The brief and this doc are stronger than any single decision but they're not stronger than evidence.
+
+---
+
+## 14. Site identity — the four signature moves
+
+**Locked 2026-06-10.** The thesis is **personal-site-as-software**. Four moves carry it. They compound: the fluid sim and the View Transitions sit on opposite layers (canvas under, route morph over); the ⌘K menu and the chrome strip are typographic — they reinforce the others without competing.
+
+### 14.1 Move A — WebGL2 fluid sim (already shipped)
+
+Lives on `/` only. Crest sampled in the display shader and warped by the velocity field; mouse disturbs both ink trails and crest. Pointer-driven uniforms damped with a JS-side spring (stiffness 320, damping 28, mass 0.8) so the fluid "follows" the cursor with grace rather than 1:1 jitter. **Reduced-motion: stop the rAF loop, render one last frame, leave it on screen as a still image.** Files: `site/app/{FluidCanvas,fluid,shaders}.{tsx,ts}`.
+
+### 14.2 Move B — View Transitions on `/work` ↔ `/work/[slug]`
+
+Native API, enabled via Next.js 16 `experimental.viewTransition` + `@view-transition { navigation: auto }` in `globals.css`.
+
+- Tile cover: `view-transition-name: work-hero-{slug}` on the figure. Hero on the detail page uses the same name → the cover morphs.
+- Tile title: `view-transition-name: work-title-{slug}` → title slides into h1 position.
+- Mono eyebrow label crossfades root.
+- Duration: 400ms `--ease-out`. Reduced-motion: `animation: none !important` on all `::view-transition-*` pseudo-elements.
+- Skip naming: global header and the fluid sim canvas — give them `view-transition-name: none` so they don't ghost.
+
+### 14.3 Move C — ⌘K command menu + keyboard hint chrome
+
+Cross-page navigation backbone. White sheet, 1px ink border, no shadow. Backdrop is solid `--bg`, not blurred.
+
+- **Open:** `transform: scale(0.98 → 1)` + `opacity 0 → 1` over 160ms `--ease-out`.
+- **Close:** `opacity 1 → 0` over 80ms `--ease-in` (cubic-bezier(0.4, 0, 1, 1)). Asymmetric enter/exit.
+- **Backdrop:** solid `--bg`. No translucency, no `mix-blend`, no blur. (Earlier translucent veil rejected by design-critic 2026-06-10 — read as "stuck overlay.")
+- **Item focus:** background `--bg → --ink-05` + 2px leading bar in `--ink`. 80ms.
+- **Items (v1, five):** Go to Work / Go to Studio / Go to Contact / Open Colophon / Copy email address. Plex Mono shortcuts right-aligned. (Toggle Motion deferred until the reduced-motion override system is built; spec previously listed six items.)
+- **Discoverability:** `⌘K` hint in the chrome strip (Mac) / `Ctrl K` (Windows/Linux). Platform-detected via `navigator.userAgentData?.platform`.
+- **Keyboard prefixes:** `G W` → `/work`, `G S` → `/studio`, `G C` → `/contact`, `?` → show shortcuts.
+
+Defer: implementation lives in a `site/components/CommandMenu/` primitive when built.
+
+### 14.4 Move D — Persistent mono chrome strip
+
+Bottom of viewport, every page. 10px IBM Plex Mono, ink at 60% opacity (use `--ink-60` token). Tabular figures everywhere. All slots are inline on desktop; the strip wraps to two rows on mobile.
+
+Layout (left → right):
+
+```
+MD_DESIGN / v2.4.0 · 0573884 · BUILT 2026-06-10            0.412   ⌘K
+```
+
+| Slot | Source | Notes |
+|---|---|---|
+| Wordmark | static `MD_DESIGN` | Already exists in landing chrome; reuse |
+| Version | `package.json` via `process.env.NEXT_PUBLIC_VERSION` | SemVer. Major = new section. Minor = case study. Patch = everything else. |
+| Commit short hash | `process.env.VERCEL_GIT_COMMIT_SHA?.slice(0,7)` | Wrap in `<a>` to commit URL if repo public, else plain text |
+| Build date | `new Date().toISOString().slice(0,10)` at build time (Server Component constant) | NOT runtime — must be build-time |
+| Scroll progress | `scrollY / (scrollHeight - innerHeight)` | Three decimals, tabular. rAF only while scrolling; idle = no work |
+| ⌘K hint | platform-detected | Opens the command menu |
+
+The wordmark links to `/colophon` — a plain Plex Mono two-column table (stack / hosting / type / motion / rendering / design / access / source / version / licence). Component lives in `site/components/ChromeStrip/`.
+
+### 14.5 Type extensions (extends §3)
+
+Five upgrades layered on top of the existing scale:
+
+1. **Inter switched to variable** in `next/font` (no static `weight` array). Axis `opsz` exposed via `axes: ['opsz']`. (`slnt` is not exposed by next/font's Inter type — use `font-style: italic` for emphasis instead; Inter has a proper italic cut.) Plex Mono stays static (not variable on Google Fonts).
+2. **Display 200 + opsz 144** for case-study hero project name: `font-variation-settings: "wght" 200, "opsz" 144;` at `clamp(72px, 12vw, 184px)`. Tracking `--tracking-display-tight` (-0.04em), leading `--leading-display-tight` (0.92). **Caveat:** Google Fonts' Inter variable exposes `opsz` only across `14–32`; values above 32 clamp silently to the largest optical-size master. Specifying `opsz: 144` requests "the largest cut available" — adequate for now; document if a future self-hosted Inter Display file unlocks a true 144 master.
+3. **Non-integer wght 510** for H1/H2/buttons: `font-variation-settings: "wght" 510;`. Linear's signature — looks subtly custom inside Inter.
+4. **Italic for emphasis** instead of bold: `em { font-style: italic; }`. Inter's italic cut handles emphasis cleanly; reserve bold for headings, not in-line emphasis.
+5. **OpenType features as default body settings** — `ss03` (round quotes), `cv11` (single-story a), `calt` (contextual alternates). Set globally in `:root`. Mono adds `ss02` (slashed zero), `zero`. Tabular contexts add `tnum`.
+
+Plus three editorial moves:
+- **Hanging punctuation** — `html { hanging-punctuation: first allow-end last; }`. Two CSS lines, Stripe Press / Khoi Vinh baseline.
+- **Drop cap on case-study lede** — `p.lede::first-letter { font-size: 5.6em; line-height: 0.85; float: left; margin: 0.08em 0.08em 0 0; font-variation-settings: "wght" 200, "opsz" 32; }`. **Reserved exclusively for one paragraph per case study** — the Context introduction. Do **not** use `.lede` on `/studio`, `/colophon`, journal posts, or any other route. The drop cap loses its weight if it appears on non-case-study pages, and a 5.6em cap next to a short measure (the 38ch Studio lede) wrecks the right-rag.
+- **Mono eyebrow label** — Plex Mono 12px, UPPERCASE, `letter-spacing: 0.08em`, color `--ink-60`. 24px above each project title on `/work` and case-study headers. **Two-line format when discipline tags exceed two tokens:** line 1 is `CASE 0X — YEAR(S)`, line 2 is the slash-separated discipline list (`UX / UI / PRODUCT / FINTECH`). Single line otherwise: `CASE 03 — IDENTITY — 2024`. The slash list never inlines with the case number on the same line — it crams into illegibility.
+
+### 14.6 German bilingual strategy
+
+Default English. German per-page opt-in via `lang="de"` on the case-study root. No language switcher in chrome.
+
+- `:lang(de) { hyphens: auto; quotes: "„" "" "" ""; }` — German compound nouns get auto-hyphenation; round quotes set to the German pair (with `ss03` enabled, both render correctly).
+- `:lang(en) { quotes: "" "" "" ""; }` — English typographer's quotes.
+- Spaced en-dashes ` – ` for German parentheticals; em-dashes `—` (no spaces) for English.
+- Localised numerals via `Intl.NumberFormat`; tabular-nums keeps alignment regardless of locale.
+
+### 14.7 Motion budget — surface-by-surface
+
+Every motion in the table; nothing else is allowed without amending this doc.
+
+| Surface | Trigger | Property | Duration | Easing | Reduced-motion |
+|---|---|---|---|---|---|
+| Link (body) | hover | `text-underline-offset` 2 → 4px, `text-decoration-thickness` 1 → 2px | 160ms | `--ease-out` | instant |
+| Link (nav) | hover | `opacity` 1 → 0.6 | 80ms | `--ease-out` | 0ms |
+| Link / button | focus-visible | `outline-offset` 2 → 4px (1px ink outline) | 80ms | `--ease-out` | static 4px |
+| Button (primary) | hover | `background-color` invert (ink ↔ paper) | 160ms | `--ease-out` | 0ms |
+| Button | active/press | `transform: translateY(0 → 1px)` | 80ms | `--ease-out` | none |
+| Image (work tile) | hover | 1px hairline appears under caption, `transform-origin: left`, `scaleX 0 → 1` | 240ms | `--ease-out` | static hairline |
+| Image (case figure) | click | open lightbox via same-doc View Transition | 240ms | `--ease-out` | swap, no transition |
+| Route `/` → any | navigate | View Transition root crossfade | 160ms | `--ease-out` | disabled |
+| Route `/work` ↔ `/work/[slug]` | navigate | View Transition with `view-transition-name` on hero + title | 400ms | `--ease-out` | disabled |
+| Command menu | open | scale 0.98 → 1 + opacity | 160ms | `--ease-out` | opacity-only 80ms |
+| Command menu | close | opacity 1 → 0 | 80ms | `--ease-in` | 0ms |
+| Form field | focus | bottom border 1px → 2px (no colour change) | 160ms | `--ease-out` | static 2px |
+| Form submit | submitting | mono label crossfade `[SEND]` → `[SENDING]` → `[SENT]` | 80ms swap | linear | same |
+| Copy-email | click | mono label swap `[COPY]` → `[COPIED]` for 1600ms | 80ms swap | `--ease-out` | same |
+| Copy-email | hover | `transition-delay: 60ms` before visual state change | 60ms delay + 160ms | `--ease-out` | no delay |
+| Hero (`/`) WebGL fluid | continuous | shader uniforms, pointer-driven spring | 60fps loop | — | **STOP loop; hold last frame** |
+| Inline async loading | indeterminate | 1px ink hairline grows left→right under input, 800ms linear infinite | 800ms | linear | static |
+
+### 14.8 Loading language — the anti-spinner
+
+Mono `[STATE]` labels only. The label IS the feedback. No spinners ever.
+
+- **Route loading** (Next.js `loading.tsx`): `[LOADING]` in IBM Plex Mono 12px, ink, top-left at content-grid column. Trailing dots cycle `.` → `..` → `...` at 400ms per step. Reserve the title row's height so no layout shift on real content arrival.
+- **Image loading:** 1px ink hairline frame (matches rest state). Inside, top-left, `[LOADING]` until decode. On decode, `opacity 0 → 1` over 160ms. LCP gets `fetchPriority="high"` and no loading state.
+- **Form submitting:** Submit button label crossfade `[SEND]` → `[SENDING]` → `[SENT]`. While `[SENDING]`, append cycling dots at 400ms. Button disabled, outline turns into the 1px ink focus-ring look. On `[SENT]`, hold 1600ms, then form replaced (root same-doc View Transition, 240ms) with `[MESSAGE RECEIVED — reply within 48h]`.
+- **Copy interactions:** `[COPY]` → click → `[COPIED]` for 1600ms → back. 80ms swap.
+
+### 14.9 Case-study canonical template
+
+Eight sections in this order. `view-transition-name` on §2 hero figure + §1 title.
+
+| § | Section | Length | Purpose |
+|---|---|---|---|
+| 1 | Header | Title + mono metadata block (`STUDIO` / `ROLE` / `CLIENT` / `YEAR` / `TEAM` / `STATUS`) | Credibility gate — reader knows what Martin owned in 5s |
+| 2 | Hero artifact | 1 image, no caption | Show the work before any prose |
+| 3 | Context | 40–80 words, 1 paragraph | What the surface is, why it mattered |
+| 4 | Problem | 30–60 words, 1 paragraph | The design problem in one tight statement |
+| 5 | Design decisions | **4–8 vignettes** — heading (≤6 words) + 40–90 words + 1–2 images each | Load-bearing section. Each vignette = one decision and why |
+| 6 | Outcome | 30–60 words, optional | Skip entirely if no specific number or behaviour change |
+| 7 | Credits | Plex Mono list | `DESIGN — Martin Drexler. ENGINEERING — …. PM — ….` |
+| 8 | Pager | `← Index` / `Next →` | Two-word exit. NO CTA. NO contact form. |
+
+**Hard exclusions** (will be rejected by `design-critic`): bootcamp arc visible (Empathize/Define/Ideate), persona cards, hero quotes from self, awards walls, vague impact claims, "Let's work together" CTAs, three-column feature grids, device mockups in 3D perspective, NDA placeholder slides. Launched-feature filter is the NDA strategy — only show what shipped publicly.
+
+**§5 vignette layout rules:**
+- The §5 section runs **full-width** (not the 5/7 split that §§3, 4, 6, 7 use). The section title is a single mono eyebrow above the vignettes, no body column alongside it.
+- **Every vignette leads with text** — 5/7 text-left, image-right, applied uniformly. Mechanical alternation across 4+ vignettes reads as pattern, not editing (design-critic 2026-06-10). The strongest claim should always lead with the prose; the image follows.
+- Use `grid-template-areas` for layout (never `direction: rtl` — foot-gun on logical properties).
+- Vignette image ratio is **3:2** (landscape) per §10.4. If a vignette artifact is portrait, use 4:5 — pick once per case study and hold the choice.
+
+**§§3, 4, 6, 7 layout (asymmetric two-up):** the mono section title sits in a **5-column track on the left**, the body content (paragraph or credits list) sits in a **7-column track on the right**. Body always gets the wider column — the title is the meta. Earlier drafts inverted this; do not repeat.
+
+### 14.10 Anti-patterns (extends §11)
+
+Locked 2026-06-10 — these are the cutting-edge-looking moves that BREAK Zion v2:
+
+- Custom cursor as coloured dot or `mix-blend-mode: difference` follower (no chroma, breaks against pure white).
+- Magnetic / cursor-gravity buttons (conflict with WCAG focus predictability + rauno's "high-frequency interactions approach zero motion").
+- Cursor trail effects (Lusion-school 2022).
+- Full-page WebGL loader/intro animation (the fluid sim runs inside the home layout, never as a gatekeeper).
+- A second WebGL distortion surface on a non-landing route (two spines = no spine).
+- Scroll-triggered word-by-word reveals (banned for the record).
+- Two-tone display ("regular SLANTED" swap mid-headline — every AI-startup landing page has this).
+- Variable-font axis sliders as a toy.
+- Marquee/ticker scrolling display text.
+- Skeleton shimmer / spinners / progress arcs (mono `[STATE]` labels only — see §14.8).

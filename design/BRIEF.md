@@ -23,9 +23,13 @@ These three audiences want different things but reject the same things: cliché,
 
 ## 3. Positioning
 
-*[To be sharpened by Martin. Drafted as a placeholder — do not treat as final.]*
+**Locked 2026-06-10.** Use the paragraph below verbatim on `/studio` as the page lede. Paula Scher pattern — short sentences, each making one claim.
 
-> Martin Drexler is a graphic designer working at the intersection of brand identity and editorial systems. Work is measured, typographically rigorous, and unafraid of restraint.
+> Designer working across UI/UX, brand, and product systems. Selected work has scaled a $45T fintech platform (CEPRES), rebuilt a €100m commerce business (Keller Sports), and shaped the visual identity of the Young Champion Ambassador program (Olympic Movement, 25+ cities). 25+ international design awards including D&AD Yellow Pencil, German Brand Award Gold, and Red Dot. Has taught design as business strategy at the University of Denver and the World Trade Center Denver.
+
+**Page hierarchy on `/studio`:** the H1 is **"Martin Drexler"** (the designer's name does the work — it's the page's monumental moment); the mono eyebrow above reads `STUDIO`; the lede sits below the H1 in the same 7/5 header pattern as case studies. The page tells the visitor *who they're considering hiring* in under 60 seconds (BRIEF §1) — a category label as H1 squanders that.
+
+UI/UX-led, brand-fluent — not the inverse. The teaching credential (Daniels College of Business + WTC Denver, 2020–2022) is what makes "design as business strategy" defensible. When future copy ambiguates this, default to the UX/product framing first.
 
 **Tone of voice:** specific, plain, confident. No adjectives where a noun will do. No "passionate," "crafted," "bespoke." Sentences end where they should.
 
@@ -41,6 +45,7 @@ These are decisions, not preferences. Argue with them in writing before breaking
 6. **Motion serves hierarchy, not decoration.** Things move because they need to communicate state, position, or causation — not because motion is available. Reduced-motion is a first-class citizen.
 7. **Photography and imagery are part of the system.** Case-study imagery has a consistent treatment (crop, ratio, color, frame). Mixed treatments look amateur.
 8. **The work is the hero.** Case studies dominate. About copy is short. The contact page is one job: make it easy.
+9. **The site IS a piece of software.** Locked 2026-06-10. Version stamps, build commit, ISO build date, scroll progress, and a ⌘K command menu are chrome on every page. The fluid sim on `/`, View Transitions on `/work` ↔ `/work/[slug]`, the ⌘K menu, and the persistent mono chrome strip are the four signature moves — they compound and do not compete. Detail in `design/SYSTEM.md §14`.
 
 ## 5. Anti-patterns
 
@@ -67,28 +72,48 @@ These are unresolved. Each one needs a decision before the page that depends on 
 - ~~Colour palette.~~ → Pure white field + pure ink hairlines. Greyscale ramp for hierarchy only. No accent.
 - ~~Motion language.~~ → Durations 80/160/240/400ms; default `--ease-out` cubic-bezier(0.2, 0, 0, 1). Things move on state change, never on scroll.
 
+**Closed 2026-06-10** (now in `design/SYSTEM.md §14`):
+
+- ~~Case-study structure.~~ → 8-section template: Header → Hero artifact → Context → Problem → 4–8 Design-decision vignettes → Outcome (optional) → Credits → Pager. Vignettes are the load-bearing section.
+- ~~Loading state.~~ → Mono `[STATE]` labels only. `[LOADING]`, `[SENDING]`, `[SENT]`, `[COPIED]`, `[LOADING 01/06]`. No spinners ever.
+- ~~Navigation.~~ → ⌘K command menu replaces persistent rail. Persistent mono chrome strip (bottom of viewport, every page) carries wordmark / version / commit / build date / scroll progress / ⌘K hint.
+- ~~Footer / mark.~~ → Mono chrome strip serves both. No separate footer block on long-form pages.
+- ~~Page transition language.~~ → View Transitions API on `/work` ↔ `/work/[slug]` with `view-transition-name` on hero + title. Root crossfade on all other route changes. 400ms `--ease-out`. Disabled under reduced-motion.
+
 **Still open:**
 
-- **Case-study structure.** Each case study needs: hero, context, role, process, outcome, imagery. Define the canonical template before building the first one.
-- **Photography treatment.** Greyscale or full-colour? Inset frame (on `--ink-05`) or full-bleed within the column? Decide once; apply everywhere.
+- **Photography treatment.** Greyscale or full-colour? Inset frame (on `--ink-05`) or full-bleed within the column? Decide once; apply everywhere. Needed before CEPRES case study #1 ships.
 - **Image preparation pipeline.** AVIF + WebP + PNG fallback at what sizes? Manual export or build-step automation?
-- **Navigation.** Persistent rail (top, 56px, see `design/SYSTEM.md §10.2`) or homepage-only? On mobile: collapse, scroll-hide, or stay sticky?
-- **Footer.** Currently absent. What goes there when there's more than one page worth linking to? A bottom rail with page coord + counter (per system) is the candidate.
-- **Loading state.** No spinners (system rule). Replace with mono `[ LOADING ]` status line? Spike needed.
-- **Mark / wordmark.** The crest is a one-off illustration. Does the site also need a wordmark for nav / favicon contexts? Currently the crest stands alone.
 
-## 7. Page Inventory (proposed)
+## 7. Page Inventory (locked 2026-06-10)
 
 Order is implementation order, not navigation order.
 
 | Route | Status | Purpose |
 |---|---|---|
-| `/` | live (holding) | Crest + single CTA. Will eventually become a real landing page; design that page once `/work` exists. |
-| `/contact` | live | Form. Works. Style needs to align with the rest of the site once direction lands. |
-| `/work` | not built | Portfolio index. Selected work, not exhaustive — 6–10 pieces at most in the first pass. |
-| `/work/[slug]` | not built | Case study template. Build the template before the first case study. |
-| `/studio` | not built | About. Short. One photograph at most. Clients, recognition, contact prompt. |
+| `/` | live | WebGL2 fluid sim with crest + four-corner chrome. Redesign deferred until `/work` exists. |
+| `/contact` | live | Form. Works. Wireframe-grid background. Will inherit the mono chrome strip once it ships. |
+| `/system` | live | Internal design-system reference (noindex). |
+| `/work/cepres` | next | Case study #1 — the template gets shaped against the hardest case. Build before `/work` index exists. |
+| `/work/[slug]` | template | Canonical case-study template (8 sections). See `design/SYSTEM.md §14`. |
+| `/work` | after #1–4 | Six-row typographic ledger index. Slash-separated mono discipline tags, right-aligned mono date, hairline rules. View Transitions wire to case study. |
+| `/work/keller-sports` | phase 1b | After CEPRES proves the template. |
+| `/work/yca`, `/work/planetarie` | phase 1b | Goodvoice CD work. |
+| `/work/byte`, `/work/space-force` | phase 1c | Haimish work. Space Force conditional on role confirmation. |
+| `/studio` | phase 2 | About. Paragraph above (verbatim from §3) + factual mono teaching block + named clients. One portrait max. |
+| `/colophon` | phase 2 | Plain Plex Mono table: stack / type / motion / rendering / design / access / source / version / licence. Linked from chrome strip wordmark. |
+| `/work/archive` | phase 3 | Text-only ledger of older / smaller work (Fibbers, Neuro Hope, Auto Verbeessen, Plotgrid, Creative Consortium, USA Wrestling, Global Counseling Network, mining, drilling, etc.). |
 | `/journal` | optional | Writing. Only ship if there is writing to ship; don't build the page to fill it later. |
+
+**The six case studies (display order on `/work` once it exists):**
+1. **CEPRES** — `Martin Drexler Design Studio` — UX / UI / PRODUCT / FINTECH
+2. **Keller Sports** — `Keller Sports (Head of Design)` — COMMERCE / UI / BRAND / PRODUCT
+3. **YCA** — `Goodvoice Group (Creative Director)` — BRAND / UX / PRODUCT / SPATIAL
+4. **Planetarie** — `Goodvoice Group (Creative Director)` — BRAND / PRODUCT / PACKAGING / CPG
+5. **byte** — `Haimish Studio (Product Design)` — PRODUCT / PACKAGING / 3D / CONSUMER
+6. **Space for Curiosity** — `Haimish Studio` — BRAND / CONTENT / FILM *(conditional)*
+
+NDA blocklist: D&AD Yellow Pencil project, BMW, Red Bull. Can be named in `/studio` prose (clients) but no case studies.
 
 ## 8. References
 
