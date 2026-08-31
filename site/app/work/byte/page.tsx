@@ -75,15 +75,13 @@ export default function BytePage() {
         </aside>
       </header>
 
-      <figure className={styles.hero}>
-        <div
-          className={styles.heroFrame}
-          data-fig="01"
-          data-status="placeholder"
-          data-placeholder="byte-kit-hero"
-          aria-label="byte oral-care kit hero"
-        >
-          Take this journey to the next level · kit hero
+      <figure
+        className={`${styles.cover} ${styles.coverObject}`}
+        style={{ viewTransitionName: 'work-hero-byte' }}
+      >
+        <div className={styles.coverSquare}>
+          <strong>kit</strong>
+          <span>Tongue · Rinse · Floss · Test · Refresh · pH</span>
         </div>
       </figure>
 

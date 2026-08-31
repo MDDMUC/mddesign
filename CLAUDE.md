@@ -1,25 +1,33 @@
 # CLAUDE.md
 
-Guidance for Claude Code working in this repository.
+Guidance for Claude Code and Grok working in this repository.
+
+Grok session protocol, skills, and in-repo memory: [`AGENTS.md`](AGENTS.md) + [`memory/SESSION_PROTOCOL.md`](memory/SESSION_PROTOCOL.md).
 
 ## Project
 
 Martin Drexler is a freelance graphic designer (hello@martindrexler.com). This repo is his portfolio site — the ambition is **a world-class design-focused website for a freelance graphic design business**.
 
-**Current state (2026-06-10):** Site has expanded from holding page to a full portfolio. Landing is the WebGL2 Dobryakov fluid sim with the crest sampled in-shader and warped by the velocity field. Four-corner chrome on `/` only. Every other route carries the persistent mono chrome strip (wordmark / version / commit / build date / scroll progress / ⌘K hint) at the bottom of the viewport. ⌘K (Mac) or Ctrl K (Win/Linux) opens a command menu with cross-page navigation + copy email. Cross-document View Transitions wire `/work` ↔ case-study pages.
+**Current state (2026-08-31):** Composition push (lane 2). Landing is a title card: cities + the name + one Work link over a full-viewport Spline scene (gated below 720px). Chrome is a 44px Plex Mono typesetter bar (MDDS / Work / Studio / Contact / ⌘K) plus the command menu. `/work` is a display-scale typographic ledger (dates printed, no logo cells). Six case studies share the 8-section spine; each has a distinct type cover. Vignette image frames are hidden until photography lands. Contact H1 is the email.
+
+`ChromeStrip` and the WebGL2 fluid sim (`FluidCanvas.tsx` / `fluid.ts` / `shaders.ts`) still exist on disk but are **not mounted**. BRIEF / SYSTEM.md §14 still describe them as signature moves — treat **live `site/` as what ships**; do not restore retired chrome to match the spec.
 
 **Current routes:**
-- `/` — WebGL2 fluid landing (`page.tsx` + `FluidCanvas.tsx` + `fluid.ts` + `shaders.ts`, ~510 lines total).
-- `/contact` — functional contact form, posts to `/api/contact`.
-- `/work` — six-row typographic ledger of selected work.
+- `/` — title card over Spline (`page.tsx` + `SplineBackground`).
+- `/contact` — form, posts to `/api/contact`. H1 = email.
+- `/work` — display-scale typographic ledger.
 - `/work/cepres` — case study #1 (UX flagship, fintech, $45T platform).
 - `/work/keller-sports` — case study #2 (commerce + brand + product, 13 awards, in-house tenure).
-- `/studio` — about page. H1 = Martin Drexler, positioning paragraph as lede, Practice / Teaching / Clients / Recognition sections.
-- `/colophon` — Plex Mono table of how the site is built. Noindex.
+- `/work/yca` — case study #3 (Olympic Movement program, Goodvoice CD).
+- `/work/planetarie` — case study #4 (CBDa brand → Tanasi acquisition).
+- `/work/byte` — case study #5 (consumer dental packaging + 3D, Haimish).
+- `/work/space-for-curiosity` — case study #6 (Space Force / Air Force brand + film, Haimish).
+- `/studio` — about page. H1 = Martin Drexler, positioning paragraph as lede, Spline portrait, Practice / Teaching / Clients / Recognition / Index.
+- `/colophon` — Plex Mono table of how the site is built. Noindex. (Rendering row still mentions the fluid sim — stale.)
 - `/system` — internal design-system reference. Noindex.
 - `/api/contact` — serverless POST handler, sends via Google Workspace SMTP (nodemailer). Six SMTP env vars must be set in Vercel (`SMTP_HOST/PORT/USER/PASS`, `MAIL_FROM`, `MAIL_TO`).
 
-**Locked direction:** `design/BRIEF.md` + `design/SYSTEM.md §14` define "personal-site-as-software" with four signature moves (fluid sim, View Transitions, ⌘K menu, mono chrome strip). The case-study template (`SYSTEM.md §14.9`) is the canonical 8-section structure; its shared CSS lives at `site/components/CaseStudy/CaseStudy.module.css`. The locked six case studies + studio attribution + NDA blocklist are in memory (`project_case_studies_v1.md`).
+**Locked direction:** `design/BRIEF.md` + `design/SYSTEM.md §14`. Live signature moves: Spline on `/`, View Transitions on `/work` ↔ `/work/[slug]`, ⌘K command menu, Plex Mono typesetter bar. Case-study template is the 8-section spine with per-case type covers (`CaseStudy.module.css`). Locked six case studies + studio attribution + NDA blocklist: `design/BRIEF.md §7` and `memory/PROJECT_MEMORY.md`.
 
 **Expansion is intentional and incremental.** Don't rebuild the whole site in one pass. Each new page or section should be designed and shipped to the quality bar set in `design/BRIEF.md`. If a page would look like it could come from a generic agency template, it isn't ready.
 
@@ -41,7 +49,8 @@ No ESLint (Next 16 / ESLint 9 / `eslint-config-next` interplay is broken). `tsc`
 
 - **Framework:** Next.js 16 (App Router), React 19, TypeScript
 - **Styling:** CSS Modules + tokens in `site/styles/tokens.css`
-- **Fonts:** Inter via `next/font/google` (more may be added — coordinate via the BRIEF)
+- **Fonts:** Inter variable (`opsz`) + IBM Plex Mono via `next/font/google`. No third family without a BRIEF lock.
+- **3D:** Spline (`@splinetool/react-spline`) on `/` and `/studio` portrait; skip mount at `max-width: 720px`.
 - **Build:** Next.js on Vercel (static pages + one serverless function at `/api/contact`). Was static export until 2026-06-08; switched to add the contact form mailer.
 - **Deployment:** Vercel — Project Root Directory must be set to `site/` in the Vercel dashboard. Static pages still serve from the edge; only `/api/contact` invokes a serverless function.
 
@@ -50,36 +59,43 @@ No ESLint (Next 16 / ESLint 9 / `eslint-config-next` interplay is broken). `tsc`
 ```
 site/
 ├── app/
-│   ├── layout.tsx         # html/body wrapper, font loading (Inter variable opsz + IBM Plex Mono), mounts ChromeStrip + CommandMenu
-│   ├── page.tsx           # Landing — mounts FluidCanvas + four-corner chrome
+│   ├── layout.tsx         # fonts; mounts typesetter NavRail + CommandMenu
+│   ├── page.tsx           # Landing — typographic stack + SplineBackground
 │   ├── page.module.css
-│   ├── FluidCanvas.tsx    # React shell for the WebGL2 sim
-│   ├── fluid.ts           # Sim engine (advection, jacobi, projection, crest sampling)
-│   ├── shaders.ts         # GLSL programs
+│   ├── FluidCanvas.tsx    # Unmounted WebGL2 sim (retired from /)
+│   ├── fluid.ts           # Unmounted sim engine
+│   ├── shaders.ts         # Unmounted GLSL
 │   ├── contact/           # /contact form
 │   ├── api/contact/       # Serverless POST handler (nodemailer)
 │   ├── system/            # /system — design system reference (noindex)
-│   ├── studio/            # /studio — about page (positioning, teaching, clients, recognition)
+│   ├── studio/            # /studio — about + SplinePortrait
 │   ├── colophon/          # /colophon — how the site is built (noindex)
-│   ├── work/              # /work — typographic ledger of selected work
+│   ├── work/              # /work — typographic ledger
 │   │   ├── cepres/        # case study #1
-│   │   └── keller-sports/ # case study #2
+│   │   ├── keller-sports/ # case study #2
+│   │   ├── yca/           # case study #3
+│   │   ├── planetarie/    # case study #4
+│   │   ├── byte/          # case study #5
+│   │   └── space-for-curiosity/ # case study #6
 │   ├── icon.jpg           # Favicons
 │   ├── apple-icon.jpg
 │   ├── robots.ts
 │   └── sitemap.ts
 ├── components/
-│   ├── CaseStudy/         # Shared CSS module for /work/[slug] pages (SYSTEM §14.9)
-│   ├── ChromeStrip/       # Persistent mono chrome strip (SYSTEM §14.4)
-│   └── CommandMenu/       # ⌘K command palette (SYSTEM §14.3)
+│   ├── CaseStudy/         # Shared CSS module for /work/[slug] (SYSTEM §14.9)
+│   ├── NavRail/           # Sticky top chrome (live)
+│   ├── CommandMenu/       # ⌘K command palette (SYSTEM §14.3)
+│   ├── SplineBackground/  # Full-viewport Spline on / (gated <720px)
+│   ├── SplinePortrait/    # Contained Spline on /studio (gated <720px)
+│   └── ChromeStrip/       # Built, then retired from layout — do not remount unasked
 ├── styles/
 │   ├── tokens.css         # Single token source — extend, don't fork (Zion v2)
-│   ├── animations.css     # 5 reveal/stagger utilities
+│   ├── animations.css     # Reveal/stagger utilities (incl. line-rise + weight morph)
 │   ├── reset.css
 │   └── globals.css        # @view-transition wiring, hanging-punctuation, OT defaults, drop cap class
 └── public/
     ├── icons/sprite.svg
-    └── images/hero/familycrest.{png,webp}
+    └── images/hero/{familycrest,awards-horizontal-black}.*
 
 design/
 ├── BRIEF.md               # North-star: principles, sitemap, open questions
@@ -117,19 +133,17 @@ The aesthetic direction is owned by `design/BRIEF.md`. Read it before any visual
 1. **Single source of truth per concern.**
    - Tokens → `site/styles/tokens.css`
    - Design direction → `design/BRIEF.md`
-   - Project state / how-we-work → this file
+   - Project state / how-we-work → this file (Claude) and `AGENTS.md` (Grok)
+   - Session / durable memory → `memory/`
    - Decisions → `logs/DECISIONS.md`
 2. **CLAUDE.md must match the running site.** If the site grows beyond what's documented here, update this file in the same commit.
-3. **No new root-level `.md` files.** Pivots go straight to `docs/archive/`.
+3. **No new root-level `.md` files** except operational counterparts (`AGENTS.md`). Design pivots go straight to `docs/archive/`.
 4. **Don't pattern-match from `docs/archive/`.** It's history. Anduril, Shadow Trader, Zion, and hand-drawn directions all live there and were all rejected.
-5. **Workflow / agents / tickets scaffolding** at the repo root (`agents/`, `tickets/`, `workflow/`, `content/`) is currently unused. Don't populate it without explicit user direction — the prior multi-agent flow was aspirational and got in the way.
+5. **Workflow / agents / tickets scaffolding** at the repo root (`agents/`, `tickets/`, `workflow/`, `content/`) is currently unused. Don't populate it without explicit user direction — the prior multi-agent flow was aspirational and got in the way. Grok skills live in `.grok/skills/`; that is the supported process.
 
 ## Working with the Design Critic
 
-A project-scoped subagent lives at `.claude/agents/design-critic.md`. Invoke it (via the `Agent` tool) when:
-- You've finished a meaningful visual change and want a second pass before claiming done.
-- You're unsure whether a design choice clears the bar set by the brief.
-- The user asks for a design review.
+Project-scoped critic: `.claude/agents/design-critic.md` (Claude) and `.grok/agents/design-critic.md` (Grok). Invoke after meaningful visual work, or when the user asks for a design review. Grok: spawn `design-critic` or run `/mddesign-critique`.
 
 Don't invoke it for trivial changes (copy edits, dependency bumps, typo fixes).
 
@@ -148,3 +162,4 @@ Confirm with the user before:
 - Changing the type system (adding/removing fonts, restructuring the scale).
 - Introducing a library or dependency.
 - Touching anything in `docs/archive/` — those files are frozen history.
+- Changing a locked signature move (Spline on `/`, View Transitions on `/work`, ⌘K, NavRail), or remounting ChromeStrip / the fluid sim.

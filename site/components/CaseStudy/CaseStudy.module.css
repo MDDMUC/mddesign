@@ -8,6 +8,7 @@
   margin: 0 auto;
   padding: var(--space-9) var(--pad-page) var(--space-10);
   color: var(--ink-80);
+  overflow-x: clip;
 }
 
 /* ─── §1 Header ──────────────────────────────────────────────── */
@@ -34,7 +35,7 @@
 
 .title {
   font-family: var(--font-display);
-  font-size: var(--fs-display-xl);
+  font-size: var(--fs-display-m);
   font-variation-settings: 'wght' 200, 'opsz' 144;
   font-feature-settings: var(--ot-display);
   letter-spacing: var(--tracking-display-tight);
@@ -84,45 +85,223 @@
   margin: 0;
 }
 
-/* ─── §2 Hero artifact ──────────────────────────────────────── */
+/* ─── §2 Cover — type as artifact until photography lands ───── */
 
-.hero {
+.cover {
   margin: 0 0 var(--space-10) 0;
 }
 
-.heroFrame {
-  position: relative;
-  border: var(--rule);
-  aspect-ratio: 16 / 9;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--ink-05);
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ink-50);
+.coverStat {
+  margin: 0;
 }
 
-.heroFrame::before {
-  content: 'FIG. ' attr(data-fig);
-  position: absolute;
-  top: var(--space-3);
-  left: var(--space-4);
-  font-size: var(--text-2xs);
-  letter-spacing: 0.08em;
+.coverStat strong {
+  display: block;
+  font-family: var(--font-display);
+  font-variation-settings: 'wght' 200, 'opsz' 144;
+  font-feature-settings: var(--ot-display);
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  font-weight: 400;
+}
+
+.coverStat span {
+  display: block;
+  margin-top: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+  font-feature-settings: var(--ot-mono);
+}
+
+/* CEPRES — one figure owns the inverted field. */
+.coverField {
+  background: var(--bg-inverse);
+  color: var(--ink-inverse);
+  padding: var(--space-9) var(--pad-page) var(--space-8);
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  min-height: min(48vh, 28rem);
+  display: flex;
+  align-items: flex-end;
+}
+
+.coverField .coverStat strong {
+  font-size: clamp(5.5rem, 16vw, 12rem);
+  color: var(--ink-inverse);
+}
+
+.coverField .coverStat span {
+  color: var(--ink-30);
+}
+
+/* Keller — one primary figure, three facts as a running line. */
+.coverStrip {
+  border-top: var(--rule);
+  border-bottom: var(--rule);
+  padding: var(--space-8) 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-8);
+  align-items: end;
+}
+
+.coverStrip .coverStat strong {
+  font-size: clamp(4.5rem, 10vw, 8rem);
+  color: var(--ink);
+}
+
+.coverStrip .coverStat span {
   color: var(--ink-60);
 }
 
-.heroFrame::after {
-  content: attr(data-status);
-  position: absolute;
-  top: var(--space-3);
-  right: var(--space-4);
-  font-size: var(--text-2xs);
-  letter-spacing: 0.08em;
-  color: var(--ink-30);
+.coverFacts {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+  color: var(--ink-60);
+  font-feature-settings: var(--ot-mono);
+  max-width: 28ch;
+  line-height: 1.7;
+}
+
+/* YCA — wayfinding: vertical kicker + giant line. */
+.coverWayfind {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-7);
+  align-items: end;
+  min-height: min(62vh, 38rem);
+  padding: var(--space-8) 0 var(--space-6);
+  border-bottom: var(--rule);
+}
+
+.coverVert {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  color: var(--ink-60);
+  font-feature-settings: var(--ot-mono);
+}
+
+.coverGiant {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 10vw, 8.5rem);
+  font-variation-settings: 'wght' 200, 'opsz' 144;
+  font-feature-settings: var(--ot-display);
+  letter-spacing: -0.05em;
+  line-height: 0.84;
+  color: var(--ink);
+  margin: 0;
+}
+
+/* Planetarie — packaging object: 4:5 box in an 8/4 split. */
+.coverPack {
+  display: grid;
+  grid-template-columns: 4fr 8fr;
+  gap: var(--gutter);
+  align-items: end;
+}
+
+.coverBox {
+  aspect-ratio: 4 / 5;
+  border: var(--rule);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-5);
+}
+
+.coverBox strong {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-variation-settings: 'wght' 200, 'opsz' 144;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  font-weight: 400;
+}
+
+.coverBox span {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+  color: var(--ink-60);
+}
+
+.coverPack .coverNote {
+  font-family: var(--font-body);
+  font-size: var(--text-xl);
+  line-height: var(--leading-snug);
+  max-width: 22ch;
+  margin: 0;
+  color: var(--ink-80);
+}
+
+/* byte — product object: small square, lots of field. */
+.coverObject {
+  min-height: min(54vh, 32rem);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: var(--space-9) 0;
+}
+
+.coverSquare {
+  width: min(22rem, 72vw);
+  aspect-ratio: 1 / 1;
+  border: var(--rule);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: var(--space-5);
+}
+
+.coverSquare strong {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 10vw, 8rem);
+  font-variation-settings: 'wght' 200, 'opsz' 144;
+  letter-spacing: -0.05em;
+  line-height: 0.85;
+  font-weight: 400;
+}
+
+.coverSquare span {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+  color: var(--ink-60);
+}
+
+/* Space — letterbox title card. */
+.coverLetterbox {
+  background: var(--bg-inverse);
+  color: var(--ink-inverse);
+  aspect-ratio: 2.35 / 1;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-6);
+}
+
+.coverLetterbox p {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-variation-settings: 'wght' 200, 'opsz' 144;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 0;
+  max-width: 18ch;
 }
 
 /* ─── §§3–7 Sections — 5/7 split, body in the wider column ──── */
@@ -174,53 +353,28 @@
   margin-top: var(--space-4);
 }
 
-/* ─── §5 Vignettes — alternating asymmetric pairs ───────────── */
+/* ─── §5 Vignettes — text until photography lands ───────────── */
 
 .vignettes {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-9);
+  gap: var(--space-8);
 }
 
-/* Every vignette leads with text — mechanical alternation across four
-   vignettes read as pattern, not editing (design-critic 2026-06-10). The
-   strongest claim should always lead with the prose; the image follows. */
 .vignette {
-  display: grid;
-  grid-template-columns: 5fr 7fr;
-  grid-template-areas: 'text image';
-  gap: var(--gutter);
-  align-items: start;
+  display: block;
+  max-width: 42rem;
+  padding-top: var(--space-4);
+  border-top: var(--rule);
 }
 
 .vignetteText {
-  grid-area: text;
 }
 
+/* Image slots return with the photography pipeline. Empty 3:2
+   frames read as a wireframe — do not show them without artifacts. */
 .vignetteFrame {
-  position: relative;
-  grid-area: image;
-  border: var(--rule);
-  aspect-ratio: 3 / 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--ink-05);
-  font-family: var(--font-mono);
-  font-size: var(--text-2xs);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-50);
-}
-
-.vignetteFrame::before {
-  content: 'FIG. ' attr(data-fig);
-  position: absolute;
-  top: var(--space-2);
-  left: var(--space-3);
-  font-size: var(--text-2xs);
-  letter-spacing: 0.08em;
-  color: var(--ink-60);
+  display: none;
 }
 
 .vignetteHeading {
@@ -311,9 +465,24 @@
 @media (max-width: 900px) {
   .header,
   .section,
-  .vignette {
+  .coverPack,
+  .coverWayfind,
+  .coverStrip {
     grid-template-columns: 1fr;
-    grid-template-areas: 'text' 'image';
+  }
+
+  .coverVert {
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+
+  .coverField {
+    min-height: 0;
+    padding: var(--space-7) var(--pad-page);
+  }
+
+  .coverLetterbox {
+    aspect-ratio: 16 / 9;
   }
 
   .meta {
@@ -322,10 +491,6 @@
 
   .vignettes {
     gap: var(--space-7);
-  }
-
-  .vignetteFrame {
-    margin-top: var(--space-4);
   }
 }
 

@@ -81,17 +81,14 @@ export default function CepresPage() {
         </aside>
       </header>
 
-      {/* §2 Hero artifact — image, no caption */}
-      <figure className={styles.hero}>
-        <div
-          className={styles.heroFrame}
-          data-fig="01"
-          data-status="placeholder"
-          data-placeholder="cepres-dashboard-hero"
-          aria-label="CEPRES platform dashboard"
-        >
-          Dashboard · platform hero
-        </div>
+      <figure
+        className={`${styles.cover} ${styles.coverField}`}
+        style={{ viewTransitionName: 'work-hero-cepres' }}
+      >
+        <p className={styles.coverStat}>
+          <strong>76→7</strong>
+          <span>user roles distilled into scenarios</span>
+        </p>
       </figure>
 
       {/* §3 Context */}

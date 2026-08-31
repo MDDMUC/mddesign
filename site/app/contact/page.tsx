@@ -73,7 +73,11 @@ export default function ContactPage() {
       <header className={styles.header}>
         <div>
           <p className={styles.eyebrow}>Contact</p>
-          <h1 className={styles.title}>Start a conversation</h1>
+          <h1 className={styles.title}>
+            <a href="mailto:hello@martindrexler.com">
+              hello@martindrexler.com
+            </a>
+          </h1>
           <p className={styles.lede}>
             Brief work, full engagements, teaching, or notes — write any time.
             I reply within twenty-four hours.
@@ -81,13 +85,6 @@ export default function ContactPage() {
         </div>
         <aside className={styles.meta}>
           <dl className={styles.metaList}>
-            <dt className={styles.metaTerm}>Email</dt>
-            <dd className={styles.metaDef}>
-              <a href="mailto:hello@martindrexler.com">
-                hello@martindrexler.com
-              </a>
-            </dd>
-
             <dt className={styles.metaTerm}>LinkedIn</dt>
             <dd className={styles.metaDef}>
               <a

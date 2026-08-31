@@ -81,17 +81,17 @@ export default function PlanetariePage() {
         </aside>
       </header>
 
-      {/* §2 Hero artifact */}
-      <figure className={styles.hero}>
-        <div
-          className={styles.heroFrame}
-          data-fig="01"
-          data-status="placeholder"
-          data-placeholder="planetarie-product-hero"
-          aria-label="Planetarie product hero"
-        >
-          CBDa extracted with water · product hero
+      <figure
+        className={`${styles.cover} ${styles.coverPack}`}
+        style={{ viewTransitionName: 'work-hero-planetarie' }}
+      >
+        <div className={styles.coverBox}>
+          <strong>CBDa</strong>
+          <span>water-only extraction</span>
         </div>
+        <p className={styles.coverNote}>
+          USDA-organic. Patent-pending. Built from the values session out.
+        </p>
       </figure>
 
       {/* §3 Context */}

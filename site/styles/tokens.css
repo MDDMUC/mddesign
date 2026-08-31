@@ -110,7 +110,7 @@
   --gutter: var(--space-5);
   --pad-page: var(--space-5);
   --pad-page-lg: var(--space-7);
-  --rail-h: 56px;              /* top/bottom rail */
+  --rail-h: 44px;              /* typesetter bar */
 
   /* ───────── Rules ─────────
    * Hairlines are the signature. `--rule` is the default — pure black 1px.

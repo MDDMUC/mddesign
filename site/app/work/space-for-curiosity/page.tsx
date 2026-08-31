@@ -75,16 +75,11 @@ export default function SpaceForCuriosityPage() {
         </aside>
       </header>
 
-      <figure className={styles.hero}>
-        <div
-          className={styles.heroFrame}
-          data-fig="01"
-          data-status="placeholder"
-          data-placeholder="space-for-curiosity-hero"
-          aria-label="Space for Curiosity series still"
-        >
-          Cockpit · series still
-        </div>
+      <figure
+        className={`${styles.cover} ${styles.coverLetterbox}`}
+        style={{ viewTransitionName: 'work-hero-space-for-curiosity' }}
+      >
+        <p>No score. No CTA. 3–5 minutes.</p>
       </figure>
 
       <section className={styles.section}>

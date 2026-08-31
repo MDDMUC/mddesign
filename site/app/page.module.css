@@ -1,236 +1,124 @@
-/* Landing — modified "Console" hero (research synthesis 2026-06-10).
-   Replaces the WebGL fluid sim with a typographic console: name + status
-   panel. Pure type, ink hairlines only. Compounds with the four signature
-   moves (View Transitions, ⌘K menu, mono chrome strip, top nav rail). */
+/* Landing — title card over the Spline field.
+   One job: the name, the cities, a way into the work. */
 
 .main {
   position: relative;
-  max-width: var(--container-wide);
-  margin: 0 auto;
-  padding: var(--space-5) var(--pad-page) var(--space-7);
-  color: var(--ink-80);
-  height: calc(100vh - 56px);
+  height: calc(100dvh - var(--rail-h));
+  max-width: none;
+  margin: 0;
+  padding: var(--space-6) var(--pad-page) var(--space-6);
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  color: var(--ink);
 }
 
-/* Eyebrow + H1 sit visually above the Spline stage but stay
-   pointer-transparent so cursor events reach the Spline scene behind. */
-.eyebrow,
+.places,
 .title {
   position: relative;
   z-index: 1;
   pointer-events: none;
 }
 
-/* ─── Hero — flex column, title stack centered ──────────────── */
-
-.hero {
-  position: relative;
-  z-index: 1;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  min-height: 0;
-}
-
-.eyebrow {
+.places {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   font-weight: 400;
   letter-spacing: var(--tracking-mono-label);
   text-transform: uppercase;
   color: var(--ink-60);
-  margin: 0 0 var(--space-5) 0;
+  margin: 0;
   font-feature-settings: var(--ot-mono);
 }
 
+.dot {
+  margin: 0 0.6em;
+  color: var(--ink-30);
+}
+
+.titling {
+  position: relative;
+  z-index: 1;
+}
+
 .title {
   font-family: var(--font-display);
-  font-size: clamp(3.5rem, 8.5vw, 8rem);
+  font-size: clamp(2.75rem, 7vw, 7.25rem);
   font-feature-settings: var(--ot-display);
-  letter-spacing: -0.045em;
+  letter-spacing: var(--tracking-display-tight);
   line-height: 0.88;
   color: var(--ink);
-  /* Optical-align the title's "M" to the eyebrow + awards left edge.
-     Inter Display's caps have a small left side bearing that mono doesn't. */
-  margin: 0 0 0 -0.05em;
+  margin: 0;
+  min-width: 0;
 }
 
-.titleBold {
+@keyframes lockup-rise {
+  from { transform: translateY(140%); }
+  to { transform: translateY(0); }
+}
+
+.name,
+.studio {
   display: block;
+  animation: lockup-rise var(--dur-reveal) var(--ease-out) both;
+}
+
+.name {
   font-variation-settings: 'wght' 700, 'opsz' 144;
   text-transform: uppercase;
+  white-space: nowrap;
+  animation-delay: var(--stagger-3);
 }
 
-.titleLight {
-  display: block;
+.studio {
   font-variation-settings: 'wght' 400, 'opsz' 144;
-  letter-spacing: -0.04em;
+  text-transform: none;
+  letter-spacing: -0.035em;
+  animation-delay: var(--stagger-4);
 }
 
-/* Award strip — sits directly below the title block. Sized so it doesn't
-   dominate; pointer-events disabled like the rest of the hero text. */
-.awards {
-  display: block;
-  height: auto;
-  width: clamp(240px, 30vw, 480px);
-  margin-top: var(--space-5);
-  /* Static layout offset (instead of transform) so reduced-motion's
-     `transform: none` reset doesn't zero out our visual spacing. */
-  position: relative;
-  top: var(--space-5);
+.into {
+  position: absolute;
+  right: 0;
+  bottom: 0.55em;
   z-index: 1;
-  pointer-events: none;
-}
-
-/* ─── Positioning paragraph ────────────────────────────────── */
-
-.positioning {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: 5fr 7fr;
-  gap: var(--gutter);
-  margin-bottom: var(--space-5);
-  flex-shrink: 0;
-}
-
-.positioning::before {
-  content: 'About';
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  font-weight: 400;
   letter-spacing: var(--tracking-mono-label);
   text-transform: uppercase;
-  color: var(--ink-60);
-  padding-top: var(--space-2);
-  border-top: var(--rule);
-}
-
-.positioning p {
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  line-height: var(--leading-snug);
-  color: var(--ink-80);
-  margin: 0;
-  max-width: 60ch;
-}
-
-/* ─── Exit links ───────────────────────────────────────────── */
-
-.exit {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  grid-template-columns: 5fr 7fr;
-  gap: var(--gutter);
-  flex-shrink: 0;
-}
-
-.exit::before {
-  content: 'Continue';
-  font-family: var(--font-mono);
-  font-size: var(--text-xs);
-  font-weight: 400;
-  letter-spacing: var(--tracking-mono-label);
-  text-transform: uppercase;
-  color: var(--ink-60);
-  padding-top: var(--space-2);
-  border-top: var(--rule);
-}
-
-.exit nav,
-.exit > a {
-  display: contents;
-}
-
-.exitLink {
-  font-family: var(--font-display);
-  font-size: var(--text-lg);
-  font-variation-settings: 'wght' 510;
-  letter-spacing: -0.015em;
-  line-height: 1.2;
   color: var(--ink);
   text-decoration: none;
-  padding: var(--space-2) 0;
-  border-bottom: var(--rule-faint);
-  transition: opacity var(--dur-instant) var(--ease-out);
+  font-feature-settings: var(--ot-mono);
 }
 
-.exitLink:first-of-type {
-  border-top: var(--rule-faint);
+.into:hover {
+  opacity: 0.5;
 }
 
-.exitLink:hover {
-  opacity: 0.6;
-}
-
-.exitLink:focus-visible {
+.into:focus-visible {
   outline: 1px solid var(--ink);
   outline-offset: 4px;
-}
-
-/* ─── Responsive ────────────────────────────────────────────── */
-
-@media (max-width: 900px) {
-  .positioning,
-  .exit {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 720px) {
   .main {
     height: auto;
-    min-height: calc(100vh - 56px);
-    padding: var(--space-5) var(--pad-page) var(--space-7);
-  }
-}
-
-@media (max-width: 640px) {
-  .main {
-    min-height: calc(100vh - 48px);
+    min-height: calc(100dvh - var(--rail-h));
+    overflow: visible;
+    padding: var(--space-6) var(--pad-page) var(--space-7);
   }
 
-  .hero {
-    min-height: 62vh;
-    padding: var(--space-5) 0;
-  }
-
-  .eyebrow {
-    margin-bottom: var(--space-3);
+  .name {
+    white-space: normal;
   }
 
   .title {
-    font-size: clamp(3rem, 16vw, 5.5rem);
-    letter-spacing: -0.05em;
-    line-height: 0.9;
+    font-size: clamp(2.5rem, 12vw, 4rem);
   }
 
-  .awards {
-    width: clamp(200px, 52vw, 320px);
-    margin-top: var(--space-3);
-    transform: translateY(var(--space-3));
-  }
-
-  .positioning {
-    margin-bottom: var(--space-5);
-  }
-
-  .positioning p {
-    font-size: var(--text-base);
-  }
-
-  .exit::before,
-  .positioning::before {
-    margin-bottom: var(--space-2);
-  }
-
-  .exitLink {
-    font-size: var(--text-base);
-    padding: var(--space-2) 0;
+  .into {
+    position: static;
+    display: inline-block;
+    margin-top: var(--space-6);
   }
 }

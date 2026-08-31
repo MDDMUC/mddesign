@@ -81,17 +81,17 @@ export default function KellerSportsPage() {
         </aside>
       </header>
 
-      {/* §2 Hero artifact */}
-      <figure className={styles.hero}>
-        <div
-          className={styles.heroFrame}
-          data-fig="01"
-          data-status="placeholder"
-          data-placeholder="keller-sports-shop-hero"
-          aria-label="Keller Sports shop hero"
-        >
-          Revolution in motion · shop hero
-        </div>
+      <figure
+        className={`${styles.cover} ${styles.coverStrip}`}
+        style={{ viewTransitionName: 'work-hero-keller-sports' }}
+      >
+        <p className={styles.coverStat}>
+          <strong>€100m</strong>
+          <span>commerce, identity through checkout</span>
+        </p>
+        <p className={styles.coverFacts}>
+          13 awards · 3 shop relaunches · in-house photography studio
+        </p>
       </figure>
 
       {/* §3 Context */}

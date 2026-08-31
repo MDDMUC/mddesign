@@ -80,17 +80,18 @@ export default function YcaPage() {
         </aside>
       </header>
 
-      {/* §2 Hero artifact */}
-      <figure className={styles.hero}>
-        <div
-          className={styles.heroFrame}
-          data-fig="01"
-          data-status="placeholder"
-          data-placeholder="yca-program-hero"
-          aria-label="Young Champion Ambassador program hero"
-        >
-          Olympic torch relay · program hero
-        </div>
+      <figure
+        className={`${styles.cover} ${styles.coverWayfind}`}
+        style={{ viewTransitionName: 'work-hero-yca' }}
+      >
+        <span className={styles.coverVert}>25+ cities</span>
+        <p className={styles.coverGiant}>
+          Explore
+          <br />
+          Discover
+          <br />
+          Understand
+        </p>
       </figure>
 
       {/* §3 Context */}

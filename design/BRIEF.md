@@ -44,8 +44,8 @@ These are decisions, not preferences. Argue with them in writing before breaking
 5. **Color is restraint, not palette.** Pick the smallest palette that does the job. One accent at most in the first pass. Add only with evidence.
 6. **Motion serves hierarchy, not decoration.** Things move because they need to communicate state, position, or causation — not because motion is available. Reduced-motion is a first-class citizen.
 7. **Photography and imagery are part of the system.** Case-study imagery has a consistent treatment (crop, ratio, color, frame). Mixed treatments look amateur.
-8. **The work is the hero.** Case studies dominate. About copy is short. The contact page is one job: make it easy.
-9. **The site IS a piece of software.** Locked 2026-06-10. Version stamps, build commit, ISO build date, scroll progress, and a ⌘K command menu are chrome on every page. The fluid sim on `/`, View Transitions on `/work` ↔ `/work/[slug]`, the ⌘K menu, and the persistent mono chrome strip are the four signature moves — they compound and do not compete. Detail in `design/SYSTEM.md §14`.
+8. **The work is the hero.** Case studies dominate. About copy is short. The contact page is one job: make it easy. The homepage does not recite the studio paragraph or a three-link brochure — that copy lives on `/studio`; the work lives on `/work`.
+9. **The site IS a piece of software.** Locked 2026-06-10, chrome revised 2026-08-31. ⌘K remains the command palette. Live chrome is a 44px Plex Mono typesetter bar (wordmark / Work / Studio / Contact / ⌘K). The ChromeStrip (version / commit / build / scroll) is retired from the layout. Spline on `/` is the one 3D object. View Transitions on `/work` ↔ `/work/[slug]`. They compound and do not compete.
 
 ## 5. Anti-patterns
 
@@ -76,14 +76,20 @@ These are unresolved. Each one needs a decision before the page that depends on 
 
 - ~~Case-study structure.~~ → 8-section template: Header → Hero artifact → Context → Problem → 4–8 Design-decision vignettes → Outcome (optional) → Credits → Pager. Vignettes are the load-bearing section.
 - ~~Loading state.~~ → Mono `[STATE]` labels only. `[LOADING]`, `[SENDING]`, `[SENT]`, `[COPIED]`, `[LOADING 01/06]`. No spinners ever.
-- ~~Navigation.~~ → ⌘K command menu replaces persistent rail. Persistent mono chrome strip (bottom of viewport, every page) carries wordmark / version / commit / build date / scroll progress / ⌘K hint.
-- ~~Footer / mark.~~ → Mono chrome strip serves both. No separate footer block on long-form pages.
+- ~~Navigation.~~ → ⌘K command menu *and* a persistent typesetter bar (Plex Mono, 44px). Bar carries wordmark / Work / Studio / Contact / ⌘K hint. Revised 2026-08-31: not a boxed product header; not the retired ChromeStrip.
+- ~~Footer / mark.~~ → No separate footer block on long-form pages. Wordmark in the bar links home; colophon remains a route.
 - ~~Page transition language.~~ → View Transitions API on `/work` ↔ `/work/[slug]` with `view-transition-name` on hero + title. Root crossfade on all other route changes. 400ms `--ease-out`. Disabled under reduced-motion.
+
+**Closed 2026-08-31** (composition push — lane 2):
+
+- ~~Landing job.~~ → Title card: cities + lockup + one Work link over the Spline field. Lockup is **MARTIN DREXLER** (uppercase, `wght` 700) over **Design Studio** (title case, `wght` 400). Reveal is line-rise only — no variable-font weight morph (Inter snaps between masters). No awards logo strip. No studio paragraph on `/`.
+- ~~`/work` index.~~ → Display-scale names, dates printed, no logo cells. Typographic ledger, not a catalog of equal 36px rows.
+- ~~Case-study covers.~~ → Shared 8-section spine. Each case gets a distinct type cover (geometry, not decoration) until photography lands. Vignette image frames stay hidden rather than showing empty 3:2 boxes.
+- ~~Contact headline.~~ → The email is the H1.
 
 **Still open:**
 
-- **Photography treatment.** Greyscale or full-colour? Inset frame (on `--ink-05`) or full-bleed within the column? Decide once; apply everywhere. Needed before CEPRES case study #1 ships.
-- **Image preparation pipeline.** AVIF + WebP + PNG fallback at what sizes? Manual export or build-step automation?
+- **Image preparation pipeline.** AVIF + WebP + PNG fallback at what sizes? Manual export or build-step automation? Photography treatment remains option C (1px hairline, no greyscale, no tint) — BRIEF 2026-06-10.
 
 ## 7. Page Inventory (locked 2026-06-10)
 
@@ -91,17 +97,17 @@ Order is implementation order, not navigation order.
 
 | Route | Status | Purpose |
 |---|---|---|
-| `/` | live | WebGL2 fluid sim with crest + four-corner chrome. Redesign deferred until `/work` exists. |
-| `/contact` | live | Form. Works. Wireframe-grid background. Will inherit the mono chrome strip once it ships. |
+| `/` | live | Title card over Spline. Cities + name + Work. |
+| `/contact` | live | Form. H1 = email. |
 | `/system` | live | Internal design-system reference (noindex). |
-| `/work/cepres` | next | Case study #1 — the template gets shaped against the hardest case. Build before `/work` index exists. |
-| `/work/[slug]` | template | Canonical case-study template (8 sections). See `design/SYSTEM.md §14`. |
-| `/work` | after #1–4 | Six-row typographic ledger index. Slash-separated mono discipline tags, right-aligned mono date, hairline rules. View Transitions wire to case study. |
-| `/work/keller-sports` | phase 1b | After CEPRES proves the template. |
-| `/work/yca`, `/work/planetarie` | phase 1b | Goodvoice CD work. |
-| `/work/byte`, `/work/space-force` | phase 1c | Haimish work. Space Force conditional on role confirmation. |
-| `/studio` | phase 2 | About. Paragraph above (verbatim from §3) + factual mono teaching block + named clients. One portrait max. |
-| `/colophon` | phase 2 | Plain Plex Mono table: stack / type / motion / rendering / design / access / source / version / licence. Linked from chrome strip wordmark. |
+| `/work/cepres` | live | Case 01. Type cover (software field). Images still to come. |
+| `/work/[slug]` | template | 8-section spine; cover geometry varies per case. See `design/SYSTEM.md §14.9`. |
+| `/work` | live | Display-scale typographic ledger. Dates printed. No logos. |
+| `/work/keller-sports` | live | Case 02. Catalog-strip cover. |
+| `/work/yca`, `/work/planetarie` | live | Cases 03–04. Wayfinding / packaging covers. |
+| `/work/byte`, `/work/space-for-curiosity` | live | Cases 05–06. Object / letterbox covers. |
+| `/studio` | live | About. H1 = Martin Drexler. BRIEF §3 paragraph verbatim. Spline portrait. |
+| `/colophon` | live | Plain Plex Mono table. Noindex. |
 | `/work/archive` | phase 3 | Text-only ledger of older / smaller work (Fibbers, Neuro Hope, Auto Verbeessen, Plotgrid, Creative Consortium, USA Wrestling, Global Counseling Network, mining, drilling, etc.). |
 | `/journal` | optional | Writing. Only ship if there is writing to ship; don't build the page to fill it later. |
 
