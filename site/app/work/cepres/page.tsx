@@ -42,7 +42,7 @@ export default function CepresPage() {
       <header className={styles.header}>
         <div>
           <p className={styles.eyebrow}>
-            CASE 01 — 2018–2020
+            CASE 05 — 2018–2020
             <br />
             UX / UI / PRODUCT / FINTECH
           </p>
@@ -176,7 +176,10 @@ export default function CepresPage() {
 
       {/* §8 Pager */}
       <nav className={styles.pager} aria-label="Case study navigation">
-        <Link href="/work">&larr; Index</Link>
+        <Link href="/work/space-for-curiosity">
+          &larr; Space for Curiosity
+        </Link>
+        <Link href="/work">Index</Link>
         <Link href="/work/keller-sports">Keller Sports &rarr;</Link>
       </nav>
     </main>

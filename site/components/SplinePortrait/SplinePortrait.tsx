@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
+import type { Application } from '@splinetool/runtime'
 import styles from './SplinePortrait.module.css'
 
 const Spline = dynamic(() => import('@splinetool/react-spline'), {
@@ -11,6 +12,16 @@ const Spline = dynamic(() => import('@splinetool/react-spline'), {
 type Props = {
   scene: string
   ariaLabel?: string
+}
+
+function hideSplineWatermark(app: Application) {
+  try {
+    const pipeline = (app as unknown as { _renderer?: { pipeline?: { setWatermark?: (v: null) => void } } })
+      ._renderer?.pipeline
+    pipeline?.setWatermark?.(null)
+  } catch {
+    // Runtime internals may change; fail silent.
+  }
 }
 
 export function SplinePortrait({ scene, ariaLabel }: Props) {
@@ -36,10 +47,12 @@ export function SplinePortrait({ scene, ariaLabel }: Props) {
     return () => window.clearTimeout(t)
   }, [isMobile])
 
-  const handleLoad = () => {
+  const handleLoad = (app: Application) => {
+    hideSplineWatermark(app)
     // Brief settle window before fading in — covers Spline's ResizeObserver
     // pass + first render frame.
     window.setTimeout(() => {
+      hideSplineWatermark(app)
       setLoaded(true)
     }, 300)
   }

@@ -1,0 +1,90 @@
+/* Floating primary links — no chrome bar.
+   Hides on scroll down; returns on scroll up with a white pill. */
+
+.nav {
+  position: fixed;
+  /* Same vertical inset as homepage awards → bottom of screen. */
+  top: var(--hero-edge);
+  /* Align with the homepage headline column (padded + centered container). */
+  left: max(
+    var(--pad-page),
+    calc((100vw - var(--container-wide)) / 2)
+  );
+  z-index: 40;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-4) var(--space-5);
+  pointer-events: none;
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out),
+    background-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    padding var(--dur-base) var(--ease-out);
+}
+
+.nav[data-visible='false'] {
+  opacity: 0;
+  transform: translateY(-0.5rem);
+  pointer-events: none;
+}
+
+.nav[data-pill='true'] {
+  background: var(--bg);
+  border-radius: 999px;
+  padding: 0.55em 1.1em;
+  box-shadow: 0 1px 0 var(--ink-10), 0 8px 24px rgb(0 0 0 / 6%);
+  gap: var(--space-4) var(--space-5);
+}
+
+.nav[data-visible='true'] {
+  pointer-events: none;
+}
+
+.nav[data-visible='true'] .link {
+  pointer-events: auto;
+}
+
+.link {
+  pointer-events: auto;
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-variation-settings: 'wght' 700, 'opsz' 14;
+  font-feature-settings: var(--ot-display);
+  letter-spacing: var(--tracking-display-tight);
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 1;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 0.1em;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.link:hover {
+  border-bottom-color: var(--ink-30);
+}
+
+.link[aria-current='page'] {
+  border-bottom-color: var(--ink);
+}
+
+.link:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav {
+    transition: none;
+    transform: none;
+  }
+
+  .nav[data-visible='false'] {
+    opacity: 0;
+    transform: none;
+  }
+}

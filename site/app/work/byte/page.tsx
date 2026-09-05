@@ -41,7 +41,7 @@ export default function BytePage() {
       <header className={styles.header}>
         <div>
           <p className={styles.eyebrow}>
-            CASE 05 — 2022
+            CASE 01 — 2022
             <br />
             PRODUCT / PACKAGING / 3D / CONSUMER
           </p>
@@ -161,9 +161,10 @@ export default function BytePage() {
       </section>
 
       <nav className={styles.pager} aria-label="Case study navigation">
-        <Link href="/work/planetarie">&larr; Planetarie</Link>
-        <Link href="/work">Index</Link>
-        <Link href="/work/space-for-curiosity">Space for Curiosity &rarr;</Link>
+        <Link href="/work">&larr; Index</Link>
+        <Link href="/work/creative-consortium">
+          Creative Consortium &rarr;
+        </Link>
       </nav>
     </main>
   )

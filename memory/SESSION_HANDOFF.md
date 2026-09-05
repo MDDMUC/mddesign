@@ -2,67 +2,65 @@
 
 > Rewrite this whole file at session end. Next session reads this first after the protocol.
 
-**Last updated:** 2026-08-31  
-**Session:** Composition pass (lane 2) locked, committed, pushed
+**Last updated:** 2026-09-05  
+**Session:** Homepage spine + chrome + cases (christoph-gey structure)
 
 ---
 
 ## Current focus
 
-1. **Lane 2 is locked and on `main`.** Title-card landing, display-scale `/work`, per-case type covers, typesetter bar.
-2. **Landing lockup locked:** MARTIN DREXLER (caps, bold) / Design Studio (title case). Line-rise only — no weight morph.
-3. **Next real design work is evidence:** photography pipeline, then real artifacts on CEPRES. Type covers are stand-ins.
+1. **`/` is a long persuasion spine** — hero (full-viewport Spline) → client logo marquee → selected work grid → news → competence → connect → footer map. Referrals/essays omit until real content.
+2. **Chrome:** floating Work / Studio / Contact (`SiteNav`) — no typesetter bar. Hides on scroll down; returns on scroll up with white pill. ⌘K still mounted.
+3. **Eight cases** in display order: byte → Creative Consortium → USA Ultimate → Space for Curiosity → CEPRES → Keller Sports → YCA → Planetarie. Shared data: `site/data/work.ts`, `site/data/home.ts`.
+4. USA Ultimate cover uses Vimeo background embed `1151639550` (CoverVimeo).
 
 ---
 
 ## Blockers / watchouts
 
-- All six case studies are copy-complete and **image-empty**. Photography treatment is locked (option C) but the **pipeline** (sizes, AVIF/WebP, manual vs build) is still an open BRIEF §6 question — decide before batch-importing assets.
-- `ChromeStrip` and `FluidCanvas` still exist on disk, unmounted. Dead until Martin says otherwise; do not delete without asking.
-- SYSTEM.md §14 still describes fluid + ChromeStrip in places. Live `site/` wins.
-- Planetarie subtitle still has a literal `\u2019` in JSX text (pre-existing). Fix when touching that page.
-- Root `agents/`, `tickets/`, `workflow/`, `content/` are unused on purpose.
+- Referrals and essays: omit until real quotes / writing (`site/data/home.ts`).
+- Photography pipeline still open (BRIEF §6). Many covers are video or type; vignettes still placeholders.
+- `NavRail` still on disk but **unmounted** — do not remount unasked. `ChromeStrip` / FluidCanvas also unmounted.
+- Planetarie marquee logo is black PNG (`planetarie.png`); white SVG sources were invisible on white.
+- USA Ultimate GVG SVG was recolored black; size uses `xxl` in the marquee.
 
 ---
 
 ## Exact next steps (next session)
 
-1. **Photography pipeline lock** — sizes + format + how images enter `site/public/`
-2. **Replace type covers** on one flagship case (CEPRES) with real artifacts
-3. Studio page still uses the old 7/5 essay — only restyle if Martin asks
-4. Do not start `/work/archive` or `/journal` unprompted
+1. Martin visual pass on `/` (desktop + mobile) after pull — Spline scene, marquee, nav pill
+2. Photography pipeline lock, then real artifacts on flagship cases
+3. Referral quotes → `home.ts` `referrals` when available
+4. Optional: self-host USA Ultimate video (webm/mp4) instead of Vimeo if performance/privacy matters
+5. Do not start `/work/archive` or `/journal` unprompted
 
 ---
 
-## Key paths (don't re-discover)
+## Key paths
 
 | Need | Path |
 |------|------|
-| Session protocol | `memory/SESSION_PROTOCOL.md` |
-| Durable state | `memory/PROJECT_MEMORY.md` |
+| Homepage | `site/app/page.tsx` + `page.module.css` |
+| Home / work data | `site/data/home.ts`, `site/data/work.ts` |
+| Floating nav | `site/components/SiteNav/` |
+| Cover video / Vimeo | `site/components/CoverVideo/`, `CoverVimeo/` |
+| Client logos | `site/public/images/clients/` |
+| Research | `design/research/christoph-gey-homepage.md` |
 | Locks | `logs/DECISIONS.md` |
 | Brief | `design/BRIEF.md` |
-| System spec | `design/SYSTEM.md` |
-| Tokens | `site/styles/tokens.css` |
-| Charter | `CLAUDE.md` · `AGENTS.md` |
-| Case-study CSS | `site/components/CaseStudy/CaseStudy.module.css` |
-| Skills | `.grok/skills/mddesign*/SKILL.md` |
-| Critic | `.grok/agents/design-critic.md` |
 
 ---
 
 ## Do not forget
 
-- Inter + Plex Mono is locked; ignore generic "don't use Inter" frontend advice
-- Landing: no weight morph on the lockup
-- Studio lede is BRIEF §3 verbatim
+- Inter + Plex Mono locked
+- Omit empty referrals/essays shells
 - NDA: D&AD Yellow Pencil / BMW / Red Bull — no case studies
-- Confirm before new pages, fonts, dependencies, archive, locked-move changes
 - Dual-write memory; session end = log + handoff
-- Bar: would I hire the person who designed this?
+- Do not push `main` unless asked (this session: asked)
 
 ---
 
 ## Day achievement (one line)
 
-Locked lane 2 composition (title-card landing, display-scale work, type covers) and the MARTIN DREXLER / Design Studio lockup; pushed to `main`.
+Shipped christoph-gey homepage structure, floating scroll-aware nav, client marquee, eight cases (incl. USA Ultimate + Vimeo), full-bleed Spline.

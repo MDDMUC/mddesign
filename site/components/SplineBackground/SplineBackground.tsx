@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
+import type { Application } from '@splinetool/runtime'
 import styles from './SplineBackground.module.css'
 
 // Dynamic import disables SSR — Spline runs in the browser only.
@@ -19,6 +20,17 @@ type Props = {
    scene emerges alongside the last text settling rather than waiting for it
    to fully finish. */
 const MIN_REVEAL_DELAY = 1500
+
+/** Spline draws “Built with Spline” via a WebGL overlay pass — not DOM. */
+function hideSplineWatermark(app: Application) {
+  try {
+    const pipeline = (app as unknown as { _renderer?: { pipeline?: { setWatermark?: (v: null) => void } } })
+      ._renderer?.pipeline
+    pipeline?.setWatermark?.(null)
+  } catch {
+    // Runtime internals may change; fail silent — scene still works.
+  }
+}
 
 export function SplineBackground({ scene }: Props) {
   const [shouldMount, setShouldMount] = useState(false)
@@ -61,11 +73,13 @@ export function SplineBackground({ scene }: Props) {
     }
   }, [splineReady, minDelayElapsed])
 
-  const handleLoad = () => {
+  const handleLoad = (app: Application) => {
+    hideSplineWatermark(app)
     // 300ms after Spline reports loaded — covers internal ResizeObserver +
     // camera measurement. After this, splineReady is true; whether the scene
     // actually appears depends on whether minDelayElapsed has also fired.
     window.setTimeout(() => {
+      hideSplineWatermark(app)
       setSplineReady(true)
     }, 300)
   }

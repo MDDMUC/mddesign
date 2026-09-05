@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import { CommandMenu } from '@/components/CommandMenu/CommandMenu'
-import { NavRail } from '@/components/NavRail/NavRail'
+import { SiteNav } from '@/components/SiteNav/SiteNav'
 import '../styles/globals.css'
 
 const inter = Inter({
@@ -33,7 +33,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${plexMono.variable}`}>
       <body>
-        <NavRail />
+        <SiteNav />
         {children}
         <CommandMenu />
       </body>

@@ -49,3 +49,35 @@ Append-only. Newest entries at the **bottom**.
 **Open:** photography pipeline; Studio still old 7/5; Planetarie `\u2019` glitch.
 
 **Next:** Images.
+
+## 2026-09-04 — Homepage spine (christoph-gey.de structure)
+
+**Focus:** Emulate classmate site structure on `/` — not the Divi look.
+
+**Shipped:**
+- Long `/`: hero (Spline contained) ? six case teasers ? news ? competence ? connect ? footer map
+- Referrals/essays omitted until real content (critic + BRIEF)
+- `site/data/work.ts` + `site/data/home.ts`; `/work` wired to shared data
+- BRIEF / DECISIONS / CLAUDE / research note updated
+- `npm run typecheck` + `npm run build` clean; HTTP smoke on /, /work, /studio, /contact, /work/cepres
+
+**Open:** photography; referral quotes; essays; interactive browser/mobile pass
+
+**Next:** Martin supplies quotes / images, or photography pipeline lock
+
+## 2026-09-05 — Homepage spine, chrome, cases
+
+**Focus:** Emulate christoph-gey.de structure; polish hero/chrome; expand work.
+
+**Shipped:**
+- Long `/`: hero (Spline full-viewport) + awards + client logo marquee + work grid + news + competence + connect
+- Retired NavRail bar; `SiteNav` floating Work/Studio/Contact (hide on scroll down, pill on scroll up)
+- Client logos from F:\WORK + Wikimedia; Planetarie black PNG; USA Ultimate SVG xxl
+- Cases reordered: byte, Creative Consortium, USA Ultimate, Space for Curiosity, then CEPRES…Planetarie
+- USA Ultimate case + Vimeo cover `1151639550`; CoverVimeo component; 4:5 cover frames
+- Spline watermark disabled via runtime; watermark CSS insufficient (WebGL overlay)
+- Docs: BRIEF, DECISIONS, CLAUDE, research note, memory
+
+**Open:** photography pipeline; referrals; essays; mobile visual pass with Martin
+
+**Next:** pull + visual QA; photography; optional self-host USAU video

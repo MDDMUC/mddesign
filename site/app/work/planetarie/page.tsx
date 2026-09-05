@@ -42,7 +42,7 @@ export default function PlanetariePage() {
       <header className={styles.header}>
         <div>
           <p className={styles.eyebrow}>
-            CASE 04 — 2020–2022
+            CASE 08 — 2020–2022
             <br />
             BRAND / PRODUCT / PACKAGING / CPG
           </p>
@@ -219,7 +219,7 @@ export default function PlanetariePage() {
       <nav className={styles.pager} aria-label="Case study navigation">
         <Link href="/work/yca">&larr; YCA</Link>
         <Link href="/work">Index</Link>
-        <Link href="/work/byte">byte &rarr;</Link>
+        <span className={styles.pagerDisabled}>End of selected work</span>
       </nav>
     </main>
   )

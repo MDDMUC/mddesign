@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/work/planetarie`, lastModified, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/work/byte`, lastModified, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/work/space-for-curiosity`, lastModified, changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${base}/work/creative-consortium`, lastModified, changeFrequency: 'monthly', priority: 0.85 },
     { url: `${base}/studio`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${base}/contact`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
   ]

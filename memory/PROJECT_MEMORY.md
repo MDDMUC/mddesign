@@ -23,12 +23,12 @@ Durable state. Update when facts change; do not put ephemeral chat noise here.
 - View Transitions API (`experimental.viewTransition` + `@view-transition { navigation: auto }`)
 - No ESLint. Checks: `tsc` + `next build` from `site/`
 
-## Live routes (as of 2026-08-31)
+## Live routes (as of 2026-09-05)
 
 | Route | What it is |
 |-------|------------|
-| `/` | Typographic landing (cities eyebrow → Martin Drexler / Design Studio → awards strip → BRIEF §3 paragraph → WORK/ABOUT/CONTACT) over a full-viewport Spline scene |
-| `/work` | Six-row typographic ledger. Logo cells are still `LOGO` placeholders |
+| `/` | Long persuasion spine: hero (full-viewport Spline) → client marquee → eight case teasers → news → competence → connect → footer map. Floating SiteNav (no bar). |
+| `/work` | Display-scale typographic ledger; shared data in `site/data/work.ts` (order: byte → Creative Consortium → USA Ultimate → Space for Curiosity → CEPRES → Keller → YCA → Planetarie) |
 | `/work/cepres` | Case 01 — fintech UX flagship. Copy shipped; images placeholders |
 | `/work/keller-sports` | Case 02 — commerce + brand, in-house HoD. Copy shipped; images placeholders |
 | `/work/yca` | Case 03 — Olympic Movement program. Copy shipped; images placeholders |
@@ -42,7 +42,7 @@ Durable state. Update when facts change; do not put ephemeral chat noise here.
 
 Chrome: 44px Plex Mono **typesetter bar** (MDDS / Work / Studio / Contact / ⌘K) + **CommandMenu**. `ChromeStrip` exists on disk but is **not mounted**. Fluid sim files exist (`FluidCanvas.tsx`, `fluid.ts`, `shaders.ts`) but landing no longer uses them.
 
-**Composition (2026-08-31, lane 2):** `/` is a title card (cities + name + Work) over Spline. `/work` is display-scale names with dates, no logo cells. Case studies keep the 8-section spine; each has a distinct type cover; vignette frames hidden until photography.
+**Composition (2026-09-04):** `/` is a long homepage spine (structure after christoph-gey.de; craft stays Zion). Hero keeps MARTIN DREXLER / Design Studio lockup + Spline (contained). `/work` is display-scale names with dates. Case studies keep the 8-section spine; type covers until photography.
 
 ## Locks (do not reopen without Martin)
 
@@ -69,12 +69,12 @@ Treat **live `site/` as what ships**. Update BRIEF/SYSTEM/CLAUDE/colophon when a
 
 ## Open product work
 
-1. **Photography pipeline** — still open in BRIEF §6. AVIF/WebP/PNG sizes; manual vs build-step. Blocks real case-study images.
+1. **Photography pipeline** — still open in BRIEF §6. AVIF/WebP/PNG sizes; manual vs build-step. Blocks real case-study images / homepage visual teasers.
 2. **Case-study images** — every hero + vignette is `data-status="placeholder"`.
-3. **`/work` logos** — six `LOGO` placeholder cells.
-4. **Doc reconciliation** — BRIEF §7 inventory, SYSTEM §14 moves, colophon Rendering row, CLAUDE.md (updated 2026-08-31 for Grok).
-5. **`/work/archive`** — phase 3, text-only ledger of older work. Do not start without Martin.
-6. **`/journal`** — optional; only if there is writing to ship.
+3. **Homepage referrals** — section mounts when Martin supplies publishable quotes (`site/data/home.ts`).
+4. **Homepage essays / `/journal`** — only when writing exists.
+5. **Doc reconciliation** — SYSTEM §14 / colophon still mention fluid / ChromeStrip in places.
+6. **`/work/archive`** — phase 3. Do not start without Martin.
 
 ## Design process (installed 2026-08-31)
 

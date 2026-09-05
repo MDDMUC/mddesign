@@ -42,7 +42,7 @@ export default function KellerSportsPage() {
       <header className={styles.header}>
         <div>
           <p className={styles.eyebrow}>
-            CASE 02 — 2014–2016
+            CASE 06 — 2014–2016
             <br />
             COMMERCE / UI / BRAND / PRODUCT
           </p>

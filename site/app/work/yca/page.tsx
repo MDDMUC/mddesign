@@ -42,7 +42,7 @@ export default function YcaPage() {
       <header className={styles.header}>
         <div>
           <p className={styles.eyebrow}>
-            CASE 03 — 2019–2021
+            CASE 07 — 2019–2021
             <br />
             BRAND / UX / PRODUCT / SPATIAL
           </p>

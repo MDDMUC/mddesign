@@ -44,8 +44,8 @@ These are decisions, not preferences. Argue with them in writing before breaking
 5. **Color is restraint, not palette.** Pick the smallest palette that does the job. One accent at most in the first pass. Add only with evidence.
 6. **Motion serves hierarchy, not decoration.** Things move because they need to communicate state, position, or causation — not because motion is available. Reduced-motion is a first-class citizen.
 7. **Photography and imagery are part of the system.** Case-study imagery has a consistent treatment (crop, ratio, color, frame). Mixed treatments look amateur.
-8. **The work is the hero.** Case studies dominate. About copy is short. The contact page is one job: make it easy. The homepage does not recite the studio paragraph or a three-link brochure — that copy lives on `/studio`; the work lives on `/work`.
-9. **The site IS a piece of software.** Locked 2026-06-10, chrome revised 2026-08-31. ⌘K remains the command palette. Live chrome is a 44px Plex Mono typesetter bar (wordmark / Work / Studio / Contact / ⌘K). The ChromeStrip (version / commit / build / scroll) is retired from the layout. Spline on `/` is the one 3D object. View Transitions on `/work` ↔ `/work/[slug]`. They compound and do not compete.
+8. **The work is the hero.** Case studies dominate. About copy is short. The contact page is one job: make it easy. The homepage is a long persuasion spine (structure locked 2026-09-04 after christoph-gey.de): hero → featured cases → news → referrals → competence → essays → connect. Depth still lives on `/studio` and `/work/[slug]`; `/` teasers must stay evidence-led, not brochure fluff.
+9. **The site IS a piece of software.** Locked 2026-06-10, chrome revised 2026-08-31. ⌘K remains the command palette. Live chrome is a 44px Plex Mono typesetter bar (wordmark / Work / Studio / Contact / ⌘K). The ChromeStrip (version / commit / build / scroll) is retired from the layout. Spline on `/` is the one 3D object (hero band only). View Transitions on `/work` ↔ `/work/[slug]`. They compound and do not compete.
 
 ## 5. Anti-patterns
 
@@ -82,14 +82,19 @@ These are unresolved. Each one needs a decision before the page that depends on 
 
 **Closed 2026-08-31** (composition push — lane 2):
 
-- ~~Landing job.~~ → Title card: cities + lockup + one Work link over the Spline field. Lockup is **MARTIN DREXLER** (uppercase, `wght` 700) over **Design Studio** (title case, `wght` 400). Reveal is line-rise only — no variable-font weight morph (Inter snaps between masters). No awards logo strip. No studio paragraph on `/`.
 - ~~`/work` index.~~ → Display-scale names, dates printed, no logo cells. Typographic ledger, not a catalog of equal 36px rows.
 - ~~Case-study covers.~~ → Shared 8-section spine. Each case gets a distinct type cover (geometry, not decoration) until photography lands. Vignette image frames stay hidden rather than showing empty 3:2 boxes.
 - ~~Contact headline.~~ → The email is the H1.
 
+**Closed 2026-09-04** (homepage spine — structure from christoph-gey.de):
+
+- ~~Landing job.~~ → Long persuasion homepage matching christoph-gey.de **structure**: hero (studio mark + role H1 + positioning + awards strip + availability + Spline) → full-width **client logo/name banner** → **multi-column project cards** (media frame → name → promise → body → Case study CTA; 4-col desktop) → news → referrals → competence → essays → connect → footer map. Craft stays Zion. Type-cover frames stand in for project media until photography. Client banner is typographic names until a logo lockup asset ships (NDA names stay `/studio` only). **Omit** referrals/essays until real content. Spline in hero band only.
+
 **Still open:**
 
 - **Image preparation pipeline.** AVIF + WebP + PNG fallback at what sizes? Manual export or build-step automation? Photography treatment remains option C (1px hairline, no greyscale, no tint) — BRIEF 2026-06-10.
+- **Homepage referrals.** Publishable quotes (name + role + text) when Martin supplies them.
+- **Homepage essays / `/journal`.** Only when writing exists.
 
 ## 7. Page Inventory (locked 2026-06-10)
 
@@ -97,7 +102,7 @@ Order is implementation order, not navigation order.
 
 | Route | Status | Purpose |
 |---|---|---|
-| `/` | live | Title card over Spline. Cities + name + Work. |
+| `/` | live | Long spine: hero (Spline) → cases → news → referrals → competence → essays → connect. |
 | `/contact` | live | Form. H1 = email. |
 | `/system` | live | Internal design-system reference (noindex). |
 | `/work/cepres` | live | Case 01. Type cover (software field). Images still to come. |
@@ -105,7 +110,9 @@ Order is implementation order, not navigation order.
 | `/work` | live | Display-scale typographic ledger. Dates printed. No logos. |
 | `/work/keller-sports` | live | Case 02. Catalog-strip cover. |
 | `/work/yca`, `/work/planetarie` | live | Cases 03–04. Wayfinding / packaging covers. |
-| `/work/byte`, `/work/space-for-curiosity` | live | Cases 05–06. Object / letterbox covers. |
+| `/work/byte`, `/work/space-for-curiosity` | live | Cases 05–06. Object covers (4:5). |
+| `/work/creative-consortium` | live | Case 07. Brand / 3D motion; cover video 4:5. |
+| `/work/usa-ultimate` | live | Case 08. Haimish; USA Ultimate digital system. |
 | `/studio` | live | About. H1 = Martin Drexler. BRIEF §3 paragraph verbatim. Spline portrait. |
 | `/colophon` | live | Plain Plex Mono table. Noindex. |
 | `/work/archive` | phase 3 | Text-only ledger of older / smaller work (Fibbers, Neuro Hope, Auto Verbeessen, Plotgrid, Creative Consortium, USA Wrestling, Global Counseling Network, mining, drilling, etc.). |

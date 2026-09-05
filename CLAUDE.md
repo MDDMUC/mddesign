@@ -8,12 +8,12 @@ Grok session protocol, skills, and in-repo memory: [`AGENTS.md`](AGENTS.md) + [`
 
 Martin Drexler is a freelance graphic designer (hello@martindrexler.com). This repo is his portfolio site — the ambition is **a world-class design-focused website for a freelance graphic design business**.
 
-**Current state (2026-08-31):** Composition push (lane 2). Landing is a title card: cities + the name + one Work link over a full-viewport Spline scene (gated below 720px). Chrome is a 44px Plex Mono typesetter bar (MDDS / Work / Studio / Contact / ⌘K) plus the command menu. `/work` is a display-scale typographic ledger (dates printed, no logo cells). Six case studies share the 8-section spine; each has a distinct type cover. Vignette image frames are hidden until photography lands. Contact H1 is the email.
+**Current state (2026-09-04):** Homepage is a long persuasion spine (structure after christoph-gey.de): hero with full-viewport Spline (gated &lt;720px) → client logo marquee → case teasers → news → competence → connect → footer map. Chrome: floating Work / Studio / Contact (no typesetter bar); ⌘K command menu still mounted. `/work` is a display-scale typographic ledger. Six case studies share the 8-section spine; type covers until photography. Contact H1 is the email.
 
 `ChromeStrip` and the WebGL2 fluid sim (`FluidCanvas.tsx` / `fluid.ts` / `shaders.ts`) still exist on disk but are **not mounted**. BRIEF / SYSTEM.md §14 still describe them as signature moves — treat **live `site/` as what ships**; do not restore retired chrome to match the spec.
 
 **Current routes:**
-- `/` — title card over Spline (`page.tsx` + `SplineBackground`).
+- `/` — long spine over full-viewport Spline (`page.tsx` + `SplineBackground`).
 - `/contact` — form, posts to `/api/contact`. H1 = email.
 - `/work` — display-scale typographic ledger.
 - `/work/cepres` — case study #1 (UX flagship, fintech, $45T platform).
@@ -22,12 +22,15 @@ Martin Drexler is a freelance graphic designer (hello@martindrexler.com). This r
 - `/work/planetarie` — case study #4 (CBDa brand → Tanasi acquisition).
 - `/work/byte` — case study #5 (consumer dental packaging + 3D, Haimish).
 - `/work/space-for-curiosity` — case study #6 (Space Force / Air Force brand + film, Haimish).
+- `/work/creative-consortium` — case study #7 (brand / 3D motion, Haimish).
+- `/work/usa-ultimate` — case study #8 (USA Ultimate digital system, Haimish).
+- `/work/creative-consortium` — case study #7 (brand + 3D flag motion + web, Haimish).
 - `/studio` — about page. H1 = Martin Drexler, positioning paragraph as lede, Spline portrait, Practice / Teaching / Clients / Recognition / Index.
 - `/colophon` — Plex Mono table of how the site is built. Noindex. (Rendering row still mentions the fluid sim — stale.)
 - `/system` — internal design-system reference. Noindex.
 - `/api/contact` — serverless POST handler, sends via Google Workspace SMTP (nodemailer). Six SMTP env vars must be set in Vercel (`SMTP_HOST/PORT/USER/PASS`, `MAIL_FROM`, `MAIL_TO`).
 
-**Locked direction:** `design/BRIEF.md` + `design/SYSTEM.md §14`. Live signature moves: Spline on `/`, View Transitions on `/work` ↔ `/work/[slug]`, ⌘K command menu, Plex Mono typesetter bar. Case-study template is the 8-section spine with per-case type covers (`CaseStudy.module.css`). Locked six case studies + studio attribution + NDA blocklist: `design/BRIEF.md §7` and `memory/PROJECT_MEMORY.md`.
+**Locked direction:** `design/BRIEF.md` + `design/SYSTEM.md §14`. Live signature moves: full-viewport Spline on `/`, View Transitions on `/work` ↔ `/work/[slug]`, ⌘K command menu, floating Work / Studio / Contact (NavRail typesetter bar retired). Homepage section order locked 2026-09-04. Case-study template is the 8-section spine with per-case type covers (`CaseStudy.module.css`). Locked six case studies + studio attribution + NDA blocklist: `design/BRIEF.md §7` and `memory/PROJECT_MEMORY.md`.
 
 **Expansion is intentional and incremental.** Don't rebuild the whole site in one pass. Each new page or section should be designed and shipped to the quality bar set in `design/BRIEF.md`. If a page would look like it could come from a generic agency template, it isn't ready.
 

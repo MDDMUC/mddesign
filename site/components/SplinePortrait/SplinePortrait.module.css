@@ -38,6 +38,11 @@
   max-height: 100% !important;
 }
 
+.canvas a[href*='spline.design'],
+.canvas a[href*='spline.one'] {
+  display: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .canvas {
     display: none;

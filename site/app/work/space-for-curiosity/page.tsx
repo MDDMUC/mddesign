@@ -41,7 +41,7 @@ export default function SpaceForCuriosityPage() {
       <header className={styles.header}>
         <div>
           <p className={styles.eyebrow}>
-            CASE 06 — 2023
+            CASE 04 — 2023
             <br />
             BRAND / CONTENT / FILM
           </p>
@@ -159,9 +159,9 @@ export default function SpaceForCuriosityPage() {
       </section>
 
       <nav className={styles.pager} aria-label="Case study navigation">
-        <Link href="/work/byte">&larr; byte</Link>
+        <Link href="/work/usa-ultimate">&larr; USA Ultimate</Link>
         <Link href="/work">Index</Link>
-        <span className={styles.pagerDisabled}>End of selected work</span>
+        <Link href="/work/cepres">CEPRES &rarr;</Link>
       </nav>
     </main>
   )

@@ -118,9 +118,9 @@ export default function StudioPage() {
           <p>
             Selected clients across fifteen years: BMW, Red Bull, Peak
             Performance, the US Space Force, the US Air Force, USA Wrestling,
-            the US Olympic &amp; Paralympic Museum, the International Olympic
-            Academy, CEPRES, Keller Sports, Planetarie (acquired by Tanasi),
-            and byte.
+            USA Ultimate, the US Olympic &amp; Paralympic Museum, the
+            International Olympic Academy, CEPRES, Keller Sports, Planetarie
+            (acquired by Tanasi), and byte.
           </p>
         </div>
       </section>
