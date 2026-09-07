@@ -149,7 +149,7 @@ export const workItems: WorkItem[] = [
   {
     index: '08',
     slug: 'planetarie',
-    title: 'Planetarie',
+    title: 'planetarie',
     promise:
       'A CBDa brand built to outweigh a category’s stigma — then acquired.',
     descriptor:

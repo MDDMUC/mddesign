@@ -11,6 +11,20 @@
   overflow-x: clip;
 }
 
+/* Mid widths: rail shares the page pad — clear the label column.
+   Below 720px SiteNav falls back to the horizontal bar (no inset). */
+@media (min-width: 720px) and (max-width: 1679px) {
+  .main {
+    padding-left: calc(var(--pad-page) + var(--nav-rail-clear));
+  }
+}
+
+@media (max-width: 719px) {
+  .main {
+    padding-top: calc(var(--space-7) + var(--space-6));
+  }
+}
+
 /* ─── §1 Header ──────────────────────────────────────────────── */
 
 .header {
@@ -42,6 +56,39 @@
   line-height: var(--leading-display-tight);
   color: var(--ink);
   margin: 0 0 var(--space-5) 0;
+}
+
+/* Brand lockup — all-caps bold with fade + scale enter (Keller, etc.). */
+@keyframes titleBrandEnter {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.titleBrand {
+  font-size: var(--fs-display-l);
+  font-variation-settings: 'wght' 700, 'opsz' 144;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-display-tight);
+  line-height: 0.92;
+}
+
+.titleBrandInner {
+  display: block;
+  transform-origin: left center;
+  animation: titleBrandEnter var(--dur-reveal) var(--ease-out) both;
+  animation-delay: var(--stagger-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .titleBrandInner {
+    animation: none;
+  }
 }
 
 .subtitle {
@@ -315,6 +362,26 @@
   pointer-events: none;
 }
 
+/* Natural video frame — container matches the movie; shown at 80% width.
+   Keller pegasus is 720×232 (≈ 96:31). */
+.coverMediaFit {
+  position: relative;
+  padding: 0;
+  width: 80%;
+  max-width: 80%;
+  aspect-ratio: 720 / 232;
+  overflow: hidden;
+}
+
+.coverMediaFitVideo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border: 0;
+  pointer-events: none;
+}
+
 /* 16:9 Vimeo in a 4:5 cell — size to cover height, crop sides. */
 iframe.coverMediaVideo {
   inset: auto;
@@ -384,7 +451,7 @@ iframe.coverMediaVideo {
   margin-top: var(--space-4);
 }
 
-/* ─── §5 Vignettes — text until photography lands ───────────── */
+/* ─── §5 Vignettes ──────────────────────────────────────────── */
 
 .vignettes {
   display: grid;
@@ -399,13 +466,42 @@ iframe.coverMediaVideo {
   border-top: var(--rule);
 }
 
+/* Text-left / image-right when a case ships real artifacts (SYSTEM §14.9). */
+.vignetteWithMedia {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: var(--gutter);
+  max-width: none;
+  align-items: start;
+}
+
 .vignetteText {
 }
 
-/* Image slots return with the photography pipeline. Empty 3:2
-   frames read as a wireframe — do not show them without artifacts. */
+/* Empty placeholder frames stay hidden. Live frames show with option-C
+   1px hairline (BRIEF §6 / photography lock). */
 .vignetteFrame {
   display: none;
+}
+
+.vignetteFrameLive {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+}
+
+/* Pair of portrait UI screens in one vignette. */
+.vignetteFramePair {
+  grid-template-columns: 1fr 1fr;
+}
+
+.vignetteFrameLive img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: var(--rule);
+  background: var(--bg);
 }
 
 .vignetteHeading {
@@ -523,10 +619,14 @@ iframe.coverMediaVideo {
   .vignettes {
     gap: var(--space-7);
   }
+
+  .vignetteWithMedia {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 640px) {
   .main {
-    padding: var(--space-7) var(--pad-page) var(--space-9);
+    padding: calc(var(--space-7) + var(--space-6)) var(--pad-page) var(--space-9);
   }
 }

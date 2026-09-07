@@ -9,6 +9,13 @@
   color: var(--ink);
 }
 
+/* Everything above the portrait plate (Spline, type, bands, footer). */
+.foreground {
+  position: relative;
+  z-index: 1;
+  background: transparent;
+}
+
 /* ─── Hero ───────────────────────────────────────────────────── */
 
 .hero {
@@ -23,11 +30,46 @@
   padding: var(--space-6) var(--pad-page) var(--hero-edge);
   border-bottom: var(--rule);
   box-sizing: border-box;
+  background: transparent;
+}
+
+/* Portrait plate — separate from Spline, fixed behind all page layers. */
+.heroPortrait {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.heroPortraitFrame {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  /* Tall portrait aspect ≈ 1:1 for the head plate. */
+  width: min(52vw, 100vh);
+  overflow: hidden;
+}
+
+.heroPortraitFrame > span,
+.heroPortraitFrame > img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.heroPortraitImg {
+  object-fit: cover;
+  /* Session plate #2 on white — lock onto the face; right viewport edge
+     finishes the crop through the right side of the head. */
+  object-position: 46% 6%;
 }
 
 .heroInner {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;

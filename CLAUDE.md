@@ -8,7 +8,7 @@ Grok session protocol, skills, and in-repo memory: [`AGENTS.md`](AGENTS.md) + [`
 
 Martin Drexler is a freelance graphic designer (hello@martindrexler.com). This repo is his portfolio site — the ambition is **a world-class design-focused website for a freelance graphic design business**.
 
-**Current state (2026-09-04):** Homepage is a long persuasion spine (structure after christoph-gey.de): hero with full-viewport Spline (gated &lt;720px) → client logo marquee → case teasers → news → competence → connect → footer map. Chrome: floating Work / Studio / Contact (no typesetter bar); ⌘K command menu still mounted. `/work` is a display-scale typographic ledger. Six case studies share the 8-section spine; type covers until photography. Contact H1 is the email.
+**Current state (2026-09-04):** Homepage is a long persuasion spine (structure after christoph-gey.de): hero with full-viewport Spline (gated &lt;720px) → client logo marquee → case teasers → news → competence → connect → footer map. Chrome: floating Work / Studio / Contact (no typesetter bar) — horizontal top bar on `/` / `/contact`; vertical left rail on `/studio` + `/work/[slug]`; top-right on `/work` index; ⌘K command menu still mounted. `/work` is a display-scale typographic ledger. Six case studies share the 8-section spine; type covers until photography. Contact H1 is the email.
 
 `ChromeStrip` and the WebGL2 fluid sim (`FluidCanvas.tsx` / `fluid.ts` / `shaders.ts`) still exist on disk but are **not mounted**. BRIEF / SYSTEM.md §14 still describe them as signature moves — treat **live `site/` as what ships**; do not restore retired chrome to match the spec.
 
@@ -25,12 +25,12 @@ Martin Drexler is a freelance graphic designer (hello@martindrexler.com). This r
 - `/work/creative-consortium` — case study #7 (brand / 3D motion, Haimish).
 - `/work/usa-ultimate` — case study #8 (USA Ultimate digital system, Haimish).
 - `/work/creative-consortium` — case study #7 (brand + 3D flag motion + web, Haimish).
-- `/studio` — about page. H1 = Martin Drexler, positioning paragraph as lede, Spline portrait, Practice / Teaching / Clients / Recognition / Index.
+- `/studio` — about page. H1 = Martin Drexler, positioning paragraph as lede, white-bg photo portrait (replaces SplinePortrait), Practice / Teaching / Clients / Recognition / Index.
 - `/colophon` — Plex Mono table of how the site is built. Noindex. (Rendering row still mentions the fluid sim — stale.)
 - `/system` — internal design-system reference. Noindex.
 - `/api/contact` — serverless POST handler, sends via Google Workspace SMTP (nodemailer). Six SMTP env vars must be set in Vercel (`SMTP_HOST/PORT/USER/PASS`, `MAIL_FROM`, `MAIL_TO`).
 
-**Locked direction:** `design/BRIEF.md` + `design/SYSTEM.md §14`. Live signature moves: full-viewport Spline on `/`, View Transitions on `/work` ↔ `/work/[slug]`, ⌘K command menu, floating Work / Studio / Contact (NavRail typesetter bar retired). Homepage section order locked 2026-09-04. Case-study template is the 8-section spine with per-case type covers (`CaseStudy.module.css`). Locked six case studies + studio attribution + NDA blocklist: `design/BRIEF.md §7` and `memory/PROJECT_MEMORY.md`.
+**Locked direction:** `design/BRIEF.md` + `design/SYSTEM.md §14`. Live signature moves: full-viewport Spline on `/`, View Transitions on `/work` ↔ `/work/[slug]`, ⌘K command menu, floating Work / Studio / Contact — bar on marketing routes, left vertical rail on `/work` + cases (NavRail typesetter bar retired). Homepage section order locked 2026-09-04. Case-study template is the 8-section spine with per-case type covers (`CaseStudy.module.css`). Locked six case studies + studio attribution + NDA blocklist: `design/BRIEF.md §7` and `memory/PROJECT_MEMORY.md`.
 
 **Expansion is intentional and incremental.** Don't rebuild the whole site in one pass. Each new page or section should be designed and shipped to the quality bar set in `design/BRIEF.md`. If a page would look like it could come from a generic agency template, it isn't ready.
 
@@ -53,7 +53,7 @@ No ESLint (Next 16 / ESLint 9 / `eslint-config-next` interplay is broken). `tsc`
 - **Framework:** Next.js 16 (App Router), React 19, TypeScript
 - **Styling:** CSS Modules + tokens in `site/styles/tokens.css`
 - **Fonts:** Inter variable (`opsz`) + IBM Plex Mono via `next/font/google`. No third family without a BRIEF lock.
-- **3D:** Spline (`@splinetool/react-spline`) on `/` and `/studio` portrait; skip mount at `max-width: 720px`.
+- **3D:** Spline (`@splinetool/react-spline`) on `/` only (gated &lt;720px). `/studio` uses a static white-bg portrait still.
 - **Build:** Next.js on Vercel (static pages + one serverless function at `/api/contact`). Was static export until 2026-06-08; switched to add the contact form mailer.
 - **Deployment:** Vercel — Project Root Directory must be set to `site/` in the Vercel dashboard. Static pages still serve from the edge; only `/api/contact` invokes a serverless function.
 
@@ -71,7 +71,7 @@ site/
 │   ├── contact/           # /contact form
 │   ├── api/contact/       # Serverless POST handler (nodemailer)
 │   ├── system/            # /system — design system reference (noindex)
-│   ├── studio/            # /studio — about + SplinePortrait
+│   ├── studio/            # /studio — about + static portrait still
 │   ├── colophon/          # /colophon — how the site is built (noindex)
 │   ├── work/              # /work — typographic ledger
 │   │   ├── cepres/        # case study #1

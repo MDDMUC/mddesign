@@ -19,7 +19,7 @@ Durable state. Update when facts change; do not put ephemeral chat noise here.
 - CSS Modules + `site/styles/tokens.css` (Zion v2: pure white, ink hairlines, no chroma, no radius)
 - Inter variable (`opsz`) + IBM Plex Mono via `next/font/google`
 - Hybrid Vercel deploy: static pages + one serverless function `/api/contact` (nodemailer, Google Workspace SMTP)
-- Spline (`@splinetool/react-spline` + runtime) on `/` and `/studio` portrait; gated below 720px
+- Spline (`@splinetool/react-spline` + runtime) on `/` only; gated below 720px. `/studio` uses static upright portrait still.
 - View Transitions API (`experimental.viewTransition` + `@view-transition { navigation: auto }`)
 - No ESLint. Checks: `tsc` + `next build` from `site/`
 
@@ -30,17 +30,17 @@ Durable state. Update when facts change; do not put ephemeral chat noise here.
 | `/` | Long persuasion spine: hero (full-viewport Spline) → client marquee → eight case teasers → news → competence → connect → footer map. Floating SiteNav (no bar). |
 | `/work` | Display-scale typographic ledger; shared data in `site/data/work.ts` (order: byte → Creative Consortium → USA Ultimate → Space for Curiosity → CEPRES → Keller → YCA → Planetarie) |
 | `/work/cepres` | Case 01 — fintech UX flagship. Copy shipped; images placeholders |
-| `/work/keller-sports` | Case 02 — commerce + brand, in-house HoD. Copy shipped; images placeholders |
+| `/work/keller-sports` | Case 02 — commerce + brand, in-house HoD. CoverVideo + PDF vignette images (soft; masters pending) |
 | `/work/yca` | Case 03 — Olympic Movement program. Copy shipped; images placeholders |
 | `/work/planetarie` | Case 04 — CBDa brand → Tanasi acquisition. Copy shipped; images placeholders |
 | `/work/byte` | Case 05 — consumer dental packaging + 3D. Copy shipped; images placeholders |
 | `/work/space-for-curiosity` | Case 06 — Space Force / Air Force brand + film. Copy shipped; images placeholders |
-| `/studio` | About. H1 = Martin Drexler. Spline portrait. Practice / Teaching / Clients / Recognition / Index |
+| `/studio` | About. H1 = Martin Drexler. White-bg portrait still + left SiteNav rail. Practice / Teaching / Clients / Recognition / Index |
 | `/contact` | Form → `POST /api/contact`. Wireframe-grid background |
 | `/colophon` | Plex Mono table (noindex). Still mentions WebGL2 fluid — stale vs live landing |
 | `/system` | Design-system reference (noindex) |
 
-Chrome: 44px Plex Mono **typesetter bar** (MDDS / Work / Studio / Contact / ⌘K) + **CommandMenu**. `ChromeStrip` exists on disk but is **not mounted**. Fluid sim files exist (`FluidCanvas.tsx`, `fluid.ts`, `shaders.ts`) but landing no longer uses them.
+Chrome: floating **SiteNav** (bar on `/`+`/contact`; left rail on `/studio`+cases; top-right on `/work`) + **CommandMenu** + homepage **ReturnToTop**. NavRail/ChromeStrip/Fluid unmounted.
 
 **Composition (2026-09-04):** `/` is a long homepage spine (structure after christoph-gey.de; craft stays Zion). Hero keeps MARTIN DREXLER / Design Studio lockup + Spline (contained). `/work` is display-scale names with dates. Case studies keep the 8-section spine; type covers until photography.
 
@@ -70,7 +70,7 @@ Treat **live `site/` as what ships**. Update BRIEF/SYSTEM/CLAUDE/colophon when a
 ## Open product work
 
 1. **Photography pipeline** — still open in BRIEF §6. AVIF/WebP/PNG sizes; manual vs build-step. Blocks real case-study images / homepage visual teasers.
-2. **Case-study images** — every hero + vignette is `data-status="placeholder"`.
+2. **Case-study images** — Keller has live PDF rasters (soft). Others still type/video covers; photography pipeline open.
 3. **Homepage referrals** — section mounts when Martin supplies publishable quotes (`site/data/home.ts`).
 4. **Homepage essays / `/journal`** — only when writing exists.
 5. **Doc reconciliation** — SYSTEM §14 / colophon still mention fluid / ChromeStrip in places.

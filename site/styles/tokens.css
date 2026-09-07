@@ -113,6 +113,8 @@
   --rail-h: 44px;              /* legacy typesetter bar (unmounted) */
   /* Homepage: awards→bottom gap; SiteNav top inset (must stay in sync). */
   --hero-edge: clamp(4.5rem, 12vh, 8rem);
+  /* Left SiteNav rail on /work — label column clear of larger type. */
+  --nav-rail-clear: calc(var(--space-9) + var(--space-4));
 
   /* ───────── Rules ─────────
    * Hairlines are the signature. `--rule` is the default — pure black 1px.

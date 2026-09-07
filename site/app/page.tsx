@@ -43,7 +43,22 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className={styles.main}>
-      {/* 1 — Hero over full-bleed Spline (original scene presentation) */}
+      {/* Fixed plate — own layer, behind Spline + all page chrome (z below). */}
+      <div className={styles.heroPortrait} aria-hidden="true">
+        <div className={styles.heroPortraitFrame}>
+          <Image
+            className={styles.heroPortraitImg}
+            src="/images/hero/martin-portrait.jpg"
+            alt=""
+            fill
+            priority
+            sizes="52vw"
+          />
+        </div>
+      </div>
+
+      <div className={styles.foreground}>
+      {/* 1 — Hero over Spline (portrait is a separate layer behind this) */}
       <section className={styles.hero} aria-label="Introduction">
         <SplineBackground scene={SPLINE_SCENE} />
 
@@ -377,6 +392,7 @@ export default function Home() {
           </ul>
         </div>
       </nav>
+      </div>
     </main>
   )
 }

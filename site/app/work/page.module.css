@@ -1,4 +1,4 @@
-/* /work — names at display scale. Dates printed. No logo cells.
+/* /work — names at display scale + landscape cover on the right.
    The list is the page. */
 
 .main {
@@ -32,8 +32,9 @@
 
 .link {
   display: grid;
-  grid-template-columns: 3.25rem minmax(0, 1fr);
-  gap: var(--space-5);
+  grid-template-columns: 3.25rem minmax(0, 1fr) minmax(14rem, 28rem);
+  gap: var(--space-5) var(--space-7);
+  align-items: start;
   padding: var(--space-7) 0 var(--space-6);
   color: inherit;
   text-decoration: none;
@@ -59,27 +60,17 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+  padding-top: 0.15em;
 }
 
-.meta {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: var(--space-3) var(--space-6);
+.date {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-mono-label);
   text-transform: uppercase;
   color: var(--ink-60);
-  font-feature-settings: var(--ot-mono);
-}
-
-.date {
   font-variant-numeric: tabular-nums;
-}
-
-.tags {
-  text-align: right;
+  font-feature-settings: var(--ot-mono);
 }
 
 .projectTitle {
@@ -118,6 +109,116 @@
   font-feature-settings: var(--ot-mono);
 }
 
+/* Right column — tags above landscape cover (mockup placement). */
+.media {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-3);
+  min-width: 0;
+  padding-top: 0.15em;
+}
+
+.tags {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+  color: var(--ink-60);
+  font-feature-settings: var(--ot-mono);
+  text-align: right;
+}
+
+.cover {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: var(--rule);
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.coverMedia {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* Contain — don't crush 4:5 / ultra-wide sources into a 16:9 crop mask. */
+  object-fit: contain;
+  display: block;
+  border: 0;
+  pointer-events: none;
+  background: var(--bg);
+  z-index: 1;
+}
+
+iframe.coverMedia {
+  pointer-events: none;
+}
+
+.coverFallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-4);
+  color: var(--ink);
+  z-index: 0;
+}
+
+/* Hide type fallback when a real media element is mounted. */
+.cover:has(video) .coverFallback,
+.cover:has(iframe) .coverFallback {
+  display: none;
+}
+
+.coverFallback strong {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 2.75rem);
+  font-variation-settings: 'wght' 200, 'opsz' 72;
+  letter-spacing: var(--tracking-display-tight);
+  line-height: 0.95;
+}
+
+.coverFallback span {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-mono-label);
+  text-transform: uppercase;
+  color: var(--ink-60);
+  font-feature-settings: var(--ot-mono);
+}
+
+@media (max-width: 960px) {
+  .link {
+    grid-template-columns: 3.25rem minmax(0, 1fr);
+    grid-template-areas:
+      'index body'
+      'media media';
+  }
+
+  .index {
+    grid-area: index;
+  }
+
+  .body {
+    grid-area: body;
+  }
+
+  .media {
+    grid-area: media;
+    padding-left: calc(3.25rem + var(--space-5));
+    max-width: 28rem;
+  }
+
+  .tags {
+    text-align: left;
+  }
+}
+
 @media (max-width: 760px) {
   .main {
     padding-left: var(--pad-page);
@@ -126,18 +227,20 @@
 
   .link {
     grid-template-columns: 1fr;
-    gap: var(--space-3);
+    grid-template-areas:
+      'body'
+      'media';
+    gap: var(--space-4);
     padding: var(--space-6) 0;
   }
 
-  .meta {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-2);
+  .index {
+    display: none;
   }
 
-  .tags {
-    text-align: left;
+  .media {
+    padding-left: 0;
+    max-width: none;
   }
 
   .projectTitle {

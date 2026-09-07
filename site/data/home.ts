@@ -29,7 +29,7 @@ export const heroTitlePrimary = ['Designer', 'UI', 'UX'] as const
 export const heroTitleSecondary = ['brand', 'product', 'systems'] as const
 
 export const heroPositioning =
-  'Brands with depth demand more than decoration. As a graphic designer I focus on corporate designs and digital products (UI/UX/AI) – from strategy to execution. Recognized by Germany’s most prestigious design juries and trusted by world-leading brands.'
+  'Brands with depth demand more than decoration. As a graphic designer I focus on corporate designs and digital products (UI/UX/AI) – from strategy to execution. Recognized with prestigious design awards and trusted by world-leading brands.'
 
 export const availabilityLabel = 'Accepting projects'
 

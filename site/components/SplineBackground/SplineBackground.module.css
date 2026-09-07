@@ -6,7 +6,8 @@
   inset: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 0;
+  /* Above the separate portrait plate; below hero type / SiteNav. */
+  z-index: 1;
   /* Long homepage: do not steal wheel/touch scroll. */
   pointer-events: none;
   visibility: hidden;

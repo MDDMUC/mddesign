@@ -12,12 +12,24 @@ const links = [
 ] as const
 
 const TOP_THRESHOLD = 24
+/** Below this, case studies use the horizontal bar — no gutter for a rail. */
+const RAIL_MIN_WIDTH = 720
 
 export function SiteNav() {
   const pathname = usePathname()
   const [visible, setVisible] = useState(true)
   const [pill, setPill] = useState(false)
+  const [railOk, setRailOk] = useState(false)
   const lastY = useRef(0)
+
+  const isWorkIndex = pathname === '/work'
+  const isCaseStudy = pathname.startsWith('/work/')
+  const isStudio = pathname === '/studio'
+  /* Left vertical rail on case studies + studio (when wide enough). */
+  const isRail = (isCaseStudy || isStudio) && railOk
+
+  const layout = isRail ? 'rail' : isWorkIndex ? 'end' : 'bar'
+  const route = isWorkIndex || isCaseStudy || isStudio ? 'work' : 'site'
 
   const isActive = useCallback(
     (href: string) => {
@@ -28,6 +40,14 @@ export function SiteNav() {
     },
     [pathname]
   )
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(min-width: ${RAIL_MIN_WIDTH}px)`)
+    const apply = () => setRailOk(mq.matches)
+    apply()
+    mq.addEventListener('change', apply)
+    return () => mq.removeEventListener('change', apply)
+  }, [])
 
   useEffect(() => {
     lastY.current = window.scrollY
@@ -69,6 +89,8 @@ export function SiteNav() {
     <nav
       className={styles.nav}
       aria-label="Primary"
+      data-layout={layout}
+      data-route={route}
       data-visible={visible ? 'true' : 'false'}
       data-pill={pill ? 'true' : 'false'}
     >

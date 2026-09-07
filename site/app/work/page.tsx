@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { CoverVideo } from '@/components/CoverVideo/CoverVideo'
+import { CoverVimeo } from '@/components/CoverVimeo/CoverVimeo'
 import styles from './page.module.css'
 import { workItems } from '@/data/work'
 
@@ -20,10 +22,7 @@ export default function WorkPage() {
             <Link href={`/work/${item.slug}`} className={styles.link}>
               <span className={styles.index}>{item.index}</span>
               <div className={styles.body}>
-                <div className={styles.meta}>
-                  <span className={styles.date}>{item.date}</span>
-                  <span className={styles.tags}>{item.tags}</span>
-                </div>
+                <span className={styles.date}>{item.date}</span>
                 <h2
                   className={styles.projectTitle}
                   style={{ viewTransitionName: `work-title-${item.slug}` }}
@@ -32,6 +31,30 @@ export default function WorkPage() {
                 </h2>
                 <p className={styles.descriptor}>{item.descriptor}</p>
                 <span className={styles.studio}>{item.studio}</span>
+              </div>
+              <div className={styles.media}>
+                <span className={styles.tags}>{item.tags}</span>
+                <div className={styles.cover}>
+                  {item.coverVideo?.vimeo ? (
+                    <CoverVimeo
+                      id={item.coverVideo.vimeo}
+                      className={styles.coverMedia}
+                    />
+                  ) : null}
+                  {item.coverVideo?.webm && item.coverVideo.mp4 ? (
+                    <CoverVideo
+                      webm={item.coverVideo.webm}
+                      mp4={item.coverVideo.mp4}
+                      className={styles.coverMedia}
+                    />
+                  ) : null}
+                  {/* Always present: shows when there is no video, or when
+                      CoverVimeo opts out under prefers-reduced-motion. */}
+                  <p className={styles.coverFallback}>
+                    <strong>{item.coverStat}</strong>
+                    <span>{item.coverLabel}</span>
+                  </p>
+                </div>
               </div>
             </Link>
           </li>

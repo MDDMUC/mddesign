@@ -1,43 +1,105 @@
 /* Floating primary links — no chrome bar.
-   Hides on scroll down; returns on scroll up with a white pill. */
+   Hides on scroll down; returns on scroll up.
+   Work routes use a left vertical rail; other routes keep the top bar. */
 
 .nav {
   position: fixed;
-  /* Same vertical inset as homepage awards → bottom of screen. */
-  top: var(--hero-edge);
-  /* Align with the homepage headline column (padded + centered container). */
-  left: max(
-    var(--pad-page),
-    calc((100vw - var(--container-wide)) / 2)
-  );
   z-index: 40;
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--space-4) var(--space-5);
   pointer-events: none;
   opacity: 1;
-  transform: translateY(0);
-  transition:
-    opacity var(--dur-base) var(--ease-out),
-    transform var(--dur-base) var(--ease-out),
-    background-color var(--dur-base) var(--ease-out),
-    box-shadow var(--dur-base) var(--ease-out),
-    padding var(--dur-base) var(--ease-out);
+  /* Opacity only — no translate (avoids left/right wiggle on scroll). */
+  transition: opacity var(--dur-base) var(--ease-out);
 }
 
-.nav[data-visible='false'] {
+/* ─── Bar — homepage / studio / contact ──────────────────────── */
+
+.nav[data-layout='bar'] {
+  top: var(--hero-edge);
+  /* Match page content: container gutter + pad-page (not the raw container edge). */
+  left: max(
+    var(--pad-page),
+    calc((100vw - var(--container-wide)) / 2 + var(--pad-page))
+  );
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--space-4) var(--space-5);
+}
+
+/* Case studies on narrow viewports: sit above the title, not on it. */
+.nav[data-layout='bar'][data-route='work'] {
+  top: var(--space-5);
+}
+
+.nav[data-layout='bar'][data-visible='false'] {
   opacity: 0;
-  transform: translateY(-0.5rem);
   pointer-events: none;
 }
 
-.nav[data-pill='true'] {
+/* Soft return pad on marketing bar only — work/case links stay unboxed. */
+.nav[data-layout='bar'][data-route='site'][data-pill='true'] {
   background: var(--bg);
   border-radius: 999px;
   padding: 0.55em 1.1em;
-  box-shadow: 0 1px 0 var(--ink-10), 0 8px 24px rgb(0 0 0 / 6%);
-  gap: var(--space-4) var(--space-5);
+  box-shadow: 0 1px 0 var(--ink-15);
+}
+
+/* ─── End — /work index, top-right (same row as “Selected …” kicker) */
+
+.nav[data-layout='end'] {
+  /* Match .main padding-top so it shares the kicker’s horizontal line. */
+  top: var(--space-7);
+  right: var(--pad-page-lg);
+  left: auto;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-5) var(--space-6);
+}
+
+.nav[data-layout='end'][data-visible='false'] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.nav[data-layout='end'][data-pill='true'] {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  box-shadow: none;
+}
+
+@media (max-width: 760px) {
+  .nav[data-layout='end'] {
+    right: var(--pad-page);
+  }
+}
+
+/* ─── Rail — case studies + /studio ──────────────────────────── */
+
+.nav[data-layout='rail'] {
+  top: var(--space-7);
+  /* Locked inset — no 100vw math (scrollbar must not shift it). */
+  left: var(--pad-page);
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  gap: var(--space-6);
+}
+
+.nav[data-layout='rail'][data-visible='false'] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* No pill / border / pad on the rail — links only. */
+.nav[data-layout='rail'][data-pill='true'] {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  box-shadow: none;
 }
 
 .nav[data-visible='true'] {
@@ -64,12 +126,39 @@
   transition: border-color var(--dur-fast) var(--ease-out);
 }
 
+/* Case-study rail + /work top-right — shared large type. */
+.nav[data-layout='rail'] .link,
+.nav[data-layout='end'] .link {
+  font-size: clamp(1.25rem, 1.6vw, 1.75rem);
+  font-variation-settings: 'wght' 700, 'opsz' 36;
+  letter-spacing: var(--tracking-display-tight);
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.nav[data-layout='rail'] .link:hover,
+.nav[data-layout='end'] .link:hover {
+  opacity: 0.55;
+}
+
+.nav[data-layout='rail'] .link[aria-current='page'],
+.nav[data-layout='end'] .link[aria-current='page'] {
+  opacity: 1;
+}
+
 .link:hover {
   border-bottom-color: var(--ink-30);
 }
 
 .link[aria-current='page'] {
   border-bottom-color: var(--ink);
+}
+
+.nav[data-layout='rail'] .link:hover,
+.nav[data-layout='rail'] .link[aria-current='page'],
+.nav[data-layout='end'] .link:hover,
+.nav[data-layout='end'] .link[aria-current='page'] {
+  border-bottom-color: transparent;
 }
 
 .link:focus-visible {
@@ -80,11 +169,5 @@
 @media (prefers-reduced-motion: reduce) {
   .nav {
     transition: none;
-    transform: none;
-  }
-
-  .nav[data-visible='false'] {
-    opacity: 0;
-    transform: none;
   }
 }

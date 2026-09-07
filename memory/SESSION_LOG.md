@@ -81,3 +81,20 @@ Append-only. Newest entries at the **bottom**.
 **Open:** photography pipeline; referrals; essays; mobile visual pass with Martin
 
 **Next:** pull + visual QA; photography; optional self-host USAU video
+
+## 2026-09-07/08 — Keller images, chrome rails, studio portrait, 3D preview
+
+**Focus:** Portfolio PDF ? Keller case; SiteNav rails; /work cover column; studio still; experimental 3D wire preview.
+
+**Shipped:**
+- Keller Sports: CoverVideo hero + PDF-extracted vignette images (soft res); case CSS live vignette layout
+- SiteNav: left vertical rail on case studies + /studio; top-right on /work index; bar on / + /contact (aligned to pad-page)
+- /work: 16:9 landscape covers (video/contain + type fallback); planetarie lowercase
+- /studio: white-bg upright still (`martin-portrait-upright.jpg`); Spline portrait removed; left rail
+- Homepage: ReturnToTop pill; awards copy tweak; optional portrait plate behind Spline (separate z-layer; no Spline blend hacks)
+- Preview: `/preview/martin-3d.html` coarse wire + photo wrap (noindex)
+- Docs: CLAUDE, DECISIONS, memory handoff
+
+**Open:** native photo masters for Keller; 3D UV/zoom polish; homepage portrait plate keep/kill; photography pipeline; referrals
+
+**Next:** Martin visual QA after pull; photography masters; decide 3D preview fate

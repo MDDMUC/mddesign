@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter, IBM_Plex_Mono } from 'next/font/google'
 import { CommandMenu } from '@/components/CommandMenu/CommandMenu'
+import { ReturnToTop } from '@/components/ReturnToTop/ReturnToTop'
 import { SiteNav } from '@/components/SiteNav/SiteNav'
 import '../styles/globals.css'
 
@@ -35,6 +36,7 @@ export default function RootLayout({
       <body>
         <SiteNav />
         {children}
+        <ReturnToTop />
         <CommandMenu />
       </body>
     </html>

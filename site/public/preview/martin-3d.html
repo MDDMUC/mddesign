@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Preview — Martin 3D portrait</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #fff;
+        --ink: #111;
+        --mute: #666;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: Inter, system-ui, sans-serif;
+      }
+      #c {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      .hud {
+        position: fixed;
+        left: 1.25rem;
+        bottom: 1.25rem;
+        z-index: 2;
+        font-size: 12px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--mute);
+        pointer-events: none;
+        line-height: 1.5;
+      }
+      .hud strong {
+        color: var(--ink);
+        font-weight: 600;
+      }
+      .state {
+        position: fixed;
+        inset: 0;
+        display: grid;
+        place-items: center;
+        font-family: ui-monospace, monospace;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--mute);
+        pointer-events: none;
+      }
+      .state[data-hidden='true'] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="state" id="state">[LOADING MESH]</div>
+    <canvas id="c"></canvas>
+    <div class="hud">
+      <strong>Martin portrait — photo wrap + depth wire</strong><br />
+      Drag to orbit · scroll to zoom · right-drag to pan<br />
+      <a href="/" style="pointer-events: auto; color: inherit"
+        >← back to site</a
+      >
+    </div>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module">
+      import * as THREE from 'three'
+      import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
+      import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
+
+      const state = document.getElementById('state')
+      const canvas = document.getElementById('c')
+
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true,
+        alpha: false,
+      })
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+      renderer.setSize(window.innerWidth, window.innerHeight)
+      renderer.outputColorSpace = THREE.SRGBColorSpace
+      renderer.toneMapping = THREE.ACESFilmicToneMapping
+      renderer.toneMappingExposure = 1.05
+
+      const scene = new THREE.Scene()
+      scene.background = new THREE.Color(0xffffff)
+
+      const camera = new THREE.PerspectiveCamera(
+        35,
+        window.innerWidth / window.innerHeight,
+        0.01,
+        100
+      )
+      camera.position.set(0.15, 0.05, 1.55)
+
+      const controls = new OrbitControls(camera, renderer.domElement)
+      controls.enableDamping = true
+      controls.target.set(0, 0.05, 0)
+      controls.minDistance = 0.4
+      controls.maxDistance = 4
+
+      const loader = new GLTFLoader()
+      const texLoader = new THREE.TextureLoader()
+      const DARK_GRAY = 0x3a3a3a
+
+      /**
+       * Front-plane UVs in export space (TripoSR: head toward -Y).
+       * With flipY=true, photo top (head) is high V → map -Y → high V.
+       */
+      function applyFrontPlanarUVs(geometry) {
+        geometry.computeBoundingBox()
+        const bb = geometry.boundingBox
+        const sx = bb.max.x - bb.min.x || 1
+        const sy = bb.max.y - bb.min.y || 1
+        // Larger scale → tighter UV range → subject appears bigger on the mesh.
+        // (0.88 was too small; 1.35 ≈ 1.5× zoom-in on the photo.)
+        const scale = Math.max(sx, sy) * 1.35
+        const cx = (bb.min.x + bb.max.x) * 0.5
+        const cy = (bb.min.y + bb.max.y) * 0.5
+        const cyPhoto = cy - sy * 0.06
+        const pos = geometry.attributes.position
+        const uvs = new Float32Array(pos.count * 2)
+        for (let i = 0; i < pos.count; i++) {
+          const x = pos.getX(i)
+          const y = pos.getY(i)
+          uvs[i * 2] = 0.5 + (x - cx) / scale
+          // Texture file is head-up; keep overlay matched after studio fix.
+          uvs[i * 2 + 1] = 0.5 + (y - cyPhoto) / scale
+        }
+        geometry.setAttribute('uv', new THREE.BufferAttribute(uvs, 2))
+      }
+
+      // Near lines strong, far/back lines ghosted — depth-faded 1px wire.
+      const lineMat = new THREE.ShaderMaterial({
+        uniforms: {
+          color: { value: new THREE.Color(DARK_GRAY) },
+          uNear: { value: 0.55 },
+          uFar: { value: 1.85 },
+          uFront: { value: 1.0 },
+          uBack: { value: 0.04 },
+        },
+        vertexShader: `
+          varying float vViewZ;
+          void main() {
+            vec4 mv = modelViewMatrix * vec4(position, 1.0);
+            vViewZ = -mv.z;
+            gl_Position = projectionMatrix * mv;
+          }
+        `,
+        fragmentShader: `
+          uniform vec3 color;
+          uniform float uNear;
+          uniform float uFar;
+          uniform float uFront;
+          uniform float uBack;
+          varying float vViewZ;
+          void main() {
+            float t = smoothstep(uFar, uNear, vViewZ);
+            t = t * t;
+            float alpha = mix(uBack, uFront, t);
+            gl_FragColor = vec4(color, alpha);
+          }
+        `,
+        transparent: true,
+        depthTest: true,
+        depthWrite: false,
+      })
+
+      texLoader.load(
+        './martin-portrait-3d-input.png?v=zoomIn',
+        (texture) => {
+          texture.colorSpace = THREE.SRGBColorSpace
+          // With flipY true, high V = top of photo → pair with +Y → +V UVs.
+          texture.flipY = true
+          texture.wrapS = THREE.ClampToEdgeWrapping
+          texture.wrapT = THREE.ClampToEdgeWrapping
+
+          const fillMat = new THREE.MeshBasicMaterial({
+            map: texture,
+            transparent: true,
+            opacity: 0.92,
+            depthTest: true,
+            depthWrite: true,
+            side: THREE.FrontSide,
+          })
+
+          loader.load(
+            './martin-portrait.glb?v=orig1',
+            (gltf) => {
+              const root = gltf.scene
+              const box = new THREE.Box3().setFromObject(root)
+              const size = new THREE.Vector3()
+              const center = new THREE.Vector3()
+              box.getSize(size)
+              box.getCenter(center)
+              root.position.sub(center)
+              const maxDim = Math.max(size.x, size.y, size.z) || 1
+              root.scale.setScalar(1 / maxDim)
+              root.updateMatrixWorld(true)
+
+              const group = new THREE.Group()
+              root.traverse((obj) => {
+                if (!obj.isMesh || !obj.geometry) return
+                const geo = obj.geometry.clone()
+                geo.applyMatrix4(obj.matrixWorld)
+                // UVs in export space (head at -Y) — match photo to mesh first.
+                applyFrontPlanarUVs(geo)
+
+                const fill = new THREE.Mesh(geo, fillMat)
+                group.add(fill)
+
+                const lines = new THREE.LineSegments(
+                  new THREE.WireframeGeometry(geo),
+                  lineMat
+                )
+                group.add(lines)
+              })
+
+              // UVs lock photo to mesh; no extra spin — export orientation + UV already set.
+              scene.add(group)
+
+              window.__wireRoot = group
+              window.__wireRadius =
+                new THREE.Box3()
+                  .setFromObject(group)
+                  .getBoundingSphere(new THREE.Sphere()).radius || 0.5
+
+              controls.target.set(0, 0.05, 0)
+              controls.update()
+              state.dataset.hidden = 'true'
+            },
+            undefined,
+            (err) => {
+              console.error(err)
+              state.textContent = '[FAILED TO LOAD MESH]'
+            }
+          )
+        },
+        undefined,
+        (err) => {
+          console.error(err)
+          state.textContent = '[FAILED TO LOAD TEXTURE]'
+        }
+      )
+
+      function syncDepthFade() {
+        if (!window.__wireRoot) return
+        const dist = camera.position.distanceTo(controls.target)
+        const r = window.__wireRadius
+        // Tighter near band + longer far fade = stronger depth contrast.
+        lineMat.uniforms.uNear.value = Math.max(0.05, dist - r * 0.2)
+        lineMat.uniforms.uFar.value = dist + r * 1.45
+      }
+
+      function onResize() {
+        camera.aspect = window.innerWidth / window.innerHeight
+        camera.updateProjectionMatrix()
+        renderer.setSize(window.innerWidth, window.innerHeight)
+      }
+      window.addEventListener('resize', onResize)
+
+      function tick() {
+        controls.update()
+        syncDepthFade()
+        renderer.render(scene, camera)
+        requestAnimationFrame(tick)
+      }
+      tick()
+    </script>
+  </body>
+</html>

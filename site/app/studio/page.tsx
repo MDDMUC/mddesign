@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import styles from './page.module.css'
-import { SplinePortrait } from '@/components/SplinePortrait/SplinePortrait'
 
 export const metadata: Metadata = {
   title: 'Studio — Martin Drexler',
@@ -56,9 +56,14 @@ export default function StudioPage() {
         </div>
         <aside className={`${styles.meta} reveal-rise reveal-stagger-6`}>
           <div className={styles.portrait}>
-            <SplinePortrait
-              scene="https://prod.spline.design/u-PUnfI6smdVUTTd/scene.splinecode"
-              ariaLabel="Martin Drexler portrait"
+            <Image
+              className={styles.portraitImg}
+              src="/images/hero/martin-portrait-upright.jpg"
+              alt="Martin Drexler"
+              width={1445}
+              height={1800}
+              sizes="(max-width: 900px) 100vw, 28vw"
+              priority
             />
           </div>
           <dl className={styles.metaList}>

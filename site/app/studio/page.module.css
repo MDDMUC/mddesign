@@ -9,6 +9,19 @@
   color: var(--ink-80);
 }
 
+/* Clear the left SiteNav rail (same breakpoints as case studies). */
+@media (min-width: 720px) and (max-width: 1679px) {
+  .main {
+    padding-left: calc(var(--pad-page) + var(--nav-rail-clear));
+  }
+}
+
+@media (max-width: 719px) {
+  .main {
+    padding-top: calc(var(--space-7) + var(--space-6));
+  }
+}
+
 /* ─── Header ────────────────────────────────────────────────── */
 
 .header {
@@ -59,8 +72,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Square portrait frame — houses the contained SplinePortrait component.
-   position: relative anchors the canvas's position: absolute inside. */
+/* Square portrait frame — white-bg still (replaces SplinePortrait). */
 .portrait {
   position: relative;
   width: 100%;
@@ -68,6 +80,16 @@
   border-bottom: var(--rule);
   overflow: hidden;
   margin-bottom: var(--space-5);
+  background: var(--bg);
+}
+
+.portraitImg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Bias toward the head (top of the upright plate). */
+  object-position: center top;
 }
 
 .metaList {
@@ -313,13 +335,7 @@
   }
 }
 
-@media (max-width: 720px) {
-  /* Portrait Spline is hidden on mobile (WebGL too expensive for phones);
-     remove the now-empty frame so the meta block sits at the top. */
-  .portrait {
-    display: none;
-  }
-}
+/* 2D still — keep the portrait on mobile (no WebGL cost). */
 
 @media (max-width: 640px) {
   .main {
