@@ -153,6 +153,15 @@
   --stagger-8: 1080ms;
   --stagger-9: 1200ms;
 
+  /* Homepage hero entrance — overlapping cascade (no pause between beats). */
+  --dur-hero: 1550ms;
+  --hero-delay-primary: 80ms;
+  --hero-delay-secondary: 360ms;
+  --hero-delay-copy: 680ms;
+  --hero-stagger-line: 200ms; /* per summary line after copy start */
+  --hero-delay-awards: 1680ms; /* after fifth summary line begins */
+  --hero-delay-nav: 3200ms; /* SiteNav after awards settle */
+
   /* Legacy motion aliases */
   --duration-fast: var(--dur-fast);
   --duration-normal: var(--dur-base);
@@ -172,6 +181,7 @@
     --dur-slow: 0ms;
     --dur-reveal: 0ms;
     --dur-line: 0ms;
+    --dur-hero: 0ms;
     --stagger-1: 0ms;
     --stagger-2: 0ms;
     --stagger-3: 0ms;
@@ -181,6 +191,12 @@
     --stagger-7: 0ms;
     --stagger-8: 0ms;
     --stagger-9: 0ms;
+    --hero-delay-primary: 0ms;
+    --hero-delay-secondary: 0ms;
+    --hero-delay-copy: 0ms;
+    --hero-stagger-line: 0ms;
+    --hero-delay-awards: 0ms;
+    --hero-delay-nav: 0ms;
     --duration-fast: 0ms;
     --duration-normal: 0ms;
   }

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { CoverVideo } from '@/components/CoverVideo/CoverVideo'
 import { CoverVimeo } from '@/components/CoverVimeo/CoverVimeo'
+import { CoverYouTube } from '@/components/CoverYouTube/CoverYouTube'
 import styles from './page.module.css'
 import { workItems } from '@/data/work'
 
@@ -41,6 +42,12 @@ export default function WorkPage() {
                       className={styles.coverMedia}
                     />
                   ) : null}
+                  {item.coverVideo?.youtube ? (
+                    <CoverYouTube
+                      id={item.coverVideo.youtube}
+                      className={styles.coverMedia}
+                    />
+                  ) : null}
                   {item.coverVideo?.webm && item.coverVideo.mp4 ? (
                     <CoverVideo
                       webm={item.coverVideo.webm}
@@ -49,7 +56,7 @@ export default function WorkPage() {
                     />
                   ) : null}
                   {/* Always present: shows when there is no video, or when
-                      CoverVimeo opts out under prefers-reduced-motion. */}
+                      embeds opt out under prefers-reduced-motion. */}
                   <p className={styles.coverFallback}>
                     <strong>{item.coverStat}</strong>
                     <span>{item.coverLabel}</span>

@@ -23,6 +23,50 @@ const teaching = [
   },
 ]
 
+/** Career-station mosaic — sharp teaching / studio masters only.
+ *  Soft Portfolio26 plate crops deferred until native masters exist. */
+const stations = [
+  {
+    src: '/images/studio/collage/talk-martin.jpg',
+    alt: 'Martin speaking at a design event',
+    span: 'talk' as const,
+  },
+  {
+    src: '/images/studio/collage/bw-01.jpg',
+    alt: 'Teaching at the whiteboard, University of Denver',
+    span: 'bw01' as const,
+  },
+  {
+    src: '/images/studio/collage/bw-02.jpg',
+    alt: 'Presenting design frameworks to students',
+    span: 'bw02' as const,
+  },
+  {
+    src: '/images/studio/collage/classroom.jpg',
+    alt: 'Design strategy classroom session',
+    span: 'class' as const,
+  },
+  {
+    src: '/images/studio/collage/whiteboard.jpg',
+    alt: 'Whiteboard session — design as business strategy',
+    span: 'board' as const,
+  },
+  {
+    src: '/images/studio/collage/studio-exterior.jpg',
+    alt: 'Haimish Studio exterior',
+    span: 'ext' as const,
+  },
+]
+
+const spanClass: Record<(typeof stations)[number]['span'], string> = {
+  talk: styles.spanTalk,
+  bw01: styles.spanBw01,
+  bw02: styles.spanBw02,
+  class: styles.spanClass,
+  board: styles.spanBoard,
+  ext: styles.spanExt,
+}
+
 export default function StudioPage() {
   return (
     <main className={styles.main}>
@@ -81,8 +125,32 @@ export default function StudioPage() {
         </aside>
       </header>
 
+      {/* Career stations — asymmetric mosaic under the first fold. */}
       <section
-        className={`${styles.section} reveal-rise reveal-stagger-7`}
+        className={`${styles.collageSection} reveal-rise reveal-stagger-7`}
+        aria-label="Career stations"
+      >
+        <h2 className={styles.collageLabel}>Stations</h2>
+        <div className={styles.collage}>
+          {stations.map((shot) => (
+            <figure
+              key={shot.src}
+              className={`${styles.collageCell} ${spanClass[shot.span]}`}
+            >
+              <Image
+                className={styles.collageImg}
+                src={shot.src}
+                alt={shot.alt}
+                fill
+                sizes="(max-width: 520px) 50vw, (max-width: 900px) 50vw, 42vw"
+              />
+            </figure>
+          ))}
+        </div>
+      </section>
+
+      <section
+        className={`${styles.section} reveal-rise reveal-stagger-8`}
       >
         <h2 className={styles.sectionTitle}>Practice</h2>
         <div className={styles.body}>
@@ -97,7 +165,7 @@ export default function StudioPage() {
       </section>
 
       <section
-        className={`${styles.section} reveal-rise reveal-stagger-8`}
+        className={`${styles.section} reveal-rise reveal-stagger-9`}
       >
         <h2 className={styles.sectionTitle}>Teaching</h2>
         <dl className={styles.teaching}>
@@ -116,7 +184,8 @@ export default function StudioPage() {
       </section>
 
       <section
-        className={`${styles.section} reveal-rise reveal-stagger-9`}
+        className={`${styles.section} reveal-rise`}
+        style={{ animationDelay: '1300ms' }}
       >
         <h2 className={styles.sectionTitle}>Clients</h2>
         <div className={styles.body}>

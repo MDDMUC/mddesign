@@ -98,3 +98,18 @@ Append-only. Newest entries at the **bottom**.
 **Open:** native photo masters for Keller; 3D UV/zoom polish; homepage portrait plate keep/kill; photography pipeline; referrals
 
 **Next:** Martin visual QA after pull; photography masters; decide 3D preview fate
+
+## 2026-09-08/09 — Hero motion, studio Stations, Space for Curiosity film
+
+**Focus:** Homepage hero entrance + SiteNav align; /studio Stations collage; Space for Curiosity film covers and case page; work ledger order sync.
+
+**Shipped:**
+- Homepage: removed hero portrait plate behind Spline; sequenced hero fade/slide (titles ? summary lines ? awards ? delayed SiteNav); summary split into five lines; optical -2px on primary; SiteNav bar uses centered max-width shell (no 100vw scrollbar drift)
+- /studio: Stations asymmetric mosaic under first fold (6 sharp teaching/studio masters; soft PDF crops deferred)
+- Space for Curiosity: self-hosted muted cover loop on / + /work (public/videos/space-for-curiosity/); case page playable YouTube embed (compact 16:9 in fold) + copy from AF description; CoverYouTube helper retained
+- Work order unified: Space for Curiosity ? byte ? Creative Consortium ? USA Ultimate ? CEPRES ? Keller ? YCA ? Planetarie (eaturedWork = workItems.slice(0, 4)); pagers/CASE numbers updated
+- Docs: DECISIONS, BRIEF studio inventory, CLAUDE, PROJECT_MEMORY
+
+**Open:** native masters for soft PDF stations/Keller; photography pipeline; referrals/essays; 3D preview fate
+
+**Next:** Visual QA after pull (hero timing, Stations, SFC covers, /work order); photography when ready

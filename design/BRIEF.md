@@ -113,7 +113,7 @@ Order is implementation order, not navigation order.
 | `/work/byte`, `/work/space-for-curiosity` | live | Cases 05–06. Object covers (4:5). |
 | `/work/creative-consortium` | live | Case 07. Brand / 3D motion; cover video 4:5. |
 | `/work/usa-ultimate` | live | Case 08. Haimish; USA Ultimate digital system. |
-| `/studio` | live | About. H1 = Martin Drexler. BRIEF §3 paragraph verbatim. Spline portrait. |
+| `/studio` | live | About. H1 = Martin Drexler. BRIEF §3 paragraph verbatim. White-bg portrait still. Stations career collage (asymmetric mosaic) under first fold. |
 | `/colophon` | live | Plain Plex Mono table. Noindex. |
 | `/work/archive` | phase 3 | Text-only ledger of older / smaller work (Fibbers, Neuro Hope, Auto Verbeessen, Plotgrid, Creative Consortium, USA Wrestling, Global Counseling Network, mining, drilling, etc.). |
 | `/journal` | optional | Writing. Only ship if there is writing to ship; don't build the page to fill it later. |

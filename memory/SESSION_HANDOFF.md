@@ -2,41 +2,37 @@
 
 > Rewrite this whole file at session end. Next session reads this first after the protocol.
 
-**Last updated:** 2026-09-08  
-**Session:** Keller case images, SiteNav rails, /work covers, studio portrait, 3D preview experiment
+**Last updated:** 2026-09-09  
+**Session:** Hero motion + SiteNav align; /studio Stations; Space for Curiosity film; work order sync
 
 ---
 
 ## Current focus
 
-1. **Chrome (SiteNav):**
-   - `/` + `/contact` → horizontal top bar (aligned to content + `pad-page`)
-   - `/studio` + `/work/[slug]` → **left vertical rail** (large type, scroll hide/show)
-   - `/work` index → **top-right** horizontal (no left rail)
-2. **`/work` ledger** — landscape **16:9** cover column on the right (tags above); videos/`contain` + type fallback; `planetarie` title lowercase.
-3. **Keller Sports** — CoverVideo pegasus hero; PDF-derived vignette images live (soft PDF res — native masters still needed).
-4. **`/studio`** — Spline portrait **replaced** by white-bg still `martin-portrait-upright.jpg`; left rail nav.
-5. **Homepage** — optional hero portrait plate behind Spline (separate z-layer); Return-to-Top pill (home only); awards copy softened.
-6. **3D experiment (preview only)** — coarse wireframe + photo wrap at `/preview/martin-3d.html` (noindex). Mesh in `site/public/preview/`; full exports gitignored under `design/exports/`.
+1. **Homepage hero** — Spline on white (portrait plate removed). Cascaded entrance: primary → secondary → five summary lines → awards → SiteNav fade (`--hero-delay-*` / `--dur-hero`). Primary optical `-2px`. SiteNav bar = centered `container-wide` + `pad-page` shell.
+2. **`/studio` Stations** — Asymmetric hairline mosaic under first fold; **6 sharp** teaching/studio masters only. Soft Portfolio26 plate crops deferred.
+3. **Space for Curiosity** — Homepage/`/work` covers: self-hosted muted loop (`public/videos/space-for-curiosity/cover.{webm,mp4}`). Case page: compact 16:9 YouTube embed + AF description copy; credit lists Mari Moxley (YT) — confirm Murray vs Mari with Martin if needed.
+4. **Work order** — Ledger and homepage featured share: SFC → byte → Creative Consortium → USA Ultimate → CEPRES → Keller → YCA → Planetarie.
+5. **Chrome** — Bar `/`+`/contact`; left rail `/studio`+cases; top-right `/work` index. Unchanged otherwise.
+6. **3D preview** — Still at `/preview/martin-3d.html` (noindex); optional promote/drop.
 
 ---
 
 ## Blockers / watchouts
 
-- Keller (and other) vignette rasters from portfolio PDF are soft — swap for native masters when available.
-- 3D preview UV/zoom still tunable; mesh shape restored to original TripoSR coarse wire — do not regenerate without asking.
-- Portrait orientation: use **`martin-portrait-upright.jpg`** for studio; keep head-up.
-- Photography pipeline still open (BRIEF §6).
-- `design/exports/` is gitignored — local 3D masters live there only.
+- Soft PDF station/Keller rasters — need native masters.
+- YouTube on case page still has player chrome (intentional for watch); covers must stay self-hosted muted.
+- Photography pipeline open (BRIEF §6).
+- `design/exports/` gitignored.
 
 ---
 
 ## Exact next steps (next session)
 
-1. Martin visual QA after pull: `/studio` rail + portrait, `/work` covers, Keller case, `/preview/martin-3d.html`
-2. Native photography masters for Keller (and others) when ready
-3. Decide whether homepage hero portrait plate stays / how it sits under opaque Spline
-4. Optional: promote or drop the 3D wire preview; if keep, tune UV zoom with Martin
+1. Martin visual QA after pull: hero timing/align, Stations, SFC covers + case embed, `/work` order
+2. Native photography masters when ready (Keller + career stations)
+3. Optional: longer/different SFC cover loop excerpt; confirm Moxley credit name
+4. Optional: promote or drop 3D wire preview
 5. Referrals / essays still wait on real content
 
 ---
@@ -45,12 +41,12 @@
 
 | Need | Path |
 |------|------|
+| Hero motion tokens | `site/styles/tokens.css` (`--hero-delay-*`, `--dur-hero`) |
 | SiteNav | `site/components/SiteNav/` |
-| Return to Top | `site/components/ReturnToTop/` |
-| Work ledger | `site/app/work/page.tsx` + `page.module.css` |
-| Keller case | `site/app/work/keller-sports/` + `public/images/work/keller-sports/` |
-| Studio | `site/app/studio/` + `public/images/hero/martin-portrait-upright.jpg` |
-| 3D preview | `site/public/preview/martin-3d.html` |
+| Studio Stations | `site/app/studio/` + `public/images/studio/collage/` |
+| SFC cover video | `site/public/videos/space-for-curiosity/` |
+| Work data / order | `site/data/work.ts` |
+| SFC case | `site/app/work/space-for-curiosity/` |
 | Locks | `logs/DECISIONS.md` |
 | Brief | `design/BRIEF.md` |
 

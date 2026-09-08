@@ -28,14 +28,14 @@ Durable state. Update when facts change; do not put ephemeral chat noise here.
 | Route | What it is |
 |-------|------------|
 | `/` | Long persuasion spine: hero (full-viewport Spline) → client marquee → eight case teasers → news → competence → connect → footer map. Floating SiteNav (no bar). |
-| `/work` | Display-scale typographic ledger; shared data in `site/data/work.ts` (order: byte → Creative Consortium → USA Ultimate → Space for Curiosity → CEPRES → Keller → YCA → Planetarie) |
+| `/work` | Display-scale typographic ledger; shared data in `site/data/work.ts` (order: Space for Curiosity → byte → Creative Consortium → USA Ultimate → CEPRES → Keller → YCA → Planetarie). Homepage featured = first four. |
 | `/work/cepres` | Case 01 — fintech UX flagship. Copy shipped; images placeholders |
 | `/work/keller-sports` | Case 02 — commerce + brand, in-house HoD. CoverVideo + PDF vignette images (soft; masters pending) |
 | `/work/yca` | Case 03 — Olympic Movement program. Copy shipped; images placeholders |
 | `/work/planetarie` | Case 04 — CBDa brand → Tanasi acquisition. Copy shipped; images placeholders |
 | `/work/byte` | Case 05 — consumer dental packaging + 3D. Copy shipped; images placeholders |
 | `/work/space-for-curiosity` | Case 06 — Space Force / Air Force brand + film. Copy shipped; images placeholders |
-| `/studio` | About. H1 = Martin Drexler. White-bg portrait still + left SiteNav rail. Practice / Teaching / Clients / Recognition / Index |
+| `/studio` | About. H1 = Martin Drexler. White-bg portrait still + left SiteNav rail. Stations collage under fold, then Practice / Teaching / Clients / Recognition / Index |
 | `/contact` | Form → `POST /api/contact`. Wireframe-grid background |
 | `/colophon` | Plex Mono table (noindex). Still mentions WebGL2 fluid — stale vs live landing |
 | `/system` | Design-system reference (noindex) |

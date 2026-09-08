@@ -28,8 +28,14 @@ export const heroTitlePrimary = ['Designer', 'UI', 'UX'] as const
 /** H1 secondary line — practice pillars, separated by middots. */
 export const heroTitleSecondary = ['brand', 'product', 'systems'] as const
 
-export const heroPositioning =
-  'Brands with depth demand more than decoration. As a graphic designer I focus on corporate designs and digital products (UI/UX/AI) – from strategy to execution. Recognized with prestigious design awards and trusted by world-leading brands.'
+/** Hero summary — each entry rises in as its own line. */
+export const heroPositioningLines = [
+  'Brands with depth demand more than decoration.',
+  'As a graphic designer, I focus on corporate designs.',
+  'And digital products (UI/UX/AI) – from strategy to execution.',
+  'Recognized with prestigious design awards',
+  'And trusted by world-leading brands.',
+] as const
 
 export const availabilityLabel = 'Accepting projects'
 

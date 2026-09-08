@@ -19,12 +19,38 @@ export type WorkItem = {
     mp4?: string
     /** Vimeo video id for background embed (alternative to webm/mp4). */
     vimeo?: string
+    /** YouTube video id for background embed (alternative to webm/mp4/vimeo). */
+    youtube?: string
   }
 }
 
+/**
+ * Full `/work` ledger — display order is source of truth.
+ * Homepage featured grid = first four.
+ */
 export const workItems: WorkItem[] = [
   {
     index: '01',
+    slug: 'space-for-curiosity',
+    title: 'Space for Curiosity',
+    promise:
+      'Personal curiosity as the route to institutional capability — Space Force and Air Force.',
+    descriptor:
+      'Brand narrative and film series through Haimish Studio for the US Space Force and US Air Force — curiosity framed as operational advantage.',
+    tags: 'BRAND / CONTENT / FILM',
+    studio: 'Haimish Studio',
+    date: '2023',
+    coverStat: 'SF / AF',
+    coverLabel: 'brand · film · narrative',
+    coverVariant: 'object',
+    coverVideo: {
+      /* Muted visual loop from AF film (no YT chrome on homepage /work covers). */
+      webm: '/videos/space-for-curiosity/cover.webm',
+      mp4: '/videos/space-for-curiosity/cover.mp4',
+    },
+  },
+  {
+    index: '02',
     slug: 'byte',
     title: 'byte',
     promise:
@@ -43,7 +69,7 @@ export const workItems: WorkItem[] = [
     },
   },
   {
-    index: '02',
+    index: '03',
     slug: 'creative-consortium',
     title: 'Creative Consortium',
     promise:
@@ -62,7 +88,7 @@ export const workItems: WorkItem[] = [
     },
   },
   {
-    index: '03',
+    index: '04',
     slug: 'usa-ultimate',
     title: 'USA Ultimate',
     promise:
@@ -78,21 +104,6 @@ export const workItems: WorkItem[] = [
     coverVideo: {
       vimeo: '1151639550',
     },
-  },
-  {
-    index: '04',
-    slug: 'space-for-curiosity',
-    title: 'Space for Curiosity',
-    promise:
-      'Personal curiosity as the route to institutional capability — Space Force and Air Force.',
-    descriptor:
-      'Brand narrative and film series through Haimish Studio for the US Space Force and US Air Force — curiosity framed as operational advantage.',
-    tags: 'BRAND / CONTENT / FILM',
-    studio: 'Haimish Studio',
-    date: '2023',
-    coverStat: 'SF / AF',
-    coverLabel: 'brand · film · narrative',
-    coverVariant: 'object',
   },
   {
     index: '05',
@@ -167,5 +178,5 @@ export const workItems: WorkItem[] = [
   },
 ]
 
-/** Featured homepage grid — selected work ledger. */
-export const featuredWork = workItems
+/** Homepage featured grid — same order as the top of `/work`. */
+export const featuredWork: WorkItem[] = workItems.slice(0, 4)

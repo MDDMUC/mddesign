@@ -42,7 +42,7 @@ export default function CreativeConsortiumPage() {
       <header className={styles.header}>
         <div>
           <p className={styles.eyebrow}>
-            CASE 02 — 2022
+            CASE 03 — 2022
             <br />
             BRAND / 3D / MOTION / WEB
           </p>

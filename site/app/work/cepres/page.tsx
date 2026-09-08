@@ -176,9 +176,7 @@ export default function CepresPage() {
 
       {/* §8 Pager */}
       <nav className={styles.pager} aria-label="Case study navigation">
-        <Link href="/work/space-for-curiosity">
-          &larr; Space for Curiosity
-        </Link>
+        <Link href="/work/usa-ultimate">&larr; USA Ultimate</Link>
         <Link href="/work">Index</Link>
         <Link href="/work/keller-sports">Keller Sports &rarr;</Link>
       </nav>

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import styles from './page.module.css'
 import { CoverVideo } from '@/components/CoverVideo/CoverVideo'
 import { CoverVimeo } from '@/components/CoverVimeo/CoverVimeo'
+import { CoverYouTube } from '@/components/CoverYouTube/CoverYouTube'
 import { SplineBackground } from '@/components/SplineBackground/SplineBackground'
 import { featuredWork, workItems } from '@/data/work'
 import {
@@ -12,7 +13,7 @@ import {
   connectLede,
   essays,
   footerLinks,
-  heroPositioning,
+  heroPositioningLines,
   heroTitlePrimary,
   heroTitleSecondary,
   news,
@@ -43,67 +44,54 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className={styles.main}>
-      {/* Fixed plate — own layer, behind Spline + all page chrome (z below). */}
-      <div className={styles.heroPortrait} aria-hidden="true">
-        <div className={styles.heroPortraitFrame}>
-          <Image
-            className={styles.heroPortraitImg}
-            src="/images/hero/martin-portrait.jpg"
-            alt=""
-            fill
-            priority
-            sizes="52vw"
-          />
-        </div>
-      </div>
-
-      <div className={styles.foreground}>
-      {/* 1 — Hero over Spline (portrait is a separate layer behind this) */}
+      {/* 1 — Hero over Spline */}
       <section className={styles.hero} aria-label="Introduction">
         <SplineBackground scene={SPLINE_SCENE} />
 
         <div className={styles.heroInner}>
           <div className={styles.heroCopy}>
             <h1 className={styles.heroTitle}>
-              <span className="reveal-line-wrap">
-                <span className={styles.heroTitlePrimary}>
-                  {heroTitlePrimary.map((word, i) => (
-                    <span key={word}>
-                      {i > 0 ? (
-                        <span className={styles.heroDot} aria-hidden="true">
-                          ·
-                        </span>
-                      ) : null}
-                      {word}
-                    </span>
-                  ))}
-                </span>
+              <span className={styles.heroTitlePrimary}>
+                {heroTitlePrimary.map((word, i) => (
+                  <span key={word}>
+                    {i > 0 ? (
+                      <span className={styles.heroDot} aria-hidden="true">
+                        ·
+                      </span>
+                    ) : null}
+                    {word}
+                  </span>
+                ))}
               </span>
-              <span className="reveal-line-wrap">
-                <span className={styles.heroTitleSecondary}>
-                  {heroTitleSecondary.map((word, i) => (
-                    <span key={word}>
-                      {i > 0 ? (
-                        <span className={styles.heroDot} aria-hidden="true">
-                          ·
-                        </span>
-                      ) : null}
-                      {word}
-                    </span>
-                  ))}
-                </span>
+              <span className={styles.heroTitleSecondary}>
+                {heroTitleSecondary.map((word, i) => (
+                  <span key={word}>
+                    {i > 0 ? (
+                      <span className={styles.heroDot} aria-hidden="true">
+                        ·
+                      </span>
+                    ) : null}
+                    {word}
+                  </span>
+                ))}
               </span>
             </h1>
 
-            <p
-              className={`${styles.heroPositioning} reveal-fade reveal-stagger-3`}
-            >
-              {heroPositioning}
+            <p className={styles.heroPositioning}>
+              {heroPositioningLines.map((line, i) => (
+                <span
+                  key={line}
+                  className={styles.heroPositioningLine}
+                  style={{
+                    animationDelay: `calc(var(--hero-delay-copy) + (${i} * var(--hero-stagger-line)))`,
+                  }}
+                >
+                  {line}
+                </span>
+              ))}
             </p>
 
-            <div
-              className={`${styles.awardsBanner} reveal-fade reveal-stagger-4`}
-            >
+            <div className={styles.awardsBanner}>
               <Image
                 src="/images/hero/awards-horizontal-black.png"
                 alt="International design awards including D&AD, German Brand Award, Red Dot, and others"
@@ -182,6 +170,8 @@ export default function Home() {
                   >
                     {item.coverVideo?.vimeo ? (
                       <CoverVimeo id={item.coverVideo.vimeo} />
+                    ) : item.coverVideo?.youtube ? (
+                      <CoverYouTube id={item.coverVideo.youtube} />
                     ) : item.coverVideo?.webm && item.coverVideo.mp4 ? (
                       <CoverVideo
                         webm={item.coverVideo.webm}
@@ -392,7 +382,6 @@ export default function Home() {
           </ul>
         </div>
       </nav>
-      </div>
     </main>
   )
 }

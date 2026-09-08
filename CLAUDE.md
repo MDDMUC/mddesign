@@ -25,7 +25,7 @@ Martin Drexler is a freelance graphic designer (hello@martindrexler.com). This r
 - `/work/creative-consortium` — case study #7 (brand / 3D motion, Haimish).
 - `/work/usa-ultimate` — case study #8 (USA Ultimate digital system, Haimish).
 - `/work/creative-consortium` — case study #7 (brand + 3D flag motion + web, Haimish).
-- `/studio` — about page. H1 = Martin Drexler, positioning paragraph as lede, white-bg photo portrait (replaces SplinePortrait), Practice / Teaching / Clients / Recognition / Index.
+- `/studio` — about page. H1 = Martin Drexler, positioning paragraph as lede, white-bg photo portrait, Stations career collage (asymmetric mosaic), Practice / Teaching / Clients / Recognition / Index.
 - `/colophon` — Plex Mono table of how the site is built. Noindex. (Rendering row still mentions the fluid sim — stale.)
 - `/system` — internal design-system reference. Noindex.
 - `/api/contact` — serverless POST handler, sends via Google Workspace SMTP (nodemailer). Six SMTP env vars must be set in Vercel (`SMTP_HOST/PORT/USER/PASS`, `MAIL_FROM`, `MAIL_TO`).

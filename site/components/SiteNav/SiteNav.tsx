@@ -17,9 +17,12 @@ const RAIL_MIN_WIDTH = 720
 
 export function SiteNav() {
   const pathname = usePathname()
+  const isHome = pathname === '/'
   const [visible, setVisible] = useState(true)
   const [pill, setPill] = useState(false)
   const [railOk, setRailOk] = useState(false)
+  /** Homepage: CSS delayed fade; flips to done on animation end. */
+  const [introDone, setIntroDone] = useState(!isHome)
   const lastY = useRef(0)
 
   const isWorkIndex = pathname === '/work'
@@ -30,6 +33,9 @@ export function SiteNav() {
 
   const layout = isRail ? 'rail' : isWorkIndex ? 'end' : 'bar'
   const route = isWorkIndex || isCaseStudy || isStudio ? 'work' : 'site'
+  const introPending = isHome && !introDone
+  /* During homepage intro, keep links inert but don't fight the CSS fade. */
+  const showNav = introPending ? true : visible
 
   const isActive = useCallback(
     (href: string) => {
@@ -83,7 +89,14 @@ export function SiteNav() {
     setVisible(true)
     setPill(window.scrollY > TOP_THRESHOLD)
     lastY.current = window.scrollY
+    setIntroDone(pathname !== '/')
   }, [pathname])
+
+  useEffect(() => {
+    if (!isHome) return
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced) setIntroDone(true)
+  }, [isHome])
 
   return (
     <nav
@@ -91,8 +104,14 @@ export function SiteNav() {
       aria-label="Primary"
       data-layout={layout}
       data-route={route}
-      data-visible={visible ? 'true' : 'false'}
+      data-page={isHome ? 'home' : undefined}
+      data-intro={introPending ? 'pending' : 'done'}
+      data-visible={showNav ? 'true' : 'false'}
       data-pill={pill ? 'true' : 'false'}
+      onAnimationEnd={(e) => {
+        if (e.target !== e.currentTarget) return
+        if (introPending) setIntroDone(true)
+      }}
     >
       {links.map((l) => (
         <Link
@@ -100,7 +119,7 @@ export function SiteNav() {
           href={l.href}
           className={styles.link}
           aria-current={isActive(l.href) ? 'page' : undefined}
-          tabIndex={visible ? undefined : -1}
+          tabIndex={introPending || !showNav ? -1 : undefined}
         >
           {l.label}
         </Link>

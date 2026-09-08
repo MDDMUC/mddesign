@@ -9,13 +9,6 @@
   color: var(--ink);
 }
 
-/* Everything above the portrait plate (Spline, type, bands, footer). */
-.foreground {
-  position: relative;
-  z-index: 1;
-  background: transparent;
-}
-
 /* ─── Hero ───────────────────────────────────────────────────── */
 
 .hero {
@@ -27,44 +20,12 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: var(--space-6) var(--pad-page) var(--hero-edge);
+  /* Horizontal pad lives on heroInner so SiteNav left matches the type column
+     ((100vw − container) / 2 + pad-page) — same maths as /contact. */
+  padding: var(--space-6) 0 var(--hero-edge);
   border-bottom: var(--rule);
   box-sizing: border-box;
   background: transparent;
-}
-
-/* Portrait plate — separate from Spline, fixed behind all page layers. */
-.heroPortrait {
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.heroPortraitFrame {
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  /* Tall portrait aspect ≈ 1:1 for the head plate. */
-  width: min(52vw, 100vh);
-  overflow: hidden;
-}
-
-.heroPortraitFrame > span,
-.heroPortraitFrame > img {
-  position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-}
-
-.heroPortraitImg {
-  object-fit: cover;
-  /* Session plate #2 on white — lock onto the face; right viewport edge
-     finishes the crop through the right side of the head. */
-  object-position: 46% 6%;
 }
 
 .heroInner {
@@ -78,6 +39,8 @@
   max-width: var(--container-wide);
   width: 100%;
   margin: 0 auto;
+  padding: 0 var(--pad-page);
+  box-sizing: border-box;
   pointer-events: none;
 }
 
@@ -98,14 +61,18 @@
   letter-spacing: var(--tracking-display-tight);
   line-height: 0.95;
   color: var(--ink);
-  margin: 0 0 var(--space-3);
+  /* Extra air under subhead; stack is flex-end so growth goes up, awards stay. */
+  margin: 0 0 var(--space-5);
 }
 
-@keyframes lockup-rise {
+/* Soft fade + rise — primary → secondary → copy → awards (see --hero-delay-*). */
+@keyframes hero-line-enter {
   from {
-    transform: translateY(140%);
+    opacity: 0;
+    transform: translateY(0.55em);
   }
   to {
+    opacity: 1;
     transform: translateY(0);
   }
 }
@@ -113,14 +80,16 @@
 .heroTitlePrimary,
 .heroTitleSecondary {
   display: block;
-  animation: lockup-rise var(--dur-reveal) var(--ease-out) both;
+  animation: hero-line-enter var(--dur-hero) var(--ease-reveal) both;
 }
 
 .heroTitlePrimary {
   font-variation-settings: 'wght' 700, 'opsz' 72;
   text-transform: uppercase;
   letter-spacing: var(--tracking-display-tight);
-  animation-delay: var(--stagger-3);
+  animation-delay: var(--hero-delay-primary);
+  /* Optical: Inter display D sits heavy on the left vs Work/body. */
+  margin-left: -2px;
 }
 
 .heroTitleSecondary {
@@ -128,8 +97,9 @@
   font-variation-settings: 'wght' 400, 'opsz' 36;
   letter-spacing: var(--tracking-display);
   text-transform: none;
-  margin-top: 0.12em;
-  animation-delay: var(--stagger-4);
+  /* Extra air under primary; grows the lockup upward (awards stay put). */
+  margin-top: 0.32em;
+  animation-delay: var(--hero-delay-secondary);
 }
 
 .heroDot {
@@ -149,9 +119,16 @@
   width: 100%;
 }
 
+.heroPositioningLine {
+  display: block;
+  animation: hero-line-enter var(--dur-hero) var(--ease-reveal) both;
+}
+
 .awardsBanner {
   margin: 0;
   width: 100%;
+  animation: hero-line-enter var(--dur-hero) var(--ease-reveal) both;
+  animation-delay: var(--hero-delay-awards);
 }
 
 .awardsBanner img {
@@ -865,7 +842,7 @@ iframe.coverVideo {
 @media (max-width: 720px) {
   .hero {
     min-height: auto;
-    padding: var(--space-6) var(--pad-page) var(--space-7);
+    padding: var(--space-6) 0 var(--space-7);
   }
 
   .heroTitle {
@@ -899,7 +876,9 @@ iframe.coverVideo {
 
 @media (prefers-reduced-motion: reduce) {
   .heroTitlePrimary,
-  .heroTitleSecondary {
+  .heroTitleSecondary,
+  .heroPositioningLine,
+  .awardsBanner {
     animation: none;
   }
 }

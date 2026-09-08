@@ -12,18 +12,40 @@
   transition: opacity var(--dur-base) var(--ease-out);
 }
 
+@keyframes hero-nav-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Homepage: delayed fade after hero copy + awards (see --hero-delay-nav). */
+.nav[data-page='home'][data-intro='pending'] {
+  animation: hero-nav-enter var(--dur-hero) var(--ease-reveal) both;
+  animation-delay: var(--hero-delay-nav);
+  transition: none;
+}
+
 /* ─── Bar — homepage / studio / contact ──────────────────────── */
 
 .nav[data-layout='bar'] {
   top: var(--hero-edge);
-  /* Match page content: container gutter + pad-page (not the raw container edge). */
-  left: max(
-    var(--pad-page),
-    calc((100vw - var(--container-wide)) / 2 + var(--pad-page))
-  );
+  /* Same shell as homepage .heroInner / contact .main — avoids 100vw
+     scrollbar drift that pushed Work right of the type column. */
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  padding-left: var(--pad-page);
+  padding-right: var(--pad-page);
+  box-sizing: border-box;
   flex-wrap: wrap;
   flex-direction: row;
   align-items: baseline;
+  justify-content: flex-start;
   gap: var(--space-4) var(--space-5);
 }
 
@@ -32,7 +54,7 @@
   top: var(--space-5);
 }
 
-.nav[data-layout='bar'][data-visible='false'] {
+.nav[data-layout='bar'][data-visible='false']:not([data-intro='pending']) {
   opacity: 0;
   pointer-events: none;
 }
@@ -169,5 +191,10 @@
 @media (prefers-reduced-motion: reduce) {
   .nav {
     transition: none;
+  }
+
+  .nav[data-page='home'][data-intro='pending'] {
+    animation: none;
+    opacity: 1;
   }
 }

@@ -2,10 +2,14 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import styles from '@/components/CaseStudy/CaseStudy.module.css'
 
+/** Official AF Recruiting upload — U.S. Air Force: Space for Curiosity */
+const FILM_YOUTUBE_ID = 'rqn2og2qVUw'
+const FILM_YOUTUBE_URL = `https://www.youtube.com/watch?v=${FILM_YOUTUBE_ID}`
+
 export const metadata: Metadata = {
   title: 'Space for Curiosity — Martin Drexler',
   description:
-    'A documentary-paced brand-film series for the US Space Force and US Air Force. Personal curiosity as the entry point to institutional capability.',
+    'U.S. Air Force Lt Col Blair Thompson is curious about space. His wonderment about the giant void above our heads led to algorithms used by SpaceX and NASA.',
 }
 
 const vignettes = [
@@ -41,7 +45,7 @@ export default function SpaceForCuriosityPage() {
       <header className={styles.header}>
         <div>
           <p className={styles.eyebrow}>
-            CASE 04 — 2023
+            CASE 01 — 2023
             <br />
             BRAND / CONTENT / FILM
           </p>
@@ -52,7 +56,9 @@ export default function SpaceForCuriosityPage() {
             Space for Curiosity
           </h1>
           <p className={styles.subtitle}>
-            A brand-film series for the US Space Force and US Air Force. Personal curiosity as the route to institutional capability.
+            U.S. Air Force Lt Col Blair Thompson is curious. Curious about
+            space. His wonderment about the giant void above our heads has
+            led to algorithms used by SpaceX and NASA.
           </p>
         </div>
         <aside className={styles.meta}>
@@ -76,22 +82,38 @@ export default function SpaceForCuriosityPage() {
       </header>
 
       <figure
-        className={`${styles.cover} ${styles.coverLetterbox}`}
+        className={`${styles.cover} ${styles.coverFilm}`}
         style={{ viewTransitionName: 'work-hero-space-for-curiosity' }}
       >
-        <p>No score. No CTA. 3–5 minutes.</p>
+        <iframe
+          className={styles.coverFilmIframe}
+          src={`https://www.youtube-nocookie.com/embed/${FILM_YOUTUBE_ID}?rel=0&modestbranding=1&cc_load_policy=0`}
+          title="U.S. Air Force: Space for Curiosity"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          loading="lazy"
+        />
       </figure>
+      <p className={styles.filmCredit}>
+        Film ·{' '}
+        <a href={FILM_YOUTUBE_URL} target="_blank" rel="noopener noreferrer">
+          Watch on YouTube
+        </a>
+        {' · '}Video by Master Sgt. Mari Moxley · Reserve National Security
+        Space Institute
+      </p>
 
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Context</h2>
         <div className={styles.sectionBody}>
           <p className="lede">
-            "Space for Curiosity" is a series of short brand films developed
-            with the US Space Force and US Air Force, featuring real
-            personnel on the work they actually do — from Lt Col Blair
-            Thompson on the algorithms used by SpaceX and NASA, outward.
-            Each film treats institutional capability as the visible end of
-            an individual\u2019s personal curiosity.
+            U.S. Air Force Lt Col Blair Thompson is curious about space. His
+            wonderment about the giant void above our heads led to algorithms
+            used by SpaceX and NASA. Now that curiosity is reaching the next
+            generation of space pioneers. &ldquo;Space for Curiosity&rdquo; is
+            the brand-film series developed with the US Space Force and US Air
+            Force around that thesis — institutional capability as the visible
+            end of personal curiosity.
           </p>
         </div>
       </section>
@@ -147,11 +169,23 @@ export default function SpaceForCuriosityPage() {
           <dt className={styles.creditTerm}>Direction</dt>
           <dd className={styles.creditDef}>Martin Drexler · Creative Direction</dd>
 
+          <dt className={styles.creditTerm}>Video</dt>
+          <dd className={styles.creditDef}>
+            Master Sgt. Mari Moxley · Reserve National Security Space Institute
+          </dd>
+
           <dt className={styles.creditTerm}>Studio</dt>
           <dd className={styles.creditDef}>Haimish Studio</dd>
 
           <dt className={styles.creditTerm}>Client</dt>
           <dd className={styles.creditDef}>US Space Force · US Air Force</dd>
+
+          <dt className={styles.creditTerm}>Film</dt>
+          <dd className={styles.creditDef}>
+            <a href={FILM_YOUTUBE_URL} target="_blank" rel="noopener noreferrer">
+              youtube.com/watch?v={FILM_YOUTUBE_ID}
+            </a>
+          </dd>
 
           <dt className={styles.creditTerm}>Duration</dt>
           <dd className={styles.creditDef}>2023</dd>
@@ -159,9 +193,8 @@ export default function SpaceForCuriosityPage() {
       </section>
 
       <nav className={styles.pager} aria-label="Case study navigation">
-        <Link href="/work/usa-ultimate">&larr; USA Ultimate</Link>
-        <Link href="/work">Index</Link>
-        <Link href="/work/cepres">CEPRES &rarr;</Link>
+        <Link href="/work">&larr; Index</Link>
+        <Link href="/work/byte">byte &rarr;</Link>
       </nav>
     </main>
   )

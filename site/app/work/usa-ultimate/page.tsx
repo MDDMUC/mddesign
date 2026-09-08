@@ -42,7 +42,7 @@ export default function UsaUltimatePage() {
       <header className={styles.header}>
         <div>
           <p className={styles.eyebrow}>
-            CASE 03 — 2021–2022
+            CASE 04 — 2021–2022
             <br />
             UX / UI / SPORTS / DIGITAL
           </p>
@@ -151,9 +151,7 @@ export default function UsaUltimatePage() {
           &larr; Creative Consortium
         </Link>
         <Link href="/work">Index</Link>
-        <Link href="/work/space-for-curiosity">
-          Space for Curiosity &rarr;
-        </Link>
+        <Link href="/work/cepres">CEPRES &rarr;</Link>
       </nav>
     </main>
   )
