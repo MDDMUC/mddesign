@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Preview — High Council wireframe vs solid</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #fff;
+        --ink: #111;
+        --mute: #666;
+        --rule: 1px solid rgba(17, 17, 17, 0.18);
+        --pad: clamp(1rem, 3vw, 2rem);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: Inter, system-ui, sans-serif;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        height: 100dvh;
+      }
+      header {
+        flex: 0 0 auto;
+        padding: 0.75rem var(--pad);
+        border-bottom: var(--rule);
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 2rem;
+        align-items: baseline;
+        justify-content: space-between;
+      }
+      header h1 {
+        margin: 0;
+        font-size: 0.75rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+      header p {
+        margin: 0;
+        font-size: 0.7rem;
+        color: var(--mute);
+        max-width: 56ch;
+        line-height: 1.4;
+      }
+      /* Two rows × four columns, one viewport, no page scroll */
+      .grid {
+        flex: 1 1 auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 0;
+        min-height: 0;
+        height: 100%;
+      }
+      .cell {
+        position: relative;
+        border-right: var(--rule);
+        border-bottom: var(--rule);
+        background: #fff;
+        overflow: hidden;
+        min-width: 0;
+        min-height: 0;
+      }
+      .cell:nth-child(4n) {
+        border-right: none;
+      }
+      .cell:nth-child(n + 5) {
+        border-bottom: none;
+      }
+      .cell canvas {
+        display: block;
+        width: 100% !important;
+        height: 100% !important;
+      }
+      .meta {
+        position: absolute;
+        left: 0.85rem;
+        bottom: 0.85rem;
+        z-index: 2;
+        pointer-events: none;
+      }
+      .meta .name {
+        font-size: 0.65rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+      .meta .role {
+        margin-top: 0.15rem;
+        font-family: "IBM Plex Mono", ui-monospace, monospace;
+        font-size: 0.6rem;
+        color: var(--mute);
+        letter-spacing: 0.04em;
+      }
+      .status {
+        position: absolute;
+        top: 0.75rem;
+        right: 0.75rem;
+        font-family: "IBM Plex Mono", ui-monospace, monospace;
+        font-size: 0.55rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--mute);
+        z-index: 2;
+      }
+      .status[data-ready="true"] {
+        color: #111;
+      }
+      .mode-tag {
+        position: absolute;
+        top: 0.75rem;
+        left: 0.75rem;
+        z-index: 2;
+        font-family: "IBM Plex Mono", ui-monospace, monospace;
+        font-size: 0.55rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--mute);
+        pointer-events: none;
+      }
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>High Council — wireframe vs black marble</h1>
+      <p>
+        Top row: wireframe. Bottom row: black reflective marble. Same four
+        Valar busts (Nienna, Manwë, Mandos, Aulë). Local preview · noindex.
+      </p>
+    </header>
+    <div class="grid" id="grid"></div>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+          "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module">
+      import * as THREE from "three";
+      import { STLLoader } from "three/addons/loaders/STLLoader.js";
+      import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+      import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+
+      const AGENTS = [
+        {
+          id: "nienna",
+          name: "Nienna",
+          role: "Business advisor · Gemini",
+          src: "/preview/high-council/nienna.stl",
+        },
+        {
+          id: "manwe",
+          name: "Manwë",
+          role: "Strategic architect · Claude",
+          src: "/preview/high-council/manwe.stl",
+        },
+        {
+          id: "mandos",
+          name: "Mandos",
+          role: "Red-team contrarian · Grok",
+          src: "/preview/high-council/mandos.stl",
+        },
+        {
+          id: "aule",
+          name: "Aulë",
+          role: "Execution operator · OpenAI",
+          src: "/preview/high-council/aule.stl",
+        },
+      ];
+
+      const grid = document.getElementById("grid");
+      const loader = new STLLoader();
+      /** @type {Map<string, Promise<THREE.BufferGeometry>>} */
+      const geometryCache = new Map();
+
+      function loadGeometry(src) {
+        if (!geometryCache.has(src)) {
+          geometryCache.set(
+            src,
+            new Promise((resolve, reject) => {
+              loader.load(
+                src,
+                (geometry) => {
+                  geometry.computeVertexNormals();
+                  geometry.center();
+                  // Tip crown-toward-camera STLs upright, facing +Z.
+                  geometry.rotateX(-Math.PI / 2);
+                  geometry.center();
+                  resolve(geometry);
+                },
+                undefined,
+                reject,
+              );
+            }),
+          );
+        }
+        return geometryCache.get(src);
+      }
+
+      function fitCamera(camera, controls, object, offset = 1.2) {
+        const box = new THREE.Box3().setFromObject(object);
+        const size = box.getSize(new THREE.Vector3());
+        const center = box.getCenter(new THREE.Vector3());
+        const maxDim = Math.max(size.x, size.y, size.z) || 1;
+        const fov = (camera.fov * Math.PI) / 180;
+        const dist = Math.abs(maxDim / (2 * Math.tan(fov / 2))) * offset;
+        camera.position.set(center.x, center.y, center.z + dist);
+        camera.near = dist / 100;
+        camera.far = dist * 100;
+        camera.updateProjectionMatrix();
+        controls.target.copy(center);
+        controls.update();
+      }
+
+      // Shared studio env map for polished marble reflections
+      const _pmrem = new THREE.PMREMGenerator(
+        new THREE.WebGLRenderer({ antialias: false }),
+      );
+      const marbleEnv = _pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+      _pmrem.dispose();
+
+      /**
+       * @param {typeof AGENTS[0]} agent
+       * @param {'wireframe' | 'marble'} mode
+       */
+      function mountCell(agent, mode) {
+        const cell = document.createElement("div");
+        cell.className = "cell";
+        cell.dataset.agent = agent.id;
+        cell.dataset.mode = mode;
+
+        const modeTag = document.createElement("div");
+        modeTag.className = "mode-tag";
+        modeTag.textContent = mode === "marble" ? "black marble" : mode;
+        cell.appendChild(modeTag);
+
+        const status = document.createElement("div");
+        status.className = "status";
+        status.textContent = "Loading…";
+        cell.appendChild(status);
+
+        const meta = document.createElement("div");
+        meta.className = "meta";
+        meta.innerHTML = `<div class="name">${agent.name}</div><div class="role">${agent.role}</div>`;
+        cell.appendChild(meta);
+
+        grid.appendChild(cell);
+
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xffffff);
+        if (mode === "marble") {
+          scene.environment = marbleEnv;
+        }
+
+        const camera = new THREE.PerspectiveCamera(35, 1, 0.01, 200);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        if (mode === "marble") {
+          renderer.toneMapping = THREE.ACESFilmicToneMapping;
+          renderer.toneMappingExposure = 1.05;
+        }
+        cell.appendChild(renderer.domElement);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.06;
+        controls.enablePan = false;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.6;
+
+        if (mode === "marble") {
+          const key = new THREE.DirectionalLight(0xffffff, 1.6);
+          key.position.set(3, 4, 5);
+          scene.add(key);
+          const rim = new THREE.DirectionalLight(0xb0c4de, 0.55);
+          rim.position.set(-3, 1.5, -2);
+          scene.add(rim);
+          scene.add(new THREE.AmbientLight(0xffffff, 0.22));
+        } else {
+          const key = new THREE.DirectionalLight(0xffffff, 1.1);
+          key.position.set(2.2, 3.2, 4);
+          scene.add(key);
+          const fill = new THREE.DirectionalLight(0xffffff, 0.35);
+          fill.position.set(-2, 1, 2);
+          scene.add(fill);
+          scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+        }
+
+        const group = new THREE.Group();
+        scene.add(group);
+
+        function resize() {
+          const w = cell.clientWidth;
+          const h = cell.clientHeight;
+          if (!w || !h) return;
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+          renderer.setSize(w, h, false);
+        }
+        resize();
+        window.addEventListener("resize", resize);
+
+        loadGeometry(agent.src)
+          .then((baseGeo) => {
+            const geometry = baseGeo.clone();
+
+            if (mode === "wireframe") {
+              group.add(
+                new THREE.Mesh(
+                  geometry,
+                  new THREE.MeshBasicMaterial({
+                    color: 0x111111,
+                    wireframe: true,
+                    transparent: true,
+                    opacity: 0.85,
+                  }),
+                ),
+              );
+              const under = new THREE.Mesh(
+                geometry.clone(),
+                new THREE.MeshStandardMaterial({
+                  color: 0xffffff,
+                  roughness: 0.85,
+                  metalness: 0.05,
+                  transparent: true,
+                  opacity: 0.35,
+                }),
+              );
+              under.scale.setScalar(0.998);
+              group.add(under);
+            } else {
+              // Polished black marble — dark stone + clearcoat sheen
+              group.add(
+                new THREE.Mesh(
+                  geometry,
+                  new THREE.MeshPhysicalMaterial({
+                    color: 0x0a0a0a,
+                    roughness: 0.18,
+                    metalness: 0.12,
+                    clearcoat: 1,
+                    clearcoatRoughness: 0.08,
+                    reflectivity: 0.9,
+                    envMapIntensity: 1.35,
+                    ior: 1.5,
+                  }),
+                ),
+              );
+            }
+
+            fitCamera(camera, controls, group);
+            status.textContent = "Ready";
+            status.dataset.ready = "true";
+          })
+          .catch((err) => {
+            console.error(agent.id, mode, err);
+            status.textContent = "Failed";
+          });
+
+        function tick() {
+          requestAnimationFrame(tick);
+          controls.update();
+          renderer.render(scene, camera);
+        }
+        tick();
+      }
+
+      // Top row: wireframe. Bottom row: black reflective marble.
+      AGENTS.forEach((agent) => mountCell(agent, "wireframe"));
+      AGENTS.forEach((agent) => mountCell(agent, "marble"));
+    </script>
+  </body>
+</html>

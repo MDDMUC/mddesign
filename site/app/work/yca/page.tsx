@@ -87,7 +87,7 @@ export default function YcaPage() {
       >
         <CoverVimeo
           id="444288343"
-          startAt={45}
+          startAt={80}
           className={`${styles.coverMediaVideo} ${styles.coverMediaVideoLetterbox}`}
         />
       </figure>

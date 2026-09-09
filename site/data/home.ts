@@ -109,9 +109,9 @@ export const clientBanner: ClientLogo[] = [
   },
   {
     name: 'byte',
-    src: '/images/clients/byte.svg',
-    width: 108,
-    height: 40,
+    src: '/images/clients/byte.png',
+    width: 800,
+    height: 355,
   },
   {
     name: 'Neurohope',

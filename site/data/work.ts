@@ -85,9 +85,10 @@ export const workItems: WorkItem[] = [
       mp4: '/videos/byte/cover.mp4',
     },
     coverLogo: {
-      src: '/images/clients/byte.svg',
-      width: 108,
-      height: 40,
+      src: '/images/clients/byte.png',
+      width: 800,
+      height: 355,
+      scaleFactor: 0.85,
     },
   },
   {
@@ -110,8 +111,8 @@ export const workItems: WorkItem[] = [
     },
     coverLogo: {
       src: '/images/clients/creative-consortium.svg',
-      width: 520,
-      height: 150,
+      width: 512,
+      height: 159,
     },
   },
   {
@@ -178,6 +179,11 @@ export const workItems: WorkItem[] = [
       webm: '/videos/keller-sports/cover.webm',
       mp4: '/videos/keller-sports/cover.mp4',
     },
+    coverLogo: {
+      src: '/images/clients/keller-sports.png',
+      width: 57,
+      height: 57,
+    },
   },
   {
     index: '07',
@@ -196,7 +202,7 @@ export const workItems: WorkItem[] = [
     coverVideo: {
       vimeo: '444288343',
       letterboxCrop: true,
-      startAt: 45,
+      startAt: 80,
     },
     coverLogo: {
       src: '/images/clients/yca-mark.svg',

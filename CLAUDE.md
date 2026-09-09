@@ -8,7 +8,7 @@ Grok session protocol, skills, and in-repo memory: [`AGENTS.md`](AGENTS.md) + [`
 
 Martin Drexler is a freelance graphic designer (hello@martindrexler.com). This repo is his portfolio site — the ambition is **a world-class design-focused website for a freelance graphic design business**.
 
-**Current state (2026-09-04):** Homepage is a long persuasion spine (structure after christoph-gey.de): hero with full-viewport Spline (gated &lt;720px) → client logo marquee → case teasers → news → competence → connect → footer map. Chrome: floating Work / Studio / Contact (no typesetter bar) — on `/`, horizontal links are absolute in the hero (scroll with hero); past the client marquee a case-style left rail fades in on scroll-up only; horizontal bar on `/contact`; vertical left rail on `/studio` + `/work/[slug]`; top-right on `/work` index; ⌘K command menu still mounted. `/work` is a display-scale typographic ledger. Six case studies share the 8-section spine; type covers until photography. Contact H1 is the email.
+**Current state (2026-09-09):** Homepage is a long persuasion spine (structure after christoph-gey.de): hero with full-viewport Spline (gated &lt;720px) → client logo marquee → case teasers → news → competence → connect → footer map. Chrome: floating Work / Studio / Contact (no typesetter bar) — on `/`, horizontal links are absolute in the hero (scroll with hero); past the client marquee a case-style left rail fades in on scroll-up only; horizontal bar on `/contact`; vertical left rail on `/studio` + `/work/[slug]`; top-right on `/work` index; ⌘K command menu still mounted. `/work` is a display-scale typographic ledger. Six case studies share the 8-section spine; type covers until photography. Contact H1 is the email.
 
 `ChromeStrip` and the WebGL2 fluid sim (`FluidCanvas.tsx` / `fluid.ts` / `shaders.ts`) still exist on disk but are **not mounted**. BRIEF / SYSTEM.md §14 still describe them as signature moves — treat **live `site/` as what ships**; do not restore retired chrome to match the spec.
 
@@ -28,6 +28,8 @@ Martin Drexler is a freelance graphic designer (hello@martindrexler.com). This r
 - `/studio` — about page. H1 = Martin Drexler, positioning paragraph as lede, white-bg photo portrait, Stations career collage (asymmetric mosaic), Practice / Teaching / Clients / Recognition / Index.
 - `/colophon` — Plex Mono table of how the site is built. Noindex. (Rendering row still mentions the fluid sim — stale.)
 - `/system` — internal design-system reference. Noindex.
+- `/preview/martin-3d.html` — experimental 3D portrait wire (noindex).
+- `/preview/high-council.html` — Life Project High Council wireframe agents (Nienna / Manwë / Mandos / Aulë STLs, noindex).
 - `/api/contact` — serverless POST handler, sends via Google Workspace SMTP (nodemailer). Six SMTP env vars must be set in Vercel (`SMTP_HOST/PORT/USER/PASS`, `MAIL_FROM`, `MAIL_TO`).
 
 **Locked direction:** `design/BRIEF.md` + `design/SYSTEM.md §14`. Live signature moves: full-viewport Spline on `/`, View Transitions on `/work` ↔ `/work/[slug]`, ⌘K command menu, floating Work / Studio / Contact — hero-absolute bar on `/` (+ scroll-up left rail past logos), bar on `/contact`, left vertical rail on `/studio` + cases, top-right on `/work` (NavRail typesetter bar retired). Homepage section order locked 2026-09-04. Case-study template is the 8-section spine with per-case type covers (`CaseStudy.module.css`). Locked six case studies + studio attribution + NDA blocklist: `design/BRIEF.md §7` and `memory/PROJECT_MEMORY.md`.

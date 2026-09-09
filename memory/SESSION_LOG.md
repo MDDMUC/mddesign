@@ -131,3 +131,20 @@ Append-only. Newest entries at the **bottom**.
 
 **Next:** Confirm live resume URL + portfolio after Vercel deploy; continue visual QA
 
+
+## 2026-09-09/10 — Cover logos, YCA timing, Manwë experiments
+
+**Focus:** Homepage Selected work logos; YCA cover start; Byte mark from Haimish PDF; Creative Consortium overlay fix; Manwë homepage band (added then removed); CV Manwë stamp test.
+
+**Shipped:**
+- Keller Sports cover overlay: `keller-sports.png` (footer K mark) on City Clash video
+- YCA Vimeo cover start `45s` ? `80s` (homepage data + case page)
+- Byte: replaced fake Inter SVG with real packaging wordmark PNG extracted from Sonic Cleaner Item PDF (high-res); marquee + cover overlay; cover `scaleFactor: 0.85`
+- Creative Consortium overlay: fixed SVG viewBox (paths were outside crop ? invisible); dims 512×159
+- Manwë `#manwe` homepage band: built then fully removed per Martin (BRIEF stays Spline-only 3D on `/`)
+- High Council preview kept: `/preview/high-council.html` + STLs (noindex)
+- Local-only CV test PDF (not committed): Manwë full-height right, pedestal clipped — `site/public/documents/MartinDrexler-Resume-manwe-test.pdf`
+
+**Open:** photography pipeline; referrals/essays; native masters; CV Manwë keep/kill; visual QA after deploy
+
+**Next:** Deploy QA on covers (Byte sharpness, CC visible, Keller K, YCA @1:20); decide Manwë-on-CV; photography when ready
