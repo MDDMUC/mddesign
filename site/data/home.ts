@@ -37,6 +37,12 @@ export const heroPositioningLines = [
   'And trusted by world-leading brands.',
 ] as const
 
+/** Hero summary on small viewports — keep the portrait field clear. */
+export const heroPositioningLinesMobile = [
+  'Corporate design and digital products — strategy to execution.',
+  'Award-winning work for world-leading brands.',
+] as const
+
 export const availabilityLabel = 'Accepting projects'
 
 export type ClientLogo = {
@@ -47,6 +53,10 @@ export type ClientLogo = {
   height: number
   /** Display scale relative to the default strip height. */
   scale?: 'lg' | 'xl' | 'xxl'
+  /** Multiplier on strip height (e.g. 0.9 = 10% smaller). */
+  scaleFactor?: number
+  /** Vertical nudge in px; positive shifts down. */
+  nudgeY?: number
 }
 
 /** Homepage client strip — Wikimedia SVGs + local lockups. */
@@ -102,6 +112,35 @@ export const clientBanner: ClientLogo[] = [
     src: '/images/clients/byte.svg',
     width: 108,
     height: 40,
+  },
+  {
+    name: 'Neurohope',
+    src: '/images/clients/neurohope.png',
+    width: 813,
+    height: 141,
+    scaleFactor: 0.9,
+  },
+  {
+    name: 'Everhold',
+    src: '/images/clients/everhold.png',
+    width: 822,
+    height: 224,
+  },
+  {
+    name: "Bella's Bagels",
+    src: '/images/clients/bellas-bagels-smiley.png',
+    width: 1032,
+    height: 673,
+    scale: 'xl',
+    scaleFactor: 0.9,
+    nudgeY: 3,
+  },
+  {
+    name: 'Young Champion Ambassador',
+    src: '/images/clients/yca.png',
+    width: 298,
+    height: 111,
+    scale: 'lg',
   },
 ]
 

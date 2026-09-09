@@ -1,6 +1,7 @@
 /* Floating primary links — no chrome bar.
    Hides on scroll down; returns on scroll up.
-   Work routes use a left vertical rail; other routes keep the top bar. */
+   Homepage: horizontal links live in the hero (absolute); SiteNav only
+   mounts the left rail past #clients, visible while scrolling up. */
 
 .nav {
   position: fixed;

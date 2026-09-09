@@ -7,13 +7,15 @@ type CoverVimeoProps = {
   /** Numeric Vimeo video id, e.g. `"1151639550"`. */
   id: string
   className?: string
+  /** Start playback at this offset in seconds (hash `#t=`). */
+  startAt?: number
 }
 
 /**
  * Muted looping Vimeo background embed for case covers.
  * Skips the iframe under prefers-reduced-motion.
  */
-export function CoverVimeo({ id, className }: CoverVimeoProps) {
+export function CoverVimeo({ id, className, startAt }: CoverVimeoProps) {
   const [reduceMotion, setReduceMotion] = useState(false)
 
   useEffect(() => {
@@ -26,7 +28,9 @@ export function CoverVimeo({ id, className }: CoverVimeoProps) {
 
   if (reduceMotion) return null
 
-  const src = `https://player.vimeo.com/video/${id}?background=1&autoplay=1&loop=1&byline=0&title=0&portrait=0&muted=1&quality=1080p&transparent=0`
+  const t =
+    startAt != null && startAt > 0 ? `#t=${Math.floor(startAt)}s` : ''
+  const src = `https://player.vimeo.com/video/${id}?background=1&autoplay=1&loop=1&byline=0&title=0&portrait=0&muted=1&quality=1080p&transparent=0${t}`
 
   return (
     <iframe

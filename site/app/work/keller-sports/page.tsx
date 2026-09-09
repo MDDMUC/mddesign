@@ -124,8 +124,8 @@ export default function KellerSportsPage() {
       >
         <CoverVideo
           className={styles.coverMediaFitVideo}
-          webm="/videos/keller-sports/pegasus.webm"
-          mp4="/videos/keller-sports/pegasus.mp4"
+          webm="/videos/keller-sports/cover.webm"
+          mp4="/videos/keller-sports/cover.mp4"
         />
       </figure>
 

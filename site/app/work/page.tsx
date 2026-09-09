@@ -39,7 +39,12 @@ export default function WorkPage() {
                   {item.coverVideo?.vimeo ? (
                     <CoverVimeo
                       id={item.coverVideo.vimeo}
-                      className={styles.coverMedia}
+                      startAt={item.coverVideo.startAt}
+                      className={
+                        item.coverVideo.letterboxCrop
+                          ? `${styles.coverMedia} ${styles.coverMediaLetterbox}`
+                          : styles.coverMedia
+                      }
                     />
                   ) : null}
                   {item.coverVideo?.youtube ? (

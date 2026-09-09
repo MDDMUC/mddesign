@@ -351,6 +351,22 @@
   max-width: 40rem;
 }
 
+/* Photography hero — landscape still, option-C hairline. */
+.coverPhoto {
+  position: relative;
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+  border: var(--rule);
+  background: var(--bg);
+}
+
+.coverPhotoImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .coverMediaVideo {
   position: absolute;
   inset: 0;
@@ -390,6 +406,12 @@ iframe.coverMediaVideo {
   width: 222.22%; /* (16/9) ÷ (4/5) */
   height: 100%;
   transform: translate(-50%, -50%);
+}
+
+/* Extra zoom to push cinematic letterbox bars outside the crop. */
+iframe.coverMediaVideoLetterbox {
+  width: calc(222.22% * 1.55);
+  height: calc(100% * 1.55);
 }
 
 .coverLetterbox p {

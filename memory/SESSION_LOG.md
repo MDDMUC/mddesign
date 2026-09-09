@@ -113,3 +113,21 @@ Append-only. Newest entries at the **bottom**.
 **Open:** native masters for soft PDF stations/Keller; photography pipeline; referrals/essays; 3D preview fate
 
 **Next:** Visual QA after pull (hero timing, Stations, SFC covers, /work order); photography when ready
+
+## 2026-09-09 — Homepage covers, chrome, mobile hero, resume
+
+**Focus:** Case-study video covers + logos; homepage chrome; mobile portrait hero; Keller City Clash; resume PDF for applications.
+
+**Shipped:**
+- Homepage Selected work: all 8 cases; white client marks on video covers (PE Analyzer mark, YCA torch cutout, Creative Consortium, etc.)
+- Client marquee: Neurohope, Everhold, Bella smiley, YCA; USA Wrestling mono
+- byte case photography from Haimish deck; Keller cover = City Clash (`cover.mp4`/`cover.webm`)
+- YCA: Vimeo Impact cover (letterbox zoom, start @45s) + edited mark SVG
+- Chrome: hero-absolute Work/Studio/Contact; scroll-up left rail past `#clients`
+- Mobile hero: upright portrait field ending above awards; short copy; no hero nav
+- Resume at `site/public/documents/MartinDrexler-Resume.pdf`
+
+**Open:** photography pipeline; referrals/essays; native masters; visual QA after deploy
+
+**Next:** Confirm live resume URL + portfolio after Vercel deploy; continue visual QA
+

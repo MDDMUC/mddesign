@@ -21,12 +21,24 @@ export type WorkItem = {
     vimeo?: string
     /** YouTube video id for background embed (alternative to webm/mp4/vimeo). */
     youtube?: string
+    /** Zoom iframe past letterbox bars baked into the frame (Vimeo/YouTube). */
+    letterboxCrop?: boolean
+    /** Start muted cover playback at this offset (seconds). */
+    startAt?: number
+  }
+  /** Client mark centered over the homepage video cover (white via CSS). */
+  coverLogo?: {
+    src: string
+    width: number
+    height: number
+    /** Multiplier on overlay size (e.g. 0.8 = 20% smaller). */
+    scaleFactor?: number
   }
 }
 
 /**
  * Full `/work` ledger — display order is source of truth.
- * Homepage featured grid = first four.
+ * Homepage Selected work grid shows all eight in this order.
  */
 export const workItems: WorkItem[] = [
   {
@@ -48,6 +60,11 @@ export const workItems: WorkItem[] = [
       webm: '/videos/space-for-curiosity/cover.webm',
       mp4: '/videos/space-for-curiosity/cover.mp4',
     },
+    coverLogo: {
+      src: '/images/clients/space-force.svg',
+      width: 142,
+      height: 164,
+    },
   },
   {
     index: '02',
@@ -66,6 +83,11 @@ export const workItems: WorkItem[] = [
     coverVideo: {
       webm: '/videos/byte/cover.webm',
       mp4: '/videos/byte/cover.mp4',
+    },
+    coverLogo: {
+      src: '/images/clients/byte.svg',
+      width: 108,
+      height: 40,
     },
   },
   {
@@ -86,6 +108,11 @@ export const workItems: WorkItem[] = [
       webm: '/videos/creative-consortium/cover.webm',
       mp4: '/videos/creative-consortium/cover.mp4',
     },
+    coverLogo: {
+      src: '/images/clients/creative-consortium.svg',
+      width: 520,
+      height: 150,
+    },
   },
   {
     index: '04',
@@ -103,6 +130,11 @@ export const workItems: WorkItem[] = [
     coverVariant: 'object',
     coverVideo: {
       vimeo: '1151639550',
+    },
+    coverLogo: {
+      src: '/images/clients/usa-ultimate.svg',
+      width: 179,
+      height: 101,
     },
   },
   {
@@ -122,6 +154,11 @@ export const workItems: WorkItem[] = [
       webm: '/videos/cepres/cover.webm',
       mp4: '/videos/cepres/cover.mp4',
     },
+    coverLogo: {
+      src: '/images/clients/pe-analyzer-mark.svg',
+      width: 75,
+      height: 70,
+    },
   },
   {
     index: '06',
@@ -138,8 +175,8 @@ export const workItems: WorkItem[] = [
     coverLabel: '13 awards · 3 shop relaunches',
     coverVariant: 'strip',
     coverVideo: {
-      webm: '/videos/keller-sports/pegasus.webm',
-      mp4: '/videos/keller-sports/pegasus.mp4',
+      webm: '/videos/keller-sports/cover.webm',
+      mp4: '/videos/keller-sports/cover.mp4',
     },
   },
   {
@@ -156,6 +193,17 @@ export const workItems: WorkItem[] = [
     coverStat: '25+',
     coverLabel: 'cities · Olympic Movement',
     coverVariant: 'wayfind',
+    coverVideo: {
+      vimeo: '444288343',
+      letterboxCrop: true,
+      startAt: 45,
+    },
+    coverLogo: {
+      src: '/images/clients/yca-mark.svg',
+      width: 111,
+      height: 110,
+      scaleFactor: 0.68,
+    },
   },
   {
     index: '08',
@@ -178,5 +226,5 @@ export const workItems: WorkItem[] = [
   },
 ]
 
-/** Homepage featured grid — same order as the top of `/work`. */
-export const featuredWork: WorkItem[] = workItems.slice(0, 4)
+/** Homepage featured grid — full ledger order (two rows × 4 on desktop). */
+export const featuredWork: WorkItem[] = workItems

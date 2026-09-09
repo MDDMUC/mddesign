@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -14,6 +15,7 @@ import {
   essays,
   footerLinks,
   heroPositioningLines,
+  heroPositioningLinesMobile,
   heroTitlePrimary,
   heroTitleSecondary,
   news,
@@ -44,69 +46,115 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <main className={styles.main}>
-      {/* 1 — Hero over Spline */}
+      {/* 1 — Hero over Spline (desktop) / portrait still (mobile) */}
       <section className={styles.hero} aria-label="Introduction">
         <SplineBackground scene={SPLINE_SCENE} />
 
+        <nav className={styles.heroNav} aria-label="Primary">
+          <Link href="/work" className={styles.heroNavLink}>
+            Work
+          </Link>
+          <Link href="/studio" className={styles.heroNavLink}>
+            Studio
+          </Link>
+          <Link href="/contact" className={styles.heroNavLink}>
+            Contact
+          </Link>
+        </nav>
+
         <div className={styles.heroInner}>
-          <div className={styles.heroCopy}>
-            <h1 className={styles.heroTitle}>
-              <span className={styles.heroTitlePrimary}>
-                {heroTitlePrimary.map((word, i) => (
-                  <span key={word}>
-                    {i > 0 ? (
-                      <span className={styles.heroDot} aria-hidden="true">
-                        ·
-                      </span>
-                    ) : null}
-                    {word}
-                  </span>
-                ))}
-              </span>
-              <span className={styles.heroTitleSecondary}>
-                {heroTitleSecondary.map((word, i) => (
-                  <span key={word}>
-                    {i > 0 ? (
-                      <span className={styles.heroDot} aria-hidden="true">
-                        ·
-                      </span>
-                    ) : null}
-                    {word}
-                  </span>
-                ))}
-              </span>
-            </h1>
-
-            <p className={styles.heroPositioning}>
-              {heroPositioningLines.map((line, i) => (
-                <span
-                  key={line}
-                  className={styles.heroPositioningLine}
-                  style={{
-                    animationDelay: `calc(var(--hero-delay-copy) + (${i} * var(--hero-stagger-line)))`,
-                  }}
-                >
-                  {line}
-                </span>
-              ))}
-            </p>
-
-            <div className={styles.awardsBanner}>
+          {/* Portrait field: mobile image ends here, above awards */}
+          <div className={styles.heroField}>
+            <div className={styles.heroPortrait} aria-hidden>
               <Image
-                src="/images/hero/awards-horizontal-black.png"
-                alt="International design awards including D&AD, German Brand Award, Red Dot, and others"
-                width={800}
-                height={90}
+                src="/images/hero/martin-portrait-upright.jpg"
+                alt=""
+                fill
                 priority
+                fetchPriority="high"
                 sizes="100vw"
+                className={styles.heroPortraitImg}
               />
+              <div className={styles.heroPortraitGradient} />
             </div>
+
+            <div className={styles.heroCopy}>
+              <h1 className={styles.heroTitle}>
+                <span className={styles.heroTitlePrimary}>
+                  {heroTitlePrimary.map((word, i) => (
+                    <span key={word}>
+                      {i > 0 ? (
+                        <span className={styles.heroDot} aria-hidden="true">
+                          ·
+                        </span>
+                      ) : null}
+                      {word}
+                    </span>
+                  ))}
+                </span>
+                <span className={styles.heroTitleSecondary}>
+                  {heroTitleSecondary.map((word, i) => (
+                    <span key={word}>
+                      {i > 0 ? (
+                        <span className={styles.heroDot} aria-hidden="true">
+                          ·
+                        </span>
+                      ) : null}
+                      {word}
+                    </span>
+                  ))}
+                </span>
+              </h1>
+
+              <p
+                className={`${styles.heroPositioning} ${styles.heroPositioningDesktop}`}
+              >
+                {heroPositioningLines.map((line, i) => (
+                  <span
+                    key={line}
+                    className={styles.heroPositioningLine}
+                    style={{
+                      animationDelay: `calc(var(--hero-delay-copy) + (${i} * var(--hero-stagger-line)))`,
+                    }}
+                  >
+                    {line}
+                  </span>
+                ))}
+              </p>
+              <p
+                className={`${styles.heroPositioning} ${styles.heroPositioningMobile}`}
+              >
+                {heroPositioningLinesMobile.map((line, i) => (
+                  <span
+                    key={line}
+                    className={styles.heroPositioningLine}
+                    style={{
+                      animationDelay: `calc(var(--hero-delay-copy) + (${i} * var(--hero-stagger-line)))`,
+                    }}
+                  >
+                    {line}
+                  </span>
+                ))}
+              </p>
+            </div>
+          </div>
+
+          <div className={styles.awardsBanner}>
+            <Image
+              src="/images/hero/awards-horizontal-black.png"
+              alt="International design awards including D&AD, German Brand Award, Red Dot, and others"
+              width={800}
+              height={90}
+              priority
+              sizes="100vw"
+            />
           </div>
         </div>
       </section>
 
       {/* 1b — Client logo marquee */}
       <section
+        id="clients"
         className={styles.clientBanner}
         aria-label="Selected clients"
       >
@@ -137,6 +185,15 @@ export default function Home() {
                     height={client.height}
                     className={styles.clientLogo}
                     unoptimized={client.src.endsWith('.svg')}
+                    style={
+                      {
+                        ['--logo-scale']: client.scaleFactor ?? 1,
+                        ['--logo-nudge-y']:
+                          client.nudgeY != null
+                            ? `${client.nudgeY}px`
+                            : '0px',
+                      } as CSSProperties
+                    }
                   />
                 </li>
               ))}
@@ -169,7 +226,15 @@ export default function Home() {
                     className={`${styles.projectMedia} ${coverClass[item.coverVariant]}${item.coverVideo ? ` ${styles.projectMediaVideo}` : ''}`}
                   >
                     {item.coverVideo?.vimeo ? (
-                      <CoverVimeo id={item.coverVideo.vimeo} />
+                      <CoverVimeo
+                        id={item.coverVideo.vimeo}
+                        startAt={item.coverVideo.startAt}
+                        className={
+                          item.coverVideo.letterboxCrop
+                            ? `${styles.coverVideo} ${styles.coverVideoLetterbox}`
+                            : undefined
+                        }
+                      />
                     ) : item.coverVideo?.youtube ? (
                       <CoverYouTube id={item.coverVideo.youtube} />
                     ) : item.coverVideo?.webm && item.coverVideo.mp4 ? (
@@ -183,6 +248,24 @@ export default function Home() {
                         <span>{item.coverLabel}</span>
                       </p>
                     )}
+                    {item.coverLogo && item.coverVideo ? (
+                      <span className={styles.coverLogo} aria-hidden>
+                        <Image
+                          src={item.coverLogo.src}
+                          alt=""
+                          width={item.coverLogo.width}
+                          height={item.coverLogo.height}
+                          className={styles.coverLogoImg}
+                          unoptimized={item.coverLogo.src.endsWith('.svg')}
+                          style={
+                            {
+                              ['--cover-logo-scale']:
+                                item.coverLogo.scaleFactor ?? 1,
+                            } as CSSProperties
+                          }
+                        />
+                      </span>
+                    ) : null}
                   </div>
                 </Link>
 

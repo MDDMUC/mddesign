@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
+import { CoverVimeo } from '@/components/CoverVimeo/CoverVimeo'
 import styles from '@/components/CaseStudy/CaseStudy.module.css'
 
 export const metadata: Metadata = {
@@ -81,17 +82,14 @@ export default function YcaPage() {
       </header>
 
       <figure
-        className={`${styles.cover} ${styles.coverWayfind}`}
+        className={`${styles.cover} ${styles.coverMedia}`}
         style={{ viewTransitionName: 'work-hero-yca' }}
       >
-        <span className={styles.coverVert}>25+ cities</span>
-        <p className={styles.coverGiant}>
-          Explore
-          <br />
-          Discover
-          <br />
-          Understand
-        </p>
+        <CoverVimeo
+          id="444288343"
+          startAt={45}
+          className={`${styles.coverMediaVideo} ${styles.coverMediaVideoLetterbox}`}
+        />
       </figure>
 
       {/* §3 Context */}

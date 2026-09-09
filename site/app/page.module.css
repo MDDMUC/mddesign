@@ -14,18 +14,103 @@
 .hero {
   /* Full viewport — no typesetter bar. Vertical placement + column
      alignment match the pre-nav-removal hero. Bottom pad = --hero-edge
-     (same as SiteNav top). */
+     (same as heroNav top inset). */
   position: relative;
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  /* Horizontal pad lives on heroInner so SiteNav left matches the type column
-     ((100vw − container) / 2 + pad-page) — same maths as /contact. */
+  /* Horizontal pad lives on heroInner / heroNav so Work aligns with the type column. */
   padding: var(--space-6) 0 var(--hero-edge);
   border-bottom: var(--rule);
   box-sizing: border-box;
   background: transparent;
+}
+
+/* Mobile portrait still — hidden on desktop (Spline owns the field). */
+.heroPortrait {
+  display: none;
+}
+
+.heroPortraitImg {
+  object-fit: cover;
+  object-position: center top;
+}
+
+.heroPortraitGradient {
+  position: absolute;
+  inset: auto 0 0;
+  height: 38%;
+  z-index: 1;
+  pointer-events: none;
+  /* White at the bottom → clear mid-frame so type stays legible. */
+  background: linear-gradient(
+    to top,
+    var(--bg) 0%,
+    rgba(255, 255, 255, 0.85) 35%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+/* Work / Studio / Contact — absolute to the hero, scrolls away with it. */
+.heroNav {
+  position: absolute;
+  z-index: 3;
+  top: var(--hero-edge);
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  padding-left: var(--pad-page);
+  padding-right: var(--pad-page);
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: var(--space-4) var(--space-5);
+  pointer-events: none;
+  animation: hero-nav-enter var(--dur-hero) var(--ease-reveal) both;
+  animation-delay: var(--hero-delay-nav);
+}
+
+.heroNav a {
+  pointer-events: auto;
+}
+
+.heroNavLink {
+  font-family: var(--font-display);
+  font-size: var(--text-xs);
+  font-variation-settings: 'wght' 700, 'opsz' 14;
+  font-feature-settings: var(--ot-display);
+  letter-spacing: var(--tracking-display-tight);
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  line-height: 1;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 0.1em;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.heroNavLink:hover {
+  border-bottom-color: var(--ink-30);
+}
+
+.heroNavLink:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 4px;
+}
+
+@keyframes hero-nav-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .heroInner {
@@ -48,9 +133,18 @@
   pointer-events: auto;
 }
 
+/* Wraps type + (mobile) portrait; awards sit below so the image can end cleanly. */
+.heroField {
+  position: relative;
+  width: min(640px, 100%);
+  max-width: 100%;
+}
+
 .heroCopy {
   /* Match awards banner display width (640px / 80% of 800px asset). */
-  width: min(640px, 100%);
+  position: relative;
+  z-index: 2;
+  width: 100%;
   max-width: 100%;
 }
 
@@ -119,6 +213,14 @@
   width: 100%;
 }
 
+.heroPositioningDesktop {
+  display: block;
+}
+
+.heroPositioningMobile {
+  display: none;
+}
+
 .heroPositioningLine {
   display: block;
   animation: hero-line-enter var(--dur-hero) var(--ease-reveal) both;
@@ -126,7 +228,9 @@
 
 .awardsBanner {
   margin: 0;
-  width: 100%;
+  /* Match heroField / former heroCopy column width on desktop. */
+  width: min(640px, 100%);
+  max-width: 100%;
   animation: hero-line-enter var(--dur-hero) var(--ease-reveal) both;
   animation-delay: var(--hero-delay-awards);
 }
@@ -194,23 +298,24 @@
 .clientLogo {
   display: block;
   width: auto;
-  height: 2.25rem;
+  height: calc(2.25rem * var(--logo-scale, 1));
   max-width: 100%;
   object-fit: contain;
   object-position: center;
   opacity: 0.85;
+  transform: translateY(var(--logo-nudge-y, 0px));
 }
 
 .clientItemLg .clientLogo {
-  height: 3rem;
+  height: calc(3rem * var(--logo-scale, 1));
 }
 
 .clientItemXl .clientLogo {
-  height: 4.25rem;
+  height: calc(4.25rem * var(--logo-scale, 1));
 }
 
 .clientItemXxl .clientLogo {
-  height: 4.75rem; /* ≥2× default 2.25rem */
+  height: calc(4.75rem * var(--logo-scale, 1)); /* ≥2× default 2.25rem */
 }
 
 @keyframes client-marquee {
@@ -261,6 +366,15 @@
 
 .bandInnerWide {
   max-width: 1400px;
+}
+
+/* Mid widths: clear the scroll-up left SiteNav rail past the logo strip. */
+@media (min-width: 720px) and (max-width: 1679px) {
+  #clients ~ .band .bandInner,
+  #clients ~ .band .bandInnerWide,
+  #clients ~ .footerMap .bandInner {
+    padding-left: calc(var(--pad-page) + var(--nav-rail-clear));
+  }
 }
 
 .bandHeader {
@@ -357,6 +471,29 @@
   pointer-events: none;
 }
 
+/* Client mark — dead-center over muted cover video; forced white. */
+.coverLogo {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+  pointer-events: none;
+  /* Soft veil so white marks hold on bright video frames. */
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.coverLogoImg {
+  width: auto;
+  height: auto;
+  max-width: calc(min(72%, 12rem) * var(--cover-logo-scale, 1));
+  max-height: calc(28% * var(--cover-logo-scale, 1));
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
 /* 16:9 Vimeo in a 4:5 cell — size to cover height, crop sides. */
 iframe.coverVideo {
   inset: auto;
@@ -365,6 +502,12 @@ iframe.coverVideo {
   width: 222.22%; /* (16/9) ÷ (4/5) */
   height: 100%;
   transform: translate(-50%, -50%);
+}
+
+/* Extra zoom to push cinematic letterbox bars outside the crop. */
+iframe.coverVideoLetterbox {
+  width: calc(222.22% * 1.55);
+  height: calc(100% * 1.55);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -841,8 +984,71 @@ iframe.coverVideo {
 
 @media (max-width: 720px) {
   .hero {
-    min-height: auto;
-    padding: var(--space-6) 0 var(--space-7);
+    /* Full viewport so the portrait reads as a still hero, type at the bottom. */
+    min-height: 100dvh;
+    /* No top pad — portrait runs from the top edge down to awards. */
+    padding: 0 0 var(--space-7);
+    background: var(--bg);
+  }
+
+  .heroInner {
+    z-index: 2;
+    width: 100%;
+    max-width: none;
+    /* Bleed portrait edge-to-edge; awards keep page pad. */
+    padding: 0;
+    justify-content: flex-start;
+  }
+
+  .heroField {
+    /* Portrait fills from top of hero down to the awards graphic. */
+    position: relative;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: none;
+    min-height: 0;
+    padding: var(--space-6) var(--pad-page) var(--space-5);
+    box-sizing: border-box;
+  }
+
+  .heroPortrait {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .heroCopy {
+    width: 100%;
+  }
+
+  .awardsBanner {
+    /* White field below the image — awards graphic as its own container. */
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: var(--space-4) var(--pad-page) 0;
+    box-sizing: border-box;
+    background: var(--bg);
+  }
+
+  .heroNav {
+    display: none;
+  }
+
+  .heroPositioningDesktop {
+    display: none;
+  }
+
+  .heroPositioningMobile {
+    display: block;
   }
 
   .heroTitle {
@@ -875,10 +1081,15 @@ iframe.coverVideo {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .heroNav,
   .heroTitlePrimary,
   .heroTitleSecondary,
   .heroPositioningLine,
   .awardsBanner {
     animation: none;
+  }
+
+  .heroNav {
+    opacity: 1;
   }
 }

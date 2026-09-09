@@ -156,6 +156,16 @@ iframe.coverMedia {
   pointer-events: none;
 }
 
+/* Zoom past cinematic letterbox bars inside the 16:9 frame. */
+iframe.coverMediaLetterbox {
+  inset: auto;
+  top: 50%;
+  left: 50%;
+  width: 155%;
+  height: 155%;
+  transform: translate(-50%, -50%);
+}
+
 .coverFallback {
   position: absolute;
   inset: 0;
