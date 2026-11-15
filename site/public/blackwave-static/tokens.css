@@ -1,0 +1,109 @@
+/**
+ * Blackwave application site — token snapshot
+ * Taken from mddesign/site/styles/tokens.css (Zion) on 2026-11-15.
+ * Restyled from a read of anduril.com on 2026-11-15.
+ * Headlines: Helvetica Now Display, weight 400–700, line-height about 0.9–1.05,
+ * tight negative tracking. Labels: 0.75rem, weight 500, uppercase, tracking 0.03rem.
+ * Their label face Elios and Helvetica Now Display are licensed. This file uses
+ * the fallback they publish: Helvetica, Arial. Their files are not copied.
+ * Signal fill #DFF140 is their preview-banner button only. Radius 0.
+ *
+ * Three tiers, which is the current working pattern (Brad Frost calls the
+ * labels a mental model; the DTCG format 2025.10 is the exchange standard).
+ * This page is one product, so tier 3 stays almost empty.
+ *
+ * 1. Primitive — raw values. Change these to recolor the site.
+ * 2. Semantic — what the value is for. Parts read only this tier.
+ * 3. Component — a part may override a semantic token. Add one only
+ *    when a part truly breaks the rule.
+ *
+ * Parts live in parts.css. They are recipes, not an atom library.
+ * Field is their Black #010101. Section green is their Green #505544.
+ * Secondary type #D8D8D4. Radius 0.
+ */
+
+:root {
+  /* 1. Primitive */
+  --color-ground: #010101;
+  --color-black: #010101;
+  --color-green: #505544;
+  --color-gray: #d8d8d4;
+  --color-white: #ffffff;
+  --color-accent: #dff140;
+  --color-white-62: #d8d8d4;
+  --color-white-38: rgba(255, 255, 255, 0.5);
+  --color-line: rgba(255, 255, 255, 0.18);
+  --color-line-strong: rgba(255, 255, 255, 0.42);
+  --color-line-on-gray: rgba(1, 1, 1, 0.18);
+  --color-ink-on-gray-dim: rgba(1, 1, 1, 0.62);
+
+  /* 2. Semantic */
+  --bg: var(--color-ground);
+  --field: var(--color-black);
+  --green: var(--color-green);
+  --gray: var(--color-gray);
+  --ink: var(--color-white);
+  --ink-dim: var(--color-white-62);
+  --ink-faint: var(--color-white-38);
+  --ink-on-gray: var(--color-black);
+  --accent: var(--color-accent);
+  --hairline: var(--color-line);
+  --hairline-strong: var(--color-line-strong);
+  --hairline-on-gray: var(--color-line-on-gray);
+  --ink-on-gray-dim: var(--color-ink-on-gray-dim);
+
+  --font-sans: Helvetica, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: Helvetica, "Helvetica Neue", Arial, sans-serif;
+
+  --fw-display: 500;
+  --fw-book: 400;
+  --fw-medium: 500;
+  --fw-semi: 700;
+
+  --text-2xs: 0.6875rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --fs-display-m: clamp(2.5rem, 5vw, 4.5rem);
+  --fs-display-l: clamp(3.25rem, 7.2vw, 6.5rem);
+  --fs-display-xl: clamp(4.25rem, 11vw, 9.5rem);
+
+  --leading-display: 0.95;
+  --leading-snug: 1.15;
+  --leading-body: 1.2;
+
+  --tracking-display: -0.045em;
+  --tracking-body: -0.009em;
+  --tracking-mono: 0.04em;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+
+  --pad: clamp(1.25rem, 3vw, 3rem);
+  --rail: 4.5rem;
+  --measure: 38rem;
+
+  --rule-w: 1px;
+  --radius: 0;
+
+  --ease-out: cubic-bezier(0.2, 0, 0, 1);
+  --dur-reveal: 1400ms;
+
+  --z-index: 20;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-reveal: 0ms;
+  }
+}
