@@ -1,20 +1,28 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from '@/app/page.module.css'
 
 type CoverYouTubeProps = {
   /** YouTube video id, e.g. `"rqn2og2qVUw"`. */
   id: string
   className?: string
+  /** Tile mode: gray poster until the parent link is hovered or focused. */
+  playOnHover?: boolean
 }
 
 /**
  * Muted looping YouTube background embed for case covers.
  * Skips the iframe under prefers-reduced-motion.
  */
-export function CoverYouTube({ id, className }: CoverYouTubeProps) {
+export function CoverYouTube({
+  id,
+  className,
+  playOnHover = false,
+}: CoverYouTubeProps) {
   const [reduceMotion, setReduceMotion] = useState(false)
+  const [active, setActive] = useState(false)
+  const rootRef = useRef<HTMLImageElement>(null)
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
@@ -24,7 +32,35 @@ export function CoverYouTube({ id, className }: CoverYouTubeProps) {
     return () => mq.removeEventListener('change', apply)
   }, [])
 
-  if (reduceMotion) return null
+  useEffect(() => {
+    if (!playOnHover) return
+    const host = rootRef.current?.closest('a')
+    if (!host) return
+    const on = () => setActive(true)
+    const off = () => setActive(false)
+    host.addEventListener('mouseenter', on)
+    host.addEventListener('mouseleave', off)
+    host.addEventListener('focus', on)
+    host.addEventListener('blur', off)
+    return () => {
+      host.removeEventListener('mouseenter', on)
+      host.removeEventListener('mouseleave', off)
+      host.removeEventListener('focus', on)
+      host.removeEventListener('blur', off)
+    }
+  }, [playOnHover])
+
+  if (reduceMotion && !playOnHover) return null
+  if (playOnHover && (reduceMotion || !active)) {
+    return (
+      <img
+        ref={rootRef}
+        className={`${className ?? styles.coverVideo} ${styles.coverStill}`}
+        src={`https://i.ytimg.com/vi/${id}/hqdefault.jpg`}
+        alt=""
+      />
+    )
+  }
 
   const params = new URLSearchParams({
     autoplay: '1',

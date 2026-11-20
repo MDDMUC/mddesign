@@ -40,7 +40,7 @@ const coverClass: Record<(typeof workItems)[number]['coverVariant'], string> = {
 export const metadata: Metadata = {
   title: 'Martin Drexler — Designer · UI/UX, brand, product systems',
   description:
-    'Designer working across UI/UX, brand, and product systems. Selected work has scaled a $45T fintech platform (CEPRES), rebuilt a €100m commerce business (Keller Sports), and shaped the Olympic Movement Young Champion Ambassador program. 25+ international design awards.',
+    'Designer working across brand, UI/UX, and product systems. Selected work has scaled a $65T+ fintech platform (CEPRES), rebuilt a global e-commerce business (Keller Sports), and shaped the Olympic Movement Young Champion Ambassador program. 25+ international design awards.',
 }
 
 export default function Home() {
@@ -229,6 +229,7 @@ export default function Home() {
                       <CoverVimeo
                         id={item.coverVideo.vimeo}
                         startAt={item.coverVideo.startAt}
+                        playOnHover
                         className={
                           item.coverVideo.letterboxCrop
                             ? `${styles.coverVideo} ${styles.coverVideoLetterbox}`
@@ -236,11 +237,12 @@ export default function Home() {
                         }
                       />
                     ) : item.coverVideo?.youtube ? (
-                      <CoverYouTube id={item.coverVideo.youtube} />
+                      <CoverYouTube id={item.coverVideo.youtube} playOnHover />
                     ) : item.coverVideo?.webm && item.coverVideo.mp4 ? (
                       <CoverVideo
                         webm={item.coverVideo.webm}
                         mp4={item.coverVideo.mp4}
+                        playOnHover
                       />
                     ) : (
                       <p className={styles.coverStat}>

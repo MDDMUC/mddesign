@@ -471,6 +471,17 @@
   pointer-events: none;
 }
 
+/* Resting tile: gray freeze-frame. Color returns with the pointer. */
+.coverStill {
+  filter: grayscale(1);
+  background: var(--ink-15);
+}
+
+:global(a:hover) .coverStill,
+:global(a:focus-visible) .coverStill {
+  filter: none;
+}
+
 /* Client mark — dead-center over muted cover video; forced white. */
 .coverLogo {
   position: absolute;

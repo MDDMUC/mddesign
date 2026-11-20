@@ -148,3 +148,19 @@ Append-only. Newest entries at the **bottom**.
 **Open:** photography pipeline; referrals/essays; native masters; CV Manwë keep/kill; visual QA after deploy
 
 **Next:** Deploy QA on covers (Byte sharpness, CC visible, Keller K, YCA @1:20); decide Manwë-on-CV; photography when ready
+
+
+## 2026-11-20 â€” Studio award index and positioning copy
+
+**Focus:** /studio Index lists award and year only, with a repeated mark per win. Positioning sentence: brand before UI/UX, CEPRES figure, Keller phrasing.
+
+**Shipped:**
+- Index: client column removed
+- Marks from the homepage awards strip, repeated per win
+- Adobe UI and Adobe Xd ribbons from the portfolio PDF, black icons
+- Red Dot, German Digital Innovation Award, and CO Cup stay type-only
+- Positioning (BRIEF section 3, /studio, homepage, site/data/home.ts): brand, UI/UX, and product systems; CEPRES \+ (CEPRES SuperReturn note, 15 June 2026); Keller Sports as a global e-commerce business
+
+**Open:** source PNGs for Red Dot, German Digital Innovation, CO Cup; photography pipeline
+
+**Next:** Visual QA of the Index on desktop and mobile after deploy

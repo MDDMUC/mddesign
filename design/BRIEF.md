@@ -25,7 +25,7 @@ These three audiences want different things but reject the same things: cliché,
 
 **Locked 2026-06-10.** Use the paragraph below verbatim on `/studio` as the page lede. Paula Scher pattern — short sentences, each making one claim.
 
-> Designer working across UI/UX, brand, and product systems. Selected work has scaled a $45T fintech platform (CEPRES), rebuilt a €100m commerce business (Keller Sports), and shaped the visual identity of the Young Champion Ambassador program (Olympic Movement, 25+ cities). 25+ international design awards including D&AD Yellow Pencil, German Brand Award Gold, and Red Dot. Has taught design as business strategy at the University of Denver and the World Trade Center Denver.
+> Designer working across brand, UI/UX, and product systems. Selected work has scaled a $65T+ fintech platform (CEPRES), rebuilt a global e-commerce business (Keller Sports), and shaped the visual identity of the Young Champion Ambassador program (Olympic Movement, 25+ cities). 25+ international design awards including D&AD Yellow Pencil, German Brand Award Gold, and Red Dot. Has taught design as business strategy at the University of Denver and the World Trade Center Denver.
 
 **Page hierarchy on `/studio`:** the H1 is **"Martin Drexler"** (the designer's name does the work — it's the page's monumental moment); the mono eyebrow above reads `STUDIO`; the lede sits below the H1 in the same 7/5 header pattern as case studies. The page tells the visitor *who they're considering hiring* in under 60 seconds (BRIEF §1) — a category label as H1 squanders that.
 

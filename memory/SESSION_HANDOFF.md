@@ -2,17 +2,16 @@
 
 > Rewrite this whole file at session end. Next session reads this first after the protocol.
 
-**Last updated:** 2026-09-10  
-**Session:** Cover logos (Keller / Byte / CC), YCA @1:20, Manwë band removed, CV stamp test
+**Last updated:** 2026-11-20  
+**Session:** Studio award index (marks, no client names) and positioning copy
 
 ---
 
 ## Current focus
 
-1. **Homepage Selected work overlays** — Keller K mark; Byte real wordmark PNG @ 0.85 scale; Creative Consortium SVG viewBox fixed; YCA Vimeo `#t=80s`.
-2. **Client marquee** — Byte uses same packaging PNG as overlay.
-3. **Manwë** — Homepage band removed. High Council preview still at `/preview/high-council.html`. Local CV stamp test PDF not in git (see Open).
-4. **Chrome / mobile hero / resume URL** — unchanged from prior session; production resume still `MartinDrexler-Resume.pdf`.
+1. **`/studio` Index** — award + year only. Marks repeat per win. Adobe UI and Xd ribbons added. Red Dot, German Digital Innovation, and CO Cup still have no logo file.
+2. **Positioning** — brand before UI/UX. CEPRES is `$65T+` (their 15 June 2026 SuperReturn note). Keller Sports in that sentence is “a global e-commerce business”. Case-study pages still say €100m and $45T where those lines were not part of this sentence.
+3. **Homepage covers / chrome** — unchanged this session.
 
 ---
 
@@ -28,7 +27,7 @@
 
 ## Exact next steps (next session)
 
-1. Visual QA after deploy: Byte sharpness, CC logo visible on cover, Keller K, YCA starts at 1:20
+1. Visual QA of `/studio` Index (desktop and mobile) after deploy
 2. Decide Manwë-on-CV test (promote into real resume vs delete local PDF)
 3. Native photography masters when ready
 4. Referrals / essays still wait on real content

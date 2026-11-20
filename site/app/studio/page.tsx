@@ -9,6 +9,117 @@ export const metadata: Metadata = {
     'Senior designer working across UI/UX, brand, and product systems. 25+ international design awards. Teaching design as business strategy at the University of Denver.',
 }
 
+/** Award index. Count is how many times the mark is shown. Marks are
+ *  cut from the homepage awards strip; rows without a source mark
+ *  stay type-only. */
+const awards: {
+  year: string
+  name: string
+  count: number
+  mark?: string
+  w?: number
+  h?: number
+  /** More than one distinct mark on a single row. */
+  marks?: { src: string; w: number; h: number }[]
+}[] = [
+  {
+    year: '2018–2020',
+    name: 'Private Equity Wire',
+    count: 6,
+    mark: '/images/awards/pe-wire.png',
+    w: 107,
+    h: 96,
+  },
+  {
+    year: '2018–2020',
+    name: 'Adobe UI Excellence Showcase',
+    count: 1,
+    mark: '/images/awards/adobe-ui.png',
+    w: 60,
+    h: 96,
+  },
+  {
+    year: '2014–2016',
+    name: 'Shop Usability Award',
+    count: 5,
+    mark: '/images/awards/shop-usability.png',
+    w: 96,
+    h: 96,
+  },
+  {
+    year: '2014–2016',
+    name: 'Internet World Business Shop Award',
+    count: 2,
+    mark: '/images/awards/iwb.png',
+    w: 98,
+    h: 96,
+  },
+  {
+    year: '2014–2016',
+    name: 'Swiss eCommerce Award',
+    count: 2,
+    mark: '/images/awards/swiss-ecommerce.png',
+    w: 96,
+    h: 96,
+  },
+  {
+    year: '2014–2016',
+    name: 'German Brand Award',
+    count: 1,
+    mark: '/images/awards/german-brand.png',
+    w: 53,
+    h: 96,
+  },
+  {
+    year: '2014–2016',
+    name: 'German Design Award',
+    count: 2,
+    mark: '/images/awards/german-design.png',
+    w: 76,
+    h: 96,
+  },
+  {
+    year: '2014–2016',
+    name: 'Anton Award',
+    count: 1,
+    mark: '/images/awards/anton.png',
+    w: 99,
+    h: 96,
+  },
+  {
+    year: '2014–2016',
+    name: 'Adobe UI · Adobe Xd Showcase',
+    count: 1,
+    marks: [
+      { src: '/images/awards/adobe-ui.png', w: 60, h: 96 },
+      { src: '/images/awards/adobe-xd.png', w: 60, h: 96 },
+    ],
+  },
+  {
+    year: '2020',
+    name: 'CO Cup — Best Tincture · Best Topical (3rd)',
+    count: 1,
+  },
+  {
+    year: '—',
+    name: 'D&AD Yellow Pencil',
+    count: 1,
+    mark: '/images/awards/yellow-pencil.png',
+    w: 62,
+    h: 96,
+  },
+  {
+    year: '—',
+    name: 'Red Dot Design Award',
+    count: 1,
+  },
+  {
+    year: '—',
+    name: 'German Digital Innovation Award',
+    count: 1,
+  },
+]
+
 const teaching = [
   {
     years: '2020–2022',
@@ -88,9 +199,9 @@ export default function StudioPage() {
           <p
             className={`${styles.headerLede} reveal-rise reveal-stagger-5`}
           >
-            Designer working across UI/UX, brand, and product systems.
-            Selected work has scaled a $45T fintech platform (CEPRES), rebuilt
-            a €100m commerce business (Keller Sports), and shaped the visual
+            Designer working across brand, UI/UX, and product systems.
+            Selected work has scaled a $65T+ fintech platform (CEPRES), rebuilt
+            a global e-commerce business (Keller Sports), and shaped the visual
             identity of the Young Champion Ambassador program (Olympic
             Movement, 25+ cities). 25+ international design awards including
             D&amp;AD Yellow Pencil, German Brand Award Gold, and Red Dot. Has
@@ -216,33 +327,44 @@ export default function StudioPage() {
         </div>
       </section>
 
-      {/* Credentials index — Plex Mono, year · award · project. Full-width.
-          Pattern: Pentagram-style prose above + factual list below. */}
+      {/* Credentials index — year, award, repeated mark. No client names. */}
       <section
         className={`${styles.awardsSection} reveal-rise`}
         style={{ animationDelay: '1600ms' }}
       >
         <h2 className={styles.sectionTitle}>Index</h2>
         <dl className={styles.awards}>
-          {[
-            ['2018–2020', 'Private Equity Wire — Best of category × 6', 'CEPRES'],
-            ['2018–2020', 'Adobe UI Excellence Showcase', 'CEPRES'],
-            ['2014–2016', 'Shop Usability Award × 5', 'Keller Sports'],
-            ['2014–2016', 'Internet World Business Shop Award × 2', 'Keller Sports'],
-            ['2014–2016', 'Swiss eCommerce Award × 2', 'Keller Sports'],
-            ['2014–2016', 'German Brand Award', 'Keller Sports'],
-            ['2014–2016', 'German Design Award × 2', 'Keller Sports'],
-            ['2014–2016', 'Anton Award', 'Keller Sports'],
-            ['2014–2016', 'Adobe UI · Adobe Xd Showcase', 'Keller Sports'],
-            ['2020', 'CO Cup — Best Tincture · Best Topical (3rd)', 'Planetarie'],
-            ['—', 'D&AD Yellow Pencil', 'Project under NDA'],
-            ['—', 'Red Dot Design Award', 'Project under NDA'],
-            ['—', 'German Digital Innovation Award', 'Project under NDA'],
-          ].map(([year, award, project], i) => (
-            <div key={i} className={styles.awardRow}>
-              <dt className={styles.awardYear}>{year}</dt>
-              <dd className={styles.awardName}>{award}</dd>
-              <dd className={styles.awardProject}>{project}</dd>
+          {awards.map((award) => (
+            <div key={award.name} className={styles.awardRow}>
+              <dt className={styles.awardYear}>{award.year}</dt>
+              <dd className={styles.awardName}>{award.name}</dd>
+              {award.mark || award.marks ? (
+                <dd
+                  className={styles.awardMarks}
+                  role="img"
+                  aria-label={
+                    award.count > 1
+                      ? `${award.name}, ${award.count}`
+                      : award.name
+                  }
+                >
+                  {(award.marks ??
+                    Array.from({ length: award.count }, () => ({
+                      src: award.mark!,
+                      w: award.w!,
+                      h: award.h!,
+                    }))
+                  ).map((icon, i) => (
+                    <img
+                      key={`${icon.src}-${i}`}
+                      src={icon.src}
+                      alt=""
+                      width={icon.w}
+                      height={icon.h}
+                    />
+                  ))}
+                </dd>
+              ) : null}
             </div>
           ))}
         </dl>

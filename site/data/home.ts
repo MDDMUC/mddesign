@@ -20,7 +20,7 @@ export type FooterLink = {
 
 /** BRIEF §3 positioning — verbatim on /studio; lightly reused on / competence. */
 export const positioningLede =
-  'Designer working across UI/UX, brand, and product systems. Selected work has scaled a $45T fintech platform (CEPRES), rebuilt a €100m commerce business (Keller Sports), and shaped the visual identity of the Young Champion Ambassador program (Olympic Movement, 25+ cities). 25+ international design awards including D&AD Yellow Pencil, German Brand Award Gold, and Red Dot. Has taught design as business strategy at the University of Denver and the World Trade Center Denver.'
+  'Designer working across brand, UI/UX, and product systems. Selected work has scaled a $65T+ fintech platform (CEPRES), rebuilt a global e-commerce business (Keller Sports), and shaped the visual identity of the Young Champion Ambassador program (Olympic Movement, 25+ cities). 25+ international design awards including D&AD Yellow Pencil, German Brand Award Gold, and Red Dot. Has taught design as business strategy at the University of Denver and the World Trade Center Denver.'
 
 /** H1 primary line — rendered bold + uppercase in the hero. */
 export const heroTitlePrimary = ['Designer', 'UI', 'UX'] as const
@@ -30,18 +30,12 @@ export const heroTitleSecondary = ['brand', 'product', 'systems'] as const
 
 /** Hero summary — each entry rises in as its own line. */
 export const heroPositioningLines = [
-  'Brands with depth demand more than decoration.',
-  'As a graphic designer, I focus on corporate designs.',
-  'And digital products (UI/UX/AI) – from strategy to execution.',
-  'Recognized with prestigious design awards',
-  'And trusted by world-leading brands.',
+  'Corporate design and digital products.',
+  'Strategy through the interface that ships.',
 ] as const
 
-/** Hero summary on small viewports — keep the portrait field clear. */
-export const heroPositioningLinesMobile = [
-  'Corporate design and digital products — strategy to execution.',
-  'Award-winning work for world-leading brands.',
-] as const
+/** Same two lines on small viewports — the portrait field stays clear. */
+export const heroPositioningLinesMobile = heroPositioningLines
 
 export const availabilityLabel = 'Accepting projects'
 

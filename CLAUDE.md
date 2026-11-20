@@ -16,7 +16,7 @@ Martin Drexler is a freelance graphic designer (hello@martindrexler.com). This r
 - `/` — long spine over full-viewport Spline (`page.tsx` + `SplineBackground`).
 - `/contact` — form, posts to `/api/contact`. H1 = email.
 - `/work` — display-scale typographic ledger.
-- `/work/cepres` — case study #1 (UX flagship, fintech, $45T platform).
+- `/work/cepres` — case study #1 (UX flagship, fintech, $65T+ platform).
 - `/work/keller-sports` — case study #2 (commerce + brand + product, 13 awards, in-house tenure).
 - `/work/yca` — case study #3 (Olympic Movement program, Goodvoice CD).
 - `/work/planetarie` — case study #4 (CBDa brand → Tanasi acquisition).
