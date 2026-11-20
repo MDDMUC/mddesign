@@ -181,7 +181,8 @@ iframe.coverMediaLetterbox {
 
 /* Hide type fallback when a real media element is mounted. */
 .cover:has(video) .coverFallback,
-.cover:has(iframe) .coverFallback {
+.cover:has(iframe) .coverFallback,
+.cover:has(img) .coverFallback {
   display: none;
 }
 

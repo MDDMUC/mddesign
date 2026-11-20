@@ -29,10 +29,10 @@ Durable state. Update when facts change; do not put ephemeral chat noise here.
 |-------|------------|
 | `/` | Long persuasion spine: hero (full-viewport Spline) → client marquee → eight case teasers → news → competence → connect → footer map. Floating SiteNav (no bar). |
 | `/work` | Display-scale typographic ledger; shared data in `site/data/work.ts` (order: Space for Curiosity → byte → Creative Consortium → USA Ultimate → CEPRES → Keller → YCA → Planetarie). Homepage featured = first four. |
-| `/work/cepres` | Case 01 — fintech UX flagship. Copy shipped; images placeholders |
+| `/work/cepres` | Case 01 — fintech UX flagship. PDF rasters (soft; masters pending) |
 | `/work/keller-sports` | Case 02 — commerce + brand, in-house HoD. CoverVideo + PDF vignette images (soft; masters pending) |
-| `/work/yca` | Case 03 — Olympic Movement program. Copy shipped; images placeholders |
-| `/work/planetarie` | Case 04 — CBDa brand → Tanasi acquisition. Copy shipped; images placeholders |
+| `/work/yca` | Case 03 — Olympic Movement program. Vimeo hero + PDF vignette rasters (soft) |
+| `/work/planetarie` | Case 04 — CBDa brand → Tanasi acquisition. PDF product/team rasters (soft) |
 | `/work/byte` | Case 05 — consumer dental packaging + 3D. Copy shipped; images placeholders |
 | `/work/space-for-curiosity` | Case 06 — Space Force / Air Force brand + film. Copy shipped; images placeholders |
 | `/studio` | About. H1 = Martin Drexler. White-bg portrait still + left SiteNav rail. Stations collage under fold, then Practice / Teaching / Clients / Recognition / Index |
@@ -70,7 +70,7 @@ Treat **live `site/` as what ships**. Update BRIEF/SYSTEM/CLAUDE/colophon when a
 ## Open product work
 
 1. **Photography pipeline** — still open in BRIEF §6. AVIF/WebP/PNG sizes; manual vs build-step. Blocks real case-study images / homepage visual teasers.
-2. **Case-study images** — Keller has live PDF rasters (soft). Others still type/video covers; photography pipeline open.
+2. **Case-study images** — Keller, CEPRES, YCA, Planetarie, and Byte have live images. CEPRES/YCA/Planetarie/Keller rasters are soft PDF extracts (cap at intrinsic px). Space for Curiosity, Creative Consortium, and USA Ultimate are not in `assets/documents/MartinDrexler-Portfolio2025-2.pdf`. Native masters still open.
 3. **Homepage referrals** — section mounts when Martin supplies publishable quotes (`site/data/home.ts`).
 4. **Homepage essays / `/journal`** — only when writing exists.
 5. **Doc reconciliation** — SYSTEM §14 / colophon still mention fluid / ChromeStrip in places.

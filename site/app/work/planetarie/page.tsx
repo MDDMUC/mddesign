@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import styles from '@/components/CaseStudy/CaseStudy.module.css'
 
@@ -13,25 +14,53 @@ const vignettes = [
     heading: 'Values before logo',
     body:
       'Before any visual work we ran sessions to distill the internal values and culture — who Planetarie was, why it existed, and who it was speaking to. Every later decision (the mark, the type, the packaging materials, the photography) traced back to those sessions. Branding from the inside out, in the literal sense.',
-    figure: 'values-sessions',
+    images: [
+      {
+        src: '/images/work/planetarie/team-mark.jpg',
+        alt: 'Planetarie team walking a park with the sprout mark above them',
+        width: 606,
+        height: 401,
+      },
+    ],
   },
   {
     heading: 'Med-tech, not headshop',
     body:
       'The CBD category in 2020 still carried the cannabis-counterculture aesthetic that kept serious investors and consumers away. Visual positioning ran adjacent to trusted med-tech — clean type, restrained palette, organic-product framing — underwritten by science (a patent-pending water-only extraction) and endorsements from athletes and physicians.',
-    figure: 'visual-positioning',
+    images: [
+      {
+        src: '/images/work/planetarie/lab.jpg',
+        alt: 'Laboratory bench and sample carousel used to frame Planetarie as med-tech',
+        width: 553,
+        height: 300,
+      },
+    ],
   },
   {
     heading: 'Packaging as proof',
     body:
       'Packaging carried the values the copy claimed: USDA organic certification, the water-extraction process printed on the box, materials chosen for environmental neutrality. Each tincture, softgel, and topical reinforced the same story; nothing on the package asked the buyer to take the brand\u2019s word for it.',
-    figure: 'packaging-system',
+    images: [
+      {
+        src: '/images/work/planetarie/packaging.jpg',
+        alt: 'Planetarie Infusion dropper and white cartons with the sprout mark',
+        width: 424,
+        height: 413,
+      },
+    ],
   },
   {
     heading: 'Endorsement as legitimacy',
     body:
       'The category\u2019s adoption problem was credibility, not awareness. Olympic athletes and medical practitioners came in at launch as the credibility layer — featured across the site, packaging, and editorial. Trusted faces beat market positioning every time.',
-    figure: 'endorsement-faces',
+    images: [
+      {
+        src: '/images/work/planetarie/founder.jpg',
+        alt: 'Planetarie founder Stacy Cason at a table with the team',
+        width: 443,
+        height: 853,
+      },
+    ],
   },
 ]
 
@@ -82,16 +111,19 @@ export default function PlanetariePage() {
       </header>
 
       <figure
-        className={`${styles.cover} ${styles.coverPack}`}
+        className={`${styles.cover} ${styles.coverPhoto}`}
         style={{ viewTransitionName: 'work-hero-planetarie' }}
       >
-        <div className={styles.coverBox}>
-          <strong>CBDa</strong>
-          <span>water-only extraction</span>
-        </div>
-        <p className={styles.coverNote}>
-          USDA-organic. Patent-pending. Built from the values session out.
-        </p>
+        <Image
+          src="/images/work/planetarie/hero-infusion.jpg"
+          alt="Planetarie Infusion box and dropper beside a plant"
+          width={554}
+          height={712}
+          className={styles.coverPhotoImg}
+          style={{ width: '100%', maxWidth: 554, height: 'auto' }}
+          priority
+          fetchPriority="high"
+        />
       </figure>
 
       {/* §3 Context */}
@@ -128,19 +160,28 @@ export default function PlanetariePage() {
       <section className={styles.sectionFull}>
         <h2 className={styles.sectionTitle}>Design decisions</h2>
         <div className={styles.vignettes}>
-          {vignettes.map((v, i) => (
-            <article key={v.heading} className={styles.vignette}>
+          {vignettes.map((v) => (
+            <article
+              key={v.heading}
+              className={`${styles.vignette} ${styles.vignetteWithMedia}`}
+            >
               <div className={styles.vignetteText}>
                 <h3 className={styles.vignetteHeading}>{v.heading}</h3>
                 <p className={styles.vignetteBody}>{v.body}</p>
               </div>
-              <div
-                className={styles.vignetteFrame}
-                data-fig={String(i + 2).padStart(2, '0')}
-                data-placeholder={v.figure}
-              >
-                {v.figure.replace(/-/g, ' ')}
-              </div>
+              <figure className={styles.vignetteFrameLive}>
+                {v.images.map((img) => (
+                  <Image
+                    key={img.src}
+                    src={img.src}
+                    alt={img.alt}
+                    width={img.width}
+                    height={img.height}
+                    style={{ width: '100%', maxWidth: img.width, height: 'auto' }}
+                    sizes="(max-width: 900px) 100vw, 58vw"
+                  />
+                ))}
+              </figure>
             </article>
           ))}
         </div>

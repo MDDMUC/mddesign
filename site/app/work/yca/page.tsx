@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
-import { CoverVimeo } from '@/components/CoverVimeo/CoverVimeo'
 import styles from '@/components/CaseStudy/CaseStudy.module.css'
+import { YcaFilm } from './YcaFilm'
 
 export const metadata: Metadata = {
   title: 'Young Champion Ambassador — Martin Drexler',
@@ -14,25 +15,89 @@ const vignettes = [
     heading: 'Five stakeholders, one program',
     body:
       'The YCA program had to convince students, parents, Olympic officials, government, and municipalities simultaneously — each with different motivations and different definitions of success. We built distinct personas for every gatekeeper and shaped messaging, materials, and visual treatment to land on each in turn, anchored by a single brand mark.',
-    figure: 'stakeholder-personas',
+    images: [
+      {
+        src: '/images/work/yca/cohort.jpg',
+        alt: 'Young Champion Ambassador cohort on the steps of a civic building',
+        width: 486,
+        height: 324,
+      },
+      {
+        src: '/images/work/yca/event-workshop.jpg',
+        alt: 'Students in YCA kits working through a workshop sheet',
+        width: 358,
+        height: 248,
+      },
+      {
+        src: '/images/work/yca/event-session.jpg',
+        alt: 'A YCA session in a wood-paneled room, facilitator presenting to the cohort',
+        width: 486,
+        height: 324,
+      },
+    ],
   },
   {
     heading: 'Curriculum as user experience',
     body:
       'Twelve months, twelve modules — Welcome, Connection, Simplicity, Creativity, Innovation, Resilience, Reflection, Olympic Legacy, Paralympic Story, Placemaking, Capstone, Presentation. Each module\u2019s structure (What / Learn / Take Away) mirrored a digital onboarding flow: predictable rhythm, clear progression, every step earning the next. The curriculum was designed as software, not as a syllabus.',
-    figure: 'curriculum-flow',
+    images: [
+      {
+        src: '/images/work/yca/curriculum.png',
+        alt: 'YCA onboarding process — module panels from Welcome through Become an Ambassador',
+        width: 887,
+        height: 976,
+      },
+      {
+        src: '/images/work/yca/screens-kit.jpg',
+        alt: 'YCA welcome booklet and the Self Awareness screen on a phone',
+        width: 760,
+        height: 840,
+      },
+      {
+        src: '/images/work/yca/screens-flow.jpg',
+        alt: 'Deck screen translating ICAP requirements into the student experience',
+        width: 1320,
+        height: 800,
+      },
+    ],
   },
   {
     heading: 'A flagship space, not a website',
     body:
       'The brand\u2019s first commitment was physical — a dedicated YCA space in Colorado Springs where every cohort began. Wayfinding glyphs (EXPLORE / DISCOVER / UNDERSTAND set vertically on the exterior), graphic system, and the visual identity all extended from the same triangular crest. Web came after.',
-    figure: 'flagship-space',
+    images: [
+      {
+        src: '/images/work/yca/flagship-space.jpg',
+        alt: 'YCA flagship building with Explore, Discover, Understand painted on the facade',
+        width: 558,
+        height: 371,
+      },
+      {
+        src: '/images/work/yca/event-museum.jpg',
+        alt: 'YCA cohort gathered in front of the US Olympic and Paralympic Museum',
+        width: 486,
+        height: 324,
+      },
+    ],
   },
   {
     heading: 'Earn the torch',
     body:
       'The selection mechanic — top-performing ambassadors travel to Athens to carry the official Olympic Torch — turned the program into a destination, not a credential. The reward had to feel rare; the path to it had to feel earned. Both were visible from the application form forward.',
-    figure: 'torch-relay',
+    images: [
+      {
+        src: '/images/work/yca/torch.jpg',
+        alt: 'Ambassador in a Tokyo 2020 kit holding the Olympic torch',
+        width: 1026,
+        height: 487,
+      },
+      {
+        src: '/images/work/yca/event-olympia.jpg',
+        alt: 'YCA students with the Olympic flag during the relay in Greece',
+        width: 359,
+        height: 248,
+      },
+    ],
   },
 ]
 
@@ -82,20 +147,24 @@ export default function YcaPage() {
       </header>
 
       <figure
-        className={`${styles.cover} ${styles.coverMedia}`}
+        className={`${styles.cover} ${styles.coverPhoto}`}
         style={{ viewTransitionName: 'work-hero-yca' }}
       >
-        <CoverVimeo
-          id="444288343"
-          startAt={80}
-          className={`${styles.coverMediaVideo} ${styles.coverMediaVideoLetterbox}`}
+        <Image
+          src="/images/work/yca/opener.jpg"
+          alt="Young Champion Ambassador mark with the International Olympic Academy, U.S. Olympic and Paralympic Museum, Colorado Springs, and Cytus"
+          width={2880}
+          height={1620}
+          className={styles.coverPhotoImg}
+          priority
+          fetchPriority="high"
         />
       </figure>
 
       {/* §3 Context */}
       <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Context</h2>
-        <div className={styles.sectionBody}>
+        <div className={`${styles.sectionBody} ${styles.sectionBodyMedia}`}>
           <p className="lede">
             The Young Champion Ambassador program connects high-performing
             students to the birthplace of the Olympic Movement, then sends
@@ -104,6 +173,7 @@ export default function YcaPage() {
             cohort, it now runs in 25+ cities across the US, Europe, and
             Asia, and was acquired by the International Olympic Academy.
           </p>
+          <YcaFilm />
         </div>
       </section>
 
@@ -125,19 +195,39 @@ export default function YcaPage() {
       <section className={styles.sectionFull}>
         <h2 className={styles.sectionTitle}>Design decisions</h2>
         <div className={styles.vignettes}>
-          {vignettes.map((v, i) => (
-            <article key={v.heading} className={styles.vignette}>
+          {vignettes.map((v) => (
+            <article
+              key={v.heading}
+              className={`${styles.vignette} ${styles.vignetteWithMedia}`}
+            >
               <div className={styles.vignetteText}>
                 <h3 className={styles.vignetteHeading}>{v.heading}</h3>
                 <p className={styles.vignetteBody}>{v.body}</p>
               </div>
-              <div
-                className={styles.vignetteFrame}
-                data-fig={String(i + 2).padStart(2, '0')}
-                data-placeholder={v.figure}
+              <figure
+                className={
+                  v.images.length > 1
+                    ? `${styles.vignetteFrameLive} ${styles.vignetteFramePair}`
+                    : styles.vignetteFrameLive
+                }
               >
-                {v.figure.replace(/-/g, ' ')}
-              </div>
+                {v.images.map((img) => (
+                  <Image
+                    key={img.src}
+                    src={img.src}
+                    alt={img.alt}
+                    width={img.width}
+                    height={img.height}
+                    className={
+                      img.src.endsWith('curriculum.png')
+                        ? styles.vignetteCutout
+                        : undefined
+                    }
+                    style={{ width: '100%', maxWidth: img.width, height: 'auto' }}
+                    sizes="(max-width: 900px) 100vw, 58vw"
+                  />
+                ))}
+              </figure>
             </article>
           ))}
         </div>

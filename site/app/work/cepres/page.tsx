@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import styles from '@/components/CaseStudy/CaseStudy.module.css'
 
@@ -13,25 +14,60 @@ const vignettes = [
     heading: '76 roles into 7 scenarios',
     body:
       'The platform served 76 distinct user roles — institutional investors, fund managers, data analysts — each needing a different cut of the same dataset. Sorting personas into seven broader use-case scenarios let the dashboard preselect default filters per scenario. Personalization moved to the entry point instead of being deferred to a settings page nobody opens.',
-    figure: 'persona-scenarios',
+    images: [
+      {
+        src: '/images/work/cepres/roles-lp-gp.jpg',
+        alt: 'CEPRES site concepts split by role — I am an LP and I am a GP',
+        width: 1183,
+        height: 788,
+      },
+    ],
   },
   {
     heading: 'Tier the filters',
     body:
       'PE.Analyzer exposed 125,000 filter options as a flat list — every option on equal footing, paralysis by default. The redesign tiered them: scenario presets at the top, common refinements one step in, the full taxonomy two steps deep. No options were removed; cognitive load was.',
-    figure: 'filter-tiering',
+    images: [
+      {
+        src: '/images/work/cepres/filters.jpg',
+        alt: 'CEPRES portfolio details with tiered filters above the holdings table',
+        width: 802,
+        height: 448,
+      },
+    ],
   },
   {
     heading: 'Dashboards composed by users',
     body:
       'A seven-persona system fails at scale because real users straddle multiple roles. The dashboard layer let users drag-arrange data widgets per analysis they cared about — branded, persistent, shareable. The interface met institutional users where their existing workflows already lived.',
-    figure: 'custom-dashboard',
+    images: [
+      {
+        src: '/images/work/cepres/dashboards.jpg',
+        alt: 'CEPRES My Dashboards — fund charts arranged as user-composed widgets',
+        width: 564,
+        height: 318,
+      },
+    ],
   },
   {
     heading: 'Seven iterations, gating',
     body:
       'Each version was tested with market experts, fund managers, and real users — not as accessory research but as the gating criterion for shipping. The seventh iteration is what shipped; the first six are why it works.',
-    figure: 'iteration-process',
+    pair: true,
+    images: [
+      {
+        src: '/images/work/cepres/iteration-hubs.jpg',
+        alt: 'Earlier CEPRES home — eight hub tiles over empty dashboard slots',
+        width: 564,
+        height: 318,
+      },
+      {
+        src: '/images/work/cepres/iteration-platform.jpg',
+        alt: 'Later CEPRES platform home — product tiles, news, and live dashboards',
+        width: 564,
+        height: 318,
+      },
+    ],
   },
 ]
 
@@ -82,13 +118,19 @@ export default function CepresPage() {
       </header>
 
       <figure
-        className={`${styles.cover} ${styles.coverField}`}
+        className={`${styles.cover} ${styles.coverPhoto}`}
         style={{ viewTransitionName: 'work-hero-cepres' }}
       >
-        <p className={styles.coverStat}>
-          <strong>76→7</strong>
-          <span>user roles distilled into scenarios</span>
-        </p>
+        <Image
+          src="/images/work/cepres/dashboard-dark.jpg"
+          alt="PE.Analyzer dark dashboard — apps, widgets, and user-arranged fund charts"
+          width={835}
+          height={645}
+          className={styles.coverPhotoImg}
+          style={{ width: '100%', maxWidth: 835, height: 'auto' }}
+          priority
+          fetchPriority="high"
+        />
       </figure>
 
       {/* §3 Context */}
@@ -123,19 +165,36 @@ export default function CepresPage() {
       <section className={styles.sectionFull}>
         <h2 className={styles.sectionTitle}>Design decisions</h2>
         <div className={styles.vignettes}>
-          {vignettes.map((v, i) => (
-            <article key={v.heading} className={styles.vignette}>
+          {vignettes.map((v) => (
+            <article
+              key={v.heading}
+              className={`${styles.vignette} ${styles.vignetteWithMedia}`}
+            >
               <div className={styles.vignetteText}>
                 <h3 className={styles.vignetteHeading}>{v.heading}</h3>
                 <p className={styles.vignetteBody}>{v.body}</p>
               </div>
-              <div
-                className={styles.vignetteFrame}
-                data-fig={String(i + 2).padStart(2, '0')}
-                data-placeholder={v.figure}
+              <figure
+                className={`${styles.vignetteFrameLive}${
+                  'pair' in v && v.pair ? ` ${styles.vignetteFramePair}` : ''
+                }`}
               >
-                {v.figure.replace(/-/g, ' ')}
-              </div>
+                {v.images.map((img) => (
+                  <Image
+                    key={img.src}
+                    src={img.src}
+                    alt={img.alt}
+                    width={img.width}
+                    height={img.height}
+                    style={{ width: '100%', maxWidth: img.width, height: 'auto' }}
+                    sizes={
+                      'pair' in v && v.pair
+                        ? '(max-width: 900px) 50vw, 28vw'
+                        : '(max-width: 900px) 100vw, 58vw'
+                    }
+                  />
+                ))}
+              </figure>
             </article>
           ))}
         </div>

@@ -40,6 +40,7 @@ export default function WorkPage() {
                     <CoverVimeo
                       id={item.coverVideo.vimeo}
                       startAt={item.coverVideo.startAt}
+                      playOnHover
                       className={
                         item.coverVideo.letterboxCrop
                           ? `${styles.coverMedia} ${styles.coverMediaLetterbox}`
@@ -50,6 +51,7 @@ export default function WorkPage() {
                   {item.coverVideo?.youtube ? (
                     <CoverYouTube
                       id={item.coverVideo.youtube}
+                      playOnHover
                       className={styles.coverMedia}
                     />
                   ) : null}
@@ -57,6 +59,7 @@ export default function WorkPage() {
                     <CoverVideo
                       webm={item.coverVideo.webm}
                       mp4={item.coverVideo.mp4}
+                      playOnHover
                       className={styles.coverMedia}
                     />
                   ) : null}

@@ -2,8 +2,8 @@
 
 > Rewrite this whole file at session end. Next session reads this first after the protocol.
 
-**Last updated:** 2026-11-20  
-**Session:** Studio award index (marks, no client names) and positioning copy
+**Last updated:** 2026-11-21  
+**Session:** Case images for CEPRES, YCA, and Planetarie are committed. Day closed.
 
 ---
 
@@ -27,10 +27,11 @@
 
 ## Exact next steps (next session)
 
-1. Visual QA of `/studio` Index (desktop and mobile) after deploy
+1. Visual QA of `/studio`, `/work/cepres`, `/work/yca`, and `/work/planetarie` after this deploy
 2. Decide Manwë-on-CV test (promote into real resume vs delete local PDF)
 3. Native photography masters when ready
 4. Referrals / essays still wait on real content
+5. `/blackwave` is live from `18bef07`. Do not republish it unless Martin asks.
 
 ---
 

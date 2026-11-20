@@ -174,3 +174,15 @@ Append-only. Newest entries at the **bottom**.
 **Shipped:** `site/public/blackwave-static/` now matches the application page. `/blackwave` iframes `index.html` instead of the old `explode.html`. Styles `parts.css?v=57`. Script `explode.js?v=144`. The page stays `noindex`. Other uncommitted studio work was left out of this commit.
 
 **Next:** Confirm https://martindrexler.com/blackwave after the Vercel deploy.
+
+---
+
+## 2026-11-21 — Case images committed, day closed
+
+**Focus:** Commit the remaining case-study work and leave the local-only files on disk.
+
+**Shipped:** CEPRES, YCA, and Planetarie case pages now use their image sets. YCA plays Vimeo `444288343` from a poster, with no autoplay until the control. Work covers can play on hover. Soft PDF rasters stay marked as such.
+
+**Left local:** `.tmp-shots/`. `MartinDrexler-Resume-manwe-test.pdf`. `images/clients/_pe-analyzer-src.pdf`. `images/hero/martin-portrait - small.jpg`. `videos/yca/yca-impact.mp4` (about 198MB; the page uses Vimeo).
+
+**Next:** Visual QA of `/studio`, `/work/cepres`, `/work/yca`, and `/work/planetarie` after deploy. Manwë resume test is still undecided. Photography masters are still open.
