@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 export default function BlackwavePage() {
   return (
     <iframe
-      src="/blackwave-static/explode.html"
+      src="/blackwave-static/index.html"
       title="Blackwave application"
       style={{
         position: 'fixed',

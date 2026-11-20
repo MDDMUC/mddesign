@@ -164,3 +164,13 @@ Append-only. Newest entries at the **bottom**.
 **Open:** source PNGs for Red Dot, German Digital Innovation, CO Cup; photography pipeline
 
 **Next:** Visual QA of the Index on desktop and mobile after deploy
+
+---
+
+## 2026-11-21 — Publish the current Blackwave page at /blackwave
+
+**Focus:** The live `/blackwave` route was still the 15 November vessel study.
+
+**Shipped:** `site/public/blackwave-static/` now matches the application page. `/blackwave` iframes `index.html` instead of the old `explode.html`. Styles `parts.css?v=57`. Script `explode.js?v=144`. The page stays `noindex`. Other uncommitted studio work was left out of this commit.
+
+**Next:** Confirm https://martindrexler.com/blackwave after the Vercel deploy.
