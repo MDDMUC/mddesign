@@ -6,7 +6,7 @@
   <title>Martin Drexler — Senior Brand Designer</title>
   <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="tokens.css" />
-  <link rel="stylesheet" href="parts.css?v=143" />
+  <link rel="stylesheet" href="parts.css?v=156" />
 </head>
 <body>
   <nav class="index" aria-label="Chapters">
@@ -24,6 +24,7 @@
     <a href="#space" aria-label="Space"></a>
     <a href="#yca" aria-label="YCA"></a>
     <a href="#planetarie" aria-label="Planetarie"></a>
+    <a href="#practices" aria-label="Studios"></a>
     <a href="#quotes" aria-label="Quotes"></a>
     <a href="#life" aria-label="Life"></a>
     <a href="#together" aria-label="End"></a>
@@ -1047,7 +1048,7 @@
               <figure class="case__tile">
                 <div class="case__media">
                   <video class="case__video" muted playsinline preload="auto" aria-hidden="true">
-                    <source src="assets/cases/yca-impact.mp4#t=10" type="video/mp4" />
+                    <source src="assets/cases/yca-impact.mp4#t=18" type="video/mp4" />
                   </video>
                 </div>
               </figure>
@@ -1110,12 +1111,50 @@
         </div>
       </section>
 
+      <section class="frame frame--practices" id="practices" data-about="practices">
+        <div class="practices-hold">
+          <article class="practice">
+            <div class="practice__body">
+              <img class="practice__hero" src="assets/practices/haimish-hero.jpg" alt="" />
+              <img class="practice__logo" src="assets/practices/haimish-logo.svg" alt="Haimish Studio" />
+              <h2 class="practice__title">
+                <span class="h-line"><span class="h-line__in">I'm a co-founder and partner at Haimish Studio.</span></span>
+              </h2>
+              <p class="practice__line">Founder and partner from April 2021 to October 2024 in Colorado Springs. Haimish Studio was a brand and design practice. The studio made brand and design work for clients including U.S. Space Force, U.S. Air Force, personal.AI, and Lynx Global Intelligence.</p>
+              <a class="practice__visit" href="https://www.haimish.studio" target="_blank" rel="noopener">Visit website</a>
+            </div>
+          </article>
+          <article class="practice">
+            <div class="practice__body">
+              <img class="practice__hero" src="assets/practices/ghostsignal-hero.jpg" alt="" />
+              <img class="practice__logo" src="assets/practices/ghostsignal-logo.png" alt="GhostSignal" />
+              <h2 class="practice__title">
+                <span class="h-line"><span class="h-line__in">I am a co-founder at GhostSignal.</span></span>
+              </h2>
+              <p class="practice__line">Co-founder, design, since October 2025, based in Munich. GhostSignal is a partner-making company for soulful advertising. We connect podcasters and creators with advertisers in resonant partnerships.</p>
+              <a class="practice__visit" href="https://www.ghostsignal.cloud" target="_blank" rel="noopener">Visit website</a>
+            </div>
+          </article>
+          <article class="practice">
+            <div class="practice__body">
+              <img class="practice__hero" src="assets/practices/md-hero.jpg" alt="" />
+              <img class="practice__logo practice__logo--shield" src="assets/practices/md-logo.jpg" alt="Martin Drexler Design" />
+              <h2 class="practice__title">
+                <span class="h-line"><span class="h-line__in">I have my own consulting business as Martin Drexler Design Studio.</span></span>
+              </h2>
+              <p class="practice__line">Independent designer and consultant since August 2016. Martin Drexler Design Studio is my own consulting practice. The work is product design, UI and UX, branding, and packaging.</p>
+              <a class="practice__visit" href="https://martindrexler.com" target="_blank" rel="noopener">Visit website</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section class="frame frame--quotes" id="quotes" data-about="quotes">
         <div class="quotes-hold" id="quotes-hold">
           <div class="quotes-mark" id="quotes-mark">
             <img data-quote="0" src="assets/quotes/artemis.svg" alt="NASA Artemis" width="200" height="165" />
             <img data-quote="1" src="assets/quotes/jetblue.svg" alt="JetBlue" width="527" height="202" />
-            <img data-quote="1" src="assets/quotes/usaf.svg" alt="U.S. Air Force" width="2040" height="1080" />
+            <img data-quote="1" src="assets/quotes/usaf.svg?v=2" alt="U.S. Air Force" width="1280" height="998" />
             <img data-quote="3" src="assets/quotes/newmont.svg" alt="Newmont" width="610" height="99" />
           </div>
           <div class="quotes-copy">
@@ -1134,17 +1173,21 @@
       </section>
 
       <section class="frame frame--stars" id="stars" data-about="life" aria-label="Climbing">
-        <h1 class="display display--m stars__title">
-          <span class="h-line" style="--i:0"><span class="h-line__in">Off the clock</span></span>
-        </h1>
-        <ul class="stars">
-          <li class="stars__item"><span>Climbing 1</span></li>
-          <li class="stars__item"><span>Climbing 2</span></li>
-          <li class="stars__item"><span>Climbing 3</span></li>
-          <li class="stars__item"><span>Climbing 4</span></li>
-          <li class="stars__item"><span>Climbing 5</span></li>
-          <li class="stars__item"><span>Climbing 6</span></li>
-        </ul>
+        <div class="stars-stage">
+        <h1 class="display display--m stars__title" aria-label="I love, training climbing mountain biking"><span id="stars-type"></span><span class="hello__caret" id="stars-caret" aria-hidden="true"></span></h1>
+        <div class="stars">
+          <div class="stars__row stars__row--land">
+            <img src="assets/life/climbing-2.jpg" alt="Climbing" style="--r:1.333" />
+            <img src="assets/life/climbing-5.jpg" alt="Climbing" style="--r:1.333" />
+            <img src="assets/life/climbing-4.jpg" alt="Climbing" style="--r:1.667" />
+          </div>
+          <div class="stars__row stars__row--port">
+            <img src="assets/life/climbing-3.jpg?v=2" alt="Climbing" style="--r:0.75" />
+            <img src="assets/life/climbing-1.jpg" alt="Climbing in the Gunks, September 2023" style="--r:0.667" />
+            <img src="assets/life/climbing-6.jpg" alt="Climbing" style="--r:0.563" />
+          </div>
+        </div>
+        </div>
       </section>
 
       <section class="frame frame--end" id="together" data-about="together">
@@ -1154,10 +1197,6 @@
         </h1>
         <p class="end__sub">I would love to talk to you in person about how I could help Blackwave level up.</p>
         <img class="end__portrait" src="assets/martin-cutout.png" alt="Martin Drexler" width="640" height="800" />
-        <div class="end__lockup" id="end-mark" data-scene="https://prod.spline.design/2VP4ii8nltELLL1I/scene.splinecode">
-          <div class="end__mark"></div>
-          <img class="end__bw" src="assets/blackwave-logo.png" alt="Blackwave" width="640" height="120" />
-        </div>
         <div class="end__actions">
           <a href="https://martindrexler.com/work" target="_blank" rel="noopener noreferrer">Portfolio</a>
           <a href="https://martindrexler.com/documents/MartinDrexler-Resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
@@ -1195,66 +1234,6 @@
     })();
   </script>
   <script>
-    (function () {
-      var mark = document.getElementById("end-mark");
-      if (!mark || !("IntersectionObserver" in window)) return;
-      var io = new IntersectionObserver(function (entries) {
-        if (!entries[0].isIntersecting) return;
-        io.disconnect();
-        import("https://unpkg.com/@splinetool/runtime@1.12.97/build/runtime.js").then(function (mod) {
-          var slot = mark.querySelector(".end__mark");
-          var canvas = document.createElement("canvas");
-          slot.appendChild(canvas);
-          var app = new mod.Application(canvas);
-          return app.load(mark.getAttribute("data-scene")).then(function () {
-            function strip() {
-              try { app._renderer.pipeline.setWatermark(null); } catch (err) { /* runtime internals */ }
-              var all = app.getAllObjects ? app.getAllObjects() : [];
-              for (var i = 0; i < all.length; i++) {
-                var name = all[i].name || "";
-                if (name === "Rectangle" || name.indexOf("Rectangle") !== -1) all[i].visible = false;
-              }
-              if (app.setBackgroundColor) app.setBackgroundColor("rgba(0,0,0,0)");
-            }
-            strip();
-            if (app.setGlobalEvents) app.setGlobalEvents(false);
-            var logo = app.findObjectByName("Logo");
-            if (!logo) return;
-            var rest = { x: logo.position.x, y: logo.position.y, z: logo.position.z };
-            var base = { x: logo.rotation.x, y: logo.rotation.y, z: logo.rotation.z };
-            if (app.setZoom) app.setZoom(1.05);
-            function fit() {
-              var w = slot.clientWidth;
-              var h = slot.clientHeight;
-              if (w < 2 || h < 2) return;
-              var dpr = Math.min(window.devicePixelRatio || 1, 2);
-              if (app.setSize) app.setSize(Math.round(w * dpr), Math.round(h * dpr));
-              canvas.style.width = "100%";
-              canvas.style.height = "100%";
-            }
-            fit();
-            window.addEventListener("resize", fit);
-            var spinStart = performance.now();
-            var spinMs = 18000;
-            var reduceSpin = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-            (function spin(now) {
-              var turn = reduceSpin ? 0 : ((now - spinStart) / spinMs) * Math.PI * 2;
-              logo.rotation.x = base.x;
-              logo.rotation.y = base.y + turn;
-              logo.rotation.z = base.z;
-              logo.position.x = rest.x - 70;
-              logo.position.y = rest.y;
-              logo.position.z = rest.z;
-              var dprNow = Math.min(window.devicePixelRatio || 1, 2);
-              var want = Math.round(slot.clientWidth * dprNow);
-              if (canvas.width !== want || canvas.height !== want) fit();
-              requestAnimationFrame(spin);
-            })(spinStart);
-          });
-        });
-      }, { rootMargin: "240px" });
-      io.observe(mark);
-    })();
     /* Each headline line rises with the scroll and sinks again
        when the page moves back. Later lines in a title wait. */
     (function () {
@@ -1346,7 +1325,7 @@
   <script type="importmap">
     { "imports": { "three": "https://unpkg.com/three@0.170.0/build/three.module.js" } }
   </script>
-  <script type="module" src="smoke.js?v=27"></script>
-  <script type="module" src="explode.js?v=206"></script>
+  <script type="module" src="smoke.js?v=28"></script>
+  <script type="module" src="explode.js?v=210"></script>
 </body>
 </html>

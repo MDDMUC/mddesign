@@ -241,6 +241,104 @@ main {
   max-width: 18rem;
 }
 
+.frame--practices {
+  min-height: 380svh;
+  justify-content: flex-start;
+  padding: 0;
+  background: #f4f4f4;
+  color: #010101;
+}
+
+.practices-hold {
+  position: sticky;
+  top: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.35rem;
+  height: 100svh;
+  box-sizing: border-box;
+  padding: 1.35rem;
+  padding-right: calc(1.35rem + var(--rail));
+}
+
+.practice {
+  display: flex;
+  min-height: 0;
+  background: #fff;
+  box-shadow: 0 16px 36px rgba(1, 1, 1, var(--shade, 0));
+  opacity: var(--plate, 0);
+  transform: translateY(calc((1 - var(--plate, 0)) * 1.4rem)) scale(calc(0.96 + 0.04 * var(--plate, 0)));
+}
+
+.practice__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.7rem;
+  min-height: 0;
+  padding: 0 0 1.15rem;
+  opacity: var(--ink, 0);
+  transform: translateY(calc((1 - var(--ink, 0)) * 0.8rem));
+}
+
+.practice__hero {
+  display: block;
+  width: 100%;
+  height: 9.5rem;
+  object-fit: cover;
+  object-position: center;
+}
+
+.practice__logo {
+  display: block;
+  width: auto;
+  height: 2.15rem;
+  max-width: 70%;
+  margin: 1rem 1.2rem 0;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.practice__logo--shield {
+  height: 3rem;
+  mix-blend-mode: multiply;
+}
+
+.practice__title {
+  margin: 0.15rem 1.2rem 0;
+  font-family: HelveticaNowDisplay, Helvetica, "Helvetica Neue", Arial, sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.25rem, 1.7vw, 1.7rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.practice__line {
+  margin: 0 1.2rem;
+  max-width: 28em;
+  font-family: HelveticaNowDisplay, Helvetica, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.35;
+}
+
+.practice__visit {
+  display: inline-block;
+  margin: auto 1.2rem 0;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #010101;
+  font-family: HelveticaNowDisplay, Helvetica, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.92rem;
+  letter-spacing: -0.01em;
+  color: #010101;
+  text-decoration: none;
+}
+
+.practice__visit:hover,
+.practice__visit:focus-visible {
+  background: #010101;
+  color: #fff;
+}
+
 .frame--quotes {
   min-height: 400svh;
   justify-content: flex-start;
@@ -2146,7 +2244,7 @@ h1.display {
 }
 
 .frame--life {
-  min-height: 100svh;
+  min-height: 170svh;
   justify-content: flex-start;
   padding: 0;
 }
@@ -2172,6 +2270,8 @@ h1.display {
   height: 100%;
   object-fit: contain;
   object-position: center;
+  opacity: 0;
+  transform: translateY(1.4rem) scale(1.045);
 }
 
 .life-ring {
@@ -2215,41 +2315,66 @@ h1.display {
 
 .frame--stars {
   position: relative;
-  min-height: 100svh;
+  min-height: 280svh;
   justify-content: flex-start;
   padding: 0;
 }
 
+.stars-stage {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  box-sizing: border-box;
+  height: 100svh;
+  padding: var(--pad);
+  padding-right: calc(var(--pad) + var(--rail));
+}
+
 .stars__title {
-  position: absolute;
-  left: var(--pad);
-  bottom: var(--pad);
+  flex: none;
   z-index: 2;
   margin: 0;
-  white-space: nowrap;
+  white-space: pre-line;
 }
 
 .stars {
-  position: absolute;
-  inset: 4.5vh calc(var(--pad) + var(--rail)) 4vh var(--pad);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.65rem;
 }
 
-.stars__item {
-  margin: 0;
-  display: grid;
-  place-items: center;
-  min-height: 28vh;
-  background: #e6e6e6;
-  color: #6a6a6a;
-  font-family: HelveticaNowDisplay, Helvetica, "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.85rem;
-  letter-spacing: 0.02em;
+.stars__row {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  gap: 0.65rem;
+  min-height: 0;
+}
+
+.stars__row--land {
+  flex: 0.457 1 0;
+}
+
+.stars__row--port {
+  flex: 1 1 0;
+}
+
+.stars__row img {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  aspect-ratio: var(--r);
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0;
 }
 
 .frame--end {
@@ -2303,22 +2428,22 @@ h1.display {
 
 .end__lockup {
   position: absolute;
-  left: var(--pad);
-  top: var(--pad);
+  left: 50%;
+  top: 50%;
   z-index: 4;
   display: flex;
-  flex-direction: row;
   align-items: center;
-  gap: 0.85rem;
+  justify-content: center;
   width: auto;
   pointer-events: none;
   overflow: visible;
+  transform: translate(-50%, -50%);
 }
 
 .end__mark {
   position: relative;
-  width: calc(min(11rem, 26vw) * 450 / 800);
-  height: calc(min(11rem, 26vw) * 450 / 800);
+  width: calc(min(11rem, 26vw) * 450 / 400 * 1.2);
+  height: calc(min(11rem, 26vw) * 450 / 400 * 1.2);
   flex: none;
   overflow: hidden;
 }
@@ -2332,7 +2457,7 @@ h1.display {
 
 .end__bw {
   display: block;
-  width: min(11rem, 26vw);
+  width: min(6.05rem, 14.3vw);
   height: auto;
   margin: 0;
   filter: invert(1);
@@ -2448,6 +2573,24 @@ h1.display {
     padding-right: var(--pad);
   }
 
+  .frame--practices {
+    min-height: 0;
+  }
+
+  .practices-hold {
+    position: relative;
+    height: auto;
+    grid-template-columns: 1fr;
+    padding-right: 1.35rem;
+  }
+
+  .practice,
+  .practice__body {
+    opacity: 1;
+    transform: none;
+    box-shadow: 0 16px 36px rgba(1, 1, 1, 0.08);
+  }
+
   .frame--stars {
     min-height: 0;
     padding: var(--pad);
@@ -2456,16 +2599,17 @@ h1.display {
   .stars {
     position: relative;
     inset: auto;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
+    height: auto;
   }
 
-  .stars__item {
-    min-height: 22vh;
+  .stars__row {
+    flex: none;
+    flex-wrap: wrap;
   }
 
-  .stars__item.is-wide {
-    grid-column: 1 / -1;
+  .stars__row img {
+    height: auto;
+    width: min(100%, 18rem);
   }
 
   .case__tile-wrap {
@@ -2546,12 +2690,22 @@ h1.display {
     transform: none !important;
   }
 
-  .stars__title {
+  .stars-stage {
     position: relative;
-    left: auto;
-    bottom: auto;
-    white-space: normal;
-    margin: 0 var(--pad) 1rem;
+    inset: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+  }
+
+  .stars__title {
+    max-width: none;
+    margin: 0 0 1rem;
+  }
+
+  .stars {
+    width: 100%;
+    height: auto;
   }
 
   html[data-spin="1"] #story .frame--rest .display__line,

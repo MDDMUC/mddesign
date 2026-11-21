@@ -54,7 +54,7 @@ if (headline && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) 
   const caret = document.createElement("span");
   caret.className = "hello__caret";
   caret.setAttribute("aria-hidden", "true");
-  const typeStart = performance.now() + 4000;
+  const typeStart = performance.now() + 3000;
   const perChar = 110;
   let shown = 0;
   function typeFrame(now) {

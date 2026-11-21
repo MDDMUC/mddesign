@@ -1940,6 +1940,22 @@ const caseFilms = Array.from(document.querySelectorAll(".frame--case")).map((el)
   frame: el.querySelector("iframe"),
 }));
 
+function syncLifeCollage() {
+  const el = document.getElementById("life");
+  const img = el && el.querySelector(".life-collage img");
+  if (!img) return;
+  if (reduced) {
+    img.style.opacity = "1";
+    img.style.transform = "none";
+    return;
+  }
+  const span = Math.max(1, el.offsetHeight - window.innerHeight);
+  const p = clamp01(-el.getBoundingClientRect().top / span);
+  const t = smooth(clamp01(p / 0.72));
+  img.style.opacity = t.toFixed(3);
+  img.style.transform = "translateY(" + ((1 - t) * 1.4).toFixed(3) + "rem) scale(" + (1.045 - t * 0.045).toFixed(4) + ")";
+}
+
 function paintLife() {
   if (!lifeEl || !lifeOrbit || !lifeShots.length || reduced) return;
   const span = lifeEl.offsetHeight - window.innerHeight;
@@ -2070,6 +2086,63 @@ function syncCaseVideo(video, p, scrub) {
   }
 }
 
+const practicesEl = document.getElementById("practices");
+const practiceCards = practicesEl ? Array.from(practicesEl.querySelectorAll(".practice")) : [];
+
+const STARS_LINE = "I love,\ntraining\nclimbing\nmountain biking";
+const starsEl = document.getElementById("stars");
+const starsType = document.getElementById("stars-type");
+const starsCaret = document.getElementById("stars-caret");
+
+function syncStars() {
+  if (!starsEl || !starsType) return;
+  const imgs = starsEl.querySelectorAll(".stars__row img");
+  if (reduced) {
+    starsType.textContent = STARS_LINE;
+    if (starsCaret) starsCaret.style.visibility = "hidden";
+    for (let i = 0; i < imgs.length; i++) imgs[i].style.opacity = "1";
+    return;
+  }
+  const span = Math.max(1, starsEl.offsetHeight - window.innerHeight);
+  const p = clamp01(-starsEl.getBoundingClientRect().top / span);
+  const typeT = clamp01(p / 0.34);
+  const n = typeT >= 1 ? STARS_LINE.length : Math.floor(typeT * STARS_LINE.length);
+  starsType.textContent = STARS_LINE.slice(0, n);
+  if (starsCaret) starsCaret.style.visibility = n > 0 && n < STARS_LINE.length ? "visible" : "hidden";
+  for (let i = 0; i < imgs.length; i++) {
+    const start = 0.38 + i * 0.09;
+    imgs[i].style.opacity = smooth(clamp01((p - start) / 0.1)).toFixed(3);
+  }
+}
+
+function paintPractices() {
+  if (!practicesEl || !practiceCards.length) return;
+  const show = function (card, plate, ink) {
+    card.style.setProperty("--plate", plate.toFixed(3));
+    card.style.setProperty("--shade", (plate * 0.1).toFixed(3));
+    card.style.setProperty("--ink", ink.toFixed(3));
+    const lines = card.querySelectorAll(".h-line");
+    for (let n = 0; n < lines.length; n++) lines[n].style.setProperty("--rise", ink.toFixed(3));
+  };
+  if (reduced) {
+    for (let i = 0; i < practiceCards.length; i++) show(practiceCards[i], 1, 1);
+    return;
+  }
+  const span = Math.max(1, practicesEl.offsetHeight - window.innerHeight);
+  const p = clamp01(-practicesEl.getBoundingClientRect().top / span);
+  const windows = [
+    [0.02, 0.14, 0.14, 0.32],
+    [0.34, 0.46, 0.46, 0.64],
+    [0.66, 0.78, 0.78, 0.94]
+  ];
+  for (let i = 0; i < practiceCards.length; i++) {
+    const w = windows[i];
+    const plate = smooth(clamp01((p - w[0]) / (w[1] - w[0])));
+    const ink = smooth(clamp01((p - w[2]) / (w[3] - w[2])));
+    show(practiceCards[i], plate, ink);
+  }
+}
+
 function paintCases() {
   if (!caseFilms.length) return;
   const vw = window.innerWidth;
@@ -2150,7 +2223,7 @@ function paintCases() {
     const box = film.el.getBoundingClientRect();
     const onScreen = box.top < vh * 0.92 && box.bottom > vh * 0.08;
     syncCaseVideo(film.video, p, (space || yca)
-      ? { play: true, visible: onScreen, at: yca ? 10 : 0 }
+      ? { play: true, visible: onScreen, at: yca ? 18 : 0 }
       : null);
   }
 }
@@ -2478,6 +2551,9 @@ function frame(now) {
   paintCity();
   paintAtlas(dt);
   paintCases();
+  paintPractices();
+  syncStars();
+  syncLifeCollage();
   paintLife();
   apply(state);
   const wireIn = paintSheet(t);
