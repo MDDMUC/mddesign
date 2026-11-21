@@ -49,9 +49,11 @@ scene.background = bgTex;
 let bgGlow = -1;
 let bgDrop = -1;
 let bgShift = -1;
+let bgWash = -1;
 
-function paintBackground(glow, drop, shift) {
+function paintBackground(glow, drop, shift, wash) {
   const nudge = shift || 0;
+  const white = wash || 0;
   const aspect = Math.max(0.5, window.innerWidth / Math.max(1, window.innerHeight));
   const w = 1280;
   const h = Math.max(2, Math.round(w / aspect));
@@ -62,17 +64,18 @@ function paintBackground(glow, drop, shift) {
     bgDrop = -1;
     bgShift = -1;
   }
-  if (Math.abs(glow - bgGlow) < 0.004 && Math.abs(drop - bgDrop) < 0.01 && Math.abs(nudge - bgShift) < 0.004) return;
+  if (Math.abs(glow - bgGlow) < 0.004 && Math.abs(drop - bgDrop) < 0.01 && Math.abs(nudge - bgShift) < 0.004 && Math.abs((arguments[3] || 0) - bgWash) < 0.004) return;
   bgGlow = glow;
   bgDrop = drop;
   bgShift = nudge;
+  bgWash = white;
   const g = bgCtx;
   g.globalAlpha = 1;
   g.fillStyle = "#010101";
   g.fillRect(0, 0, w, h);
   if (glow > 0.001) {
     const cx = w * 0.5;
-    const floorY = h * (0.66 + 0.12 * drop + nudge);
+    const floorY = h * (0.66 + 0.07 * drop + nudge);
     g.save();
     g.globalAlpha = glow;
     g.translate(cx, floorY);
@@ -93,7 +96,7 @@ function paintBackground(glow, drop, shift) {
     g.rect(0, 0, w, floorY);
     g.clip();
     g.globalAlpha = glow;
-    const cy = h * (0.46 + 0.12 * drop + nudge);
+    const cy = h * (0.46 + 0.07 * drop + nudge);
     const pool = g.createRadialGradient(cx, cy, w * 0.04, cx, cy, w * 0.46);
     pool.addColorStop(0, "rgba(69,69,69,0.5)");
     pool.addColorStop(0.32, "rgba(42,42,42,0.35)");
@@ -102,6 +105,12 @@ function paintBackground(glow, drop, shift) {
     g.fillStyle = pool;
     g.fillRect(0, 0, w, floorY);
     g.restore();
+    g.globalAlpha = 1;
+  }
+  if (white > 0.001) {
+    g.globalAlpha = white;
+    g.fillStyle = "#ffffff";
+    g.fillRect(0, 0, w, h);
     g.globalAlpha = 1;
   }
   bgTex.needsUpdate = true;
@@ -416,6 +425,12 @@ gray.renderOrder = 0;
 helical.renderOrder = 1;
 helicalTop.renderOrder = 2;
 helical.material.depthWrite = false;
+helical.material.polygonOffset = true;
+helical.material.polygonOffsetFactor = -2;
+helical.material.polygonOffsetUnits = -2;
+topMat.polygonOffset = true;
+topMat.polygonOffsetFactor = -3;
+topMat.polygonOffsetUnits = -3;
 shell.add(gray, helical, helicalTop);
 const bossHome = BODY / 2 + R * 0.72;
 const boss = port(bossMat);
@@ -760,6 +775,8 @@ new GLTFLoader().load("assets/copv-15l.glb", (gltf) => {
   cadWhole.frustumCulled = false;
   cadWrap = new THREE.Mesh(geo, helicalMat);
   cadWrapTop = new THREE.Mesh(geo, topMat);
+  cadWrap.renderOrder = 2;
+  cadWrapTop.renderOrder = 3;
   cadWrap.scale.setScalar(1.012);
   cadWrapTop.scale.setScalar(1.02);
   cadWrap.frustumCulled = cadWrapTop.frustumCulled = false;
@@ -869,29 +886,32 @@ function alignBlueprint(t) {
   drawingAlign.position.set(dx * hold, dy * hold, 0);
 }
 
-// Same curve for the print and the side-view wire: the sheet falls as the
-// wire rises, and both finish as the mesh is allowed to turn.
-function blueprintMix(t) {
-  const film = document.getElementById("audiences");
-  const fadeSpan = Math.max(window.innerHeight * 0.28, 1);
-  const start = film ? film.offsetTop : 0;
-  const fadeU = Math.min(1, Math.max(0, (window.scrollY - (start - fadeSpan)) / fadeSpan));
-  const fade = fadeU * fadeU * (3 - 2 * fadeU);
-  let dissolve = 0;
-  if (t > 0) dissolve = Math.min(1, 0.22 + 0.78 * (t / Math.max(beats[1].t, 0.0001)));
-  else if (fadeU > 0.78) dissolve = ((fadeU - 0.78) / 0.22) * 0.22;
-  if (reduced || t >= beats[1].t) dissolve = 1;
-  const wireIn = dissolve * dissolve * (3 - 2 * dissolve);
-  return { fade, wireIn };
+// Hero first. The print fades in after that screen, holds, then the last
+// stretch before chapter 02 crossfades it into the white mesh.
+function blueprintPhase() {
+  const open = document.getElementById("open");
+  const next = document.getElementById("audiences");
+  if (!next || reduced) return { show: reduced ? 0 : 0, mesh: reduced ? 1 : 0 };
+  const vh = window.innerHeight;
+  const heroEnd = (open ? open.offsetTop : 0) + vh;
+  const shown = heroEnd + vh * 0.35;
+  const meshStart = next.offsetTop - vh * 0.8;
+  const y = window.scrollY;
+  const reveal = y <= heroEnd ? 0 : Math.min(1, (y - heroEnd) / Math.max(1, shown - heroEnd));
+  const show = reveal * reveal * (3 - 2 * reveal);
+  const u = Math.min(1, Math.max(0, (y - meshStart) / Math.max(1, next.offsetTop - meshStart)));
+  const mesh = u * u * (3 - 2 * u);
+  return { show, mesh };
 }
 
 function paintSheet(t) {
   if (!sheetEl) return reduced ? 1 : 0;
-  const mix = blueprintMix(t);
-  const opacity = reduced ? 0 : mix.fade * (1 - mix.wireIn);
+  const phase = blueprintPhase();
+  const mesh = phase.mesh;
+  const opacity = reduced ? 0 : phase.show * (1 - mesh);
   sheetEl.style.opacity = opacity.toFixed(3);
   sheetEl.style.visibility = opacity > 0.004 ? "visible" : "hidden";
-  return reduced ? 1 : mix.wireIn;
+  return reduced ? 1 : mesh;
 }
 
 function progress() {
@@ -901,14 +921,10 @@ function progress() {
   if (max <= 0) return 0;
   if (!film) return Math.min(1, Math.max(0, window.scrollY / max));
   const start = film.offsetTop;
-  // Chapter 02 is the first vessel screen. The old fade ran for most of that
-  // section and held the clock, so the film seemed to begin on chapter 03.
-  const fadeSpan = Math.max(window.innerHeight * 0.28, 1);
-  const fadeU = Math.min(1, Math.max(0, (window.scrollY - (start - fadeSpan)) / fadeSpan));
-  const fade = fadeU * fadeU * (3 - 2 * fadeU);
+  const mesh = blueprintPhase().mesh;
   if (canvas) {
-    canvas.style.visibility = fade > 0.004 ? "visible" : "hidden";
-    canvas.style.opacity = String(fade);
+    canvas.style.visibility = mesh > 0.004 ? "visible" : "hidden";
+    canvas.style.opacity = String(mesh);
   }
   const rest = document.getElementById("rest");
   const end = rest
@@ -925,7 +941,10 @@ function codaDrop() {
   const story = document.getElementById("story");
   if (!rest || !story) return 0;
   const start = rest.offsetTop;
-  const release = story.offsetTop + story.offsetHeight - window.innerHeight;
+  const outlook = document.getElementById("outlook-sat");
+  const release = outlook
+    ? outlook.offsetTop - window.innerHeight
+    : story.offsetTop + story.offsetHeight - window.innerHeight;
   const span = Math.max(1, release - start);
   const u = Math.min(1, Math.max(0, (window.scrollY - start) / span));
   return Math.min(1, u / 0.38);
@@ -993,6 +1012,13 @@ function apply(state) {
     cadBody.material.transparent = spread > 0.02;
     cadBody.material.depthWrite = spread < 0.4;
   }
+  // Finished wrap is a solid shell. The liner stays so the strap gaps and the
+  // dome ends are not see-through when the vessel starts its spin.
+  const solidShell = (state.wrap || 0) >= 0.98 && state.wire <= 0.02;
+  helicalMat.transparent = !solidShell;
+  helicalMat.depthWrite = solidShell;
+  helicalMat.opacity = 1;
+  topMat.depthWrite = solidShell;
   if (cadWhole) cadWhole.visible = useCad && vseat > 0.985 && spread < 0.04;
   sealL.visible = sealR.visible = !!(cadWhole && cadWhole.visible);
   grayMat.opacity = metal;
@@ -1079,7 +1105,7 @@ function apply(state) {
     state.pos[1],
     Math.cos(camPhi) * dist
   );
-  camera.lookAt(0, (state.drop || 0) * 0.78 + (state.nudge || 0), 0);
+  camera.lookAt(0, (state.drop || 0) * 0.46 + (state.nudge || 0), 0);
   if (beatEl) beatEl.textContent = state.beat;
   if (lineEl) lineEl.textContent = state.line;
 }
@@ -1093,6 +1119,18 @@ let lastFrame = performance.now();
 const aboutPanels = document.querySelectorAll(".about-panel");
 const aboutSteps = document.querySelectorAll("[data-about]");
 const teachEl = document.getElementById("teaching");
+const quotesEl = document.getElementById("quotes");
+const quotesHold = document.getElementById("quotes-hold");
+const quotesType = document.getElementById("quotes-type");
+const quotesCaret = document.getElementById("quotes-caret");
+const quotesBy = document.getElementById("quotes-by");
+const quotesMark = document.getElementById("quotes-mark");
+const QUOTES = [
+  { text: "Martin brings a unique combination of strategic thinking and creative vision to everything he touches. His diverse experience enables him to create tailored solutions for any business challenge.", by: "Ryan Cobb, Moon Mission Design Engineer, NASA" },
+  { text: "Martin brings thoughtful empathy and unbridled creativity to every challenge. His ability to listen deeply and craft innovative solutions makes him exceptional to work with.", by: "Dr. Tyler Phillips, JetBlue Pilot, USAF Retired" },
+  { text: "Martin spent hours in pursuit of a final product that truly reflected my vision. His process exceeded my expectations and delivered exactly what I needed.", by: "Mark Wright, DDS" },
+  { text: "Martin's process delivers superior results that not only meet but exceed expectations. Strategic, thorough, and always focused on what the organization actually needs.", by: "Joe Murray, Strategic Development, Newmont Mining" }
+];
 const portraitEl = document.getElementById("portrait");
 const awardsEl = document.getElementById("awards");
 const citySceneEl = document.querySelector(".city-scene");
@@ -1106,11 +1144,20 @@ const lifeShots = lifeOrbit ? Array.from(lifeOrbit.querySelectorAll(".life-shot"
 const portraitHold = portraitEl && portraitEl.querySelector(".atlas-hold");
 const helloA = document.getElementById("hello-a");
 const helloB = document.getElementById("hello-b");
+const helloGreet = document.getElementById("hello-greet");
+const helloGreetCaret = document.getElementById("hello-greet-caret");
 const helloType = document.getElementById("hello-type");
 const helloCaret = document.getElementById("hello-caret");
 const portraitPhoto = document.getElementById("portrait-photo");
 const aboutKicker = portraitEl && portraitEl.querySelector(".frame__num");
-const HELLO_LINE = "15 years as an award-winning brand designer";
+const AWARDS_LINE = "I have won over\n25 international\ndesigner awards";
+const awardsType = document.getElementById("awards-type");
+const awardsCaret = document.getElementById("awards-caret");
+const TEACH_LINE = "I have taught\nbranding and design\nat the highest level";
+const teachType = document.getElementById("teach-type");
+const teachCaret = document.getElementById("teach-caret");
+const GREET_LINE = "Hello,\nI'm Martin";
+const HELLO_LINE = "I have over\n15\u00a0years of experience as an award-winning brand designer";
 const cityBldgs = Array.from(document.querySelectorAll(".city-scene .bldg")).sort(
   (a, b) => Number(a.style.getPropertyValue("--i")) - Number(b.style.getPropertyValue("--i"))
 );
@@ -1253,11 +1300,15 @@ const meshMat = new THREE.ShaderMaterial({
 const globeMat = new THREE.LineBasicMaterial({ color: 0xd0d0d0, transparent: true, depthTest: true, depthWrite: false });
 const landMat = new THREE.LineBasicMaterial({ color: 0x1a1a1a, transparent: true, depthTest: true, depthWrite: false });
 const globeFillMat = new THREE.MeshBasicMaterial({ color: 0xfafafa, transparent: true, depthWrite: true });
+const EYE_GLOBE = 0.04;
 const eyeLocal = new THREE.Vector3(0.0402, 0.2450, 0.1937);
 const eyeCamLocal = new THREE.Vector3(0.0522, 0.2530, 0.3337);
-const EYE_GLOBE = 0.04;
+const headLocal = new THREE.Vector3(0.04, 0.30, 0.11);
+let headRadius = 0.2;
 const eyeW = new THREE.Vector3();
 const eyeCamW = new THREE.Vector3();
+const headW = new THREE.Vector3();
+const headCamW = new THREE.Vector3();
 const wideCam = new THREE.Vector3();
 const wideLook = new THREE.Vector3();
 const origin = new THREE.Vector3();
@@ -1383,7 +1434,7 @@ const globeKeys = [
   { u: 0.72, lat: 51, lon: 18, dist: 2.65, lookLat: 40, lookLon: -6, lookR: 0 },
   { u: 0.80, lat: 32, lon: -28, dist: 4.7, lookLat: 16, lookLon: -18, lookR: 0 },
   { u: 0.90, lat: 43, lon: -90, dist: 2.35, lookLat: 40, lookLon: -92, lookR: 0.12 },
-  { u: 1.00, lat: 40.4, lon: -105, dist: 1.62, lookLat: 39.74, lookLon: -105, lookR: 0.35 },
+  { u: 1.00, lat: 39.74, lon: -104.99, dist: 1.62, lookLat: 39.74, lookLon: -104.99, lookR: 0.35 },
 ];
 
 function blendSpan(keys, u) {
@@ -1411,23 +1462,98 @@ function placeAllowed(place, dist) {
   return true;
 }
 
+function syncAwards() {
+  if (!awardsType || !awardsEl) return;
+  if (reduced) {
+    awardsType.textContent = AWARDS_LINE;
+    if (awardsCaret) awardsCaret.style.visibility = "hidden";
+    return;
+  }
+  const top = awardsEl.getBoundingClientRect().top;
+  const vh = window.innerHeight;
+  const typeT = clamp01((vh * 0.92 - top) / (vh * 0.38));
+  const n = typeT >= 1 ? AWARDS_LINE.length : Math.floor(typeT * AWARDS_LINE.length);
+  awardsType.textContent = AWARDS_LINE.slice(0, n);
+  if (awardsCaret) awardsCaret.style.visibility = n > 0 && n < AWARDS_LINE.length ? "visible" : "hidden";
+}
+
+function syncTeach() {
+  if (!teachType || !teachEl) return;
+  if (reduced) {
+    teachType.textContent = TEACH_LINE;
+    if (teachCaret) teachCaret.style.visibility = "hidden";
+    return;
+  }
+  const top = teachEl.getBoundingClientRect().top;
+  const vh = window.innerHeight;
+  const typeT = clamp01((vh * 0.92 - top) / (vh * 0.38));
+  const n = typeT >= 1 ? TEACH_LINE.length : Math.floor(typeT * TEACH_LINE.length);
+  teachType.textContent = TEACH_LINE.slice(0, n);
+  if (teachCaret) teachCaret.style.visibility = n > 0 && n < TEACH_LINE.length ? "visible" : "hidden";
+}
+
+function syncQuotes() {
+  if (!quotesEl || !quotesType) return;
+  if (reduced) {
+    quotesType.textContent = QUOTES.map(function (q) { return q.text; }).join("\n\n");
+    if (quotesBy) quotesBy.textContent = QUOTES.map(function (q) { return q.by; }).join(" · ");
+    if (quotesCaret) quotesCaret.style.visibility = "hidden";
+    if (quotesHold) quotesHold.style.opacity = "1";
+    if (quotesMark) {
+      quotesMark.style.opacity = "1";
+      const marks = quotesMark.querySelectorAll("img");
+      for (let n = 0; n < marks.length; n++) marks[n].classList.add("is-on");
+    }
+    return;
+  }
+  const span = Math.max(1, quotesEl.offsetHeight - window.innerHeight);
+  const p = clamp01(-quotesEl.getBoundingClientRect().top / span);
+  const scaled = p * QUOTES.length;
+  const i = Math.min(QUOTES.length - 1, Math.floor(scaled));
+  const local = scaled - i;
+  const quote = QUOTES[i];
+  const typeT = clamp01(local / 0.62);
+  const n = typeT >= 1 ? quote.text.length : Math.floor(typeT * quote.text.length);
+  quotesType.textContent = quote.text.slice(0, n);
+  if (quotesCaret) quotesCaret.style.visibility = n > 0 && n < quote.text.length ? "visible" : "hidden";
+  if (quotesBy) {
+    quotesBy.textContent = typeT >= 1 ? quote.by : "";
+    quotesBy.style.opacity = typeT >= 1 ? "1" : "0";
+  }
+  const leaving = i < QUOTES.length - 1 ? 1 - smooth(clamp01((local - 0.84) / 0.16)) : 1;
+  if (quotesHold) quotesHold.style.opacity = leaving.toFixed(3);
+  if (quotesMark) {
+    const marks = quotesMark.querySelectorAll("img");
+    for (let n = 0; n < marks.length; n++) {
+      marks[n].classList.toggle("is-on", Number(marks[n].dataset.quote) === i);
+    }
+    quotesMark.style.opacity = (clamp01(local / 0.14) * leaving).toFixed(3);
+  }
+}
+
 function syncHello(u) {
   if (!helloA || !helloType) return;
   if (reduced) {
+    if (helloGreet) helloGreet.textContent = GREET_LINE;
     helloA.style.opacity = "0";
     helloType.textContent = HELLO_LINE;
     if (helloB) helloB.style.opacity = "1";
+    if (helloGreetCaret) helloGreetCaret.style.visibility = "hidden";
     if (helloCaret) helloCaret.style.visibility = "hidden";
     if (aboutKicker) aboutKicker.style.opacity = "1";
     return;
   }
+  const greetT = clamp01(u / 0.07);
+  const gn = greetT >= 1 ? GREET_LINE.length : Math.floor(greetT * GREET_LINE.length);
   const helloOut = smooth(clamp01((u - 0.145) / 0.055));
   const typeT = clamp01((u - 0.17) / 0.10);
   const n = typeT >= 1 ? HELLO_LINE.length : Math.floor(typeT * HELLO_LINE.length);
   const lineFade = 1 - smooth(clamp01((u - 0.32) / 0.05));
+  if (helloGreet) helloGreet.textContent = GREET_LINE.slice(0, gn);
   helloType.textContent = HELLO_LINE.slice(0, n);
   helloA.style.opacity = (1 - helloOut).toFixed(3);
   if (helloB) helloB.style.opacity = (Math.min(1, helloOut * 1.6) * lineFade).toFixed(3);
+  if (helloGreetCaret) helloGreetCaret.style.visibility = gn > 0 && gn < GREET_LINE.length && helloOut < 0.2 ? "visible" : "hidden";
   if (helloCaret) helloCaret.style.visibility = n > 0 && n < HELLO_LINE.length && lineFade > 0.8 ? "visible" : "hidden";
   if (aboutKicker) aboutKicker.style.opacity = (1 - smooth(clamp01((u - 0.26) / 0.10))).toFixed(3);
 }
@@ -1456,9 +1582,12 @@ function matchFrame() {
   let centerNdc = aspect > 1.05 ? 0.3 : 0;
   centerNdc = Math.max(-limit, Math.min(limit, centerNdc));
   const x = centerNdc * dist * tanH;
+  // Drop the bust so the front of the torso meets the bottom of the screen.
+  // The portrait is locked to this box, so it sits on the same edge.
+  const footY = 0.5 - (dist - bustMax.z) * tanV;
   // The bust stays on the right of the frame, and the camera looks straight
   // down the nose so the mirrored sides read as a mirror.
-  bust.position.set(x, 0, 0);
+  bust.position.set(x, footY, 0);
   matchCam.set(x, 0, dist);
   matchLook.set(x, 0, 0);
   portraitShift = centerNdc;
@@ -1469,6 +1598,11 @@ function bustPose(turn) {
   bust.updateMatrixWorld(true);
   eyeW.copy(eyeLocal).applyMatrix4(bust.matrixWorld);
   eyeCamW.copy(eyeCamLocal).applyMatrix4(bust.matrixWorld);
+  headW.copy(headLocal).applyMatrix4(bust.matrixWorld);
+  const aim = eyeCamW.clone().sub(eyeW);
+  if (aim.lengthSq() < 1e-6) aim.set(0, 0, 1);
+  const fit = headRadius / Math.tan((32 * Math.PI / 180) / 2) / 0.62;
+  headCamW.copy(headW).add(aim.normalize().multiplyScalar(fit));
 }
 
 function placePortrait(op) {
@@ -1547,6 +1681,7 @@ function paintAtlas(dt) {
   bust.visible = !reduced && meshFade > 0.01 && bustReady;
   globe.visible = globeOp > 0.01;
   globeMat.opacity = globeOp;
+  globeMat.color.setRGB(0.82, 0.82, 0.82);
   landMat.opacity = globeOp;
   globeFillMat.opacity = globeOp;
   globeFillMat.depthWrite = globeOp > 0.15;
@@ -1554,6 +1689,7 @@ function paintAtlas(dt) {
   matchFrame();
   bustPose(turn);
   if (!reduced && u < 0.56) {
+    // Zoom onto the eye, hold the globe there, then open out to the wide shot.
     if (u < 0.44) {
       atlasCamPos.lerpVectors(matchCam, eyeCamW, turn);
       atlasLook.lerpVectors(matchLook, eyeW, turn);
@@ -1568,8 +1704,12 @@ function paintAtlas(dt) {
     }
   } else {
     const { a, b, t } = blendSpan(globeKeys, Math.max(u, 0.56));
-    setLL(atlasCamPos, a.lat + (b.lat - a.lat) * t, a.lon + (b.lon - a.lon) * t, a.dist + (b.dist - a.dist) * t);
-    setLL(atlasLook, a.lookLat + (b.lookLat - a.lookLat) * t, a.lookLon + (b.lookLon - a.lookLon) * t, a.lookR + (b.lookR - a.lookR) * t);
+    // The wide shot spins the globe. The zoom has to follow that spin,
+    // or it lands west of the Denver dot.
+    const follow = smooth(clamp01((u - 0.8) / 0.2));
+    const spinDeg = globeSpin * 180 / Math.PI * follow;
+    setLL(atlasCamPos, a.lat + (b.lat - a.lat) * t, a.lon + (b.lon - a.lon) * t + spinDeg, a.dist + (b.dist - a.dist) * t);
+    setLL(atlasLook, a.lookLat + (b.lookLat - a.lookLat) * t, a.lookLon + (b.lookLon - a.lookLon) * t + spinDeg, a.lookR + (b.lookR - a.lookR) * t);
     globe.position.copy(origin);
     globe.scale.setScalar(1);
   }
@@ -1583,7 +1723,7 @@ function paintAtlas(dt) {
   placePortrait((1 - morph) * veil);
   const dist = atlasCam.position.length();
   if (u < 0.56) globeSpin = 0;
-  else if (!reduced && dist > 3.2) globeSpin += (dt || 0) * 0.09;
+  else if (!reduced && u < 0.8 && dist > 3.2) globeSpin += (dt || 0) * 0.09;
   globe.rotation.y = globeSpin;
   globe.updateMatrixWorld(true);
   globeLight.position.copy(atlasCam.position);
@@ -1754,6 +1894,35 @@ if (atlasRenderer) {
       lines.renderOrder = 1;
       bust.add(lines);
     });
+    const acc = new THREE.Vector3();
+    const sample = [];
+    bust.updateMatrixWorld(true);
+    bust.traverse((obj) => {
+      const pos = obj.geometry && obj.geometry.attributes.position;
+      if (!pos) return;
+      for (let i = 0; i < pos.count; i += 6) {
+        const y = pos.getY(i);
+        if (y < 0.14) continue;
+        sample.push(pos.getX(i), y, pos.getZ(i));
+        acc.x += pos.getX(i);
+        acc.y += y;
+        acc.z += pos.getZ(i);
+      }
+    });
+    const n = sample.length / 3;
+    if (n > 8) {
+      acc.multiplyScalar(1 / n);
+      const dist = [];
+      for (let i = 0; i < n; i++) {
+        const dx = sample[i * 3] - acc.x;
+        const dy = sample[i * 3 + 1] - acc.y;
+        const dz = sample[i * 3 + 2] - acc.z;
+        dist.push(Math.hypot(dx, dy, dz));
+      }
+      dist.sort((a, b) => a - b);
+      headLocal.copy(acc);
+      headRadius = dist[Math.floor(dist.length * 0.72)] || headRadius;
+    }
     bustReady = true;
   });
   resizeAtlas();
@@ -1799,8 +1968,88 @@ function caseProgress(el) {
   return clamp01(-el.getBoundingClientRect().top / span);
 }
 
-function syncCaseVideo(video, p) {
+function syncCaseVideo(video, p, scrub) {
   if (!video) return;
+  video.muted = true;
+  video.playsInline = true;
+  if (scrub && scrub.play) {
+    video.controls = false;
+    video.playbackRate = 1;
+    const at = scrub.at || 0;
+    video.loop = at <= 0;
+    video.dataset.at = String(at);
+    if (!video.dataset.bound) {
+      video.dataset.bound = "1";
+      video.addEventListener("ended", function () {
+        const restart = Number(video.dataset.at || 0);
+        try { video.currentTime = restart; } catch (err) { /* seek before metadata */ }
+        const again = video.play();
+        if (again && again.catch) again.catch(function () {});
+      });
+    }
+    if (!scrub.visible) {
+      if (!video.paused) video.pause();
+      return;
+    }
+    if (at > 0.2 && video.dataset.cued !== "1") {
+      if (video.dataset.cueing !== "1") {
+        video.dataset.cueing = "1";
+        const cue = function () {
+          if (Math.abs((video.currentTime || 0) - at) < 0.4) {
+            video.dataset.cued = "1";
+            return;
+          }
+          try { video.currentTime = at; } catch (err) { /* seek before metadata */ }
+        };
+        video.addEventListener("seeked", function () {
+          video.dataset.cued = "1";
+          if (video.paused) {
+            const pending = video.play();
+            if (pending && pending.catch) pending.catch(function () {});
+          }
+        }, { once: true });
+        if (video.readyState >= 1) cue();
+        else {
+          try { video.load(); } catch (err) { /* already loading */ }
+          video.addEventListener("loadedmetadata", cue, { once: true });
+        }
+      }
+      return;
+    }
+    if (video.paused && !video.seeking) {
+      const pending = video.play();
+      if (pending && pending.catch) pending.catch(function () {});
+    }
+    return;
+  }
+  video.loop = false;
+  if (scrub) {
+    const dur = video.duration;
+    const known = dur && isFinite(dur) ? dur : 0;
+    if ((scrub.start || 0) > 0.2 && !known) {
+      if (video.readyState < 1) {
+        try { video.load(); } catch (err) { /* already loading */ }
+      }
+      return;
+    }
+    const start = known ? Math.min(scrub.start || 0, Math.max(0, known - 0.2)) : 0;
+    const length = scrub.length || 5;
+    const endAt = known ? Math.min(start + length, Math.max(start, known - 0.04)) : start + length;
+    const u = clamp01((p - scrub.p0) / Math.max(0.01, scrub.p1 - scrub.p0));
+    const t = start + u * Math.max(0, endAt - start);
+    if (p < scrub.p0 || p > scrub.p1) {
+      if (!video.paused) video.pause();
+      return;
+    }
+    const end = video.seekable && video.seekable.length ? video.seekable.end(video.seekable.length - 1) : 0;
+    if (end >= t - 0.05 && !video.seeking && Math.abs((video.currentTime || 0) - t) > 0.07) {
+      try { video.currentTime = t; } catch (err) { /* seek before metadata */ }
+    } else if ((video.currentTime || 0) + 0.15 < t && video.paused) {
+      const pending = video.play();
+      if (pending && pending.catch) pending.catch(function () {});
+    }
+    return;
+  }
   const visible = p > 0.18 && p < 0.86;
   if (!visible) {
     if (!video.paused) video.pause();
@@ -1832,12 +2081,16 @@ function paintCases() {
       syncCaseVideo(film.video, 0.4);
       continue;
     }
-    const logoIn = easeOut(clamp01(p / 0.12));
-    const videoIn = easeOut(clamp01((p - 0.16) / 0.14));
-    const logoOut = smooth(clamp01((p - 0.32) / 0.1));
-    const zoomT = smooth(clamp01((p - 0.38) / 0.18));
-    const textA = easeOut(clamp01((p - 0.58) / 0.12));
-    const out = smooth(clamp01((p - 0.84) / 0.16));
+    const space = film.el.id === "space";
+    const yca = film.el.id === "yca";
+    const planet = film.el.id === "planetarie";
+    const parked = space || yca || planet;
+    const logoIn = easeOut(clamp01(p / (space || planet ? 0.08 : 0.12)));
+    const videoIn = easeOut(clamp01((p - (space || planet ? 0.1 : 0.16)) / (space || planet ? 0.1 : 0.14)));
+    const logoOut = parked ? 0 : smooth(clamp01((p - 0.32) / 0.1));
+    const zoomT = smooth(clamp01((p - (space || planet ? 0.46 : 0.38)) / (space || planet ? 0.2 : 0.18)));
+    const textA = easeOut(clamp01((p - (space || planet ? 0.68 : 0.58)) / 0.1));
+    const out = smooth(clamp01((p - (space || planet ? 0.88 : 0.84)) / 0.12));
     const tileW = film.tile.offsetWidth || 1;
     const tileH = film.tile.offsetHeight || 1;
     const fill = Math.max(vw / tileW, vh / tileH) * 1.06;
@@ -1848,8 +2101,43 @@ function paintCases() {
     }
     const lift = film.logo.classList.contains("case__logo--suite") ? 0 : videoIn * (1 - zoomT) * 24;
     const drop = (1 - videoIn) * 10 + videoIn * (1 - zoomT) * 10;
-    film.logo.style.opacity = (logoIn * (1 - logoOut)).toFixed(3);
-    film.logo.style.transform = "translate(-50%, calc(-50% - " + lift.toFixed(2) + "vh)) scale(" + (0.94 + 0.06 * logoIn).toFixed(3) + ")";
+    const shown = logoIn * (1 - logoOut);
+    film.logo.style.opacity = shown.toFixed(3);
+    if (yca) {
+      const mark = film.logo.querySelector(".case__suite-mark");
+      const partners = film.logo.querySelector(".case__suite-partners");
+      const markIn = easeOut(clamp01(p / 0.14));
+      film.logo.style.opacity = "1";
+      if (mark) mark.style.opacity = markIn.toFixed(3);
+      if (partners) {
+        const logos = partners.querySelectorAll("img");
+        for (let n = 0; n < logos.length; n++) {
+          const inn = easeOut(clamp01((p - 0.05 - n * 0.028) / 0.07));
+          logos[n].style.opacity = (inn * (1 - videoIn)).toFixed(3);
+        }
+      }
+    }
+    if (parked) {
+      const park = (space || planet) ? smooth(clamp01((p - 0.1) / 0.22)) : videoIn;
+      const shift = -50 * (1 - park);
+      const intro = yca ? easeOut(clamp01(p / 0.14)) : logoIn;
+      const sc = (0.94 + 0.06 * intro) * (1 - 0.2 * park);
+      const topPct = yca ? 50 : 42;
+      film.logo.style.transformOrigin = "top left";
+      film.logo.style.setProperty("--park", park.toFixed(3));
+      film.logo.style.left = (50 * (1 - park)).toFixed(3) + "%";
+      film.logo.style.top = (topPct * (1 - park)).toFixed(3) + "%";
+      if (yca) {
+        const plate = film.logo.querySelector(".case__suite-plate");
+        const markH = plate ? plate.offsetHeight : 0;
+        const yPx = (1 - park) * -(markH / 2);
+        film.logo.style.transform = "translate(" + shift.toFixed(2) + "%, " + yPx.toFixed(2) + "px) scale(" + sc.toFixed(3) + ")";
+      } else {
+        film.logo.style.transform = "translate(" + shift.toFixed(2) + "%, " + shift.toFixed(2) + "%) scale(" + sc.toFixed(3) + ")";
+      }
+    } else {
+      film.logo.style.transform = "translate(-50%, calc(-50% - " + lift.toFixed(2) + "vh)) scale(" + (0.94 + 0.06 * logoIn).toFixed(3) + ")";
+    }
     film.wrap.style.opacity = videoIn.toFixed(3);
     film.wrap.style.transform = "translate(-50%, calc(-50% + " + drop.toFixed(2) + "vh))";
     film.tile.style.transform = "scale(" + scale.toFixed(4) + ")";
@@ -1859,7 +2147,11 @@ function paintCases() {
     film.beats[0].style.transform = "translateY(" + ((1 - textA) * 28).toFixed(2) + "vh)";
     film.zoom.style.transform = "scale(" + (1 - out * 0.94).toFixed(4) + ")";
     film.zoom.style.opacity = (1 - smooth(clamp01((out - 0.45) / 0.55))).toFixed(3);
-    syncCaseVideo(film.video, p);
+    const box = film.el.getBoundingClientRect();
+    const onScreen = box.top < vh * 0.92 && box.bottom > vh * 0.08;
+    syncCaseVideo(film.video, p, (space || yca)
+      ? { play: true, visible: onScreen, at: yca ? 10 : 0 }
+      : null);
   }
 }
 
@@ -1876,6 +2168,281 @@ function syncAbout() {
   }
 }
 
+const satGroup = new THREE.Group();
+const satBay = new THREE.Object3D();
+satGroup.visible = false;
+scene.add(satGroup);
+const satWire = new THREE.MeshBasicMaterial({ color: "#ffffff", wireframe: true, transparent: true });
+const satDark = new THREE.MeshStandardMaterial({ color: "#141618", metalness: 0.25, roughness: 0.62, transparent: true });
+(function buildSatellite() {
+  const bus = new THREE.Mesh(new THREE.BoxGeometry(1.5, 1.85, 1.05, 2, 2, 2), satWire);
+  bus.position.y = 0.2;
+  const core = new THREE.Mesh(new THREE.BoxGeometry(0.92, 1.15, 0.64, 2, 2, 2), satWire);
+  core.position.y = 0.16;
+  const rib = new THREE.Mesh(new THREE.BoxGeometry(1.2, 0.04, 0.72, 2, 1, 2), satWire);
+  rib.position.y = 0.2;
+  const panelGeo = new THREE.BoxGeometry(2.5, 1.15, 0.04);
+  const panelL = new THREE.Mesh(panelGeo, satDark);
+  panelL.position.set(-2.15, 0.35, 0);
+  const panelR = panelL.clone();
+  panelR.position.x = 2.15;
+  const yokeL = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.05, 0.08), satWire);
+  yokeL.position.set(-1.0, 0.42, 0);
+  const yokeR = yokeL.clone();
+  yokeR.position.x = 1.0;
+  const lip = new THREE.Mesh(new THREE.BoxGeometry(0.92, 1.05, 0.06, 2, 2, 1), satWire);
+  lip.position.set(0, 0.02, 0.2);
+  satGroup.add(bus, core, rib, panelL, panelR, yokeL, yokeR, lip);
+  satBay.position.set(0, 0.05, 0);
+  satGroup.add(satBay);
+  satGroup.scale.setScalar(0.8);
+})();
+
+const padGroup = new THREE.Group();
+padGroup.visible = false;
+scene.add(padGroup);
+function padFadeMap(kind) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 256;
+  canvas.height = 256;
+  const g = canvas.getContext("2d");
+  const shade = kind === "tower"
+    ? g.createLinearGradient(0, 256, 0, 0)
+    : g.createRadialGradient(128, 128, 8, 128, 128, 128);
+  shade.addColorStop(0, "rgba(36,36,36,0.85)");
+  shade.addColorStop(0.42, "rgba(14,14,14,0.28)");
+  shade.addColorStop(1, "rgba(1,1,1,0)");
+  g.fillStyle = shade;
+  g.fillRect(0, 0, 256, 256);
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+function padMat(kind) {
+  return new THREE.MeshBasicMaterial({
+    map: padFadeMap(kind),
+    transparent: true,
+    depthWrite: false,
+    toneMapped: false
+  });
+}
+const padDeckMat = padMat("deck");
+const padTankMat = padMat("tank");
+const padHoldMat = padMat("tower");
+(function buildPad() {
+  const deck = new THREE.Mesh(new THREE.BoxGeometry(48, 0.6, 30), padDeckMat);
+  deck.position.y = -0.3;
+  padGroup.add(deck);
+  const spine = new THREE.Mesh(new THREE.BoxGeometry(1.1, 58, 1.4), padHoldMat);
+  spine.position.set(-5.4, 29, -1.2);
+  const cradle = new THREE.Mesh(new THREE.BoxGeometry(0.35, 48, 0.35), padHoldMat);
+  cradle.position.set(-3.6, 26, -0.4);
+  cradle.rotation.z = 0.08;
+  padGroup.add(spine, cradle);
+  for (let i = 0; i < 3; i++) {
+    const tank = new THREE.Mesh(new THREE.SphereGeometry(2.2, 28, 18), padTankMat);
+    tank.position.set(14, 2.2, -7 + i * 5.5);
+    padGroup.add(tank);
+  }
+})();
+
+const falconRig = new THREE.Group();
+falconRig.visible = false;
+scene.add(falconRig);
+const falconClip = new THREE.Plane(new THREE.Vector3(0, 0, -1), 0.35);
+const falconWireMat = new THREE.MeshBasicMaterial({ color: "#ffffff", wireframe: true, transparent: true });
+let falconStarted = false;
+let falconReady = false;
+let falconWire = null;
+let rocketLoop = 0;
+let spinLatch = null;
+const falconSolidMats = [];
+const outlookTmp = new THREE.Vector3();
+const outlookCam = new THREE.Vector3();
+
+function loadFalcon() {
+  if (falconStarted) return;
+  falconStarted = true;
+  new GLTFLoader().load("assets/falcon.glb", (gltf) => {
+    const model = gltf.scene;
+    model.updateMatrixWorld(true);
+    const box = new THREE.Box3().setFromObject(model);
+    model.position.y -= box.min.y;
+    falconWireMat.clippingPlanes = [falconClip];
+    model.traverse((node) => {
+      if (!node.isMesh) return;
+      const list = Array.isArray(node.material) ? node.material : [node.material];
+      list.forEach((mat) => {
+        mat.transparent = true;
+        mat.opacity = 0;
+        mat.side = THREE.DoubleSide;
+        mat.clippingPlanes = [falconClip];
+        falconSolidMats.push(mat);
+      });
+    });
+    // These two parts sit on the vessel centerline and cut through the dome.
+    model.traverse((node) => {
+      if (node.name === "Interstage_Engine_holder" || node.name === "Interstage_Engine_holder_extra") node.visible = false;
+    });
+    const lines = model.clone();
+    lines.traverse((node) => {
+      if (node.isMesh) node.material = falconWireMat;
+    });
+    falconWire = lines;
+    falconRig.add(model, lines);
+    falconReady = true;
+  });
+}
+
+function outlookProgress() {
+  const sat = document.getElementById("outlook-sat");
+  const pad = document.getElementById("outlook-pad");
+  const out = document.getElementById("outlook-out");
+  if (!sat || !pad) return -1;
+  if (reduced) {
+    const padTop = pad.getBoundingClientRect().top;
+    const satTop = sat.getBoundingClientRect().top;
+    if (out && out.getBoundingClientRect().top < window.innerHeight * 0.4) return 1;
+    if (padTop < window.innerHeight * 0.72) return 0.7;
+    if (satTop < window.innerHeight * 0.72) return 0.2;
+    return -1;
+  }
+  const tail = out || pad;
+  const start = sat.offsetTop;
+  const end = tail.offsetTop + tail.offsetHeight - window.innerHeight;
+  return (window.scrollY - start) / Math.max(1, end - start);
+}
+
+function poseOutlook(u) {
+  if (u > -0.35) loadFalcon();
+  const active = u >= 0;
+  const padCopy = document.getElementById("outlook-pad");
+  if (!active) {
+    satGroup.visible = false;
+    padGroup.visible = false;
+    falconRig.visible = false;
+    padGroup.rotation.y = 0;
+    falconRig.rotation.y = 0;
+    root.position.set(0, 0, 0);
+    root.scale.setScalar(1);
+    rocketLoop = 0;
+    spinLatch = null;
+    if (padCopy) {
+      padCopy.style.setProperty("--copy", "0");
+      delete padCopy.dataset.copyReady;
+      padCopy.querySelectorAll(".h-line").forEach((line) => line.classList.remove("is-in"));
+    }
+    document.body.style.background = "";
+    if (camera.far !== 40) {
+      camera.far = 40;
+      camera.updateProjectionMatrix();
+    }
+    return 0;
+  }
+  const pose = Math.min(u, 1);
+  if (spinLatch == null) spinLatch = idleSpin;
+  const tau = Math.PI * 2;
+  const rem = ((spinLatch % tau) + tau) % tau;
+  const spinGoal = spinLatch + (rem < 0.03 ? 0 : tau - rem);
+  const settle = smooth(clamp01(pose / 0.07));
+  const yawNow = spinLatch + (spinGoal - spinLatch) * settle;
+  const rise = smooth(clamp01((pose - 0.07) / 0.05));
+  const stand = smooth(clamp01((pose - 0.13) / 0.06));
+  const marry = smooth(clamp01((pose - 0.20) / 0.18));
+  const zoom = smooth(clamp01((pose - 0.42) / 0.06));
+  const cross = smooth(clamp01((pose - 0.48) / 0.22));
+  const wideLinear = clamp01((pose - 0.72) / 0.14);
+  const wide = Math.pow(smooth(wideLinear), 1.7);
+  const filled = smooth(clamp01((wide - 0.15) / 0.85));
+  const deckIn = smooth(clamp01((wide - 0.62) / 0.38));
+  const holdIn = smooth(clamp01((wide - 0.94) / 0.06));
+  const scripted = clamp01((pose - 0.86) / 0.08) * Math.PI * 2;
+  const looping = pose >= 0.94;
+  const spin = looping ? scripted + rocketLoop : scripted;
+  const wash = smooth(clamp01((pose - 0.94) / 0.06));
+  const satYaw = 0.32;
+  const satOpacity = marry * (1 - smooth(clamp01(cross / 0.28)));
+  satWire.opacity = satOpacity;
+  satDark.opacity = satOpacity;
+  satGroup.visible = satOpacity > 0.02;
+  satGroup.position.set(0, 0.05, 0);
+  satGroup.rotation.order = "YXZ";
+  satGroup.rotation.set((1 - marry) * -0.22, satYaw + (1 - marry) * (Math.PI / 2), (1 - marry) * 0.4);
+  satGroup.updateMatrix();
+  satBay.updateWorldMatrix(true, false);
+  satBay.getWorldPosition(outlookTmp);
+  const centerY = 1.18;
+  const rocketMount = new THREE.Vector3(0, 45.6, 0);
+  rocketMount.applyAxisAngle(new THREE.Vector3(0, 1, 0), spin);
+  const climb = smooth(clamp01((cross - 0.16) / 0.84));
+  const here = new THREE.Vector3(0, centerY * rise, 0).lerp(outlookTmp, marry).lerp(rocketMount, climb);
+  root.position.copy(here);
+  const satScale = 0.29;
+  const rocketScale = 0.34;
+  root.scale.setScalar(1 + (satScale - 1) * marry + (rocketScale - satScale) * climb);
+  root.rotation.order = "XYZ";
+  const upright = new THREE.Quaternion().setFromEuler(new THREE.Euler(0, 0, Math.PI / 2));
+  if (marry <= 0) {
+    root.rotation.set(0, 0, stand * Math.PI / 2);
+    if (settle < 1) root.rotateY(yawNow);
+  } else if (cross <= 0) {
+    root.quaternion.copy(upright).slerp(satGroup.quaternion, marry);
+  } else {
+    root.quaternion.copy(satGroup.quaternion).slerp(upright, climb);
+  }
+  root.quaternion.premultiply(new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), spin));
+  const rocketIn = smooth(clamp01(cross / 0.2)) * (1 - wash);
+  const skin = filled > 0.98;
+  falconClip.constant = 0.7 + wide * 0.55;
+  falconWireMat.clippingPlanes = skin ? [] : [falconClip];
+  falconWireMat.opacity = (1 - filled) * rocketIn;
+  falconWireMat.depthWrite = filled < 0.04;
+  falconSolidMats.forEach((mat) => {
+    mat.clippingPlanes = skin ? [] : [falconClip];
+    mat.opacity = filled * rocketIn;
+  });
+  if (falconWire) falconWire.visible = filled < 0.98 && rocketIn > 0.02;
+  falconRig.visible = rocketIn > 0.02 && falconReady;
+  falconRig.rotation.y = spin;
+  padGroup.visible = (deckIn > 0.02 || holdIn > 0.02) && falconReady && wash < 0.98;
+  padGroup.rotation.y = spin;
+  const padFade = 1 - wash;
+  padDeckMat.opacity = deckIn * padFade * 0.52;
+  padTankMat.opacity = deckIn * padFade * 0.44;
+  padHoldMat.opacity = holdIn * padFade * 0.4;
+  if (camera.far !== 500) {
+    camera.far = 500;
+    camera.updateProjectionMatrix();
+  }
+  const look = new THREE.Vector3(0, centerY, 0).lerp(here, Math.max(rise, marry, zoom));
+  // Pad bottom sits on the background seam. That seam is 85% down the frame
+  // once the floor wash has settled (0.66 + 0.07 + 0.12).
+  if (wide > 0) look.lerp(new THREE.Vector3(0, 33.6, 0), wide);
+  const satCam = new THREE.Vector3(2.4, 0.55, 5.6);
+  const level = smooth(clamp01((climb - 0.58) / 0.42));
+  const followOff = new THREE.Vector3(0.25, -1.7, 0.7).lerp(new THREE.Vector3(0.75, 0.05, 2.7), level);
+  const followCam = here.clone().add(followOff);
+  const wideCamPos = new THREE.Vector3(102, 18, 136);
+  outlookCam.copy(new THREE.Vector3(0, 0, 7.1)).lerp(satCam, marry);
+  if (zoom > 0) outlookCam.lerp(followCam, zoom);
+  if (wide > 0) outlookCam.lerp(wideCamPos, wide);
+  camera.position.copy(outlookCam);
+  camera.lookAt(look);
+  if (padCopy) {
+    const copyIn = smooth(clamp01((cross - 0.02) / 0.05));
+    const copyOut = smooth(clamp01((pose - 0.9) / 0.08));
+    padCopy.style.setProperty("--copy", String(copyIn * (1 - copyOut)));
+    const words = padCopy.querySelectorAll(".stack-word");
+    words.forEach((line, i) => {
+      line.classList.toggle("is-on", climb >= (i + 1) / (words.length + 0.4));
+    });
+    const stacked = climb >= words.length / (words.length + 0.4);
+    padCopy.style.setProperty("--subs", String((stacked ? smooth(clamp01((climb - 0.9) / 0.1)) : 0) * (1 - copyOut)));
+  }
+  document.body.style.background = wash > 0.02 ? "#ffffff" : "";
+  return wash;
+}
+
 function frame(now) {
   const dt = Math.min(0.05, (now - lastFrame) / 1000);
   lastFrame = now;
@@ -1884,12 +2451,16 @@ function frame(now) {
     ? { pos: [0.12, 0, 7.1], wire: 0, face: 0, form: 1, spin: 0, seat: 1, spread: 0, vshow: 1, vseat: 1, weld: 1, wrap: 1, yaw: 0, boss: 1, beat: "05 · Together", line: "All of it, together." }
     : poseAt(t);
   const atEnd = !reduced && t >= 0.999;
-  if (atEnd) {
+  const outlookU = outlookProgress();
+  const outlookOn = outlookU >= 0;
+  if (outlookU >= 0.94) rocketLoop += dt * (Math.PI * 2 / 42);
+  else rocketLoop = 0;
+  if (atEnd && !outlookOn) {
     idleSpin += dt * (Math.PI * 2 / 24);
     glowTime = Math.min(3, glowTime + dt);
-  } else {
+  } else if (!outlookOn) {
     idleSpin = 0;
-    glowTime = 0;
+    if (!atEnd) glowTime = 0;
   }
   if ((atEnd || reduced) && document.documentElement.dataset.spin !== "1") {
     document.documentElement.dataset.spin = "1";
@@ -1898,10 +2469,12 @@ function frame(now) {
   state.idle = idleSpin;
   state.drop = codaDrop();
   // End hold only. Clears the centered culmination line. Earlier beats stay put.
-  state.nudge = atEnd || reduced ? 0.72 : 0;
+  state.nudge = (atEnd || reduced ? 0.72 : 0) * (reduced ? 1 : state.drop);
   const glow = reduced ? 1 : glowTime / 3;
-  paintBackground(glow, atEnd || reduced ? state.drop : 0, atEnd || reduced ? 0.12 : 0);
   syncAbout();
+  syncAwards();
+  syncTeach();
+  syncQuotes();
   paintCity();
   paintAtlas(dt);
   paintCases();
@@ -1913,6 +2486,8 @@ function frame(now) {
     drawingFlat.visible = state.wire * wireIn > 0.02;
   }
   alignBlueprint(t);
+  const wash = poseOutlook(outlookU);
+  paintBackground(glow, atEnd || reduced ? state.drop : 0, (atEnd || reduced ? 0.12 : 0) * (reduced ? 1 : state.drop), wash || 0);
   renderer.render(scene, camera);
   requestAnimationFrame(frame);
 }
