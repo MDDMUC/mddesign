@@ -2124,7 +2124,7 @@ function syncCaseVideo(video, p, scrub) {
 const practicesEl = document.getElementById("practices");
 const practiceCards = practicesEl ? Array.from(practicesEl.querySelectorAll(".practice")) : [];
 
-const STARS_LINE = "When I am\nnot working\nI love to train\nand to climb.";
+const STARS_LINE = "When I am\nnot working\nI love to train\nand to climb";
 const starsEl = document.getElementById("stars");
 const starsType = document.getElementById("stars-type");
 const starsCaret = document.getElementById("stars-caret");
