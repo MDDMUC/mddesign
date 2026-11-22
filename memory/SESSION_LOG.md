@@ -222,3 +222,24 @@ Append-only. Newest entries at the **bottom**.
 **Shipped:** Sample events removed from `blackwave-visits`. The first `open` in a session sends one mail to `MAIL_TO` through the existing SMTP settings. Later chapters in that session do not send another mail. A local test open returned in about two seconds with no SMTP error, then that test row was deleted.
 
 **Next:** Watch the inbox after the deploy. The visits page should be empty until a real open.
+
+---
+
+## 2026-11-22 — Session close
+
+**Focus:** Close the day. The feature commits were already on `main`. This entry is the full record.
+
+**Shipped, already pushed:**
+- `db4781a` — Homepage hero is `Designer`, with `UI/UX` after `systems` on the subline. `/studio` Index no longer shows award years. Years remain in the data.
+- `e292983` — `/blackwave` records an open, each chapter that enters the viewport, and link clicks. `/blackwave/visits` lists those sessions. A plain `/blackwave` link is tracked. `?ref=` only names the row.
+- `8c379f8` — The first open in a browser session emails `MAIL_TO` through the existing SMTP settings. Twelve sample sessions were written for a layout check, then deleted.
+
+**Infrastructure, not in git:** Vercel account `hello-6738`, project `mddmucs-projects/mddesign`. Upstash Redis `blackwave-visits` is free, in Frankfurt, with auto-upgrade off. Env on the project: `KV_REST_API_URL`, `KV_REST_API_TOKEN`, and `BLACKWAVE_READ_KEY` for Production and Development. The key is also in `site/.env.local`. Preview does not have the read key.
+
+**Checked:** Local POST stored a visit and the list API returned it. A later open took about two seconds and logged no SMTP error. Those test rows were deleted.
+
+**Left untracked on purpose:** `.tmp-shots/`, Manwë resume PDF, `_pe-analyzer-src.pdf`, `martin-portrait - small.jpg`, `videos/yca/`.
+
+**Open:** Browser tab title still leads with UI/UX. Manwë resume test is undecided. Photography masters are still open. Confirm one real visit after the `8c379f8` deploy.
+
+**Next:** Open `/blackwave` after deploy and confirm the email plus one row on `/blackwave/visits`.

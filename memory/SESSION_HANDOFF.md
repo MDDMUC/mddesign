@@ -3,15 +3,16 @@
 > Rewrite this whole file at session end. Next session reads this first after the protocol.
 
 **Last updated:** 2026-11-22  
-**Session:** Blackwave visits are stored in Upstash Redis `blackwave-visits`. The sample rows were deleted. The first open in a session emails `MAIL_TO`. Read the list at `/blackwave/visits`.
+**Session:** Hero copy, studio Index years, and Blackwave visit tracking are on `main`. Latest commit `8c379f8`.
 
 ---
 
 ## Current focus
 
-1. **Homepage hero** — H1 is `Designer`. Subline is `brand · product · systems · UI/UX` in `site/data/home.ts`. Tab title still says `Designer · UI/UX, brand, product systems`.
-2. **`/studio` Index** — award name + repeated marks. Years stay in the data and are not rendered. Red Dot, German Digital Innovation, and CO Cup still have no logo file.
-3. **Positioning sentence** — brand before UI/UX. CEPRES is `$65T+` (their 15 June 2026 SuperReturn note). Keller Sports in that sentence is “a global e-commerce business”. Case-study pages still say €100m and $45T where those lines were not part of this sentence.
+1. **Blackwave visits** — any open of `/blackwave` is stored. `?ref=name` is only the label on the row. The list is `/blackwave/visits`, unlocked with `BLACKWAVE_READ_KEY` (Vercel Production and Development, and `site/.env.local`). Store is Upstash `blackwave-visits`, free, Frankfurt, auto-upgrade off. The first open in a browser session emails `MAIL_TO`. Later chapters do not send more mail. Sample rows were deleted. Preview does not have the read key.
+2. **Homepage hero** — H1 is `Designer`. Subline is `brand · product · systems · UI/UX` in `site/data/home.ts`. The browser tab title still says `Designer · UI/UX, brand, product systems`.
+3. **`/studio` Index** — award name and repeated marks. Years stay in the data and are not rendered. Red Dot, German Digital Innovation, and CO Cup still have no logo file.
+4. **Positioning sentence** — brand before UI/UX. CEPRES is `$65T+`. Keller Sports in that sentence is “a global e-commerce business”. Some case pages still say €100m and $45T.
 
 ---
 
@@ -22,16 +23,18 @@
 - Photography pipeline open (BRIEF §6).
 - `design/exports/` gitignored.
 - Local only: `MartinDrexler-Resume-manwe-test.pdf` (Manwë full-height right, pedestal clipped) — decide keep/kill before shipping.
+- Do not commit `.env.local` or print `BLACKWAVE_READ_KEY` into the repo.
 
 ---
 
 ## Exact next steps (next session)
 
-1. Visual QA of `/` and `/studio` after this deploy. Tab title still leads with UI/UX if Martin wants that matched to the hero.
-2. Decide Manwë-on-CV test (promote into real resume vs delete local PDF)
-3. Native photography masters when ready
-4. Referrals / essays still wait on real content
-5. `/blackwave` is live from `18bef07`. Do not republish it unless Martin asks.
+1. After the `8c379f8` deploy, open `/blackwave` once and confirm the email and a single row on `/blackwave/visits`.
+2. Visual QA of `/` and `/studio`. Match the tab title to the hero only if Martin asks.
+3. Decide the Manwë-on-CV test (promote into the real resume or delete the local PDF).
+4. Native photography masters when ready.
+5. Referrals / essays still wait on real content.
+6. Do not republish `/blackwave` unless Martin asks. Tracking changes are allowed.
 
 ---
 
@@ -40,10 +43,14 @@
 | Need | Path |
 |------|------|
 | Work data / covers | `site/data/work.ts` |
-| Homepage | `site/app/page.tsx`, `page.module.css` |
-| Client logos | `site/public/images/clients/` (`byte.png`, `keller-sports.png`, `creative-consortium.svg`) |
+| Homepage copy | `site/data/home.ts` |
+| Blackwave page | `site/app/blackwave/page.tsx` |
+| Blackwave scroll | `site/public/blackwave-static/index.html`, `track.js` |
+| Visit API and mail | `site/app/api/blackwave/route.ts` |
+| Visit list | `site/app/blackwave/visits/page.tsx` |
+| Visit store | `site/lib/blackwave-visits.ts` |
+| Client logos | `site/public/images/clients/` |
 | Resume (production) | `site/public/documents/MartinDrexler-Resume.pdf` |
-| High Council preview | `site/public/preview/high-council.html` + `high-council/*.stl` |
 | Locks | `logs/DECISIONS.md` |
 
 ---

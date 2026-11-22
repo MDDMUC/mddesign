@@ -46,6 +46,8 @@ Chrome: floating **SiteNav** (bar on `/`+`/contact`; left rail on `/studio`+case
 
 **Copy (2026-11-22):** Homepage hero H1 is `Designer`. Subline is `brand · product · systems · UI/UX` (`site/data/home.ts`). `/studio` Index shows the award name and marks. Years stay in the awards array and are not rendered.
 
+**Blackwave visits (2026-11-22):** `/blackwave` is the one-scroll application in an iframe (`site/public/blackwave-static/`). `track.js` records an open, each chapter that reaches the viewport, and link clicks. Any visit is tracked. `?ref=` only names the row. `/blackwave/visits` lists sessions behind `BLACKWAVE_READ_KEY`. Storage is the Vercel Upstash store `blackwave-visits` (free, Frankfurt, auto-upgrade off) via `KV_REST_API_URL` / `KV_REST_API_TOKEN`. The first open in a session emails `MAIL_TO`. The read key is in Vercel Production and Development and in `site/.env.local`. It is not in the repo. Sample rows were deleted.
+
 ## Locks (do not reopen without Martin)
 
 - Positioning: UI/UX-led, brand-fluent, "design as business strategy." Studio lede is the BRIEF §3 paragraph, verbatim.
