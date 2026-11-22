@@ -202,3 +202,13 @@ Append-only. Newest entries at the **bottom**.
 **Open:** Browser tab title is still `Designer · UI/UX, brand, product systems`. Martin did not ask to change it.
 
 **Next:** Visual QA of `/` and `/studio` after deploy.
+
+---
+
+## 2026-11-22 — Blackwave visit log
+
+**Focus:** Record who opens `/blackwave` and show it on a private page.
+
+**Shipped:** `track.js` posts an open, each chapter that enters the viewport, and link clicks to `/api/blackwave`. `/blackwave/visits` lists those sessions after the read key. A `?ref=` on `/blackwave` is the name on the row. Storage is the Vercel Upstash store `blackwave-visits` (`KV_REST_API_URL` / `KV_REST_API_TOKEN`). The read key is in Vercel Production and Development, and in local `.env.local`. It is not in the repo.
+
+**Next:** Open `/blackwave/visits` after the deploy. Send marked links as `/blackwave?ref=name`.

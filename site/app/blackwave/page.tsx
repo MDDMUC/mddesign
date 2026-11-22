@@ -6,10 +6,23 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 
-export default function BlackwavePage() {
+type Search = Record<string, string | string[] | undefined>
+
+export default async function BlackwavePage({
+  searchParams,
+}: {
+  searchParams: Promise<Search>
+}) {
+  const query = await searchParams
+  const raw = typeof query.ref === 'string' ? query.ref : ''
+  const ref = raw.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 40)
+  const src = ref
+    ? `/blackwave-static/index.html?ref=${encodeURIComponent(ref)}`
+    : '/blackwave-static/index.html'
+
   return (
     <iframe
-      src="/blackwave-static/index.html"
+      src={src}
       title="Blackwave application"
       style={{
         position: 'fixed',

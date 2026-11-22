@@ -3,7 +3,7 @@
 > Rewrite this whole file at session end. Next session reads this first after the protocol.
 
 **Last updated:** 2026-11-22  
-**Session:** Homepage hero reads Designer / brand · product · systems · UI/UX. Studio Index no longer shows years.
+**Session:** Blackwave visits are stored in Upstash Redis `blackwave-visits` (free, Frankfurt, no auto-upgrade). Read them at `/blackwave/visits` with `BLACKWAVE_READ_KEY`.
 
 ---
 

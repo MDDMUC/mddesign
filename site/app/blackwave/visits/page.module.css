@@ -1,0 +1,124 @@
+.main {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: var(--space-9) var(--space-4) var(--space-10);
+}
+
+.kicker,
+.meta,
+.time,
+.note,
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.kicker {
+  color: var(--ink-60);
+  margin: 0 0 var(--space-3);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 500;
+  letter-spacing: var(--tracking-display-tight);
+  margin: 0;
+}
+
+.lede,
+.empty,
+.path,
+.clicks {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--ink-80);
+}
+
+.lede {
+  max-width: 36rem;
+  margin: var(--space-4) 0 var(--space-6);
+}
+
+.note,
+.error {
+  margin: 0 0 var(--space-5);
+  color: var(--ink-70);
+}
+
+.form {
+  display: grid;
+  gap: var(--space-2);
+  max-width: 18rem;
+  margin-bottom: var(--space-6);
+}
+
+.label {
+  color: var(--ink-60);
+}
+
+.input {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--ink);
+  background: var(--bg);
+  border: var(--rule);
+  padding: var(--space-2) var(--space-3);
+}
+
+.button {
+  justify-self: start;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-inverse);
+  background: var(--ink);
+  border: 0;
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: var(--rule);
+}
+
+.row {
+  padding: var(--space-4) 0;
+  border-bottom: var(--rule-faint);
+}
+
+.who {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  align-items: baseline;
+}
+
+.ref {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+}
+
+.time,
+.meta {
+  color: var(--ink-60);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.meta,
+.path,
+.clicks {
+  margin: var(--space-2) 0 0;
+}
+
+.clicks {
+  color: var(--ink-70);
+}
