@@ -517,9 +517,8 @@ main {
   letter-spacing: var(--tracking-sub);
 }
 
-/* Wraps the competitive-advantage line at the width of "You are unique." */
 #product .materials-copy .display__line:last-child {
-  max-width: calc(7.18 * var(--fs-chapter));
+  max-width: min(var(--measure-chapter), 100%);
 }
 
 .display__line a {
@@ -1396,6 +1395,21 @@ h1.h-rise {
 
 #outlook-sat {
   min-height: 260svh;
+  border-bottom: 0;
+}
+
+.sat-copy {
+  position: fixed;
+  z-index: 4;
+  left: var(--pad);
+  bottom: var(--pad);
+  width: min(36rem, calc(100vw - (var(--pad) * 2) - var(--rail)));
+  opacity: var(--sat, 0);
+  pointer-events: none;
+}
+
+.sat-copy .h-line__in {
+  transform: none;
 }
 
 #outlook-pad {
@@ -1481,7 +1495,7 @@ h1.h-rise {
 .quote-by {
   font-size: 0.26em;
   letter-spacing: 0;
-  margin-top: 0.45em;
+  margin-top: 2.75rem;
 }
 
 .quote-by em {
@@ -1490,6 +1504,7 @@ h1.h-rise {
 }
 
 #rest .rest-sub {
+  margin-top: 3.5rem;
   opacity: var(--rest-sub, 0);
   transform: translateY(calc((1 - var(--rest-sub, 0)) * 0.8em));
 }
@@ -2461,11 +2476,21 @@ h1.h-rise {
   padding-right: calc(var(--pad) + var(--rail));
 }
 
-.stars__title {
+.stars-copy {
   flex: none;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  max-width: 16em;
+}
+
+.stars__title {
   margin: 0;
   white-space: pre-line;
+}
+
+.stars__sub {
+  margin-top: 0.85rem;
 }
 
 .stars {

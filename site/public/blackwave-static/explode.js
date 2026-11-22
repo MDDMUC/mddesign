@@ -1149,7 +1149,7 @@ const helloType = document.getElementById("hello-type");
 const helloCaret = document.getElementById("hello-caret");
 const portraitPhoto = document.getElementById("portrait-photo");
 const aboutKicker = portraitEl && portraitEl.querySelector(".frame__num");
-const AWARDS_LINE = "I deliver\naward-winning\ndesign.";
+const AWARDS_LINE = "The marks\nare on\nthe work.";
 const END_LINE = "Let's talk.";
 const endEl = document.getElementById("together");
 const endType = document.getElementById("end-type");
@@ -1158,7 +1158,7 @@ let endCount = 0;
 let endStarted = 0;
 const awardsType = document.getElementById("awards-type");
 const awardsCaret = document.getElementById("awards-caret");
-const TEACH_LINE = "I have taught\nbranding and design\nat the highest level";
+const TEACH_LINE = "I have\ntaught this.";
 const teachType = document.getElementById("teach-type");
 const teachCaret = document.getElementById("teach-caret");
 const GREET_LINE = "Hello,\nI'm Martin";
@@ -2455,6 +2455,8 @@ function poseOutlook(u) {
     root.scale.setScalar(1);
     rocketLoop = 0;
     spinLatch = null;
+    const satCopy = document.querySelector("#outlook-sat .sat-copy");
+    if (satCopy) satCopy.style.setProperty("--sat", "0");
     if (padCopy) {
       padCopy.style.setProperty("--copy", "0");
       delete padCopy.dataset.copyReady;
@@ -2556,6 +2558,12 @@ function poseOutlook(u) {
   if (wide > 0) outlookCam.lerp(wideCamPos, wide);
   camera.position.copy(outlookCam);
   camera.lookAt(look);
+  const satCopy = document.querySelector("#outlook-sat .sat-copy");
+  if (satCopy) {
+    const seated = reduced ? 1 : smooth(clamp01((marry - 0.9) / 0.1));
+    const satOut = reduced ? 0 : smooth(clamp01((pose - 0.43) / 0.05));
+    satCopy.style.setProperty("--sat", String(seated * (1 - satOut)));
+  }
   if (padCopy) {
     const copyIn = smooth(clamp01((cross - 0.02) / 0.05));
     const copyOut = smooth(clamp01((pose - 0.9) / 0.08));
