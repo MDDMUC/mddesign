@@ -2594,9 +2594,26 @@ h1.h-rise {
 
 .frame--end .display,
 .frame--end .frame__num,
-.frame--end .end__sub {
+.frame--end .end__sub,
+.frame--end .end__home {
   position: relative;
   z-index: 3;
+}
+
+.end__home {
+  display: inline-block;
+  margin: 1.25rem 0 0;
+  padding: 0.65rem 1rem;
+  background: #010101;
+  color: #fff;
+  font-family: HelveticaNowDisplay, Helvetica, "Helvetica Neue", Arial, sans-serif;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.end__home:hover {
+  background: #222;
 }
 
 .end__sub {
