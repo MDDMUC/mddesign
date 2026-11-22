@@ -65,6 +65,19 @@ export async function recordVisit(event: Event): Promise<void> {
   await redisCommand(['LTRIM', KEY, 0, MAX - 1])
 }
 
+/** True only the first time this session opens the page. */
+export async function claimFirstOpen(sid: string): Promise<boolean> {
+  const result = await redisCommand([
+    'SET',
+    `blackwave:mailed:${sid}`,
+    '1',
+    'NX',
+    'EX',
+    60 * 60 * 24 * 30,
+  ])
+  return result === 'OK'
+}
+
 export async function listVisits(): Promise<Visit[]> {
   const raw = await redisCommand(['LRANGE', KEY, 0, MAX - 1])
   const rows = Array.isArray(raw) ? raw : []

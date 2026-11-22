@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server'
+import nodemailer from 'nodemailer'
 import {
+  claimFirstOpen,
   cleanVisitField,
   listVisits,
   recordVisit,
@@ -44,7 +46,44 @@ export async function POST(req: Request) {
   } catch {
     return NextResponse.json({ error: 'Could not store the view.' }, { status: 502 })
   }
+
+  if (kind === 'open') {
+    try {
+      const first = await claimFirstOpen(sid)
+      if (first) await notifyOpen(ref)
+    } catch (err) {
+      console.error('Blackwave visit mail failed', err)
+    }
+  }
+
   return NextResponse.json({ ok: true })
+}
+
+async function notifyOpen(ref: string) {
+  const { SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS, MAIL_FROM, MAIL_TO } = process.env
+  if (!SMTP_HOST || !SMTP_PORT || !SMTP_USER || !SMTP_PASS || !MAIL_FROM || !MAIL_TO) return
+
+  const who = ref || 'Unmarked link'
+  const port = Number(SMTP_PORT)
+  const transporter = nodemailer.createTransport({
+    host: SMTP_HOST,
+    port,
+    secure: port === 465,
+    auth: { user: SMTP_USER, pass: SMTP_PASS },
+  })
+
+  await transporter.sendMail({
+    from: `Martin Drexler Site <${MAIL_FROM}>`,
+    to: MAIL_TO,
+    subject: `Blackwave page opened — ${who}`,
+    text: [
+      `${who} opened https://martindrexler.com/blackwave`,
+      '',
+      'The visit list is at https://martindrexler.com/blackwave/visits',
+      '',
+      'One note is sent per browser session, when the page is opened.',
+    ].join('\n'),
+  })
 }
 
 export async function GET(req: Request) {

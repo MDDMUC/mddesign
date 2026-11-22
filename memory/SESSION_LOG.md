@@ -212,3 +212,13 @@ Append-only. Newest entries at the **bottom**.
 **Shipped:** `track.js` posts an open, each chapter that enters the viewport, and link clicks to `/api/blackwave`. `/blackwave/visits` lists those sessions after the read key. A `?ref=` on `/blackwave` is the name on the row. Storage is the Vercel Upstash store `blackwave-visits` (`KV_REST_API_URL` / `KV_REST_API_TOKEN`). The read key is in Vercel Production and Development, and in local `.env.local`. It is not in the repo.
 
 **Next:** Open `/blackwave/visits` after the deploy. Send marked links as `/blackwave?ref=name`.
+
+---
+
+## 2026-11-22 — Blackwave open email
+
+**Focus:** Clear the twelve sample visits. Email Martin when a real session opens the page.
+
+**Shipped:** Sample events removed from `blackwave-visits`. The first `open` in a session sends one mail to `MAIL_TO` through the existing SMTP settings. Later chapters in that session do not send another mail. A local test open returned in about two seconds with no SMTP error, then that test row was deleted.
+
+**Next:** Watch the inbox after the deploy. The visits page should be empty until a real open.

@@ -3,7 +3,7 @@
 > Rewrite this whole file at session end. Next session reads this first after the protocol.
 
 **Last updated:** 2026-11-22  
-**Session:** Blackwave visits are stored in Upstash Redis `blackwave-visits` (free, Frankfurt, no auto-upgrade). Read them at `/blackwave/visits` with `BLACKWAVE_READ_KEY`.
+**Session:** Blackwave visits are stored in Upstash Redis `blackwave-visits`. The sample rows were deleted. The first open in a session emails `MAIL_TO`. Read the list at `/blackwave/visits`.
 
 ---
 

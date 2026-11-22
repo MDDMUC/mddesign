@@ -31,7 +31,7 @@ Martin Drexler is a freelance graphic designer (hello@martindrexler.com). This r
 - `/preview/martin-3d.html` — experimental 3D portrait wire (noindex).
 - `/preview/high-council.html` — Life Project High Council wireframe agents (Nienna / Manwë / Mandos / Aulë STLs, noindex).
 - `/api/contact` — serverless POST handler, sends via Google Workspace SMTP (nodemailer). Six SMTP env vars must be set in Vercel (`SMTP_HOST/PORT/USER/PASS`, `MAIL_FROM`, `MAIL_TO`).
-- `/api/blackwave` — view log for the `/blackwave` application. POST stores an open, a chapter, or a click. GET returns the same visits as the page below.
+- `/api/blackwave` — view log for the `/blackwave` application. POST stores an open, a chapter, or a click. The first open in a session emails `MAIL_TO`. GET returns the same visits as the page below.
 - `/blackwave/visits` — private list of those sessions. Unlocked with `BLACKWAVE_READ_KEY`. Storage is the Upstash Redis store `blackwave-visits` (`KV_REST_API_URL` / `KV_REST_API_TOKEN`, or the `UPSTASH_REDIS_REST_*` names). A `?ref=` on `/blackwave` is passed into the iframe and shown as the visitor name.
 
 **Locked direction:** `design/BRIEF.md` + `design/SYSTEM.md §14`. Live signature moves: full-viewport Spline on `/`, View Transitions on `/work` ↔ `/work/[slug]`, ⌘K command menu, floating Work / Studio / Contact — hero-absolute bar on `/` (+ scroll-up left rail past logos), bar on `/contact`, left vertical rail on `/studio` + cases, top-right on `/work` (NavRail typesetter bar retired). Homepage section order locked 2026-09-04. Case-study template is the 8-section spine with per-case type covers (`CaseStudy.module.css`). Locked six case studies + studio attribution + NDA blocklist: `design/BRIEF.md §7` and `memory/PROJECT_MEMORY.md`.
