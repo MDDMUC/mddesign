@@ -54,6 +54,7 @@
 
   --font-sans: Helvetica, "Helvetica Neue", Arial, sans-serif;
   --font-mono: Helvetica, "Helvetica Neue", Arial, sans-serif;
+  --font-display: HelveticaNowDisplay, Helvetica, "Helvetica Neue", Arial, sans-serif;
 
   --fw-display: 500;
   --fw-book: 400;
@@ -69,14 +70,27 @@
   --fs-display-m: clamp(2.5rem, 5vw, 4.5rem);
   --fs-display-l: clamp(3.25rem, 7.2vw, 6.5rem);
   --fs-display-xl: clamp(4.25rem, 11vw, 9.5rem);
+  /* Interior chapter headlines. Desktop values are the locked scale. */
+  --fs-chapter: clamp(2rem, 3.9vw, 3.5rem);
+  --fs-sub: 1.125rem;
+  --fs-quote: clamp(1.8rem, 3.6vw, 3.1rem);
+  --fs-practice: clamp(1.25rem, 1.7vw, 1.7rem);
 
   --leading-display: 0.95;
+  --leading-stack: 0.9;
   --leading-snug: 1.15;
+  --leading-sub: 1.15;
   --leading-body: 1.2;
 
   --tracking-display: -0.045em;
+  --tracking-chapter: -0.02em;
+  --tracking-sub: -0.01em;
   --tracking-body: -0.009em;
   --tracking-mono: 0.04em;
+
+  --space-after-head: 1.85rem;
+  --space-subline: 1.25rem;
+  --measure-chapter: 36rem;
 
   --space-1: 0.25rem;
   --space-2: 0.5rem;
@@ -100,6 +114,38 @@
   --dur-reveal: 1400ms;
 
   --z-index: 20;
+}
+
+/* Tablet: still a composed page, with a slimmer rail. */
+@media (max-width: 1100px) {
+  :root {
+    --fs-chapter: clamp(1.85rem, 4.4vw, 2.65rem);
+    --fs-sub: 1.05rem;
+    --fs-quote: clamp(1.55rem, 3.2vw, 2.15rem);
+    --fs-practice: clamp(1.2rem, 2.2vw, 1.5rem);
+    --space-after-head: 1.35rem;
+    --space-subline: 1rem;
+    --pad: clamp(1.15rem, 2.6vw, 2rem);
+    --rail: 3.25rem;
+    --measure-chapter: 32rem;
+  }
+}
+
+/* Phone: the rail goes away and the type steps down again. */
+@media (max-width: 700px) {
+  :root {
+    --fs-chapter: clamp(1.55rem, 8.4vw, 2rem);
+    --fs-sub: 1rem;
+    --fs-quote: clamp(1.35rem, 6.4vw, 1.8rem);
+    --fs-practice: clamp(1.2rem, 5vw, 1.45rem);
+    --leading-sub: 1.35;
+    --space-after-head: 1.05rem;
+    --space-subline: 0.8rem;
+    --pad: 1.05rem;
+    --rail: 0px;
+    --measure: 100%;
+    --measure-chapter: 100%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

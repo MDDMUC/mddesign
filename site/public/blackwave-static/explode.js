@@ -1128,7 +1128,6 @@ const quotesMark = document.getElementById("quotes-mark");
 const QUOTES = [
   { text: "Martin brings a unique combination of strategic thinking and creative vision to everything he touches. His diverse experience enables him to create tailored solutions for any business challenge.", by: "Ryan Cobb, Moon Mission Design Engineer, NASA" },
   { text: "Martin brings thoughtful empathy and unbridled creativity to every challenge. His ability to listen deeply and craft innovative solutions makes him exceptional to work with.", by: "Dr. Tyler Phillips, JetBlue Pilot, USAF Retired" },
-  { text: "Martin spent hours in pursuit of a final product that truly reflected my vision. His process exceeded my expectations and delivered exactly what I needed.", by: "Mark Wright, DDS" },
   { text: "Martin's process delivers superior results that not only meet but exceed expectations. Strategic, thorough, and always focused on what the organization actually needs.", by: "Joe Murray, Strategic Development, Newmont Mining" }
 ];
 const portraitEl = document.getElementById("portrait");
@@ -1150,7 +1149,13 @@ const helloType = document.getElementById("hello-type");
 const helloCaret = document.getElementById("hello-caret");
 const portraitPhoto = document.getElementById("portrait-photo");
 const aboutKicker = portraitEl && portraitEl.querySelector(".frame__num");
-const AWARDS_LINE = "I have won over\n25 international\ndesigner awards";
+const AWARDS_LINE = "I deliver\naward-winning\ndesign.";
+const END_LINE = "Let's talk.";
+const endEl = document.getElementById("together");
+const endType = document.getElementById("end-type");
+const endCaret = document.getElementById("end-caret");
+let endCount = 0;
+let endStarted = 0;
 const awardsType = document.getElementById("awards-type");
 const awardsCaret = document.getElementById("awards-caret");
 const TEACH_LINE = "I have taught\nbranding and design\nat the highest level";
@@ -1460,6 +1465,26 @@ function placeAllowed(place, dist) {
   if (place.name === "London" || place.name === "Germany" || place.name === "Barcelona") return dist > 2.2;
   if (place.name === "New York" || place.name === "Philadelphia") return dist > 3.3 || dist < 2.45;
   return true;
+}
+
+function syncEnd(now) {
+  if (!endType || !endEl) return;
+  if (reduced) {
+    endType.textContent = END_LINE;
+    if (endCaret) endCaret.style.visibility = "hidden";
+    return;
+  }
+  const top = endEl.getBoundingClientRect().top;
+  if (!endStarted && top < window.innerHeight * 0.55) endStarted = now || performance.now();
+  if (!endStarted) {
+    endType.textContent = "";
+    if (endCaret) endCaret.style.visibility = "hidden";
+    return;
+  }
+  const perLetter = 280;
+  endCount = Math.min(END_LINE.length, Math.floor((now - endStarted) / perLetter));
+  endType.textContent = END_LINE.slice(0, endCount);
+  if (endCaret) endCaret.style.visibility = endCount > 0 && endCount < END_LINE.length ? "visible" : "hidden";
 }
 
 function syncAwards() {
@@ -1945,15 +1970,16 @@ function syncLifeCollage() {
   const img = el && el.querySelector(".life-collage img");
   if (!img) return;
   if (reduced) {
-    img.style.opacity = "1";
-    img.style.transform = "none";
+    img.style.setProperty("--reveal", "130%");
     return;
   }
-  const span = Math.max(1, el.offsetHeight - window.innerHeight);
-  const p = clamp01(-el.getBoundingClientRect().top / span);
-  const t = smooth(clamp01(p / 0.72));
-  img.style.opacity = t.toFixed(3);
-  img.style.transform = "translateY(" + ((1 - t) * 1.4).toFixed(3) + "rem) scale(" + (1.045 - t * 0.045).toFixed(4) + ")";
+  const box = el.getBoundingClientRect();
+  const vh = window.innerHeight;
+  const start = vh * 0.98;
+  const end = vh - box.height;
+  const travel = Math.max(1, start - end);
+  const p = smooth(clamp01((start - box.top) / travel));
+  img.style.setProperty("--reveal", (p * 130).toFixed(1) + "%");
 }
 
 function paintLife() {
@@ -1994,41 +2020,50 @@ function syncCaseVideo(video, p, scrub) {
     const at = scrub.at || 0;
     video.loop = at <= 0;
     video.dataset.at = String(at);
+    const beforeCue = at > 0.2 && (video.currentTime || 0) < at - 0.35;
     if (!video.dataset.bound) {
       video.dataset.bound = "1";
+      video.addEventListener("loadedmetadata", function () {
+        const cue = Number(video.dataset.at || 0);
+        if (cue > 0.2 && (video.currentTime || 0) < cue - 0.35) {
+          try { video.currentTime = cue; } catch (err) { /* seek before the range is ready */ }
+        }
+      });
       video.addEventListener("ended", function () {
         const restart = Number(video.dataset.at || 0);
         try { video.currentTime = restart; } catch (err) { /* seek before metadata */ }
-        const again = video.play();
-        if (again && again.catch) again.catch(function () {});
+        if (restart <= 0.2) {
+          const again = video.play();
+          if (again && again.catch) again.catch(function () {});
+        }
       });
     }
     if (!scrub.visible) {
       if (!video.paused) video.pause();
       return;
     }
-    if (at > 0.2 && video.dataset.cued !== "1") {
-      if (video.dataset.cueing !== "1") {
-        video.dataset.cueing = "1";
-        const cue = function () {
-          if (Math.abs((video.currentTime || 0) - at) < 0.4) {
-            video.dataset.cued = "1";
-            return;
-          }
-          try { video.currentTime = at; } catch (err) { /* seek before metadata */ }
-        };
-        video.addEventListener("seeked", function () {
+    if (beforeCue) {
+      if (!video.paused) video.pause();
+      if (video.seeking || video.dataset.cueing === "1") return;
+      if (video.readyState < 1) return;
+      video.dataset.cued = "0";
+      video.dataset.cueing = "1";
+      const onSeeked = function () {
+        video.removeEventListener("seeked", onSeeked);
+        video.dataset.cueing = "0";
+        const cue = Number(video.dataset.at || 0);
+        if ((video.currentTime || 0) >= cue - 0.35) {
           video.dataset.cued = "1";
-          if (video.paused) {
+          if (scrub.visible) {
             const pending = video.play();
             if (pending && pending.catch) pending.catch(function () {});
           }
-        }, { once: true });
-        if (video.readyState >= 1) cue();
-        else {
-          try { video.load(); } catch (err) { /* already loading */ }
-          video.addEventListener("loadedmetadata", cue, { once: true });
         }
+      };
+      video.addEventListener("seeked", onSeeked);
+      try { video.currentTime = at; } catch (err) {
+        video.dataset.cueing = "0";
+        video.removeEventListener("seeked", onSeeked);
       }
       return;
     }
@@ -2089,7 +2124,7 @@ function syncCaseVideo(video, p, scrub) {
 const practicesEl = document.getElementById("practices");
 const practiceCards = practicesEl ? Array.from(practicesEl.querySelectorAll(".practice")) : [];
 
-const STARS_LINE = "I love,\ntraining\nclimbing\nmountain biking";
+const STARS_LINE = "When I am\nnot working\nI love to train\nand to climb.";
 const starsEl = document.getElementById("stars");
 const starsType = document.getElementById("stars-type");
 const starsCaret = document.getElementById("stars-caret");
@@ -2124,7 +2159,7 @@ function paintPractices() {
     const lines = card.querySelectorAll(".h-line");
     for (let n = 0; n < lines.length; n++) lines[n].style.setProperty("--rise", ink.toFixed(3));
   };
-  if (reduced) {
+  if (reduced || window.innerWidth <= 900) {
     for (let i = 0; i < practiceCards.length; i++) show(practiceCards[i], 1, 1);
     return;
   }
@@ -2151,19 +2186,22 @@ function paintCases() {
     const film = caseFilms[i];
     const p = caseProgress(film.el);
     if (reduced) {
-      syncCaseVideo(film.video, 0.4);
+      syncCaseVideo(film.video, 0.4, film.el.id === "yca"
+        ? { play: true, visible: true, at: 0 }
+        : null);
       continue;
     }
     const space = film.el.id === "space";
     const yca = film.el.id === "yca";
-    const planet = film.el.id === "planetarie";
-    const parked = space || yca || planet;
-    const logoIn = easeOut(clamp01(p / (space || planet ? 0.08 : 0.12)));
-    const videoIn = easeOut(clamp01((p - (space || planet ? 0.1 : 0.16)) / (space || planet ? 0.1 : 0.14)));
+    const cepres = film.el.id === "cepres";
+    const parked = space || yca || cepres;
+    const logoIn = easeOut(clamp01(p / (space || cepres ? 0.08 : 0.12)));
+    const videoIn = easeOut(clamp01((p - (space || cepres ? 0.1 : 0.16)) / (space || cepres ? 0.1 : 0.14)));
     const logoOut = parked ? 0 : smooth(clamp01((p - 0.32) / 0.1));
-    const zoomT = smooth(clamp01((p - (space || planet ? 0.46 : 0.38)) / (space || planet ? 0.2 : 0.18)));
-    const textA = easeOut(clamp01((p - (space || planet ? 0.68 : 0.58)) / 0.1));
-    const out = smooth(clamp01((p - (space || planet ? 0.88 : 0.84)) / 0.12));
+    const zoomT = smooth(clamp01((p - (space || cepres ? 0.46 : 0.38)) / (space || cepres ? 0.2 : 0.18)));
+    const narrow = vw <= 1100;
+    const textA = easeOut(clamp01((p - (narrow ? 0.06 : (space || cepres ? 0.68 : 0.58))) / 0.1));
+    const out = smooth(clamp01((p - (space || cepres ? 0.88 : 0.84)) / 0.12));
     const tileW = film.tile.offsetWidth || 1;
     const tileH = film.tile.offsetHeight || 1;
     const fill = Math.max(vw / tileW, vh / tileH) * 1.06;
@@ -2191,20 +2229,28 @@ function paintCases() {
       }
     }
     if (parked) {
-      const park = (space || planet) ? smooth(clamp01((p - 0.1) / 0.22)) : videoIn;
+      const park = (space || cepres) ? smooth(clamp01((p - 0.1) / 0.22)) : videoIn;
       const shift = -50 * (1 - park);
       const intro = yca ? easeOut(clamp01(p / 0.14)) : logoIn;
       const sc = (0.94 + 0.06 * intro) * (1 - 0.2 * park);
       const topPct = yca ? 50 : 42;
       film.logo.style.transformOrigin = "top left";
       film.logo.style.setProperty("--park", park.toFixed(3));
-      film.logo.style.left = (50 * (1 - park)).toFixed(3) + "%";
-      film.logo.style.top = (topPct * (1 - park)).toFixed(3) + "%";
+      const edge = yca ? park * 1.15 : 0;
+      film.logo.style.left = "calc(" + (50 * (1 - park)).toFixed(3) + "% + " + edge.toFixed(2) + "rem)";
+      if (window.innerWidth <= 1100) {
+        const root = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+        film.logo.style.top = ((topPct / 100) * (1 - park) * vh + edge * root) + "px";
+      } else {
+        film.logo.style.top = "calc(" + (topPct * (1 - park)).toFixed(3) + "% + " + edge.toFixed(2) + "rem)";
+      }
       if (yca) {
         const plate = film.logo.querySelector(".case__suite-plate");
         const markH = plate ? plate.offsetHeight : 0;
+        const inset = plate ? Math.max(0, (film.logo.offsetWidth - plate.offsetWidth) / 2) : 0;
         const yPx = (1 - park) * -(markH / 2);
-        film.logo.style.transform = "translate(" + shift.toFixed(2) + "%, " + yPx.toFixed(2) + "px) scale(" + sc.toFixed(3) + ")";
+        film.logo.style.transformOrigin = (inset * park).toFixed(2) + "px 0";
+        film.logo.style.transform = "translate(calc(" + shift.toFixed(2) + "% - " + (inset * park).toFixed(2) + "px), " + yPx.toFixed(2) + "px) scale(" + sc.toFixed(3) + ")";
       } else {
         film.logo.style.transform = "translate(" + shift.toFixed(2) + "%, " + shift.toFixed(2) + "%) scale(" + sc.toFixed(3) + ")";
       }
@@ -2212,18 +2258,27 @@ function paintCases() {
       film.logo.style.transform = "translate(-50%, calc(-50% - " + lift.toFixed(2) + "vh)) scale(" + (0.94 + 0.06 * logoIn).toFixed(3) + ")";
     }
     film.wrap.style.opacity = videoIn.toFixed(3);
-    film.wrap.style.transform = "translate(-50%, calc(-50% + " + drop.toFixed(2) + "vh))";
-    film.tile.style.transform = "scale(" + scale.toFixed(4) + ")";
+    if (narrow) {
+      film.wrap.style.transform = "none";
+      film.tile.style.transform = "none";
+      film.beats[0].style.transform = "none";
+      film.zoom.style.transform = "none";
+      const stage = film.el.querySelector(".case");
+      if (stage) stage.style.top = Math.min(0, vh - stage.offsetHeight) + "px";
+    } else {
+      film.wrap.style.transform = "translate(-50%, calc(-50% + " + drop.toFixed(2) + "vh))";
+      film.tile.style.transform = "scale(" + scale.toFixed(4) + ")";
+      film.beats[0].style.transform = "translateY(" + ((1 - textA) * 28).toFixed(2) + "vh)";
+      film.zoom.style.transform = "scale(" + (1 - out * 0.94).toFixed(4) + ")";
+    }
     film.tile.style.borderColor = "rgba(1,1,1," + (0.16 * (1 - zoomT)).toFixed(3) + ")";
     film.scrim.style.opacity = textA.toFixed(3);
     film.beats[0].style.opacity = textA.toFixed(3);
-    film.beats[0].style.transform = "translateY(" + ((1 - textA) * 28).toFixed(2) + "vh)";
-    film.zoom.style.transform = "scale(" + (1 - out * 0.94).toFixed(4) + ")";
     film.zoom.style.opacity = (1 - smooth(clamp01((out - 0.45) / 0.55))).toFixed(3);
     const box = film.el.getBoundingClientRect();
     const onScreen = box.top < vh * 0.92 && box.bottom > vh * 0.08;
-    syncCaseVideo(film.video, p, (space || yca)
-      ? { play: true, visible: onScreen, at: yca ? 18 : 0 }
+    syncCaseVideo(film.video, p, (space || yca || cepres)
+      ? { play: true, visible: onScreen, at: 0 }
       : null);
   }
 }
@@ -2546,6 +2601,7 @@ function frame(now) {
   const glow = reduced ? 1 : glowTime / 3;
   syncAbout();
   syncAwards();
+  syncEnd(now);
   syncTeach();
   syncQuotes();
   paintCity();
