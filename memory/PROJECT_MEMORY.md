@@ -42,7 +42,9 @@ Durable state. Update when facts change; do not put ephemeral chat noise here.
 
 Chrome: floating **SiteNav** (bar on `/`+`/contact`; left rail on `/studio`+cases; top-right on `/work`) + **CommandMenu** + homepage **ReturnToTop**. NavRail/ChromeStrip/Fluid unmounted.
 
-**Composition (2026-09-04):** `/` is a long homepage spine (structure after christoph-gey.de; craft stays Zion). Hero keeps MARTIN DREXLER / Design Studio lockup + Spline (contained). `/work` is display-scale names with dates. Case studies keep the 8-section spine; type covers until photography.
+**Composition (2026-09-04):** `/` is a long homepage spine (structure after christoph-gey.de; craft stays Zion). Hero keeps the display lockup + Spline (contained). `/work` is display-scale names with dates. Case studies keep the 8-section spine; type covers until photography.
+
+**Copy (2026-11-22):** Homepage hero H1 is `Designer`. Subline is `brand · product · systems · UI/UX` (`site/data/home.ts`). `/studio` Index shows the award name and marks. Years stay in the awards array and are not rendered.
 
 ## Locks (do not reopen without Martin)
 

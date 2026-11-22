@@ -327,7 +327,7 @@ export default function StudioPage() {
         </div>
       </section>
 
-      {/* Credentials index — year, award, repeated mark. No client names. */}
+      {/* Credentials index — award, repeated mark. No client names. */}
       <section
         className={`${styles.awardsSection} reveal-rise`}
         style={{ animationDelay: '1600ms' }}
@@ -336,8 +336,7 @@ export default function StudioPage() {
         <dl className={styles.awards}>
           {awards.map((award) => (
             <div key={award.name} className={styles.awardRow}>
-              <dt className={styles.awardYear}>{award.year}</dt>
-              <dd className={styles.awardName}>{award.name}</dd>
+              <dt className={styles.awardName}>{award.name}</dt>
               {award.mark || award.marks ? (
                 <dd
                   className={styles.awardMarks}

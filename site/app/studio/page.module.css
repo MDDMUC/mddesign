@@ -321,7 +321,7 @@
 
 .awardRow {
   display: grid;
-  grid-template-columns: minmax(7rem, 9rem) minmax(12rem, 1.4fr) auto;
+  grid-template-columns: minmax(12rem, 1.4fr) auto;
   gap: var(--space-4);
   padding: var(--space-3) 0;
   border-bottom: var(--rule-faint);
@@ -330,14 +330,6 @@
 
 .awardRow:last-child {
   border-bottom: var(--rule);
-}
-
-.awardYear {
-  font-size: var(--text-xs);
-  color: var(--ink-60);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin: 0;
 }
 
 .awardName {

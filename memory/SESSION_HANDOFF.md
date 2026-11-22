@@ -2,16 +2,16 @@
 
 > Rewrite this whole file at session end. Next session reads this first after the protocol.
 
-**Last updated:** 2026-11-21  
-**Session:** Case images for CEPRES, YCA, and Planetarie are committed. Day closed.
+**Last updated:** 2026-11-22  
+**Session:** Homepage hero reads Designer / brand · product · systems · UI/UX. Studio Index no longer shows years.
 
 ---
 
 ## Current focus
 
-1. **`/studio` Index** — award + year only. Marks repeat per win. Adobe UI and Xd ribbons added. Red Dot, German Digital Innovation, and CO Cup still have no logo file.
-2. **Positioning** — brand before UI/UX. CEPRES is `$65T+` (their 15 June 2026 SuperReturn note). Keller Sports in that sentence is “a global e-commerce business”. Case-study pages still say €100m and $45T where those lines were not part of this sentence.
-3. **Homepage covers / chrome** — unchanged this session.
+1. **Homepage hero** — H1 is `Designer`. Subline is `brand · product · systems · UI/UX` in `site/data/home.ts`. Tab title still says `Designer · UI/UX, brand, product systems`.
+2. **`/studio` Index** — award name + repeated marks. Years stay in the data and are not rendered. Red Dot, German Digital Innovation, and CO Cup still have no logo file.
+3. **Positioning sentence** — brand before UI/UX. CEPRES is `$65T+` (their 15 June 2026 SuperReturn note). Keller Sports in that sentence is “a global e-commerce business”. Case-study pages still say €100m and $45T where those lines were not part of this sentence.
 
 ---
 
@@ -27,7 +27,7 @@
 
 ## Exact next steps (next session)
 
-1. Visual QA of `/studio`, `/work/cepres`, `/work/yca`, and `/work/planetarie` after this deploy
+1. Visual QA of `/` and `/studio` after this deploy. Tab title still leads with UI/UX if Martin wants that matched to the hero.
 2. Decide Manwë-on-CV test (promote into real resume vs delete local PDF)
 3. Native photography masters when ready
 4. Referrals / essays still wait on real content

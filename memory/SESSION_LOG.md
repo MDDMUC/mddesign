@@ -186,3 +186,19 @@ Append-only. Newest entries at the **bottom**.
 **Left local:** `.tmp-shots/`. `MartinDrexler-Resume-manwe-test.pdf`. `images/clients/_pe-analyzer-src.pdf`. `images/hero/martin-portrait - small.jpg`. `videos/yca/yca-impact.mp4` (about 198MB; the page uses Vimeo).
 
 **Next:** Visual QA of `/studio`, `/work/cepres`, `/work/yca`, and `/work/planetarie` after deploy. Manwë resume test is still undecided. Photography masters are still open.
+
+---
+
+## 2026-11-22 — Hero lockup and studio Index years
+
+**Focus:** Homepage hero title and the `/studio` awards index.
+
+**Shipped:**
+- Hero H1 is `Designer`. The subline is `brand · product · systems · UI/UX` (`site/data/home.ts`). `UI/UX` is one item so no middot splits it.
+- `/studio` Index no longer prints the year in front of each award. The year strings stay in the awards data. The row grid is name + marks.
+
+**Left local:** `.tmp-shots/`, Manwë resume PDF, `_pe-analyzer-src.pdf`, `martin-portrait - small.jpg`, `videos/yca/`.
+
+**Open:** Browser tab title is still `Designer · UI/UX, brand, product systems`. Martin did not ask to change it.
+
+**Next:** Visual QA of `/` and `/studio` after deploy.

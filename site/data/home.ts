@@ -23,10 +23,10 @@ export const positioningLede =
   'Designer working across brand, UI/UX, and product systems. Selected work has scaled a $65T+ fintech platform (CEPRES), rebuilt a global e-commerce business (Keller Sports), and shaped the visual identity of the Young Champion Ambassador program (Olympic Movement, 25+ cities). 25+ international design awards including D&AD Yellow Pencil, German Brand Award Gold, and Red Dot. Has taught design as business strategy at the University of Denver and the World Trade Center Denver.'
 
 /** H1 primary line — rendered bold + uppercase in the hero. */
-export const heroTitlePrimary = ['Designer', 'UI', 'UX'] as const
+export const heroTitlePrimary = ['Designer'] as const
 
 /** H1 secondary line — practice pillars, separated by middots. */
-export const heroTitleSecondary = ['brand', 'product', 'systems'] as const
+export const heroTitleSecondary = ['brand', 'product', 'systems', 'UI/UX'] as const
 
 /** Hero summary — each entry rises in as its own line. */
 export const heroPositioningLines = [
